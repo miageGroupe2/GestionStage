@@ -1,14 +1,14 @@
 <?php
     require_once RACINE_VUE.'Afficheur.php';
-    
+    require_once RACINE_VUE.'VueMenuGauche.php';
 
     call_action();
     
     
     function afficherPagePrincipale($id){
         
-        
-        AffichePage($id);
+        $menuGauche = genererMenuGauche();
+        AffichePage($menuGauche);
     }
     
     function afficherProposerStage($id){
