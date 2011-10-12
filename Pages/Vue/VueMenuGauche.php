@@ -41,7 +41,7 @@ function genererMenuGauche() {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <input type=\"text\" class=\"forml\" style=\"width:160px;\" name=\"password\" id=\"recherche\" title=\"saisie_mdp\"/>
+                                                <input type=\"password\" class=\"forml\" style=\"width:160px;\" name=\"password\" id=\"recherche\" title=\"saisie_mdp\"/>
                                             </td>
                                         </tr>
                                         <tr>

@@ -27,7 +27,8 @@
             if ($_POST['login'] != NULL AND $_POST['password'] != NULL) {
 
                 $login = $_POST['login'];
-                $password = $_POST['password'];
+                $password = sha1($_POST['password']);
+                echo $password;
                 $utilisateurExistant = BD::authentification($login, $password);
 
                 if ($utilisateurExistant == TRUE ){
