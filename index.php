@@ -1,6 +1,8 @@
 <?php
 	
-    require_once 'Pages/ControleurPrincipal.php' ;
+    require_once './path_config.php' ;
+    
+    require_once racineControleur.'/ControleurPrincipal.php' ;
 
     /*
      *  git add . (commande récursive)

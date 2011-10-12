@@ -1,5 +1,5 @@
 <?php
-    require_once 'Afficheur.php';
+    require_once racineVue.'Afficheur.php';
     
 
     call_action();
