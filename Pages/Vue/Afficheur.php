@@ -40,7 +40,7 @@ function AffichePage($menuGauche, $corps) {
                     <table>
                         <tr>    
                             <td id=\"banniere\">
-                                ban
+                                <a href=\"".RACINE."\">Accueil</a>
                             </td>
                         </tr>    
                     </table>
