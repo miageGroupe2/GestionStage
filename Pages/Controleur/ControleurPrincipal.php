@@ -7,16 +7,16 @@
     
     
     function afficherPagePrincipale($id){
-        
         $menuGauche = genererMenuGauche();
-        $corps = genererCorps();
+        $corps = genererPageAccueil();
         AffichePage($menuGauche, $corps);
     }
     
-    function afficherProposerStage($id){
-        
-        
-        AffichePage($id);
+    
+    function afficherProposerStage($id){     
+        $menuGauche = genererMenuGauche();
+        $corps = genererProposerStage();
+        AffichePage($menuGauche, $corps);
     }
 
     function call_action() {
@@ -30,17 +30,14 @@
 
                 case 'pagePrincipale' :
                     $action = 'afficherPagePrincipale';
-                    $id = 'ceci est la page principale';
                     break;
                 
                 case 'proposerStage' :
                     $action = 'afficherProposerStage' ;
-                    $id = 'ceci est la page poour proposer un stage';
                     break;
 
                 default :
                     $action = 'afficherPagePrincipale';
-                    $id='ceci est la page principale';
                     break;
             }
         }
