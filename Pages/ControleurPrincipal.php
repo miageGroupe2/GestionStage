@@ -20,6 +20,7 @@
     function call_action() {
 
         $action = 'pagePrincipale';
+        $id = 'ceci est la page principale';
         if (!isset($_REQUEST['action'])) {
             $action = 'afficherPagePrincipale';
         } else {
@@ -37,6 +38,7 @@
 
                 default :
                     $action = 'afficherPagePrincipale';
+                    $id='ceci est la page principale';
                     break;
             }
         }

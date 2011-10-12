@@ -1,0 +1,52 @@
+/* 
+    Document   : index
+    Created on : 12 oct. 2011, 09:31:05
+    Author     : anthony
+    
+Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+body{
+    margin: 0 auto 0 auto;
+    width: 1000px;
+    height: 100% ;
+}
+
+#page{
+    width: 1000px;
+    height: 100%;
+    margin: 0 auto 0 auto;
+}
+
+#banniere{
+    background-image: url('../Images/Index/banniere.jpg');
+}
+
+#menu_gauche{
+    border: 1px solid black;
+    width: 180px;
+    height: 100%;
+}
+
+#corps{
+    border: 1px solid black;
+    width: 820px;
+}
+
+#bas_page{
+    border: 1px solid black;
+    width: 1000px;
+    text-align: center;
+}
+
+

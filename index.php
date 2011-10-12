@@ -1,7 +1,15 @@
 <?php
 	
-    require_once 'ControleurPrincipal.php' ;
-	
+    require_once 'Pages/ControleurPrincipal.php' ;
+
+    /*
+     *  git add . (commande récursive)
+     *  git commit –a
+     *  git push
+     *  git pull
+     */
+
+
 ?>
 
 <html>
