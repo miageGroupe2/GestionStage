@@ -23,25 +23,20 @@
     function connecterUtilisateur() {
 
         if (!isset($_SESSION['connecte'])) {
+            
             if ($_POST['login'] != NULL AND $_POST['password'] != NULL) {
 
                 $login = $_POST['login'];
                 $password = $_POST['password'];
                 $utilisateurExistant = BD::authentification($login, $password);
 
-
                 if ($utilisateurExistant == TRUE ){
+
                     $_SESSION['connecte'] = 1 ;
                     $_SESSION['login'] = $login ;
-
-
-                    $centre = "<strong>Vous êtes connecté(e)</strong><br />";
-                } else {
-                    $centre = "<strong>Erreur lors de l'authentification</strong><br />";
-                }
+                    
+                } 
             }
-        } else {
-            $centre = "Vous êtes déjà connecté<br />";
         }
         
         afficherPagePrincipale($centre);
