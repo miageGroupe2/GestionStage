@@ -13,7 +13,7 @@ function genererProposerStage() {
     $corps = "
                 <td id = \"corps\">
                     <h2>Proposer un stage</h2>
-                    <form action=\"http://localhost/?action=proposerStage\" method=\"post\">
+                    <form action=\"".RACINE."?action=proposerStage\" method=\"post\">
                         <table>
                             <tr>
                                 <td colspam=\"2\">
