@@ -2,57 +2,58 @@
 
 class BD {
 
-    private static $lien;
+    private static $connection;
 
-    public static function getConnexion() {
+    private static function getConnection() {
 
-        if (isset(self::$lien)) {
-            return self::$lien;
-        } else { 
-            Connexion::connect();
-            return self::$lien;
+        if (isset(self::$connection)) {
+            return self::$connection;
+        } else {
+            self::$connection = mysql_connect("localhost", "root", "admin") or die("Erreur de connection à la BD");
+            mysql_select_db("GestionStage");
+            return self::$connection;
         }
     }
 
-    private static function connect() {
+//
+//    public static function seDeconnecter() {
+//        if (isset($_SESSION['logge'])) {
+//            session_destroy();
+//        }
+//    }
 
-        self::$lien = mysql_connect("localhost", "root", "admin") or die("Erreur de connection à la BD");
-        mysql_select_db("GestionStage");
-    }
+    /**
+     * Permet de vérifier que l'utilisateur existe dans la base
+     * @param type $login
+     * @param type $password
+     * @return type TRUE si le couple login/password est correct, false sinon
+     */
+    public static function authentification($login, $password) {
 
-    public static function executeReq($r) {
+        BD::getConnection();
+        $login = mysql_real_escape_string($login);
+        $password = mysql_real_escape_string($password);
 
-        Connexion::getConnexion();
-        $var = null;
-        try {
-            $var = mysql_query("$r");
-        } catch (Exception $e) {
-            echo "erreur";
-        }
-        return $var;
-    }
+        if ($login != FALSE && $password != FALSE) {
 
-    public static function estConnecte() {
-        session_start();
-        $connecte = false;
-        if (isset($_SESSION['logge'])) {
-            if ($_SESSION['logge'] == 1) {
-                $connecte = true;
+            $requete = "SELECT login FROM Utilisateur WHERE login = '$login' AND password = '$password' ";
+
+            try {
+                $retour = mysql_query($requete);
+            } catch (Exception $e) {
+                echo "erreur lors de l'authentification :" . $e;
+            }
+
+            $nombreDeLignes = mysql_num_rows($retour);
+
+            if ($nombreDeLignes > 0) {
+
+                return TRUE;
+            } else {
+
+                return FALSE;
             }
         }
-        return $connecte;
-    }
-
-    public static function seDeconnecter() {
-        if (isset($_SESSION['logge'])) {
-            session_destroy();
-        }
-    }
-    
-    public static function connecterUtilisateur($loggin, $password){
-        
-        
-        
     }
 
 }

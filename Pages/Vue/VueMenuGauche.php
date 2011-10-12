@@ -3,6 +3,7 @@
 function genererMenuGauche() {
     if (isset($_SESSION['connecte'])) {
         if ($_SESSION['connecte'] == 1) {
+
             $menuGauche = "<table>
                         <tr>
                             <td id=\"menu_gauche\">
@@ -14,7 +15,7 @@ function genererMenuGauche() {
                         <tr>
                             <td id=\"menu_gauche\">
                                 Connexion :
-                                <form action=\"http://localhost/?action=log\" method=\"post\">
+                                <form action=\"http://localhost/GestionStage/?action=connexion\" method=\"post\">
                                     <table>
                                         <tr>
                                             <td>Login :</td>
@@ -29,7 +30,7 @@ function genererMenuGauche() {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <input type=\"text\" class=\"forml\" style=\"width:160px;\" name=\"mdp\" id=\"recherche\" title=\"saisie_mdp\"/>
+                                                <input type=\"text\" class=\"forml\" style=\"width:160px;\" name=\"password\" id=\"recherche\" title=\"saisie_mdp\"/>
                                             </td>
                                         </tr>
                                         <tr>
