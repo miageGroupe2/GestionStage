@@ -7,14 +7,14 @@
     call_action();
     
     
-    function afficherPagePrincipale($id){
+    function afficherPagePrincipale(){
         $menuGauche = genererMenuGauche();
         $corps = genererPageAccueil();
         AffichePage($menuGauche, $corps);
     }
     
     
-    function afficherProposerStage($id){     
+    function afficherProposerStage(){     
         $menuGauche = genererMenuGauche();
         $corps = genererProposerStage();
         AffichePage($menuGauche, $corps);
@@ -39,13 +39,13 @@
             }
         }
         
-        afficherPagePrincipale($centre);
+        afficherPagePrincipale();
     }
 
     function call_action() {
 
         $action = 'pagePrincipale';
-        $id = 'ceci est la page principale';
+        
         if (!isset($_REQUEST['action'])) {
             $action = 'afficherPagePrincipale';
         } else {
@@ -69,7 +69,7 @@
                     break;
             }
         }
-        $action($id);
+        $action();
     }
 
     
