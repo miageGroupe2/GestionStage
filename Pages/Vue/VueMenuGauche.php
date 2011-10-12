@@ -26,7 +26,7 @@ function genererMenuGauche() {
                         <tr>
                             <td id=\"menu_gauche\">
                                 Connexion :
-                                <form action=\"http://localhost/GestionStage/?action=connexion\" method=\"post\">
+                                <form action=\"".RACINE."?action=connexion\" method=\"post\">
                                     <table>
                                         <tr>
                                             <td>Login :</td>
