@@ -10,13 +10,14 @@ function genererPageAccueil() {
 }
 
 function genererProposerStage() {
-    $corps = "<td id = \"corps\">
+    $corps = "
+                <td id = \"corps\">
                     <h2>Proposer un stage</h2>
                     <form action=\"http://localhost/?action=proposerStage\" method=\"post\">
                         <table>
                             <tr>
                                 <td colspam=\"2\">
-                                    <br/>Coordonn&eacute;es &eacute;tudiant :<br/><br/>
+                                    <h3>Coordonn&eacute;es &eacute;tudiant :</h3>
                                  </td>
                             </tr>
                             <tr>
@@ -24,7 +25,7 @@ function genererProposerStage() {
                                     Nom &eacute;tudiant :
                                 </td>
                                 <td>
-                                    <INPUT type=text name=\"nom\">
+                                    <input type=text name=\"nom\">
                                 </td>
                             </tr>
                             <tr>
@@ -32,12 +33,24 @@ function genererProposerStage() {
                                     Pr&eacute;nom &eacute;tudiant :
                                 </td>
                                 <td>
-                                    <INPUT type=text name=\"prenom\">
+                                    <input type=text name=\"prenom\">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Formation :
+                                </td>
+                                <td>
+                                    <select name=\"fonction\">
+                                        <option VALUE=\"l3_miage\">L3 MIAGE</option>
+                                        <option VALUE=\"m2_acsi\">M2 MIAGE ACSI</option>
+                                        <option VALUE=\"m2_sid\">M2 MIAGE SID</option>
+                                    </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspam=\"2\">
-                                    <br/>Coordonn&eacute;es de l'entreprise :<br/><br/>
+                                    <h3>Coordonn&eacute;es de l'entreprise :</h3>
                                  </td>
                             </tr>
                             <tr>
@@ -45,12 +58,12 @@ function genererProposerStage() {
                                     Nom de l'entreprise :
                                 </td>
                                 <td>
-                                    <INPUT type=text name=\"nom_entreprise\">
+                                    <input type=text name=\"nom_entreprise\">
                                 </td>
                             </tr>
                             <tr>
                                 <td colspam=\"2\">
-                                    <br/>Adresse de l'entreprise :<br/><br/>
+                                    <br/><h3>Adresse de l'entreprise :</h3><br/>
                                  </td>
                             </tr>
                             <tr>
@@ -58,7 +71,7 @@ function genererProposerStage() {
                                     N°, Rue :
                                 </td>
                                 <td>
-                                    <INPUT type=text name=\"num_rue\">
+                                    <input type=text name=\"num_rue\">
                                 </td>
                             </tr>
                             <tr>
@@ -66,7 +79,7 @@ function genererProposerStage() {
                                     Code postal :
                                 </td>
                                 <td>
-                                    <INPUT type=text name=\"code_postal\">
+                                    <input type=text name=\"code_postal\">
                                 </td>
                             </tr>
                             <tr>
@@ -74,7 +87,7 @@ function genererProposerStage() {
                                     Ville :
                                 </td>
                                 <td>
-                                     <INPUT type=text name=\"ville\">
+                                     <input type=text name=\"ville\">
                                 </td>
                             </tr>
                             <tr>
@@ -82,7 +95,7 @@ function genererProposerStage() {
                                     Pays :
                                 </td>
                                 <td>
-                                     <INPUT type=text name=\"pays\">
+                                     <input type=text name=\"pays\">
                                 </td>
                             </tr>
                             <tr>
@@ -90,12 +103,12 @@ function genererProposerStage() {
                                     T&eacute;l&eacute;phone accueil :
                                 </td>
                                 <td>
-                                     <INPUT type=text name=\"tel_accueil\">
+                                     <input type=text name=\"tel_accueil\">
                                 </td>
                             </tr>
                              <tr>
                                 <td colspam=\"2\">
-                                    <br/>Coordonn&eacute;es du tuteur :<br/><br/>
+                                    <h3>Coordonn&eacute;es du tuteur :</h3>
                                  </td>
                             </tr>
                             <tr>
@@ -103,7 +116,7 @@ function genererProposerStage() {
                                     Nom tuteur :
                                 </td>
                                 <td>
-                                    <INPUT type=text name=\"nom_tuteur\">
+                                    <input type=text name=\"nom_tuteur\">
                                 </td>
                             </tr>
                             <tr>
@@ -111,7 +124,7 @@ function genererProposerStage() {
                                     Pr&eacute;nom tuteur :
                                 </td>
                                 <td>
-                                    <INPUT type=text name=\"prenom_tuteur\">
+                                    <input type=text name=\"prenom_tuteur\">
                                 </td>
                             </tr>
                             <tr>
@@ -119,7 +132,7 @@ function genererProposerStage() {
                                     T&eacute;l&eacute;phone fixe :
                                 </td>
                                 <td>
-                                    <INPUT type=text name=\"tel_fixe\">
+                                    <input type=text name=\"tel_fixe\">
                                 </td>
                             </tr>
                             <tr>
@@ -127,7 +140,7 @@ function genererProposerStage() {
                                     T&eacute;l&eacute;phone portable :
                                 </td>
                                 <td>
-                                    <INPUT type=text name=\"tel_port\">
+                                    <input type=text name=\"tel_port\">
                                 </td>
                             </tr>
                             <tr>
@@ -135,29 +148,19 @@ function genererProposerStage() {
                                     Mail :
                                 </td>
                                 <td>
-                                    <INPUT type=text name=\"mail\">
+                                    <input type=text name=\"mail\">
                                 </td>
                             </tr>
                             <tr>
                                 <td colspam=\"2\">
-                                    <br/>Informations stage :<br/><br/>
-                                 </td>
-                            </tr>
-                             <tr>
-                                <td>
-                                    Sujet :
-                                </td>
-                                <td>
-                                    <textarea rows=\"3\" name=\"sujet\">
-                                    Tapez ici votre sujet</textarea>
-                                </td>
+                                    <h3>Informations stage :</h3>                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     Date d&eacute;but (JJ/MM/AAAA) :
                                 </td>
                                 <td>
-                                    <INPUT type=text name=\"date_deb\">
+                                    <input type=text name=\"date_deb\">
                                 </td>
                             </tr>
                             <tr>
@@ -165,14 +168,29 @@ function genererProposerStage() {
                                     Date fin (JJ/MM/AAAA) :
                                 </td>
                                 <td>
-                                    <INPUT type=text name=\"date_fin\">
+                                    <input type=text name=\"date_fin\">
                                 </td>
                             </tr>
-                        </table>
-                    </form><br/>
-                </td>
-            </tr>
-        </table>";
+                            <tr>
+                                <td>
+                                    Sujet :
+                                </td>
+                                <td>
+                                    <textarea cols=\"60\" rows=\"9\" name=\"sujet\"> Tapez ici une synthèse de votre sujet</textarea>
+                                </td>
+                            </tr>
+                        </tabke>
+                        <table>
+                            <tr>
+                                <td class=\"submit\">
+                                    <input type=\"reset\" value=\"Annuler\">
+                                    <input type=\"submit\" value=\"Envoyer\">
+                                 </td>
+                            </tr>                         
+                        </table><br/>
+                    </td>
+                </tr>
+            </table>";
 
     return $corps;
 }

@@ -29,6 +29,7 @@ function AffichePage($menuGauche, $corps) {
 <html>
     <head>
         <link rel=\"stylesheet\" media=\"screen\" type=\"text/css\" title=\"Design\" href=\"Styles/index.css\"/>
+        <link rel=\"stylesheet\" media=\"screen\" type=\"text/css\" title=\"Design\" href=\"Styles/site.css\"/>
         <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">
         <title>Université Nancy 2 - Gestion des stages</title>
     </head>
