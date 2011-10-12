@@ -8,15 +8,10 @@
         
         if (isset($_SESSION['connecte'])) {
             
-            
-            echo " dans le isset";
-            
             if ($_SESSION['connecte'] == 1) {
-
-                echo "<br/> ".$_SESSION['connecte'];
+                
                 $utilisateurConnecte = TRUE ;
             }
-
         }
         
         if ($utilisateurConnecte == TRUE){
@@ -26,7 +21,7 @@
                                 <td id=\"menu_gauche\">
                                     Vous &ecirc;tes connect&eacute; en tant que " . $_SESSION['login'] . "
                                     <a href=\"".RACINE."?action=deconnexion\">(Se d&eacuteconnecter)</a>
-                                 </td>
+                                 
                              ";
         } else {
 
@@ -59,12 +54,12 @@
                                             </tr>
                                         </table>
                                     </form><br/><br/>
-                                    <a href=\"".RACINE."?action=proposerStage\">Proposer Stage</a>
-                                </td>
+                                    
                                 ";
         }
 
-        
+        $menuGauche .= "<a href=\"".RACINE."?action=proposerStage\">Proposer Stage</a>
+                                </td>";
         return $menuGauche;
     }
 
