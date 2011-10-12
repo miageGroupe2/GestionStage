@@ -48,6 +48,12 @@ class BD {
             session_destroy();
         }
     }
+    
+    public static function connecterUtilisateur($loggin, $password){
+        
+        
+        
+    }
 
 }
 
