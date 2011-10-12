@@ -1,10 +1,10 @@
 <?php
 
 //function AffichePage( $menuleft, $content,$menuright) {
-function AffichePage($menuGauche) {
+function AffichePage($menuGauche, $corps) {
 
 
-	session_start(); 
+    session_start();
 //	if (isset ($_SESSION['logge'])) {
 //		if ($_SESSION['logge']==1){	//l'utilisateur est loggé on affiche le menu d'admnistration
 //			$menuleft .= '<br /><br />Bonjour '.$_SESSION['user'].'! ';
@@ -20,12 +20,11 @@ function AffichePage($menuGauche) {
 //			$menuleft .= '<BR/><a href=CategorieControleur.php?action=supprimerCategorie>Supprimer une catégorie</a> ';	
 //		}
 //	}else{
-		
 //	}
-	
-	
 
-echo "
+
+
+    echo "
 <!DOCTYPE html>
 <html>
     <head>
@@ -46,6 +45,7 @@ echo "
                         </tr>    
                     </table>
                     $menuGauche
+                    $corps
                      <table>
                         <tr>
                             <td id=\"bas_page\">
@@ -58,7 +58,6 @@ echo "
         </table>
     </body>
 </html>";
-
 }
 
 ?>

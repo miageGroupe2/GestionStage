@@ -1,7 +1,15 @@
 <?php
 
     function genererMenuGauche(){
-        $menuGauche = "<table>
+        if($_SESSION['connecte'] == 1 ){
+            $menuGauche = "<table>
+                        <tr>
+                            <td id=\"menu_gauche\">
+                                Vous &ecirc;tes connect&eacute; en tant que". $_SESSION['login']."
+                             </td>
+                         ";
+        }else{
+            $menuGauche = "<table>
                         <tr>
                             <td id=\"menu_gauche\">
                                 Connexion :
@@ -31,8 +39,8 @@
                                     </table>
                                 </form><br/>
                             </td>
-                        </tr>
-                    </table>";
+                            ";
+        }
         return $menuGauche;
     }
 

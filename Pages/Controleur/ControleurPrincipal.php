@@ -1,6 +1,7 @@
 <?php
     require_once RACINE_VUE.'Afficheur.php';
     require_once RACINE_VUE.'VueMenuGauche.php';
+    require_once RACINE_VUE.'VueCorps.php';
 
     call_action();
     
@@ -8,7 +9,8 @@
     function afficherPagePrincipale($id){
         
         $menuGauche = genererMenuGauche();
-        AffichePage($menuGauche);
+        $corps = genererCorps();
+        AffichePage($menuGauche, $corps);
     }
     
     function afficherProposerStage($id){
