@@ -3,8 +3,6 @@
 //function AffichePage( $menuleft, $content,$menuright) {
 function AffichePage($menuGauche, $corps) {
 
-
-    session_start();
 //	if (isset ($_SESSION['logge'])) {
 //		if ($_SESSION['logge']==1){	//l'utilisateur est loggé on affiche le menu d'admnistration
 //			$menuleft .= '<br /><br />Bonjour '.$_SESSION['user'].'! ';

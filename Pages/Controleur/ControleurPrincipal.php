@@ -1,9 +1,12 @@
 <?php
+    
     require_once RACINE_VUE.'Afficheur.php';
     require_once RACINE_VUE.'VueMenuGauche.php';
     require_once RACINE_VUE.'VueCorps.php';
     require_once 'BD.php';
 
+    session_start();
+    
     call_action();
     
     
@@ -18,6 +21,17 @@
         $menuGauche = genererMenuGauche();
         $corps = genererProposerStage();
         AffichePage($menuGauche, $corps);
+    }
+    
+    function deconnecterUtilisateur(){
+        
+        if (isset ($_SESSION['connecte'])) {
+            
+            unset ($_SESSION['connecte']);
+            session_destroy();
+        }
+        
+        afficherPagePrincipale();
     }
     
     function connecterUtilisateur() {
@@ -62,6 +76,11 @@
                 
                 case 'connexion' :
                     $action = 'connecterUtilisateur' ;
+                    
+                    break;
+                
+                case 'deconnexion' :
+                    $action = 'deconnecterUtilisateur' ;
                     
                     break;
 
