@@ -42,6 +42,7 @@ function genererProposerStage() {
                                 </td>
                                 <td>
                                     <select name=\"fonction\">
+                                        <option VALUE=\"l3_miage\">Choisir</option>
                                         <option VALUE=\"l3_miage\">L3 MIAGE</option>
                                         <option VALUE=\"m2_acsi\">M2 MIAGE ACSI</option>
                                         <option VALUE=\"m2_sid\">M2 MIAGE SID</option>
@@ -176,7 +177,7 @@ function genererProposerStage() {
                                     Sujet :
                                 </td>
                                 <td>
-                                    <textarea cols=\"60\" rows=\"9\" name=\"sujet\"> Tapez ici une synthèse de votre sujet</textarea>
+                                    <textarea cols=\"60\" rows=\"9\" name=\"sujet\"> Tapez ici une synthèse de votre sujet (mettre javascript ou rien et ajouter \"synthese\" dans le libelle)</textarea>
                                 </td>
                             </tr>
                         </tabke>
