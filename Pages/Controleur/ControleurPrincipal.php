@@ -19,7 +19,7 @@
     
     function afficherProposerStage(){     
         $menuGauche = genererMenuGauche();
-        $corps = genererProposerStage();
+        $corps = genererProposerStage(false);
         AffichePage($menuGauche, $corps);
     }
     
@@ -56,6 +56,34 @@
         
         afficherPagePrincipale();
     }
+    
+    function validerProposerStage(){
+        
+        // on vérifie que les champs obligatoire sont remplis
+        if (isset ($_POST['nom']) && (!$_POST['nom'] == null)
+                && isset ($_POST['prenom']) && (!$_POST['prenom'] == null)
+                && ($_POST['fonction'] != "choisir")
+                && isset ($_POST['nom_entreprise']) && (!$_POST['nom_entreprise'] == null)
+                && isset ($_POST['num_rue']) && (!$_POST['num_rue'] == null)
+                && isset ($_POST['code_postal']) && (!$_POST['code_postal'] == null)
+                && isset ($_POST['ville']) && (!$_POST['ville'] == null)
+                && isset ($_POST['tel_accueil']) && (!$_POST['tel_accueil'] == null)
+                && isset ($_POST['sujet']) && (!$_POST['sujet'] == null)
+                
+                ){
+            
+            $corps = "ok";
+            BD::ajouterPropositionStage();
+        }else{
+            
+            
+            $corps = genererProposerStage(true);
+        }
+        //htmlspecialchars
+        
+        $menuGauche = genererMenuGauche();
+        AffichePage($menuGauche, $corps);
+    }
 
     function call_action() {
 
@@ -81,6 +109,11 @@
                 
                 case 'deconnexion' :
                     $action = 'deconnecterUtilisateur' ;
+                    
+                    break;
+                
+                case 'validerProposerStage':
+                    $action = 'validerProposerStage' ;
                     
                     break;
 

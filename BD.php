@@ -31,8 +31,8 @@ class BD {
     public static function authentification($login, $password) {
 
         BD::getConnection();
-        $login = mysql_real_escape_string($login);
-        $password = mysql_real_escape_string($password);
+        $login = mysql_real_escape_string(htmlspecialchars($login));
+        $password = mysql_real_escape_string(htmlspecialchars($password));
 
         if ($login != FALSE && $password != FALSE) {
 
@@ -54,6 +54,11 @@ class BD {
                 return FALSE;
             }
         }
+    }
+    
+    public static function ajouterPropositionStage($nom, $prenom, $promotion, $adresseEntreprise){
+        
+        
     }
 
 }
