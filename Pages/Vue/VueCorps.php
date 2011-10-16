@@ -10,9 +10,24 @@ function genererPageAccueil() {
 }
 
 /**
+ * Permet d'afficher la page indiquant à l'utilisateur que sa proposition de stage a été acceptée
+ * @return string le code html
+ */
+function genererStagePropose (){
+    
+    $corps = "<td id = \"corps\">
+                    Proposition de stage accept&eacute;e.
+                </td>
+            </tr>
+        </table>";
+    return $corps;
+    
+}
+
+/**
  *  Permet d'afficher le formulaire de proposition de stage
  * @param type $erreurRemplissage si true si un des champs obligatoires n'a pas été renseigné
- * @return string 
+ * @return string le code html
  */
 function genererProposerStage($erreurRemplissage) {
     

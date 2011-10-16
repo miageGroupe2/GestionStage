@@ -72,7 +72,7 @@
                 
                 ){
             
-            $corps = "ok";
+            $corps = genererStagePropose() ;
             BD::ajouterPropositionStage();
         }else{
             

@@ -36,7 +36,7 @@ class BD {
 
         if ($login != FALSE && $password != FALSE) {
 
-            $requete = "SELECT login FROM Utilisateur WHERE login = '$login' AND password = '$password' ";
+            $requete = "SELECT login FROM UTILISATEUR WHERE login = '$login' AND password = '$password' ";
 
             try {
                 $retour = mysql_query($requete);
@@ -54,6 +54,40 @@ class BD {
                 return FALSE;
             }
         }
+    }
+    
+    /**
+     * Permet de rechercher toutes les entreprises ayant le pattern $nom dans 
+     * leur nom
+     * @param type $nom 
+     */
+    public static function rechercherEntreprise($nom){
+        
+        BD::getConnection();
+        $nom = mysql_real_escape_string(htmlspecialchars($nom));
+
+        if ($nom != FALSE) {
+
+            $requete = "SELECT *, nomentreprise LIKE '%$nom%' FROM `entreprise` ";
+            
+        }
+    }
+    
+    /**
+     * Permet d'obtenir tous les contacts d'une entreprise
+     * @param type $idEntreprise 
+     */
+    public static function rechercherContactParEntreprise ($idEntreprise){
+        
+        BD::getConnection();
+        $idEntreprise = mysql_real_escape_string(htmlspecialchars($idEntreprise));
+
+        if ($idEntreprise != FALSE) {
+
+            $requete = "SELECT idcontact, prenomcontact, nomcontact, fonctioncontact, nomentreprise, telephonefixecontact, telmobilecontact, mailcontact FROM contact WHERE identreprise = $id ";
+            
+        }
+        
     }
     
     public static function ajouterPropositionStage($nom, $prenom, $promotion, $adresseEntreprise){
