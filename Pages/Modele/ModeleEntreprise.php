@@ -1,6 +1,6 @@
 <?php
 
-    class Entreprise {
+    class ModeleEntreprise {
         
         private $id ;
         private $nom ;

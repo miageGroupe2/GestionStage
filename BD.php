@@ -65,12 +65,44 @@ class BD {
         
         BD::getConnection();
         $nom = mysql_real_escape_string(htmlspecialchars($nom));
-
+        $tabEntreprise = null ;
+        
         if ($nom != FALSE) {
 
             $requete = "SELECT *, nomentreprise LIKE '%$nom%' FROM `entreprise` ";
+            $retour = mysql_query($requete);
             
+            while ( $tableau = mysql_fetch_array($retour)){
+                
+                $tabEntreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet']);
+                $i ++ ;
+            }
         }
+        return $tabEntreprise;
+    }
+    
+    public static function ajouterEntreprise($nom, $adresse, $ville, $pays, $numeroTel, $numeroSiret, $urlSiteInternet){
+        
+        BD::getConnection();
+        $nom = mysql_real_escape_string(htmlspecialchars($nom));
+        $adresse = mysql_real_escape_string(htmlspecialchars($adresse));
+        $ville = mysql_real_escape_string(htmlspecialchars($ville));
+        $pays = mysql_real_escape_string(htmlspecialchars($pays));
+        $numeroTel = mysql_real_escape_string(htmlspecialchars($numeroTel));
+        $numeroSiret = mysql_real_escape_string(htmlspecialchars($numeroSiret));
+        $urlSiteInternet = mysql_real_escape_string(htmlspecialchars($urlSiteInternet));
+        
+        if ($nom != FALSE && $adresse != FALSE
+            && $ville != FALSE && $pays != FALSE    
+            && $numeroTel != FALSE && $numeroSiret != FALSE    
+            && $urlSiteInternet != FALSE ) {
+            
+            $requete = "INSERT INTO entreprise (nomentreprise, adresseentreprise, villeentreprise, paysentreprise, numerotelephone, numerosiret, urlsiteinternet) 
+            VALUES ('$nom', '$adresse', '$ville', '$pays', '$numeroTel', '$numeroSiret, '$urlSiteInternet')";
+            
+            mysql_query($requete);
+        }
+        
     }
     
     /**
@@ -90,11 +122,26 @@ class BD {
         
     }
     
-    public static function ajouterPropositionStage($nom, $prenom, $promotion, $adresseEntreprise){
+    public static function ajouterPropositionStage($nom, $prenom, $promotion, $sujet){
         
         
     }
 
+    /**
+     * Permet de valider un stage, c'est à dire de passer son état à "validé"
+     * @param type $idStage 
+     */
+    public static function validerStage($idStage){
+        
+        BD::getConnection();
+        $idStage = mysql_real_escape_string(htmlspecialchars($idStage));
+
+        if ($idStage != FALSE) {
+
+            $requete = "UPDATE stage SET etatstage = 'valide' WHERE idstage = '$idStage'";
+            mysql_query($requete);
+        }
+    }
 }
 
 ?>
