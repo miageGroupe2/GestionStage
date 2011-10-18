@@ -48,7 +48,7 @@ function genererProposerStage($erreurRemplissage) {
                             </tr>
                             <tr>
                                 <td>
-                                    Nom &eacute;tudiant : (*)
+                                    Nom &eacute;tudiant <etoile>*</etoile> : 
                                 </td>
                                 <td>
                                     <input type=text name=\"nom\">
@@ -56,7 +56,7 @@ function genererProposerStage($erreurRemplissage) {
                             </tr>
                             <tr>
                                 <td>
-                                    Pr&eacute;nom &eacute;tudiant : (*)
+                                    Pr&eacute;nom &eacute;tudiant <etoile>*</etoile> :
                                 </td>
                                 <td>
                                     <input type=text name=\"prenom\">
@@ -64,7 +64,7 @@ function genererProposerStage($erreurRemplissage) {
                             </tr>
                             <tr>
                                 <td>
-                                    Formation : (*)
+                                    Formation <etoile>*</etoile> : 
                                 </td>
                                 <td>
                                     <select name=\"fonction\">
@@ -77,12 +77,12 @@ function genererProposerStage($erreurRemplissage) {
                             </tr>
                             <tr>
                                 <td colspam=\"2\">
-                                    <h3>Coordonn&eacute;es de l'entreprise :</h3>
+                                    <h3>Coordonn&eacute;es de l'entreprise : </h3>
                                  </td>
                             </tr>
                             <tr>
                                 <td>
-                                    Nom de l'entreprise : (*)
+                                    Nom de l'entreprise <etoile>*</etoile> : 
                                 </td>
                                 <td>
                                     <input type=text name=\"nom_entreprise\">
@@ -95,7 +95,7 @@ function genererProposerStage($erreurRemplissage) {
                             </tr>
                             <tr>
                                 <td>
-                                    N°, Rue : (*)
+                                    N°, Rue <etoile>*</etoile> : 
                                 </td>
                                 <td>
                                     <input type=text name=\"num_rue\">
@@ -103,7 +103,7 @@ function genererProposerStage($erreurRemplissage) {
                             </tr>
                             <tr>
                                 <td>
-                                    Code postal : (*)
+                                    Code postal <etoile>*</etoile> :
                                 </td>
                                 <td>
                                     <input type=text name=\"code_postal\">
@@ -111,7 +111,7 @@ function genererProposerStage($erreurRemplissage) {
                             </tr>
                             <tr>
                                 <td>
-                                    Ville : (*)
+                                    Ville <etoile>*</etoile> : 
                                 </td>
                                 <td>
                                      <input type=text name=\"ville\">
@@ -119,7 +119,7 @@ function genererProposerStage($erreurRemplissage) {
                             </tr>
                             <tr>
                                 <td>
-                                    Pays : (*)
+                                    Pays <etoile>*</etoile> : 
                                 </td>
                                 <td>
                                      <input type=text name=\"pays\">
@@ -127,7 +127,7 @@ function genererProposerStage($erreurRemplissage) {
                             </tr>
                             <tr>
                                 <td>
-                                    T&eacute;l&eacute;phone accueil : (*)
+                                    T&eacute;l&eacute;phone accueil <etoile>*</etoile> : 
                                 </td>
                                 <td>
                                      <input type=text name=\"tel_accueil\">
@@ -200,7 +200,7 @@ function genererProposerStage($erreurRemplissage) {
                             </tr>
                             <tr>
                                 <td>
-                                    Sujet : (*)
+                                    Sujet <etoile>*</etoile> : 
                                 </td>
                                 <td>
                                     <textarea cols=\"60\" rows=\"9\" name=\"sujet\"> Tapez ici une synthèse de votre sujet (mettre javascript ou rien et ajouter \"synthese\" dans le libelle)</textarea>

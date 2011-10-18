@@ -59,8 +59,9 @@
         }
 
         $menuGauche .= "<a href=\"".RACINE."?action=proposerStage\">Proposer Stage</a><br/>
+                        <a href=\"".RACINE."?action=completerStage\">Compl&eacute;ter don&eacute;es stage</a><br/>
                         <a href=\"".RACINE."?action=propositionStage\">Voir les propositions de stage</a><br/>
-                        <a href=\"".RACINE."?action=stageAnneeCourante\">Voir les stages de l'ann&eacutee courante</a><br/>
+                        <a href=\"".RACINE."?action=stageAnneeCourante\">Voir les stages de l'ann&eacute;e courante</a><br/>
                         <a href=\"".RACINE."?action=tousLesStages\">Voir tous les stages</a><br/>
                                 </td>";
         return $menuGauche;

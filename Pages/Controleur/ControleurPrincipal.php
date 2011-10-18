@@ -102,6 +102,10 @@
                     $action = 'afficherProposerStage' ;
                     break;
                 
+                case 'completerStage' :
+                    $action = 'afficherCompleterStage' ;
+                    break;
+                
                 case 'connexion' :
                     $action = 'connecterUtilisateur' ;
                     
