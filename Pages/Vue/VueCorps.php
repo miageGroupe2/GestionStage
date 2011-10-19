@@ -183,7 +183,7 @@ $corps = "
                             </tr>
                             <tr>
                                 <td>
-                                    Nom &eacute;tudiant <etoile>*</etoile> : 
+                                    Nom <etoile>*</etoile> : 
                                 </td>
                                 <td>
                                     <input type=text name=\"nom\">
@@ -191,7 +191,7 @@ $corps = "
                             </tr>
                             <tr>
                                 <td>
-                                    Pr&eacute;nom &eacute;tudiant <etoile>*</etoile> :
+                                    Pr&eacute;nom <etoile>*</etoile> :
                                 </td>
                                 <td>
                                     <input type=text name=\"prenom\">
@@ -275,7 +275,7 @@ $corps = "
                             </tr>
                             <tr>
                                 <td>
-                                    Nom tuteur :
+                                    Nom :
                                 </td>
                                 <td>
                                     <input type=text name=\"nom_tuteur\">
@@ -283,10 +283,19 @@ $corps = "
                             </tr>
                             <tr>
                                 <td>
-                                    Pr&eacute;nom tuteur :
+                                    Pr&eacute;nom :
                                 </td>
                                 <td>
                                     <input type=text name=\"prenom_tuteur\">
+                                </td>
+                            </tr>
+                            <tr>
+                            <tr>
+                                <td>
+                                    Fonction :
+                                </td>
+                                <td>
+                                    <input type=text name=\"fonction_tuteur\">
                                 </td>
                             </tr>
                             <tr>
