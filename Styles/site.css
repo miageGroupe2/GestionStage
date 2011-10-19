@@ -19,3 +19,8 @@ root {
     text-align: center;
     width: 840px;
 }
+
+.tableau{
+    
+    border: 1px solid black;
+}
