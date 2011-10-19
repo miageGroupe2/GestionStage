@@ -1,7 +1,7 @@
 <?php
 
 require_once RACINE_MODELE . 'ModeleEntreprise.php';
-
+require_once RACINE_MODELE . 'ModeleStage.php';
 class BD {
 
     private static $connection;
@@ -165,14 +165,13 @@ class BD {
      */
     public static function recherherToutesPropositions() {
         BD::getConnection();
+        $i=0;
         $tabStage = null;
-        $requete = "SELECT stage.nometudiant, stage.prenometudiant, entreprise.nomentreprise FROM stage, entreprise  WHERE stage.identreprise = entreprise.identreprise";
+        $requete = "SELECT stage.idstage, entreprise.nomentreprise, stage.identreprise, stage.nometudiant, stage.prenometudiant, entreprise.nomentreprise FROM stage, entreprise  WHERE stage.identreprise = entreprise.identreprise";
         $retour = mysql_query($requete) or die(mysql_error());
-        echo $requete;
-        print_r($retour);
-        
+
         while ($tableau = mysql_fetch_array($retour)) {
-            $tabStage[$i] = new ModeleStage($tableau['idstage'], $tableau['identreprise'], $tableau['idcontact'], $tableau['nometudiant'], $tableau['prenometudiant'], $tableau['promotion'], $tableau['dateproposition'], $tableau['sujetstage'], $tableau['datevalidation'], $tableau['datedebut'], $tableau['datefin'], $tableau['datesoutenance'],$tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], $tableau['dateembauche']);
+            $tabStage[$i] = new ModeleStage($tableau['idstage'], $tableau['identreprise'],  $tableau['nomentreprise'], null, $tableau['nometudiant'], $tableau['prenometudiant'], null, null, null, null, null, null, null, null, null, null, null, null, null, null);
             $i++;
         }
         return $tabStage;
