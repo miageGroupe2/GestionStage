@@ -124,7 +124,7 @@
         if (isset ($_POST['idEntreprise']) && ($_POST['idEntreprise'] != null)){
             
 
-            $tabContact = BD::rechercherContactParEntreprise($_GET['idEntreprise']);
+            $tabContact = BD::rechercherContactParEntreprise($_POST['idEntreprise']);
             $corps = genererListeResultatRechercheContact($tabContact);
             $menuGauche = genererMenuGauche() ;
             AffichePage($menuGauche, $corps);
