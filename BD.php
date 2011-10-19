@@ -2,6 +2,8 @@
 
 require_once RACINE_MODELE . 'ModeleEntreprise.php';
 require_once RACINE_MODELE . 'ModeleStage.php';
+require_once RACINE_MODELE . 'ModeleContact.php';
+
 class BD {
 
     private static $connection;
@@ -116,7 +118,7 @@ class BD {
         BD::getConnection();
         $idEntreprise = mysql_real_escape_string(htmlspecialchars($idEntreprise));
         $tabContact = null;
-
+        $i = 0 ;
         if ($idEntreprise != FALSE) {
 
             $requete = "SELECT idcontact, prenomcontact, nomcontact, fonctioncontact, 

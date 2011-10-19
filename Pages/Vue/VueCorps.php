@@ -59,34 +59,38 @@ function genererListeResultatRechercheContact($tabContact){
     
     $corps = "<td id = \"corps\">
                   <table class=\"tableau\"><tr>
+                  <td class=\"tableau\"> Choix </td>
                   <td class=\"tableau\"> Pr&eacute;nom </td>
                   <td class=\"tableau\"> Nom </td>
                   <td class=\"tableau\"> Fonction </td>
-                  <td class=\"tableau\"> Pays </td>
                   <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
                   <td class=\"tableau\"> T&eacute;l&eacute;phone Portable </td>
                   <td class=\"tableau\"> Mail </td>
                   </tr>";
     
-    foreach ($tabContact as $contactCourant){
+    if ($tabContact != null){
         
-        $corps .= "<tr><td class=\"tableau\"> ";
-        
-        $corps .= "<a href=\"".RACINE."?action=choisirContact&idContact=".$contactCourant->getIdConctact()."\" title=\"Cliquer ici pour choisir cet contact.\">".$entrepriseCourante->getNom()."</a>";
-        $corps .= "</td><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getAdresse();
-        $corps .= "</td><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getVille();
-        $corps .= "</td><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getPays();
-        $corps .= "</td><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getNumeroTelephone();
-        $corps .= "</td><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getNumeroSiret();
-        $corps .= "</td><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getUrlSiteInternet();
-        
-        $corps .= "</tr>";  
+        foreach ($tabContact as $contactCourant){
+
+            $corps .= "<tr><td class=\"tableau\"> ";
+
+            $corps .= "<input type=\"radio\" name=\"idEntreprise\" value=\"".$contactCourant->getIdContact()."\" id=\"".$contactCourant->getIdContact()."\" />";
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $contactCourant->getPrenomContact();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $contactCourant->getNomContact();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $contactCourant->getFonctionContact();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $contactCourant->getTelephoneFixeContact();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $contactCourant->getTelephoneMobileContact();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $contactCourant->getMailContact();
+            
+
+            $corps .= "</td></tr>";  
+        }
     }
                    
     $corps .= "
@@ -118,30 +122,32 @@ function genererListeResultatRechercheEntreprise($tabEntreprise){
                   <td class=\"tableau\"> Site web </td>
                   </tr>";
     
-    
-    foreach ($tabEntreprise as $entrepriseCourante){
+    if ($tabEntreprise != null){
         
-        $corps .= "<tr><td class=\"tableau\"> ";
-        $corps .= "<input type=\"radio\" name=\"idEntreprise\" value=\"".$entrepriseCourante->getId()."\" id=\"".$entrepriseCourante->getId()."\" />";
-        $corps .= "</td><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getNom();
-        $corps .= "</td><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getAdresse();
-        $corps .= "</td><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getVille();
-        $corps .= "</td><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getPays();
-        $corps .= "</td><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getNumeroTelephone();
-        $corps .= "</td><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getNumeroSiret();
-        $corps .= "</td><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getUrlSiteInternet();
+        foreach ($tabEntreprise as $entrepriseCourante){
 
-        $corps .= "</tr>";
-   
+            $corps .= "<tr><td class=\"tableau\"> ";
+            $corps .= "<input type=\"radio\" name=\"idEntreprise\" value=\"".$entrepriseCourante->getId()."\" id=\"".$entrepriseCourante->getId()."\" />";
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $entrepriseCourante->getNom();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $entrepriseCourante->getAdresse();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $entrepriseCourante->getVille();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $entrepriseCourante->getPays();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $entrepriseCourante->getNumeroTelephone();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $entrepriseCourante->getNumeroSiret();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $entrepriseCourante->getUrlSiteInternet();
+
+            $corps .= "</tr>";
+
+        }
+           
     }
-                   
     $corps .= "</table>";
     $corps .= "<input id=\"log-submit\" type=\"submit\" value=\"Choisir cette entreprise\"/>";
     $corps .= "</form>";
