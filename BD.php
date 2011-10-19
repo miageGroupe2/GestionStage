@@ -167,14 +167,17 @@ class BD {
      */
     public static function recherherToutesPropositions() {
         BD::getConnection();
-        $requete = "SELECT s.nometudiant, s.prenometudiant, e.nomentreprise 
-             FROM stage s, entreprise e 
-             WHERE s.identreprise = e.identreprise";
-        $retour = mysql_query($requete);
-
+        $tabStage = null;
+        $requete = "SELECT stage.nometudiant, stage.prenometudiant, entreprise.nomentreprise FROM stage, entreprise  WHERE stage.identreprise = entreprise.identreprise";
+        $retour = mysql_query($requete) or die(mysql_error());
+        echo $requete;
+        print_r($retour);
+        
         while ($tableau = mysql_fetch_array($retour)) {
-            
+            $tabStage[$i] = new ModeleStage($tableau['idstage'], $tableau['identreprise'], $tableau['idcontact'], $tableau['nometudiant'], $tableau['prenometudiant'], $tableau['promotion'], $tableau['dateproposition'], $tableau['sujetstage'], $tableau['datevalidation'], $tableau['datedebut'], $tableau['datefin'], $tableau['datesoutenance'],$tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], $tableau['dateembauche']);
+            $i++;
         }
+        return $tabStage;
     }
 
     /**
