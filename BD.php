@@ -119,9 +119,11 @@ class BD {
 
         if ($idEntreprise != FALSE) {
 
-            $requete = "SELECT idcontact, prenomcontact, nomcontact, fonctioncontact, nomentreprise, telephonefixecontact, telmobilecontact, mailcontact FROM contact WHERE identreprise = $id ";
+            $requete = "SELECT idcontact, prenomcontact, nomcontact, fonctioncontact, 
+            telephonefixecontact, telmobilecontact, mailcontact FROM contact WHERE identreprise = $idEntreprise ";
+            
             $retour = mysql_query($requete);
-
+            
             while ($tableau = mysql_fetch_array($retour)) {
 
                 $tabContact[$i] = new ModeleContact($tableau['idcontact'], $tableau['prenomcontact'], $tableau['nomcontact'], $tableau['fonctioncontact'], $tableau['telephonefixecontact'], $tableau['telmobilecontact'], $tableau['mailcontact']);
