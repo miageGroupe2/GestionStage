@@ -106,23 +106,57 @@ class BD {
     }
     
     /**
-     * Permet d'obtenir tous les contacts d'une entreprise
+     * Permet d'obtenir tous les contacts d'une entreprise 
      * @param type $idEntreprise 
      */
     public static function rechercherContactParEntreprise ($idEntreprise){
         
         BD::getConnection();
         $idEntreprise = mysql_real_escape_string(htmlspecialchars($idEntreprise));
-
+        $tabContact = null ;
+        
         if ($idEntreprise != FALSE) {
 
             $requete = "SELECT idcontact, prenomcontact, nomcontact, fonctioncontact, nomentreprise, telephonefixecontact, telmobilecontact, mailcontact FROM contact WHERE identreprise = $id ";
+            $retour = mysql_query($requete);
             
+            while ( $tableau = mysql_fetch_array($retour)){
+                
+                $tabContact[$i] = new ModeleContact($tableau['idcontact'], $tableau['prenomcontact'], $tableau['nomcontact'], $tableau['fonctioncontact'], $tableau['telephonefixecontact'], $tableau['telmobilecontact'], $tableau['mailcontact']);
+                $i ++ ;
+            }
         }
         
+        return $tabContact ;        
+    }
+    
+    public static function ajouterContact ($identreprise, $nom, $prenom, $fonction, $telephoneFixe, $telephoneMobile, $mail){
+        
+        $idEntreprise = mysql_real_escape_string(htmlspecialchars($idEntreprise));
+        $nom = mysql_real_escape_string(htmlspecialchars($nom));
+        $prenom = mysql_real_escape_string(htmlspecialchars($prenom));
+        $fonction = mysql_real_escape_string(htmlspecialchars($fonction));
+        $telephoneFixe = mysql_real_escape_string(htmlspecialchars($telephoneFixe));
+        $telephoneMobile = mysql_real_escape_string(htmlspecialchars($telephoneMobile));
+        $mail = mysql_real_escape_string(htmlspecialchars($mail));
+        
+        if ($idEntreprise != FALSE && $nom != FALSE
+            && $prenom != FALSE && $fonction != FALSE
+            && $telephoneFixe!= FALSE && $telephoneMobile != FALSE
+            && $mail != FALSE ){
+            
+            
+            $requete = "INSERT INTO contact (identreprise, prenomcontact, nomcontact, fonctioncontact,
+            dateajout, datederniereactivite, telephonefixecontact, telmobilecontact, mailcontact) 
+            VALUES ('$idEntreprise', '$prenom', '$nom', '$fonction', 'CURDATE()', 'CURDATE()', '$telephoneFixe', '$telephoneMobile', '$mail')";
+            
+            mysql_query($requete);
+        }
     }
     
     public static function ajouterPropositionStage($nom, $prenom, $promotion, $sujet){
+        
+        
         
         
     }
