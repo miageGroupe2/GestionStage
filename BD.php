@@ -38,7 +38,7 @@ class BD {
 
         if ($login != FALSE && $password != FALSE) {
 
-            $requete = "SELECT login FROM UTILISATEUR WHERE login = '$login' AND password = '$password' ";
+            $requete = "SELECT login FROM utilisateur WHERE login = '$login' AND password = '$password' ";
 
             try {
                 $retour = mysql_query($requete);
