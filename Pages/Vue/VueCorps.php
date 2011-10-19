@@ -28,7 +28,7 @@ function genererStagePropose() {
  */
 function genererRechercheEntreprise() {
     $corps = "<td id = \"corps\">
-        <form action=\"" . RACINE . "?action=lancerRechercheEntreprise\" method=\"post\">
+        <form action=\"" . RACINE . "?action=effectuerRechercheEntreprise\" method=\"post\">
                   <table>
                    <tr>
                        <td colspam=\"2\">
@@ -40,7 +40,7 @@ function genererRechercheEntreprise() {
                             Nom entreprise <etoile>*</etoile> : 
                        </td>
                        <td>
-                           <input type=text name=\"nom_entreprise\"> <input type=\"submit\" value=\"Envoyer\">
+                           <input type=text name=\"nomEntreprise\"> <input type=\"submit\" value=\"Envoyer\">
                        </td>
                     </tr>
                     </table>
@@ -49,6 +49,56 @@ function genererRechercheEntreprise() {
             </tr>
         </table>";
     return $corps;
+}
+
+/**
+ * Permet de générer l'affichage des entreprises correspondantes à une recherche 
+ * @param type $tabEntreprise 
+ */
+function genererListeResultatRechercheEntreprise($tabEntreprise){
+    
+    $corps = "<td id = \"corps\">
+                  <table class=\"tableau\">";
+    
+    
+    foreach ($tabEntreprise as $entrepriseCourante){
+        
+        $corps .= "<tr><td class=\"tableau\">";
+        $corps .= $entrepriseCourante->getNom();
+        $corps .= "</td><td>";
+        $corps .= $entrepriseCourante->getAdresse();
+        $corps .= "</td><td>";
+        $corps .= $entrepriseCourante->getVille();
+        $corps .= "</td><td>";
+        $corps .= $entrepriseCourante->getPays();
+        $corps .= "</td><td>";
+        $corps .= $entrepriseCourante->getNumeroTelephone();
+        $corps .= "</td><td>";
+        $corps .= $entrepriseCourante->getNumeroSiret();
+        $corps .= "</td><td>";
+        $corps .= $entrepriseCourante->getUrlSiteInternet();
+        
+        
+        
+        
+        $corps .= "</tr>";
+        
+        
+        
+        
+        
+        
+                
+    }
+                   
+    $corsp = $corps ."
+                    </table>
+                 
+                </td>
+            </tr>
+        </table>";
+    
+    return $corps ;
 }
 
 /**

@@ -1,5 +1,7 @@
 <?php
 
+require_once RACINE_MODELE . 'ModeleEntreprise.php';
+
 class BD {
 
     private static $connection;
@@ -15,12 +17,12 @@ class BD {
         }
     }
 
-//
-//    public static function seDeconnecter() {
-//        if (isset($_SESSION['logge'])) {
-//            session_destroy();
-//        }
-//    }
+    //
+    //    public static function seDeconnecter() {
+    //        if (isset($_SESSION['logge'])) {
+    //            session_destroy();
+    //        }
+    //    }
 
     /**
      * Permet de vérifier que l'utilisateur existe dans la base
@@ -55,34 +57,35 @@ class BD {
             }
         }
     }
-    
+
     /**
      * Permet de rechercher toutes les entreprises ayant le pattern $nom dans 
      * leur nom
      * @param type $nom 
      */
-    public static function rechercherEntreprise($nom){
-        
+    public static function rechercherEntreprise($nom) {
+
         BD::getConnection();
         $nom = mysql_real_escape_string(htmlspecialchars($nom));
-        $tabEntreprise = null ;
-        
+        $tabEntreprise = null;
+
         if ($nom != FALSE) {
 
-            $requete = "SELECT *, nomentreprise LIKE '%$nom%' FROM `entreprise` ";
+            $requete = "SELECT * FROM `entreprise` WHERE nomentreprise LIKE '%$nom%'";
             $retour = mysql_query($requete);
-            
-            while ( $tableau = mysql_fetch_array($retour)){
-                
+
+            $i = 0;
+            while ($tableau = mysql_fetch_array($retour)) {
+
                 $tabEntreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet']);
-                $i ++ ;
+                $i++;
             }
         }
         return $tabEntreprise;
     }
-    
-    public static function ajouterEntreprise($nom, $adresse, $ville, $pays, $numeroTel, $numeroSiret, $urlSiteInternet){
-        
+
+    public static function ajouterEntreprise($nom, $adresse, $ville, $pays, $numeroTel, $numeroSiret, $urlSiteInternet) {
+
         BD::getConnection();
         $nom = mysql_real_escape_string(htmlspecialchars($nom));
         $adresse = mysql_real_escape_string(htmlspecialchars($adresse));
@@ -91,47 +94,46 @@ class BD {
         $numeroTel = mysql_real_escape_string(htmlspecialchars($numeroTel));
         $numeroSiret = mysql_real_escape_string(htmlspecialchars($numeroSiret));
         $urlSiteInternet = mysql_real_escape_string(htmlspecialchars($urlSiteInternet));
-        
+
         if ($nom != FALSE && $adresse != FALSE
-            && $ville != FALSE && $pays != FALSE    
-            && $numeroTel != FALSE && $numeroSiret != FALSE    
-            && $urlSiteInternet != FALSE ) {
-            
+                && $ville != FALSE && $pays != FALSE
+                && $numeroTel != FALSE && $numeroSiret != FALSE
+                && $urlSiteInternet != FALSE) {
+
             $requete = "INSERT INTO entreprise (nomentreprise, adresseentreprise, villeentreprise, paysentreprise, numerotelephone, numerosiret, urlsiteinternet) 
-            VALUES ('$nom', '$adresse', '$ville', '$pays', '$numeroTel', '$numeroSiret, '$urlSiteInternet')";
-            
+                VALUES ('$nom', '$adresse', '$ville', '$pays', '$numeroTel', '$numeroSiret, '$urlSiteInternet')";
+
             mysql_query($requete);
         }
-        
     }
-    
+
     /**
      * Permet d'obtenir tous les contacts d'une entreprise 
      * @param type $idEntreprise 
      */
-    public static function rechercherContactParEntreprise ($idEntreprise){
-        
+    public static function rechercherContactParEntreprise($idEntreprise) {
+
         BD::getConnection();
         $idEntreprise = mysql_real_escape_string(htmlspecialchars($idEntreprise));
-        $tabContact = null ;
-        
+        $tabContact = null;
+
         if ($idEntreprise != FALSE) {
 
             $requete = "SELECT idcontact, prenomcontact, nomcontact, fonctioncontact, nomentreprise, telephonefixecontact, telmobilecontact, mailcontact FROM contact WHERE identreprise = $id ";
             $retour = mysql_query($requete);
-            
-            while ( $tableau = mysql_fetch_array($retour)){
-                
+
+            while ($tableau = mysql_fetch_array($retour)) {
+
                 $tabContact[$i] = new ModeleContact($tableau['idcontact'], $tableau['prenomcontact'], $tableau['nomcontact'], $tableau['fonctioncontact'], $tableau['telephonefixecontact'], $tableau['telmobilecontact'], $tableau['mailcontact']);
-                $i ++ ;
+                $i++;
             }
         }
-        
-        return $tabContact ;        
+
+        return $tabContact;
     }
-    
-    public static function ajouterContact ($identreprise, $nom, $prenom, $fonction, $telephoneFixe, $telephoneMobile, $mail){
-        
+
+    public static function ajouterContact($identreprise, $nom, $prenom, $fonction, $telephoneFixe, $telephoneMobile, $mail) {
+
         $idEntreprise = mysql_real_escape_string(htmlspecialchars($idEntreprise));
         $nom = mysql_real_escape_string(htmlspecialchars($nom));
         $prenom = mysql_real_escape_string(htmlspecialchars($prenom));
@@ -139,50 +141,46 @@ class BD {
         $telephoneFixe = mysql_real_escape_string(htmlspecialchars($telephoneFixe));
         $telephoneMobile = mysql_real_escape_string(htmlspecialchars($telephoneMobile));
         $mail = mysql_real_escape_string(htmlspecialchars($mail));
-        
+
         if ($idEntreprise != FALSE && $nom != FALSE
-            && $prenom != FALSE && $fonction != FALSE
-            && $telephoneFixe!= FALSE && $telephoneMobile != FALSE
-            && $mail != FALSE ){
-            
-            
+                && $prenom != FALSE && $fonction != FALSE
+                && $telephoneFixe != FALSE && $telephoneMobile != FALSE
+                && $mail != FALSE) {
+
+
             $requete = "INSERT INTO contact (identreprise, prenomcontact, nomcontact, fonctioncontact,
-            dateajout, datederniereactivite, telephonefixecontact, telmobilecontact, mailcontact) 
-            VALUES ('$idEntreprise', '$prenom', '$nom', '$fonction', 'CURDATE()', 'CURDATE()', '$telephoneFixe', '$telephoneMobile', '$mail')";
-            
+                dateajout, datederniereactivite, telephonefixecontact, telmobilecontact, mailcontact) 
+                VALUES ('$idEntreprise', '$prenom', '$nom', '$fonction', 'CURDATE()', 'CURDATE()', '$telephoneFixe', '$telephoneMobile', '$mail')";
+
             mysql_query($requete);
         }
     }
-    
-    public static function ajouterPropositionStage($nom, $prenom, $promotion, $sujet){
-        
-       
+
+    public static function ajouterPropositionStage($nom, $prenom, $promotion, $sujet) {
         
     }
-    
+
     /**
      * Permet d'afficher toutes les propositions de stage
      */
-    
-    public static function recherherToutesPropositions(){
+    public static function recherherToutesPropositions() {
         BD::getConnection();
-         $requete = "SELECT s.nometudiant, s.prenometudiant, e.nomentreprise 
+        $requete = "SELECT s.nometudiant, s.prenometudiant, e.nomentreprise 
              FROM stage s, entreprise e 
              WHERE s.identreprise = e.identreprise";
-         $retour = mysql_query($requete);
-         
-         while($tableau = mysql_fetch_array($retour)){
-             
-         }
+        $retour = mysql_query($requete);
+
+        while ($tableau = mysql_fetch_array($retour)) {
+            
+        }
     }
-    
-    
+
     /**
      * Permet de valider un stage, c'est à dire de passer son état à "validé"
      * @param type $idStage 
      */
-    public static function validerStage($idStage){
-        
+    public static function validerStage($idStage) {
+
         BD::getConnection();
         $idStage = mysql_real_escape_string(htmlspecialchars($idStage));
 
@@ -192,6 +190,7 @@ class BD {
             mysql_query($requete);
         }
     }
+
 }
 
 ?>

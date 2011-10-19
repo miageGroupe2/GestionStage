@@ -97,6 +97,26 @@
         AffichePage($menuGauche, $corps);
     }
 
+    function effectuerRechercheEntreprise(){
+        
+        if (isset ($_POST['nomEntreprise']) && ($_POST['nomEntreprise'] != null)){
+            
+            
+            $tabEntreprise = BD::rechercherEntreprise($_POST['nomEntreprise']);
+            
+            $corps = genererListeResultatRechercheEntreprise($tabEntreprise);
+            $menuGauche = genererMenuGauche() ;
+            AffichePage($menuGauche, $corps);
+            
+        }else{
+            
+            afficherRechercherEntreprise();
+        }
+                
+                
+        
+    }
+    
     function call_action() {
 
         $action = 'pagePrincipale';
@@ -114,8 +134,15 @@
                     $action = 'afficherProposerStage' ;
                     break;
                 
+
                 case 'listePropositionStage' :
                     $action = 'listePropositionStage';
+                    
+                break;
+                case 'validerProposerStage':
+                    $action = 'validerProposerStage' ;
+                    
+
                     break;
                 
                 case 'completerStage' :
@@ -132,13 +159,15 @@
                     
                     break;
                 
-                case 'validerProposerStage':
-                    $action = 'validerProposerStage' ;
-                    
-                    break;
+                
 
                 case 'rechercherEntreprise':
                     $action = 'afficherRechercherEntreprise' ;
+                    
+                    break;
+                
+                case 'effectuerRechercheEntreprise':
+                    $action = 'effectuerRechercheEntreprise' ;
                     
                     break;
                 
