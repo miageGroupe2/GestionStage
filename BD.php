@@ -181,6 +181,24 @@ class BD {
         return $tabStage;
     }
 
+        /**
+     * Permet d'afficher toutes les propositions de stage
+     */
+    public static function rechercherProposition($id) {
+        BD::getConnection();
+        $i=0;
+        $tabStage = null;
+        $requete = "SELECT stage.idstage, stage.identreprise, entreprise.nomentreprise, stage.idcontact, stage.nometudiant, stage.prenometudiant, stage.promotion, stage.datedeproposition, stage.sujetstage, stage.datevalidation, stage.datedebut, stage.datefin, stage.datesoutenance, stage.lieusoutenance, stage.etatstage, stage.noteobtenue, stage.appreciationobtenue, stage.remuneration, stage.embauche, stage.dateembauche FROM stage, entreprise  WHERE stage.identreprise = entreprise.identreprise AND stage.idstage = ".$id;
+        $retour = mysql_query($requete) or die(mysql_error());
+        
+        while ($tableau = mysql_fetch_array($retour)) {
+            $tabStage[$i] = new ModeleStage($tableau['idstage'], $tableau['identreprise'],  $tableau['nomentreprise'], $tableau['idcontact'], $tableau['nometudiant'], $tableau['prenometudiant'], $tableau['promotion'], $tableau['datedeproposition'], $tableau['sujetstage'], $tableau['datevalidation'], $tableau['datedebut'], $tableau['datefin'], $tableau['datesoutenance'], $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], $tableau['dateembauche']);
+            $i++;
+        }
+
+        return $tabStage;
+    }
+    
     /**
      * Permet de valider un stage, c'est à dire de passer son état à "validé"
      * @param type $idStage 

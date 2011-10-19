@@ -386,7 +386,7 @@ function genererListePropositionStage(){
                             ."</td>
                             <td class=\"tableau\">".$stage->getNomentreprise()
                             ."</td>
-                            <td class=\"tableau\"><a href=\"".RACINE."?action=proposerStage&idstage=".$stage->getIdentreprise()."\">D&eacute;tails</a>
+                            <td class=\"tableau\"><a href=\"".RACINE."?action=detailStage&idstage=".$stage->getIdentreprise()."\">D&eacute;tails</a>
                             </td>
                         </tr>";
         }
@@ -395,5 +395,14 @@ function genererListePropositionStage(){
     return $corps;
 }
 
+function genererDetailStage(){
+    $tabStage = BD::rechercherProposition($_GET['idstage']);
+    $corps = "<td id = \"corps\">
+    ".$tabStage[0]->getNometudiant()." ".$tabStage[0]->getPrenometudiant()." <br/>
+    Sujet : <br/>".utf8_decode($tabStage[0]->getSujetstage())." <br/>    
+    </td> </tr> </table>";
+    
+    return $corps;
+}
 
 ?>

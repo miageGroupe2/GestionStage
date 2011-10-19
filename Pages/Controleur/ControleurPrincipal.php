@@ -40,6 +40,12 @@
         AffichePage($menuGauche, $corps);
     }
     
+    function afficherDetailStage(){
+        $menuGauche = genererMenuGauche();
+        $corps = genererDetailStage();
+        AffichePage($menuGauche, $corps);
+    }
+    
     function deconnecterUtilisateur(){
         
         if (isset ($_SESSION['connecte'])) {
@@ -150,16 +156,17 @@
                 case 'proposerStage' :
                     $action = 'afficherProposerStage' ;
                     break;
-                
-
+               
                 case 'listePropositionStage' :
-                    $action = 'afficherListePropositionStage';
-                    
-                break;
+                    $action = 'afficherListePropositionStage';        
+                    break;
+                
+                case 'detailStage' :
+                    $action = 'afficherDetailStage';        
+                    break;
+                
                 case 'validerProposerStage':
                     $action = 'validerProposerStage' ;
-                    
-
                     break;
                 
                 case 'completerStage' :
