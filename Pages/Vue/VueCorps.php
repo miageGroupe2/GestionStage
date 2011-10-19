@@ -58,24 +58,33 @@ function genererRechercheEntreprise() {
 function genererListeResultatRechercheEntreprise($tabEntreprise){
     
     $corps = "<td id = \"corps\">
-                  <table class=\"tableau\">";
+                  <table class=\"tableau\"><tr>
+                  <td class=\"tableau\"> Nom entreprise </td>
+                  <td class=\"tableau\"> Adresse </td>
+                  <td class=\"tableau\"> Ville </td>
+                  <td class=\"tableau\"> Pays </td>
+                  <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
+                  <td class=\"tableau\"> Numéro de Siret </td>
+                  <td class=\"tableau\"> Site web </td>
+                  </tr>";
     
     
     foreach ($tabEntreprise as $entrepriseCourante){
         
-        $corps .= "<tr><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getNom();
-        $corps .= "</td><td>";
+        $corps .= "<tr><td class=\"tableau\"> ";
+        
+        $corps .= "<a href=\"".RACINE."?action=choisirEntreprise&idEntreprise=".$entrepriseCourante->getId()."\" title=\"Cliquer ici pour choisir cette entreprise.\">".$entrepriseCourante->getNom()."</a>";
+        $corps .= "</td><td class=\"tableau\">";
         $corps .= $entrepriseCourante->getAdresse();
-        $corps .= "</td><td>";
+        $corps .= "</td><td class=\"tableau\">";
         $corps .= $entrepriseCourante->getVille();
-        $corps .= "</td><td>";
+        $corps .= "</td><td class=\"tableau\">";
         $corps .= $entrepriseCourante->getPays();
-        $corps .= "</td><td>";
+        $corps .= "</td><td class=\"tableau\">";
         $corps .= $entrepriseCourante->getNumeroTelephone();
-        $corps .= "</td><td>";
+        $corps .= "</td><td class=\"tableau\">";
         $corps .= $entrepriseCourante->getNumeroSiret();
-        $corps .= "</td><td>";
+        $corps .= "</td><td class=\"tableau\">";
         $corps .= $entrepriseCourante->getUrlSiteInternet();
         
         
@@ -91,7 +100,7 @@ function genererListeResultatRechercheEntreprise($tabEntreprise){
                 
     }
                    
-    $corsp = $corps ."
+    $corps .= "
                     </table>
                  
                 </td>
