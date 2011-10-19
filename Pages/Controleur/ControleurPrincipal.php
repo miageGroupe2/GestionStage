@@ -23,7 +23,7 @@
         AffichePage($menuGauche, $corps);
     }
     
-    function rechercherEntreprise(){
+    function afficherRechercherEntreprise(){
          $menuGauche = genererMenuGauche();
          $corps = genererRechercheEntreprise();
          AffichePage($menuGauche, $corps);
@@ -128,7 +128,7 @@
                     break;
 
                 case 'rechercherEntreprise':
-                    $action = 'rechercherEntreprise' ;
+                    $action = 'afficherRechercherEntreprise' ;
                     
                     break;
                 
