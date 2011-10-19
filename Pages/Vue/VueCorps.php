@@ -105,6 +105,8 @@ function genererListeResultatRechercheContact($tabContact){
 function genererListeResultatRechercheEntreprise($tabEntreprise){
   
     $corps = "<td id = \"corps\">
+        
+                  <form method=\"post\" action=\"" . RACINE . "?action=choisirEntreprise\">
                   <table class=\"tableau\"><tr>
                   <td class=\"tableau\"> Choix </td>
                   <td class=\"tableau\"> Nom entreprise </td>
@@ -120,9 +122,9 @@ function genererListeResultatRechercheEntreprise($tabEntreprise){
     foreach ($tabEntreprise as $entrepriseCourante){
         
         $corps .= "<tr><td class=\"tableau\"> ";
-        $corps .= "<input type=\"radio\" name=\"choixEntreprise\" id=\"a\" />";
+        $corps .= "<input type=\"radio\" name=\"idEntreprise\" value=\"".$entrepriseCourante->getId()."\" id=\"".$entrepriseCourante->getId()."\" />";
         $corps .= "</td><td class=\"tableau\">";
-        $corps .= "<a href=\"".RACINE."?action=choisirEntreprise&idEntreprise=".$entrepriseCourante->getId()."\" title=\"Cliquer ici pour choisir cette entreprise.\">".$entrepriseCourante->getNom()."</a>";
+        $corps .= $entrepriseCourante->getNom();
         $corps .= "</td><td class=\"tableau\">";
         $corps .= $entrepriseCourante->getAdresse();
         $corps .= "</td><td class=\"tableau\">";
@@ -140,10 +142,11 @@ function genererListeResultatRechercheEntreprise($tabEntreprise){
    
     }
                    
-    $corps .= "
-                    </table>
-                 
-                </td>
+    $corps .= "</table>";
+    $corps .= "<input id=\"log-submit\" type=\"submit\" value=\"Choisir cette entreprise\"/>";
+    $corps .= "</form>";
+    
+    $corps .= "</td>
             </tr>
         </table>";
 

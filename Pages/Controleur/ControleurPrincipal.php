@@ -116,7 +116,7 @@
     
     function afficherContactParEntreprise (){
         
-        if (isset ($_GET['idEntreprise']) && ($_GET['idEntreprise'] != null)){
+        if (isset ($_POST['idEntreprise']) && ($_POST['idEntreprise'] != null)){
             
 
             $tabContact = BD::rechercherContactParEntreprise($_GET['idEntreprise']);
