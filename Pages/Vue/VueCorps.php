@@ -52,6 +52,53 @@ function genererRechercheEntreprise() {
 }
 
 /**
+ *
+ * @param type $tabContact 
+ */
+function genererListeResultatRechercheContact($tabContact){
+    
+    $corps = "<td id = \"corps\">
+                  <table class=\"tableau\"><tr>
+                  <td class=\"tableau\"> Pr&eacute;nom </td>
+                  <td class=\"tableau\"> Nom </td>
+                  <td class=\"tableau\"> Fonction </td>
+                  <td class=\"tableau\"> Pays </td>
+                  <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
+                  <td class=\"tableau\"> T&eacute;l&eacute;phone Portable </td>
+                  <td class=\"tableau\"> Mail </td>
+                  </tr>";
+    
+    foreach ($tabContact as $contactCourant){
+        
+        $corps .= "<tr><td class=\"tableau\"> ";
+        
+        $corps .= "<a href=\"".RACINE."?action=choisirContact&idContact=".$contactCourant->getIdConctact()."\" title=\"Cliquer ici pour choisir cet contact.\">".$entrepriseCourante->getNom()."</a>";
+        $corps .= "</td><td class=\"tableau\">";
+        $corps .= $entrepriseCourante->getAdresse();
+        $corps .= "</td><td class=\"tableau\">";
+        $corps .= $entrepriseCourante->getVille();
+        $corps .= "</td><td class=\"tableau\">";
+        $corps .= $entrepriseCourante->getPays();
+        $corps .= "</td><td class=\"tableau\">";
+        $corps .= $entrepriseCourante->getNumeroTelephone();
+        $corps .= "</td><td class=\"tableau\">";
+        $corps .= $entrepriseCourante->getNumeroSiret();
+        $corps .= "</td><td class=\"tableau\">";
+        $corps .= $entrepriseCourante->getUrlSiteInternet();
+        
+        $corps .= "</tr>";  
+    }
+                   
+    $corps .= "
+                    </table>
+                </td>
+            </tr>
+        </table>";
+    
+    return $corps ;
+}
+
+/**
  * Permet de générer l'affichage des entreprises correspondantes à une recherche 
  * @param type $tabEntreprise 
  */
@@ -59,6 +106,7 @@ function genererListeResultatRechercheEntreprise($tabEntreprise){
     
     $corps = "<td id = \"corps\">
                   <table class=\"tableau\"><tr>
+                  <td class=\"tableau\"> Choix </td>
                   <td class=\"tableau\"> Nom entreprise </td>
                   <td class=\"tableau\"> Adresse </td>
                   <td class=\"tableau\"> Ville </td>
@@ -72,7 +120,8 @@ function genererListeResultatRechercheEntreprise($tabEntreprise){
     foreach ($tabEntreprise as $entrepriseCourante){
         
         $corps .= "<tr><td class=\"tableau\"> ";
-        
+        $corps .= "<input type=\"radio\" name=\"choixEntreprise\" id=\"a\" />";
+        $corps .= "</td><td class=\"tableau\">";
         $corps .= "<a href=\"".RACINE."?action=choisirEntreprise&idEntreprise=".$entrepriseCourante->getId()."\" title=\"Cliquer ici pour choisir cette entreprise.\">".$entrepriseCourante->getNom()."</a>";
         $corps .= "</td><td class=\"tableau\">";
         $corps .= $entrepriseCourante->getAdresse();

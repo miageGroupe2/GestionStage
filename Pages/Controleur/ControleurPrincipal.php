@@ -114,7 +114,20 @@
         }
     }
     
-    
+    function afficherContactParEntreprise (){
+        
+        if (isset ($_GET['idEntreprise']) && ($_GET['idEntreprise'] != null)){
+            
+
+            $tabContact = BD::rechercherContactParEntreprise($_GET['idEntreprise']);
+            $corps = genererListeResultatRechercheContact($tabContact);
+            $menuGauche = genererMenuGauche() ;
+            AffichePage($menuGauche, $corps);
+            
+        }else{
+            afficherPagePrincipale();
+        }
+    }
     
     function call_action() {
 
