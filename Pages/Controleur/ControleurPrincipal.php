@@ -112,10 +112,9 @@
             
             afficherRechercherEntreprise();
         }
-                
-                
-        
     }
+    
+    
     
     function call_action() {
 
@@ -168,6 +167,11 @@
                 
                 case 'effectuerRechercheEntreprise':
                     $action = 'effectuerRechercheEntreprise' ;
+                    
+                    break;
+                
+                case 'choisirEntreprise':
+                    $action = 'afficherContactParEntreprise' ;
                     
                     break;
                 
