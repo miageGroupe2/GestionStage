@@ -51,6 +51,7 @@ h2{
     padding-right: 10px;
     border: 1px solid black;
     width: 820px;
+    vertical-align: top;
 }
 
 #bas_page{

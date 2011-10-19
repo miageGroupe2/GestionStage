@@ -13,15 +13,42 @@ function genererPageAccueil() {
  * Permet d'afficher la page indiquant à l'utilisateur que sa proposition de stage a été acceptée
  * @return string le code html
  */
-function genererStagePropose (){
-    
+function genererStagePropose() {
+
     $corps = "<td id = \"corps\">
                     Proposition de stage accept&eacute;e.
                 </td>
             </tr>
         </table>";
     return $corps;
-    
+}
+
+/**
+ * 
+ */
+function genererRechercheEntreprise() {
+    $corps = "<td id = \"corps\">
+        <form action=\"" . RACINE . "?action=lancerRechercheEntreprise\" method=\"post\">
+                  <table>
+                   <tr>
+                       <td colspam=\"2\">
+                           <h3>Rechercher une entreprise :</h3>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>
+                            Nom entreprise <etoile>*</etoile> : 
+                       </td>
+                       <td>
+                           <input type=text name=\"nom_entreprise\"> <input type=\"submit\" value=\"Envoyer\">
+                       </td>
+                    </tr>
+                    </table>
+                 </form>
+                </td>
+            </tr>
+        </table>";
+    return $corps;
 }
 
 /**
@@ -30,16 +57,16 @@ function genererStagePropose (){
  * @return string le code html
  */
 function genererProposerStage($erreurRemplissage) {
-    
+
     $messageErreurRemplissage = '';
-    if ($erreurRemplissage){
-        $messageErreurRemplissage = "Veuillez renseigner tous les champs obligatoires (*)." ;
+    if ($erreurRemplissage) {
+        $messageErreurRemplissage = "Veuillez renseigner tous les champs obligatoires (*).";
     }
     $corps = "
                 <td id = \"corps\">
                     <h2>Proposer un stage</h2>
                     $messageErreurRemplissage
-                    <form action=\"".RACINE."?action=validerProposerStage\" method=\"post\">
+                    <form action=\"" . RACINE . "?action=validerProposerStage\" method=\"post\">
                         <table>
                             <tr>
                                 <td colspam=\"2\">

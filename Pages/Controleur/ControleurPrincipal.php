@@ -23,6 +23,12 @@
         AffichePage($menuGauche, $corps);
     }
     
+    function rechercherEntreprise(){
+         $menuGauche = genererMenuGauche();
+         $corps = genererRechercheEntreprise();
+         AffichePage($menuGauche, $corps);
+    }
+    
     function deconnecterUtilisateur(){
         
         if (isset ($_SESSION['connecte'])) {
@@ -121,6 +127,11 @@
                     
                     break;
 
+                case 'rechercherEntreprise':
+                    $action = 'rechercherEntreprise' ;
+                    
+                    break;
+                
                 default :
                     $action = 'afficherPagePrincipale';
                     break;

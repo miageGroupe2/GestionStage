@@ -63,7 +63,8 @@
                         <a href=\"".RACINE."?action=propositionStage\">Voir les propositions de stage</a><br/>
                         <a href=\"".RACINE."?action=stageAnneeCourante\">Voir les stages de l'ann&eacute;e courante</a><br/>
                         <a href=\"".RACINE."?action=tousLesStages\">Voir tous les stages</a><br/>
-                                </td>";
+                        <a href=\"".RACINE."?action=rechercherEntreprise\">Rechercher Entreprise</a><br/>
+                        </td>";
         return $menuGauche;
     }
 
