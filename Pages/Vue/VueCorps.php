@@ -376,19 +376,20 @@ function genererListePropositionStage(){
                         </td>
                     </tr>
             ";
-
-    foreach($tabStage as $stage){
-    $corps = $corps."
-                    <tr>
-                        <td class=\"tableau\">".$stage->getNometudiant()
-                        ."</td>
-                        <td class=\"tableau\">".$stage->getPrenometudiant()
-                        ."</td>
-                        <td class=\"tableau\">".$stage->getNomentreprise()
-                        ."</td>
-                        <td class=\"tableau\"><a href=\"".RACINE."?action=proposerStage&idstage=".$stage->getIdentreprise()."\">D&eacute;tails</a>
-                        </td>
-                    </tr>";
+    if ( $tabStage != null){
+        foreach($tabStage as $stage){
+        $corps = $corps."
+                        <tr>
+                            <td class=\"tableau\">".$stage->getNometudiant()
+                            ."</td>
+                            <td class=\"tableau\">".$stage->getPrenometudiant()
+                            ."</td>
+                            <td class=\"tableau\">".$stage->getNomentreprise()
+                            ."</td>
+                            <td class=\"tableau\"><a href=\"".RACINE."?action=proposerStage&idstage=".$stage->getIdentreprise()."\">D&eacute;tails</a>
+                            </td>
+                        </tr>";
+        }
     }
     $corps = $corps."</table></td> </tr> </table>";
     return $corps;
