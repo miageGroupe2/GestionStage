@@ -30,8 +30,10 @@ class ModeleStage {
     private $remuneration;
     private $embauche;
     private $dateembauche;
+    // Utile pour certaines requetes d'affichage, cet attribut ne fait pas parti de la table stage de la BDD
+    private $nomentreprise;
     
-    function __construct($idstage, $identreprise, $idcontact, $nometudiant, $prenometudiant, $promotion, $datedepoposition, $sujetstage, $datevalidation, $datedebut, $datefin, $datesoutenance, $lieusoutenance, $etatstage, $noteobtenue, $appreciationobtenue, $remuneration, $embauche, $dateembauche) {
+    function __construct($idstage, $identreprise, $nomentreprise, $idcontact, $nometudiant, $prenometudiant, $promotion, $datedepoposition, $sujetstage, $datevalidation, $datedebut, $datefin, $datesoutenance, $lieusoutenance, $etatstage, $noteobtenue, $appreciationobtenue, $remuneration, $embauche, $dateembauche) {
         $this->idstage = $idstage;
         $this->identreprise = $identreprise;
         $this->idcontact = $idcontact;
@@ -51,6 +53,7 @@ class ModeleStage {
         $this->remuneration = $remuneration;
         $this->embauche = $embauche;
         $this->dateembauche = $dateembauche;
+        $this->nomentreprise = $nomentreprise;
     }
 
     public function getIdstage() {
@@ -83,6 +86,14 @@ class ModeleStage {
 
     public function setNometudiant($nometudiant) {
         $this->nometudiant = $nometudiant;
+    }
+    
+    public function getNomentreprise() {
+        return $this->nomentreprise;
+    }
+
+    public function setNomentreprise($nometudiant) {
+        $this->nomentreprise = $nomentreprise;
     }
 
     public function getPrenometudiant() {

@@ -366,21 +366,20 @@ function genererListePropositionStage(){
                             Nom de l'entreprise
                         </td>
                     </tr>
-                </table>
             ";
 
     foreach($tabStage as $stage){
     $corps = $corps."
                     <tr>
-                        <td class=\"tableau\">".$stage.getNometudiant()
+                        <td class=\"tableau\">".$stage->getNometudiant()
                         ."</td>
-                        <td class=\"tableau\">".$stage.getPrenomtudiant()
+                        <td class=\"tableau\">".$stage->getPrenometudiant()
                         ."</td>
-                        <td class=\"tableau\">".$stage.getNomentreprise()
+                        <td class=\"tableau\">".$stage->getNomentreprise()
                         ."</td>
                     </tr>";
     }
-    $corps = $corps."</td> </tr> </table>";
+    $corps = $corps."</table></td> </tr> </table>";
     return $corps;
 }
 

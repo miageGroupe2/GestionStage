@@ -16,7 +16,6 @@
         AffichePage($menuGauche, $corps);
     }
     
-    
     function afficherProposerStage(){     
         $menuGauche = genererMenuGauche();
         $corps = genererProposerStage(false);
