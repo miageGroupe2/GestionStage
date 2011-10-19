@@ -156,11 +156,27 @@ class BD {
     
     public static function ajouterPropositionStage($nom, $prenom, $promotion, $sujet){
         
-        
-        
+       
         
     }
-
+    
+    /**
+     * Permet d'afficher toutes les propositions de stage
+     */
+    
+    public static function recherherToutesPropositions(){
+        BD::getConnection();
+         $requete = "SELECT s.nometudiant, s.prenometudiant, e.nomentreprise 
+             FROM stage s, entreprise e 
+             WHERE s.identreprise = e.identreprise";
+         $retour = mysql_query($requete);
+         
+         while($tableau = mysql_fetch_array($retour)){
+             
+         }
+    }
+    
+    
     /**
      * Permet de valider un stage, c'est à dire de passer son état à "validé"
      * @param type $idStage 

@@ -23,6 +23,12 @@
         AffichePage($menuGauche, $corps);
     }
     
+    function afficherListePropositionStage(){     
+        $menuGauche = genererMenuGauche();
+        $corps = genererListePropositionStage();
+        AffichePage($menuGauche, $corps);
+    }
+    
     function afficherRechercherEntreprise(){
          $menuGauche = genererMenuGauche();
          $corps = genererRechercheEntreprise();
@@ -106,6 +112,10 @@
                 
                 case 'proposerStage' :
                     $action = 'afficherProposerStage' ;
+                    break;
+                
+                case 'listePropositionStage' :
+                    $action = 'listePropositionStage';
                     break;
                 
                 case 'completerStage' :

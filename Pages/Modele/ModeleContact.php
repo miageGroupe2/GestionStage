@@ -20,7 +20,63 @@
             $this->mailContact = $mailContact;
         }
 
-        
+        public function getIdContact() {
+            return $this->idContact;
+        }
+
+        public function setIdContact($idContact) {
+            $this->idContact = $idContact;
+        }
+
+        public function getPrenomContact() {
+            return $this->prenomContact;
+        }
+
+        public function setPrenomContact($prenomContact) {
+            $this->prenomContact = $prenomContact;
+        }
+
+        public function getNomContact() {
+            return $this->nomContact;
+        }
+
+        public function setNomContact($nomContact) {
+            $this->nomContact = $nomContact;
+        }
+
+        public function getFonctionContact() {
+            return $this->fonctionContact;
+        }
+
+        public function setFonctionContact($fonctionContact) {
+            $this->fonctionContact = $fonctionContact;
+        }
+
+        public function getTelephoneFixeContact() {
+            return $this->telephoneFixeContact;
+        }
+
+        public function setTelephoneFixeContact($telephoneFixeContact) {
+            $this->telephoneFixeContact = $telephoneFixeContact;
+        }
+
+        public function getTelephoneMobileContact() {
+            return $this->telephoneMobileContact;
+        }
+
+        public function setTelephoneMobileContact($telephoneMobileContact) {
+            $this->telephoneMobileContact = $telephoneMobileContact;
+        }
+
+        public function getMailContact() {
+            return $this->mailContact;
+        }
+
+        public function setMailContact($mailContact) {
+            $this->mailContact = $mailContact;
+        }
+
+
         
     }
 

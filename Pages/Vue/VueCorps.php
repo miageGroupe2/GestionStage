@@ -104,7 +104,7 @@ function genererProposerStage($erreurRemplissage) {
                             </tr>
                             <tr>
                                 <td colspam=\"2\">
-                                    <h3>Coordonn&eacute;es de l'entreprise : </h3>
+                                    <h3>Coordonn&eacute;es  entreprise : </h3>
                                  </td>
                             </tr>
                             <tr>
