@@ -1,12 +1,12 @@
 <?php
 
 function genererPageAccueil() {
-    $corps = "<td id = \"corps\">
+$corps = "<td id = \"corps\">
                     Ceci est la page d'accueil
                 </td>
             </tr>
         </table>";
-    return $corps;
+return $corps;
 }
 
 /**
@@ -15,19 +15,19 @@ function genererPageAccueil() {
  */
 function genererStagePropose() {
 
-    $corps = "<td id = \"corps\">
+$corps = "<td id = \"corps\">
                     Proposition de stage accept&eacute;e.
                 </td>
             </tr>
         </table>";
-    return $corps;
+return $corps;
 }
 
 /**
  * 
  */
 function genererRechercheEntreprise() {
-    $corps = "<td id = \"corps\">
+$corps = "<td id = \"corps\">
         <form action=\"" . RACINE . "?action=effectuerRechercheEntreprise\" method=\"post\">
                   <table>
                    <tr>
@@ -48,7 +48,7 @@ function genererRechercheEntreprise() {
                 </td>
             </tr>
         </table>";
-    return $corps;
+return $corps;
 }
 
 /**
@@ -56,49 +56,49 @@ function genererRechercheEntreprise() {
  * @param type $tabEntreprise 
  */
 function genererListeResultatRechercheEntreprise($tabEntreprise){
-    
-    $corps = "<td id = \"corps\">
+
+$corps = "<td id = \"corps\">
                   <table class=\"tableau\">";
-    
-    
-    foreach ($tabEntreprise as $entrepriseCourante){
-        
-        $corps .= "<tr><td class=\"tableau\">";
-        $corps .= $entrepriseCourante->getNom();
-        $corps .= "</td><td>";
-        $corps .= $entrepriseCourante->getAdresse();
-        $corps .= "</td><td>";
-        $corps .= $entrepriseCourante->getVille();
-        $corps .= "</td><td>";
-        $corps .= $entrepriseCourante->getPays();
-        $corps .= "</td><td>";
-        $corps .= $entrepriseCourante->getNumeroTelephone();
-        $corps .= "</td><td>";
-        $corps .= $entrepriseCourante->getNumeroSiret();
-        $corps .= "</td><td>";
-        $corps .= $entrepriseCourante->getUrlSiteInternet();
-        
-        
-        
-        
-        $corps .= "</tr>";
-        
-        
-        
-        
-        
-        
-                
-    }
-                   
-    $corsp = $corps ."
+
+
+foreach ($tabEntreprise as $entrepriseCourante){
+
+$corps .= "<tr><td class=\"tableau\">";
+$corps .= $entrepriseCourante->getNom();
+$corps .= "</td><td>";
+$corps .= $entrepriseCourante->getAdresse();
+$corps .= "</td><td>";
+$corps .= $entrepriseCourante->getVille();
+$corps .= "</td><td>";
+$corps .= $entrepriseCourante->getPays();
+$corps .= "</td><td>";
+$corps .= $entrepriseCourante->getNumeroTelephone();
+$corps .= "</td><td>";
+$corps .= $entrepriseCourante->getNumeroSiret();
+$corps .= "</td><td>";
+$corps .= $entrepriseCourante->getUrlSiteInternet();
+
+
+
+
+$corps .= "</tr>";
+
+
+
+
+
+
+
+}
+
+$corsp = $corps ."
                     </table>
                  
                 </td>
             </tr>
         </table>";
-    
-    return $corps ;
+
+return $corps;
 }
 
 /**
@@ -108,11 +108,11 @@ function genererListeResultatRechercheEntreprise($tabEntreprise){
  */
 function genererProposerStage($erreurRemplissage) {
 
-    $messageErreurRemplissage = '';
-    if ($erreurRemplissage) {
-        $messageErreurRemplissage = "Veuillez renseigner tous les champs obligatoires (*).";
-    }
-    $corps = "
+$messageErreurRemplissage = '';
+if ($erreurRemplissage) {
+$messageErreurRemplissage = "Veuillez renseigner tous les champs obligatoires (*).";
+}
+$corps = "
                 <td id = \"corps\">
                     <h2>Proposer un stage</h2>
                     $messageErreurRemplissage
@@ -296,11 +296,41 @@ function genererProposerStage($erreurRemplissage) {
                 </tr>
             </table>";
 
+return $corps;
+}
+
+function genererListePropositionStage(){
+    $tabStage = BD::recherherToutesPropositions();
+    $corps = "<td id = \"corps\">
+                <table>
+                    <tr>
+                        <td class=\"tableau\">
+                            Nom &eacute;tudiant
+                        </td>
+                        <td class=\"tableau\">
+                            Pr&eacute;nom &eacute;tudiant
+                        </td>
+                        <td class=\"tableau\">
+                            Nom de l'entreprise
+                        </td>
+                    </tr>
+                </table>
+            ";
+
+    foreach($tabStage as $stage){
+    $corps = $corps."
+                    <tr>
+                        <td class=\"tableau\">".$stage.getNometudiant()
+                        ."</td>
+                        <td class=\"tableau\">".$stage.getPrenomtudiant()
+                        ."</td>
+                        <td class=\"tableau\">".$stage.getNomentreprise()
+                        ."</td>
+                    </tr>";
+    }
+    $corps = $corps."</td> </tr> </table>";
     return $corps;
 }
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 ?>

@@ -136,7 +136,7 @@
                 
 
                 case 'listePropositionStage' :
-                    $action = 'listePropositionStage';
+                    $action = 'afficherListePropositionStage';
                     
                 break;
                 case 'validerProposerStage':
