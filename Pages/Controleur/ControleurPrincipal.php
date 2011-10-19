@@ -34,6 +34,12 @@
          AffichePage($menuGauche, $corps);
     }
     
+    function afficherCompleterStage(){
+        $menuGauche = genererMenuGauche();
+        $corps = genererPageAccueil();
+        AffichePage($menuGauche, $corps);
+    }
+    
     function deconnecterUtilisateur(){
         
         if (isset ($_SESSION['connecte'])) {

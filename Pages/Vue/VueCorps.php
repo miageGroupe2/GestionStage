@@ -118,7 +118,6 @@ function genererListeResultatRechercheEntreprise($tabEntreprise){
                   <td class=\"tableau\"> Site web </td>
                   </tr>";
     
-    
     foreach ($tabEntreprise as $entrepriseCourante){
         
         $corps .= "<tr><td class=\"tableau\"> ";
@@ -354,7 +353,7 @@ return $corps;
 function genererListePropositionStage(){
     $tabStage = BD::recherherToutesPropositions();
     $corps = "<td id = \"corps\">
-                <table>
+                <table class=\"tableau\">
                     <tr>
                         <td class=\"tableau\">
                             Nom &eacute;tudiant
@@ -364,6 +363,9 @@ function genererListePropositionStage(){
                         </td>
                         <td class=\"tableau\">
                             Nom de l'entreprise
+                        </td>
+                        <td class=\"tableau\">
+                            Informations suppl&eacute;mentaires
                         </td>
                     </tr>
             ";
@@ -377,6 +379,8 @@ function genererListePropositionStage(){
                         ."</td>
                         <td class=\"tableau\">".$stage->getNomentreprise()
                         ."</td>
+                        <td class=\"tableau\"><a href=\"".RACINE."?action=proposerStage&idstage=".$stage->getIdentreprise()."\">D&eacute;tails</a>
+                        </td>
                     </tr>";
     }
     $corps = $corps."</table></td> </tr> </table>";
