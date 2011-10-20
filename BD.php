@@ -160,8 +160,34 @@ class BD {
         }
     }
 
-    public static function ajouterPropositionStage($nom, $prenom, $promotion, $sujet) {
+    public static function ajouterPropositionStage($nom, $prenom, $pormation, $nom_entreprise, $num_rue, $code_postal, $ville, $tel_accueil, $sujet) {
+        $Nom = mysql_real_escape_string(htmlspecialchars($nom));
+        $Prenom = mysql_real_escape_string(htmlspecialchars($prenom));
+        $Pormation = mysql_real_escape_string(htmlspecialchars($formation));
+        $Nom_entreprise = mysql_real_escape_string(htmlspecialchars($nom_entreprise));
+        $Num_rue = mysql_real_escape_string(htmlspecialchars($num_rue));
+        $Code_postal = mysql_real_escape_string(htmlspecialchars($code_postal));
+        $Ville = mysql_real_escape_string(htmlspecialchars($ville));
+        $Tel_accueil = mysql_real_escape_string(htmlspecialchars($tel_accueil));
+        $Sujet = mysql_real_escape_string(htmlspecialchars($sujet));
         
+        if($Nom != FALSE && $Prenom != FALSE && $Formation != FALSE && $Nom_entreprise != FALSE 
+            && $Num_rue != FALSE && $Code_postal != FALSE && $Ville != FALSE
+            && $Tel_accueil != FALSE && Sujet != FALSE){
+            
+            // Soit Recuperer identreprise 
+            // SOIT on ajoute un champ nom entreprise temporaire, 
+            // SOIT creer une table proposition stage qui sera par la suite
+            
+            $requete = "INSERT into stage (idstage, identreprise, idcontact, 
+                nometudiant, prenometudiant, promotion, datedeproposition, sujetstage, 
+                datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, 
+                noteobtenue, appreciationobtenue, remuneration, embauche, dateembauche) 
+                VALUES ('$Idstage', '$Identreprise', '$Idcontact', '$Nom', '$Prenom', '$Promotion'
+                ".  getdate()."', NULL, 'A valider', NULL, NULL, NULL, NULL, NULL)";
+            
+            mysql_query($requete);
+        }
     }
 
     /**
