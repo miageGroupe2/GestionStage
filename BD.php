@@ -82,8 +82,41 @@ class BD {
                 $tabEntreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet']);
                 $i++;
             }
+            
         }
         return $tabEntreprise;
+    }
+    
+    /**
+     * Permet de rechercher l'entreprise ayant l'id passé en paramètre
+     * @param type $id
+     */
+    public static function rechercherEntrepriseById($id) {
+
+        BD::getConnection();
+        $id = mysql_real_escape_string(htmlspecialchars($id));
+        $entreprise = null;
+
+        if ($id != FALSE) {
+
+            $requete = "SELECT identreprise, nomentreprise, adresseentreprise, villeentreprise, paysentreprise, numerotelephone, numerosiret FROM entreprise WHERE identreprise=".$id;
+            $retour = mysql_query($requete);
+
+            $i = 0;
+            while ($tableau = mysql_fetch_array($retour)) {
+
+                $entreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], NULL);
+                $i++;
+            }
+            if($i > 0){
+                
+                return $entreprise[0];
+            }else{
+                
+                return NULL ;
+            }
+        }
+        return NULL;
     }
 
     public static function ajouterEntreprise($nom, $adresse, $ville, $pays, $numeroTel, $numeroSiret, $urlSiteInternet) {
@@ -171,7 +204,7 @@ class BD {
         BD::getConnection();
         $i=0;
         $tabStage = null;
-        $requete = "SELECT stage.idstage, entreprise.nomentreprise, stage.identreprise, stage.nometudiant, stage.prenometudiant, entreprise.nomentreprise FROM stage, entreprise  WHERE stage.identreprise = entreprise.identreprise";
+        $requete = "SELECT stage.idstage, entreprise.nomentreprise, stage.identreprise, stage.nometudiant, stage.prenometudiant, entreprise.nomentreprise FROM stage, entreprise  WHERE stage.identreprise = entreprise.identreprise AND stage.etatstage = 'a valider'";
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {
@@ -181,22 +214,34 @@ class BD {
         return $tabStage;
     }
 
-        /**
+    /**
      * Permet d'afficher toutes les propositions de stage
      */
     public static function rechercherProposition($id) {
-        BD::getConnection();
-        $i=0;
-        $tabStage = null;
-        $requete = "SELECT stage.idstage, stage.identreprise, entreprise.nomentreprise, stage.idcontact, stage.nometudiant, stage.prenometudiant, stage.promotion, stage.datedeproposition, stage.sujetstage, stage.datevalidation, stage.datedebut, stage.datefin, stage.datesoutenance, stage.lieusoutenance, stage.etatstage, stage.noteobtenue, stage.appreciationobtenue, stage.remuneration, stage.embauche, stage.dateembauche FROM stage, entreprise  WHERE stage.identreprise = entreprise.identreprise AND stage.idstage = ".$id;
-        $retour = mysql_query($requete) or die(mysql_error());
         
-        while ($tableau = mysql_fetch_array($retour)) {
-            $tabStage[$i] = new ModeleStage($tableau['idstage'], $tableau['identreprise'],  $tableau['nomentreprise'], $tableau['idcontact'], $tableau['nometudiant'], $tableau['prenometudiant'], $tableau['promotion'], $tableau['datedeproposition'], $tableau['sujetstage'], $tableau['datevalidation'], $tableau['datedebut'], $tableau['datefin'], $tableau['datesoutenance'], $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], $tableau['dateembauche']);
-            $i++;
-        }
+        BD::getConnection();
+        
+        $id = mysql_real_escape_string(htmlspecialchars($id));
+        if ( $id != FALSE ){
+        
+            $i=0;
+            $tabStage = null;
 
-        return $tabStage;
+            $requete = "SELECT stage.idstage, stage.identreprise, entreprise.nomentreprise, stage.idcontact, stage.nometudiant, stage.prenometudiant, stage.promotion, stage.datedeproposition, stage.sujetstage, stage.datevalidation, stage.datedebut, stage.datefin, stage.datesoutenance, stage.lieusoutenance, stage.etatstage, stage.noteobtenue, stage.appreciationobtenue, stage.remuneration, stage.embauche, stage.dateembauche FROM stage, entreprise  WHERE stage.identreprise = entreprise.identreprise AND stage.idstage = ".$id;
+            $retour = mysql_query($requete) or die(mysql_error());
+
+            while ($tableau = mysql_fetch_array($retour)) {
+                $tabStage[$i] = new ModeleStage($tableau['idstage'], $tableau['identreprise'],  $tableau['nomentreprise'], $tableau['idcontact'], $tableau['nometudiant'], $tableau['prenometudiant'], $tableau['promotion'], $tableau['datedeproposition'], $tableau['sujetstage'], $tableau['datevalidation'], $tableau['datedebut'], $tableau['datefin'], $tableau['datesoutenance'], $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], $tableau['dateembauche']);
+                $i++;
+            }
+            if ( $i > 0 ){
+
+                return $tabStage[0];
+            }else{
+                return NULL;
+            }
+        }
+        return NULL ;
     }
     
     /**
