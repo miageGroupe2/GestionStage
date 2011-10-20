@@ -42,7 +42,7 @@
     
     function afficherDetailStage(){
         $menuGauche = genererMenuGauche();
-        $corps = genererDetailStage();
+        $corps = genererDetailPropositionStage();
         AffichePage($menuGauche, $corps);
     }
     

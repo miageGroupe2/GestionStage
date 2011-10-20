@@ -367,6 +367,7 @@ return $corps;
 }
 
 function genererListePropositionStage(){
+    
     $tabStage = BD::recherherToutesPropositions();
     $corps = "<td id = \"corps\">
                 <table class=\"tableau\">
@@ -395,7 +396,7 @@ function genererListePropositionStage(){
                             ."</td>
                             <td class=\"tableau\">".$stage->getNomentreprise()
                             ."</td>
-                            <td class=\"tableau\"><a href=\"".RACINE."?action=detailStage&idstage=".$stage->getIdentreprise()."\">D&eacute;tails</a>
+                            <td class=\"tableau\"><a href=\"".RACINE."?action=detailStage&idstage=".$stage->getIdstage()."\">D&eacute;tails</a>
                             </td>
                         </tr>";
         }
@@ -404,13 +405,101 @@ function genererListePropositionStage(){
     return $corps;
 }
 
-function genererDetailStage(){
-    $tabStage = BD::rechercherProposition($_GET['idstage']);
-    $corps = "<td id = \"corps\">
-    ".$tabStage[0]->getNometudiant()." ".$tabStage[0]->getPrenometudiant()." <br/>
-    Sujet : <br/>".utf8_decode($tabStage[0]->getSujetstage())." <br/>    
-    </td> </tr> </table>";
+function genererDetailPropositionStage(){
     
+    $stage = BD::rechercherProposition($_GET['idstage']);
+    
+    $corps = NULL ;
+    
+    if($stage != NULL){
+        
+        $entreprise = BD::rechercherEntrepriseById($_GET['idstage']);
+        
+        // la liste des entreprises ayant un nom similaire
+        $tabEntreprise = BD::rechercherEntreprise($stage->getNomentreprise());
+
+        //on construit l'affichage des données de l'étudiant et de l'entreprise
+        $corps = "<td id = \"corps\">
+
+                      <form method=\"post\" action=\"" . RACINE . "?action=editerStage\">
+                      <table class=\"tableau\">
+                      <tr>
+                        <td class=\"tableau\" colspan=\"8\"> Etudiant </td>
+                      </tr>
+                      <tr>
+                        <td class=\"tableau\"> Pr&eacute;nom : ".$stage->getPrenometudiant()."</td>
+                        <td class=\"tableau\"> Nom : ".$stage->getNometudiant()."</td>
+                        <td class=\"tableau\"> Promotion : ".$stage->getPromotion()."</td>
+                      </tr>
+                      <tr>
+                        <td class=\"tableau\" colspan=\"8\"> Entreprise </td>
+                      </tr>
+                      <tr>
+                        <td class=\"tableau\"> Nom : ".$entreprise->getNom()."</td>
+                        <td class=\"tableau\"> ".$entreprise->getAdresse()." ".$entreprise->getVille()." ".$entreprise->getPays()."</td>
+                        <td class=\"tableau\"> Tel :".$entreprise->getNumeroTelephone()."</td>
+                        <td class=\"tableau\"> Siret :".$entreprise->getNumeroSiret()."</td>
+                      </tr>";
+        
+        // si il existe des entreprises au nom similaire dans la base on construit 
+        // l'affichage correspondant
+        if ($tabEntreprise != NULL ){
+            
+          $corps .=
+            "<tr>
+                <td class=\"tableau\" colspan=\"8\"> Entreprise similaire dans la base :</td>
+            </tr>
+            
+
+            
+          
+                    <tr>
+                  <td class=\"tableau\"> Choix </td>
+                  <td class=\"tableau\"> Nom entreprise </td>
+                  <td class=\"tableau\"> Adresse </td>
+                  <td class=\"tableau\"> Ville </td>
+                  <td class=\"tableau\"> Pays </td>
+                  <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
+                  <td class=\"tableau\"> Numéro de Siret </td>
+                  <td class=\"tableau\"> Site web </td>
+                  </tr>";
+    
+                foreach ($tabEntreprise as $entrepriseCourante){
+
+                    $corps .= "<tr><td class=\"tableau\"> ";
+                    $corps .= "<input type=\"radio\" name=\"idEntreprise\" value=\"".$entrepriseCourante->getId()."\" id=\"".$entrepriseCourante->getId()."\" />";
+                    $corps .= "</td><td class=\"tableau\">";
+                    $corps .= $entrepriseCourante->getNom();
+                    $corps .= "</td><td class=\"tableau\">";
+                    $corps .= $entrepriseCourante->getAdresse();
+                    $corps .= "</td><td class=\"tableau\">";
+                    $corps .= $entrepriseCourante->getVille();
+                    $corps .= "</td><td class=\"tableau\">";
+                    $corps .= $entrepriseCourante->getPays();
+                    $corps .= "</td><td class=\"tableau\">";
+                    $corps .= $entrepriseCourante->getNumeroTelephone();
+                    $corps .= "</td><td class=\"tableau\">";
+                    $corps .= $entrepriseCourante->getNumeroSiret();
+                    $corps .= "</td><td class=\"tableau\">";
+                    $corps .= $entrepriseCourante->getUrlSiteInternet();
+
+                    $corps .= "</tr>";
+
+                }
+
+            
+            
+            
+
+        }
+        $corps .= "</table>";
+        
+
+        $corps .= "</td>
+                </tr>
+            </table>";
+                      
+    }
     return $corps;
 }
 
