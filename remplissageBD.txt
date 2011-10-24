@@ -1,0 +1,14 @@
+INSERT INTO `entreprise` (`identreprise`, `nomentreprise`, `adresseentreprise`, `villeentreprise`, `paysentreprise`, `numerotelephone`, `numerosiret`, `urlsiteinternet`, `statutjuridique`) VALUES
+(1, 'sopra france', 'adresse sopra', 'paris', 'france', '0329391919', '118288383838', 'sopra.fr', NULL),
+(2, 'Info Sopra', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'sopra', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'sassopra', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 'netlor', '10 rue du jardin', NULL, NULL, NULL, NULL, NULL, NULL),
+(6, 'netggglor', '10 rue du jardin', NULL, NULL, NULL, NULL, NULL, NULL);
+
+
+INSERT INTO `contact` (`idcontact`, `identreprise`, `prenomcontact`, `nomcontact`, `fonctioncontact`, `dateajout`, `datederniereactivite`, `telfixecontact`, `telmobilecontact`, `mailcontact`) VALUES
+(1, 2, 'Luc', 'Dubois', 'Ingénieur', '2011-10-19', '2011-10-19', '07 89 76 87 98', '03 45 21 24 56', 'dubois@gmail.fr');
+
+INSERT INTO `responsable` (`idresp`, `loginresp`, `passwordresp`, `mailresp`) VALUES
+(1, 'ludo', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', 'ludo@gmail.com');
