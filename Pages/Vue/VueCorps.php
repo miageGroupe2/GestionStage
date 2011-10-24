@@ -13,7 +13,7 @@ return $corps;
  * Permet d'afficher la page indiquant à l'utilisateur que sa proposition de stage a été acceptée
  * @return string le code html
  */
-function genererStagePropose() {
+function genererAjoutPropositionStageOk() {
 
 $corps = "<td id = \"corps\">
                     Proposition de stage accept&eacute;e.
@@ -168,7 +168,7 @@ function genererProposerStage($erreurRemplissage) {
 
 $messageErreurRemplissage = '';
 if ($erreurRemplissage) {
-$messageErreurRemplissage = "Veuillez renseigner tous les champs obligatoires (*).";
+$messageErreurRemplissage = "Veuillez renseigner tous les champs obligatoires <etoile>*</etoile>.";
 }
 $corps = "
                 <td id = \"corps\">
@@ -202,7 +202,7 @@ $corps = "
                                     Formation <etoile>*</etoile> : 
                                 </td>
                                 <td>
-                                    <select name=\"fonction\">
+                                    <select name=\"promotion\">
                                         <option VALUE=\"choisir\">Choisir</option>
                                         <option VALUE=\"l3_miage\">L3 MIAGE</option>
                                         <option VALUE=\"m2_acsi\">M2 MIAGE ACSI</option>
