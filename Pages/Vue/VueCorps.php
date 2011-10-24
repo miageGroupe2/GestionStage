@@ -159,18 +159,213 @@ function genererListeResultatRechercheEntreprise($tabEntreprise){
 return $corps;
 }
 
-/**
- *  Permet d'afficher le formulaire de proposition de stage
- * @param type $erreurRemplissage si true si un des champs obligatoires n'a pas été renseigné
- * @return string le code html
- */
-function genererProposerStage($erreurRemplissage) {
 
-$messageErreurRemplissage = '';
-if ($erreurRemplissage) {
-$messageErreurRemplissage = "Veuillez renseigner tous les champs obligatoires <etoile>*</etoile>.";
+function genererProposerStage() {
+
+    $nom = NULL ;
+    if (isset($_POST['nom'])){
+        
+        $nom = htmlspecialchars($_POST['nom']);
+    }
+    
+    $corps = "<td id = \"corps\">
+                <h2>Recherche d'une entreprise</h2>                
+                
+                <table class=\"tableau\">
+                
+                <form method=\"post\" action=\"" . RACINE . "?action=validerProposerStage\">
+                    <tr>
+                        <td>
+                            Nom :
+                        </td>
+                        <td>
+                            <input type=text name=\"nom\" value=\"".$nom."\">
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan =\"2\"><input type=\"submit\" value=\"Rechercher\"></td>
+                    </tr>
+                </form>
+                </table></td> </tr> </table>";
+    return $corps;
 }
-$corps = "
+
+function genererListePropositionStage(){
+    
+    $tabStage = BD::recherherToutesPropositions();
+    $corps = "<td id = \"corps\">
+                <table class=\"tableau\">
+                    <tr>
+                        <td class=\"tableau\">
+                            Nom &eacute;tudiant
+                        </td>
+                        <td class=\"tableau\">
+                            Pr&eacute;nom &eacute;tudiant
+                        </td>
+                        <td class=\"tableau\">
+                            Nom de l'entreprise
+                        </td>
+                        <td class=\"tableau\">
+                            Informations suppl&eacute;mentaires
+                        </td>
+                    </tr>
+            ";
+    if ( $tabStage != null){
+        foreach($tabStage as $stage){
+        $corps = $corps."
+                        <tr>
+                            <td class=\"tableau\">".$stage->getNometudiant()
+                            ."</td>
+                            <td class=\"tableau\">".$stage->getPrenometudiant()
+                            ."</td>
+                            <td class=\"tableau\">".$stage->getNomentreprise()
+                            ."</td>
+                            <td class=\"tableau\"><a href=\"".RACINE."?action=detailStage&idstage=".$stage->getIdstage()."\">D&eacute;tails</a>
+                            </td>
+                        </tr>";
+        }
+    }
+    $corps = $corps."</table></td> </tr> </table>";
+    return $corps;
+}
+
+function genererDetailPropositionStage(){
+    
+    $stage = BD::rechercherProposition($_GET['idstage']);
+    
+    $corps = NULL ;
+    
+    if($stage != NULL){
+        
+        $entreprise = BD::rechercherEntrepriseById($_GET['idstage']);
+        
+        // la liste des entreprises ayant un nom similaire
+        $tabEntreprise = BD::rechercherEntreprise($stage->getNomentreprise());
+
+        //on construit l'affichage des données de l'étudiant et de l'entreprise
+        $corps = "<td id = \"corps\">
+
+                      <form method=\"post\" action=\"" . RACINE . "?action=editerStage\">
+                      <table class=\"tableau\">
+                      <tr>
+                        <td class=\"tableau\" colspan=\"8\"> Etudiant </td>
+                      </tr>
+                      <tr>
+                        <td class=\"tableau\"> Pr&eacute;nom : ".$stage->getPrenometudiant()."</td>
+                        <td class=\"tableau\"> Nom : ".$stage->getNometudiant()."</td>
+                        <td class=\"tableau\"> Promotion : ".$stage->getPromotion()."</td>
+                      </tr>
+                      <tr>
+                        <td class=\"tableau\" colspan=\"8\"> Entreprise </td>
+                      </tr>
+                      <tr>
+                        <td class=\"tableau\"> Nom : ".$entreprise->getNom()."</td>
+                        <td class=\"tableau\"> ".$entreprise->getAdresse()." ".$entreprise->getVille()." ".$entreprise->getPays()."</td>
+                        <td class=\"tableau\"> Tel :".$entreprise->getNumeroTelephone()."</td>
+                        <td class=\"tableau\"> Siret :".$entreprise->getNumeroSiret()."</td>
+                      </tr>";
+        
+        // si il existe des entreprises au nom similaire dans la base on construit 
+        // l'affichage correspondant
+        if ($tabEntreprise != NULL ){
+            
+          $corps .=
+            "<tr>
+                <td class=\"tableau\" colspan=\"8\"> Entreprise similaire dans la base :</td>
+            </tr>
+            
+
+            
+          
+                    <tr>
+                  <td class=\"tableau\"> Choix </td>
+                  <td class=\"tableau\"> Nom entreprise </td>
+                  <td class=\"tableau\"> Adresse </td>
+                  <td class=\"tableau\"> Ville </td>
+                  <td class=\"tableau\"> Pays </td>
+                  <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
+                  <td class=\"tableau\"> Numéro de Siret </td>
+                  <td class=\"tableau\"> Site web </td>
+                  </tr>";
+    
+                foreach ($tabEntreprise as $entrepriseCourante){
+
+                    $corps .= "<tr><td class=\"tableau\"> ";
+                    $corps .= "<input type=\"radio\" name=\"idEntreprise\" value=\"".$entrepriseCourante->getId()."\" id=\"".$entrepriseCourante->getId()."\" />";
+                    $corps .= "</td><td class=\"tableau\">";
+                    $corps .= $entrepriseCourante->getNom();
+                    $corps .= "</td><td class=\"tableau\">";
+                    $corps .= $entrepriseCourante->getAdresse();
+                    $corps .= "</td><td class=\"tableau\">";
+                    $corps .= $entrepriseCourante->getVille();
+                    $corps .= "</td><td class=\"tableau\">";
+                    $corps .= $entrepriseCourante->getPays();
+                    $corps .= "</td><td class=\"tableau\">";
+                    $corps .= $entrepriseCourante->getNumeroTelephone();
+                    $corps .= "</td><td class=\"tableau\">";
+                    $corps .= $entrepriseCourante->getNumeroSiret();
+                    $corps .= "</td><td class=\"tableau\">";
+                    $corps .= $entrepriseCourante->getUrlSiteInternet();
+
+                    $corps .= "</tr>";
+
+                }
+
+            
+            
+            
+
+        }
+        $corps .= "</table>";
+        
+
+        $corps .= "</td>
+                </tr>
+            </table>";
+                      
+    }
+    return $corps;
+}
+
+/* ancienne fonction genererProposerStage :
+ * $messageErreurRemplissage = '';
+    
+    if ($erreurRemplissage) {
+    
+        $messageErreurRemplissage = "Veuillez renseigner tous les champs obligatoires <etoile>*</etoile>.";
+    }
+    
+    $nom = NULL ;
+    if (isset ($_POST['nom'])){
+        $nom= $_POST['nom'];
+    }
+    $prenom = NULL ;
+    if (isset ($_POST['prenom'])){
+        $nom= $_POST['prenom'];
+    }
+    $promoL3 = FALSE ;
+    $promoM2_SID = FALSE ;
+    $promoM2_ACSI = FALSE ;
+    
+    if (isset ($_POST['promotion'])){
+        
+        if($_POST['promotion']== "l3"){
+            
+            $promoL3 = TRUE ;
+            
+        }else if($_POST['promotion']== "m2_sid"){
+
+            $promoM2_SID = TRUE ;
+        
+            
+        }else if($_POST['promotion']== "m2_acsi"){
+            
+            $promoM2_ACSI = TRUE ;
+        }
+    }
+    
+    $corps = "
                 <td id = \"corps\">
                     <h2>Proposer un stage</h2>
                     $messageErreurRemplissage
@@ -186,7 +381,7 @@ $corps = "
                                     Nom <etoile>*</etoile> : 
                                 </td>
                                 <td>
-                                    <input type=text name=\"nom\">
+                                    <input type=text name=\"nom\" value=\"".$nom."\">
                                 </td>
                             </tr>
                             <tr>
@@ -194,7 +389,7 @@ $corps = "
                                     Pr&eacute;nom <etoile>*</etoile> :
                                 </td>
                                 <td>
-                                    <input type=text name=\"prenom\">
+                                    <input type=text name=\"prenom\ value=\"".$prenom."\">
                                 </td>
                             </tr>
                             <tr>
@@ -203,11 +398,25 @@ $corps = "
                                 </td>
                                 <td>
                                     <select name=\"promotion\">
-                                        <option VALUE=\"choisir\">Choisir</option>
-                                        <option VALUE=\"l3_miage\">L3 MIAGE</option>
-                                        <option VALUE=\"m2_acsi\">M2 MIAGE ACSI</option>
-                                        <option VALUE=\"m2_sid\">M2 MIAGE SID</option>
-                                    </select>
+                                        <option VALUE=\"choisir\">Choisir</option>";
+                                        
+                                        if ($promoL3 == TRUE){
+                                            $corps .= "<option VALUE=\"l3\" selected=\"selected\">L3 MIAGE</option>" ;
+                                        }else{
+                                            $corps .= "<option VALUE=\"l3\">L3 MIAGE</option>" ;
+                                        }
+                                        if ($promoM2_ACSI == TRUE){
+                                            $corps .= "<option VALUE=\"m2_acsi\" selected=\"selected\">M2 MIAGE ACSI</option>" ;
+                                        }else{
+                                            $corps .= "<option VALUE=\"m2_acsi\">M2 MIAGE ACSI</option>";
+                                        }
+                                        if ($promoM2_SID == TRUE){
+                                            $corps .= "<option VALUE=\"m2_sid\" selected=\"selected\">M2 MIAGE SID</option>" ;
+                                        }else{
+                                            $corps .= "<option VALUE=\"m2_sid\">M2 MIAGE SID</option>";
+                                        }
+                                        
+                                    $corps .="</select>
                                 </td>
                             </tr>
                             <tr>
@@ -364,143 +573,8 @@ $corps = "
             </table>";
 
 return $corps;
-}
-
-function genererListePropositionStage(){
-    
-    $tabStage = BD::recherherToutesPropositions();
-    $corps = "<td id = \"corps\">
-                <table class=\"tableau\">
-                    <tr>
-                        <td class=\"tableau\">
-                            Nom &eacute;tudiant
-                        </td>
-                        <td class=\"tableau\">
-                            Pr&eacute;nom &eacute;tudiant
-                        </td>
-                        <td class=\"tableau\">
-                            Nom de l'entreprise
-                        </td>
-                        <td class=\"tableau\">
-                            Informations suppl&eacute;mentaires
-                        </td>
-                    </tr>
-            ";
-    if ( $tabStage != null){
-        foreach($tabStage as $stage){
-        $corps = $corps."
-                        <tr>
-                            <td class=\"tableau\">".$stage->getNometudiant()
-                            ."</td>
-                            <td class=\"tableau\">".$stage->getPrenometudiant()
-                            ."</td>
-                            <td class=\"tableau\">".$stage->getNomentreprise()
-                            ."</td>
-                            <td class=\"tableau\"><a href=\"".RACINE."?action=detailStage&idstage=".$stage->getIdstage()."\">D&eacute;tails</a>
-                            </td>
-                        </tr>";
-        }
-    }
-    $corps = $corps."</table></td> </tr> </table>";
-    return $corps;
-}
-
-function genererDetailPropositionStage(){
-    
-    $stage = BD::rechercherProposition($_GET['idstage']);
-    
-    $corps = NULL ;
-    
-    if($stage != NULL){
-        
-        $entreprise = BD::rechercherEntrepriseById($_GET['idstage']);
-        
-        // la liste des entreprises ayant un nom similaire
-        $tabEntreprise = BD::rechercherEntreprise($stage->getNomentreprise());
-
-        //on construit l'affichage des données de l'étudiant et de l'entreprise
-        $corps = "<td id = \"corps\">
-
-                      <form method=\"post\" action=\"" . RACINE . "?action=editerStage\">
-                      <table class=\"tableau\">
-                      <tr>
-                        <td class=\"tableau\" colspan=\"8\"> Etudiant </td>
-                      </tr>
-                      <tr>
-                        <td class=\"tableau\"> Pr&eacute;nom : ".$stage->getPrenometudiant()."</td>
-                        <td class=\"tableau\"> Nom : ".$stage->getNometudiant()."</td>
-                        <td class=\"tableau\"> Promotion : ".$stage->getPromotion()."</td>
-                      </tr>
-                      <tr>
-                        <td class=\"tableau\" colspan=\"8\"> Entreprise </td>
-                      </tr>
-                      <tr>
-                        <td class=\"tableau\"> Nom : ".$entreprise->getNom()."</td>
-                        <td class=\"tableau\"> ".$entreprise->getAdresse()." ".$entreprise->getVille()." ".$entreprise->getPays()."</td>
-                        <td class=\"tableau\"> Tel :".$entreprise->getNumeroTelephone()."</td>
-                        <td class=\"tableau\"> Siret :".$entreprise->getNumeroSiret()."</td>
-                      </tr>";
-        
-        // si il existe des entreprises au nom similaire dans la base on construit 
-        // l'affichage correspondant
-        if ($tabEntreprise != NULL ){
-            
-          $corps .=
-            "<tr>
-                <td class=\"tableau\" colspan=\"8\"> Entreprise similaire dans la base :</td>
-            </tr>
-            
-
-            
-          
-                    <tr>
-                  <td class=\"tableau\"> Choix </td>
-                  <td class=\"tableau\"> Nom entreprise </td>
-                  <td class=\"tableau\"> Adresse </td>
-                  <td class=\"tableau\"> Ville </td>
-                  <td class=\"tableau\"> Pays </td>
-                  <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
-                  <td class=\"tableau\"> Numéro de Siret </td>
-                  <td class=\"tableau\"> Site web </td>
-                  </tr>";
-    
-                foreach ($tabEntreprise as $entrepriseCourante){
-
-                    $corps .= "<tr><td class=\"tableau\"> ";
-                    $corps .= "<input type=\"radio\" name=\"idEntreprise\" value=\"".$entrepriseCourante->getId()."\" id=\"".$entrepriseCourante->getId()."\" />";
-                    $corps .= "</td><td class=\"tableau\">";
-                    $corps .= $entrepriseCourante->getNom();
-                    $corps .= "</td><td class=\"tableau\">";
-                    $corps .= $entrepriseCourante->getAdresse();
-                    $corps .= "</td><td class=\"tableau\">";
-                    $corps .= $entrepriseCourante->getVille();
-                    $corps .= "</td><td class=\"tableau\">";
-                    $corps .= $entrepriseCourante->getPays();
-                    $corps .= "</td><td class=\"tableau\">";
-                    $corps .= $entrepriseCourante->getNumeroTelephone();
-                    $corps .= "</td><td class=\"tableau\">";
-                    $corps .= $entrepriseCourante->getNumeroSiret();
-                    $corps .= "</td><td class=\"tableau\">";
-                    $corps .= $entrepriseCourante->getUrlSiteInternet();
-
-                    $corps .= "</tr>";
-
-                }
-
-            
-            
-            
-
-        }
-        $corps .= "</table>";
-        
-
-        $corps .= "</td>
-                </tr>
-            </table>";
-                      
-    }
-    return $corps;
-}
+ */
 
 ?>
+
+
