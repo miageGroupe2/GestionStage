@@ -2,12 +2,8 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/var/www/GestionStage/path_config.php</file>
-        <file>file:/var/www/GestionStage/index.php</file>
         <file>file:/var/www/GestionStage/Pages/Controleur/ControleurPrincipal.php</file>
+        <file>file:/var/www/GestionStage/BD.php</file>
         <file>file:/var/www/GestionStage/Pages/Vue/VueCorps.php</file>
-        <file>file:/var/www/GestionStage/Styles/index.css</file>
-        <file>file:/var/www/GestionStage/Styles/site.css</file>
-        <file>file:/var/www/GestionStage/Scripts/DateChooser.js</file>
     </open-files>
 </project-private>
