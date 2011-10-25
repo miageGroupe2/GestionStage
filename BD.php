@@ -36,12 +36,12 @@ class BD {
 
         BD::getConnection();
         $login = mysql_real_escape_string(htmlspecialchars($login));
-        $password = mysql_real_escape_string(htmlspecialchars($password));
-
+        $password = sha1(mysql_real_escape_string(htmlspecialchars($password)));
+        
         if ($login != FALSE && $password != FALSE) {
 
-            $requete = "SELECT login, admin FROM utilisateur WHERE login = '$login' AND password = '$password' ";
-
+            $requete = "SELECT mailutilisateur, admin FROM utilisateur WHERE mailutilisateur = '$login' AND passwordutilisateur = '$password' ";
+            
             try {
                 $retour = mysql_query($requete);
             } catch (Exception $e) {
@@ -49,12 +49,12 @@ class BD {
             }
 
             $nombreDeLignes = mysql_num_rows($retour);
-
+            
             if ($nombreDeLignes > 0) {
                 while ($tableau = mysql_fetch_array($retour)) {
                     $_SESSION['admin'] = $tableau['admin'];
-                    $i++;
                 }
+                
                 return TRUE;
             } else {
 
