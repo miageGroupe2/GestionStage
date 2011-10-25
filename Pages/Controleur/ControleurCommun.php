@@ -34,7 +34,7 @@ function connecterUtilisateur() {
 }
 
 function afficherAccueil() {
-    $menuGauche = genererMenuGauche();
+    $menuGauche = "";
     $corps = genererPageAccueil();
     AffichePage($menuGauche, $corps);
 }
