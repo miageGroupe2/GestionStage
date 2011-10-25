@@ -73,15 +73,16 @@ class BD {
         BD::getConnection();
         $nom = mysql_real_escape_string(htmlspecialchars($nom));
         $tabEntreprise = null;
-
+        
         if ($nom != FALSE) {
 
             $requete = "SELECT * FROM `entreprise` WHERE nomentreprise LIKE '%$nom%'";
-            $retour = mysql_query($requete);
+            
+            $retour = mysql_query($requete) ;
 
             $i = 0;
             while ($tableau = mysql_fetch_array($retour)) {
-
+                
                 $tabEntreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet']);
                 $i++;
             }

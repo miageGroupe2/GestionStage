@@ -8,8 +8,19 @@ require_once 'BD.php';
 
 
 function afficherProposerStage() {
+    
+    $tabEntreprise = NULL ;
+    
+    // si l'utilisateur a renseigné le champs nom
+    if (isset($_POST['nom']) && $_POST['nom'] != NULL){
+        
+        // on va chercher dans la base la liste des entreprises ayant un 
+        //nom similaire
+        $tabEntreprise = BD::rechercherEntreprise($_POST['nom']);
+    }
+    
     $menuGauche = genererMenuGauche();
-    $corps = genererProposerStage(false);
+    $corps = genererProposerStage($tabEntreprise);
     AffichePage($menuGauche, $corps);
 }
 

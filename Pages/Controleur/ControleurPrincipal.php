@@ -45,9 +45,9 @@
                     $action = 'afficherProposerStage' ;
                     break;
                 
-                case 'validerProposerStage':
-                    $action = 'validerProposerStage' ;
-                    break;
+//                case 'validerProposerStage':
+//                    $action = 'validerProposerStage' ;
+//                    break;
                 
                 case 'completerPropositionStage' :
                     $action = 'afficherCompleterStage' ;
