@@ -41,8 +41,8 @@
                     break;
                 
                 // partie etudiant
-                case 'proposerStage' :
-                    $action = 'afficherProposerStage' ;
+                case 'proposerStageEtape1' :
+                    $action = 'proposerStageEtape1' ;
                     break;
                 
 //                case 'validerProposerStage':

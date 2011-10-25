@@ -7,7 +7,7 @@ require_once 'BD.php';
 
 
 
-function afficherProposerStage() {
+function proposerStageEtape1() {
     
     $tabEntreprise = NULL ;
     
