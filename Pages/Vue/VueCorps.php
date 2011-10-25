@@ -361,7 +361,8 @@ function genererProposerStage($tabEntreprise) {
         $nom = htmlspecialchars($_POST['nom']);
     }
     
-    $corps = "<td id = \"corps\">
+    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormPropoStageEtape1.js\" type=\"text/javascript\"></script>";
+    $corps .= "<td id = \"corps\">
                 <h2>Recherche d'une entreprise</h2>                
                 
                 
@@ -376,6 +377,8 @@ function genererProposerStage($tabEntreprise) {
                    <input type=\"submit\" value=\"Rechercher\"></form><br /><br />";
                    
     
+    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaire()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape2\">";
+
     // on liste les entreprises ayant un nom similaire
     if ($tabEntreprise != NULL){
         
@@ -435,7 +438,7 @@ function genererProposerStage($tabEntreprise) {
         
 
         $corps .= " <br /><br />
-                    <form method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape1\">
+                    
                     <table>
                         <tr>
                             <td colspam=\"2\">
@@ -447,7 +450,7 @@ function genererProposerStage($tabEntreprise) {
                                 Nom de l'entreprise <etoile>*</etoile> : 
                             </td>
                             <td>
-                                <input type=text name=\"nom_entreprise\">
+                                <input type=text name=\"nom_entreprise\" id=\"nom_entreprise\">
                             </td>
                         </tr>
                         <tr>
@@ -460,7 +463,7 @@ function genererProposerStage($tabEntreprise) {
                                 N°, Rue <etoile>*</etoile> : 
                             </td>
                             <td>
-                                <input type=text name=\"num_rue\">
+                                <input type=text name=\"num_rue\" id=\"num_rue\">
                             </td>
                         </tr>
                         <tr>
@@ -468,7 +471,7 @@ function genererProposerStage($tabEntreprise) {
                                 Code postal <etoile>*</etoile> :
                             </td>
                             <td>
-                                <input type=text name=\"code_postal\">
+                                <input type=text name=\"code_postal\" id=\"code_postal\">
                             </td>
                         </tr>
                         <tr>
@@ -476,7 +479,7 @@ function genererProposerStage($tabEntreprise) {
                                 Ville <etoile>*</etoile> : 
                             </td>
                             <td>
-                                 <input type=text name=\"ville\">
+                                 <input type=text name=\"ville\" id=\"ville\">
                             </td>
                         </tr>
                         <tr>
@@ -484,7 +487,7 @@ function genererProposerStage($tabEntreprise) {
                                 Pays <etoile>*</etoile> : 
                             </td>
                             <td>
-                                 <input type=text name=\"pays\">
+                                 <input type=text name=\"pays\" id=\"pays\">
                             </td>
                         </tr>
                         <tr>
@@ -492,7 +495,7 @@ function genererProposerStage($tabEntreprise) {
                                 T&eacute;l&eacute;phone accueil <etoile>*</etoile> : 
                             </td>
                             <td>
-                                 <input type=text name=\"tel_accueil\">
+                                 <input type=text name=\"tel_accueil\" id=\"tel_accueil\">
                             </td>
                         </tr>
                         <tr>
@@ -505,7 +508,7 @@ function genererProposerStage($tabEntreprise) {
                         </tr>
                         </table>
 
-                    <br /><input type=\"submit\" value=\"Ajouter l'entreprise\"></form><br /><br />";
+                    <br /><input type=\"submit\" value=\"Etape suivante\"></form><br /><br />";
 
 
             $corps .="</form>";

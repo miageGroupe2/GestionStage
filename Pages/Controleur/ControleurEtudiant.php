@@ -5,7 +5,17 @@ require_once RACINE_VUE . 'VueMenuGauche.php';
 require_once RACINE_VUE . 'VueCorps.php';
 require_once 'BD.php';
 
-
+function proposerStageEtape2() {
+    
+    if ($_POST['idEntreprise'] == "ajouter"){
+        
+        echo "ajout entreprise";
+    }else{
+        
+        $idEntreprise = $_POST['idEntreprise'];
+        echo $idEntreprise ;
+    }
+}
 
 function proposerStageEtape1() {
     

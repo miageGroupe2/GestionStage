@@ -1,13 +1,27 @@
 function verifierFormulaire(){
     
-    if(document.getElementById("nom").value == ""){
+    alert("dedans");
+    
+    if(document.formulaire.idEntreprise.ajouter.checked){
+        alert("if");
+        if (document.getElementById("nom_entreprise").value == ""
+            || document.getElementById("num_rue").value == ""
+            || document.getElementById("code_postal").value == ""
+            || document.getElementById("ville").value == ""
+            || document.getElementById("pays").value == ""
+            || document.getElementById("tel_accueil").value == ""
+            ){
         
-        alert("Formulaire invalide : le nom d'utilisateur est vide");
-        return false;
+            alert("Veuillez remplir tous les champs marqués d'une étoile.");
+            return false;
+        }else{
+            
+            return true ;
+        }
     
     }else{
-        
-        alert("Le formulaire est valide");
+        alert("else");
         return true;
     }
+    
 }
