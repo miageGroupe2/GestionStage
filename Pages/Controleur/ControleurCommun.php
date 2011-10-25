@@ -41,7 +41,7 @@ function afficherAccueil() {
 
 function afficherPagePrincipale() {
     $menuGauche = genererMenuGauche();
-    $corps = genererPageAccueil();
+    $corps = genererPagePrincipal();
     AffichePage($menuGauche, $corps);
 }
 

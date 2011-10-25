@@ -40,7 +40,7 @@ class BD {
 
         if ($login != FALSE && $password != FALSE) {
 
-            $requete = "SELECT login FROM utilisateur WHERE login = '$login' AND password = '$password' ";
+            $requete = "SELECT login, admin FROM utilisateur WHERE login = '$login' AND password = '$password' ";
 
             try {
                 $retour = mysql_query($requete);
@@ -51,7 +51,10 @@ class BD {
             $nombreDeLignes = mysql_num_rows($retour);
 
             if ($nombreDeLignes > 0) {
-
+                while ($tableau = mysql_fetch_array($retour)) {
+                    $_SESSION['admin'] = $tableau['admin'];
+                    $i++;
+                }
                 return TRUE;
             } else {
 
@@ -82,11 +85,10 @@ class BD {
                 $tabEntreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet']);
                 $i++;
             }
-            
         }
         return $tabEntreprise;
     }
-    
+
     /**
      * Permet de rechercher l'entreprise ayant l'id passé en paramètre
      * @param type $id
@@ -99,7 +101,7 @@ class BD {
 
         if ($id != FALSE) {
 
-            $requete = "SELECT identreprise, nomentreprise, adresseentreprise, villeentreprise, paysentreprise, numerotelephone, numerosiret FROM entreprise WHERE identreprise=".$id;
+            $requete = "SELECT identreprise, nomentreprise, adresseentreprise, villeentreprise, paysentreprise, numerotelephone, numerosiret FROM entreprise WHERE identreprise=" . $id;
             $retour = mysql_query($requete);
 
             $i = 0;
@@ -108,12 +110,12 @@ class BD {
                 $entreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], NULL);
                 $i++;
             }
-            if($i > 0){
-                
+            if ($i > 0) {
+
                 return $entreprise[0];
-            }else{
-                
-                return NULL ;
+            } else {
+
+                return NULL;
             }
         }
         return NULL;
@@ -151,14 +153,14 @@ class BD {
         BD::getConnection();
         $idEntreprise = mysql_real_escape_string(htmlspecialchars($idEntreprise));
         $tabContact = null;
-        $i = 0 ;
+        $i = 0;
         if ($idEntreprise != FALSE) {
 
             $requete = "SELECT idcontact, prenomcontact, nomcontact, fonctioncontact, 
             telephonefixecontact, telmobilecontact, mailcontact FROM contact WHERE identreprise = $idEntreprise ";
-            
+
             $retour = mysql_query($requete);
-            
+
             while ($tableau = mysql_fetch_array($retour)) {
 
                 $tabContact[$i] = new ModeleContact($tableau['idcontact'], $tableau['prenomcontact'], $tableau['nomcontact'], $tableau['fonctioncontact'], $tableau['telephonefixecontact'], $tableau['telmobilecontact'], $tableau['mailcontact']);
@@ -203,22 +205,22 @@ class BD {
         $Ville = mysql_real_escape_string(htmlspecialchars($ville));
         $Tel_accueil = mysql_real_escape_string(htmlspecialchars($tel_accueil));
         $Sujet = mysql_real_escape_string(htmlspecialchars($sujet));
-        
-        if($Nom != FALSE && $Prenom != FALSE && $Formation != FALSE && $Nom_entreprise != FALSE 
-            && $Num_rue != FALSE && $Code_postal != FALSE && $Ville != FALSE
-            && $Tel_accueil != FALSE && Sujet != FALSE){
-            
+
+        if ($Nom != FALSE && $Prenom != FALSE && $Formation != FALSE && $Nom_entreprise != FALSE
+                && $Num_rue != FALSE && $Code_postal != FALSE && $Ville != FALSE
+                && $Tel_accueil != FALSE && Sujet != FALSE) {
+
             // Soit Recuperer identreprise 
             // SOIT on ajoute un champ nom entreprise temporaire, 
             // SOIT creer une table proposition stage qui sera par la suite
-            
+
             $requete = "INSERT into stage (idstage, identreprise, idcontact, 
                 nometudiant, prenometudiant, promotion, datedeproposition, sujetstage, 
                 datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, 
                 noteobtenue, appreciationobtenue, remuneration, embauche, dateembauche) 
                 VALUES ('$Idstage', '$Identreprise', '$Idcontact', '$Nom', '$Prenom', '$Promotion'
-                ".  getdate()."', NULL, 'A valider', NULL, NULL, NULL, NULL, NULL)";
-            
+                " . getdate() . "', NULL, 'A valider', NULL, NULL, NULL, NULL, NULL)";
+
             mysql_query($requete);
         }
     }
@@ -228,13 +230,13 @@ class BD {
      */
     public static function recherherToutesPropositions() {
         BD::getConnection();
-        $i=0;
+        $i = 0;
         $tabStage = null;
         $requete = "SELECT stage.idstage, entreprise.nomentreprise, stage.identreprise, stage.nometudiant, stage.prenometudiant, entreprise.nomentreprise FROM stage, entreprise  WHERE stage.identreprise = entreprise.identreprise AND stage.etatstage = 'a valider'";
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {
-            $tabStage[$i] = new ModeleStage($tableau['idstage'], $tableau['identreprise'],  $tableau['nomentreprise'], null, $tableau['nometudiant'], $tableau['prenometudiant'], null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            $tabStage[$i] = new ModeleStage($tableau['idstage'], $tableau['identreprise'], $tableau['nomentreprise'], null, $tableau['nometudiant'], $tableau['prenometudiant'], null, null, null, null, null, null, null, null, null, null, null, null, null, null);
             $i++;
         }
         return $tabStage;
@@ -244,32 +246,32 @@ class BD {
      * Permet d'afficher toutes les propositions de stage
      */
     public static function rechercherProposition($id) {
-        
+
         BD::getConnection();
-        
+
         $id = mysql_real_escape_string(htmlspecialchars($id));
-        if ( $id != FALSE ){
-        
-            $i=0;
+        if ($id != FALSE) {
+
+            $i = 0;
             $tabStage = null;
 
-            $requete = "SELECT stage.idstage, stage.identreprise, entreprise.nomentreprise, stage.idcontact, stage.nometudiant, stage.prenometudiant, stage.promotion, stage.datedeproposition, stage.sujetstage, stage.datevalidation, stage.datedebut, stage.datefin, stage.datesoutenance, stage.lieusoutenance, stage.etatstage, stage.noteobtenue, stage.appreciationobtenue, stage.remuneration, stage.embauche, stage.dateembauche FROM stage, entreprise  WHERE stage.identreprise = entreprise.identreprise AND stage.idstage = ".$id;
+            $requete = "SELECT stage.idstage, stage.identreprise, entreprise.nomentreprise, stage.idcontact, stage.nometudiant, stage.prenometudiant, stage.promotion, stage.datedeproposition, stage.sujetstage, stage.datevalidation, stage.datedebut, stage.datefin, stage.datesoutenance, stage.lieusoutenance, stage.etatstage, stage.noteobtenue, stage.appreciationobtenue, stage.remuneration, stage.embauche, stage.dateembauche FROM stage, entreprise  WHERE stage.identreprise = entreprise.identreprise AND stage.idstage = " . $id;
             $retour = mysql_query($requete) or die(mysql_error());
 
             while ($tableau = mysql_fetch_array($retour)) {
-                $tabStage[$i] = new ModeleStage($tableau['idstage'], $tableau['identreprise'],  $tableau['nomentreprise'], $tableau['idcontact'], $tableau['nometudiant'], $tableau['prenometudiant'], $tableau['promotion'], $tableau['datedeproposition'], $tableau['sujetstage'], $tableau['datevalidation'], $tableau['datedebut'], $tableau['datefin'], $tableau['datesoutenance'], $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], $tableau['dateembauche']);
+                $tabStage[$i] = new ModeleStage($tableau['idstage'], $tableau['identreprise'], $tableau['nomentreprise'], $tableau['idcontact'], $tableau['nometudiant'], $tableau['prenometudiant'], $tableau['promotion'], $tableau['datedeproposition'], $tableau['sujetstage'], $tableau['datevalidation'], $tableau['datedebut'], $tableau['datefin'], $tableau['datesoutenance'], $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], $tableau['dateembauche']);
                 $i++;
             }
-            if ( $i > 0 ){
+            if ($i > 0) {
 
                 return $tabStage[0];
-            }else{
+            } else {
                 return NULL;
             }
         }
-        return NULL ;
+        return NULL;
     }
-    
+
     /**
      * Permet de valider un stage, c'est à dire de passer son état à "validé"
      * @param type $idStage 
