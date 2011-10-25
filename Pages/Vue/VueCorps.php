@@ -371,6 +371,10 @@ function genererDetailPropositionStage() {
     return $corps;
 }
 
+
+function genererProposerStageEtape2() {
+    
+}
 function genererProposerStage($tabEntreprise) {
 
     $nom = NULL;
@@ -384,16 +388,10 @@ function genererProposerStage($tabEntreprise) {
     $corps .= "<td id = \"corps\">
                 <h2>Recherche d'une entreprise</h2>                
                 
-                
-                
                 <form method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape1\">
+                            Nom : <input type=text name=\"nom\" value=\"" . $nom . "\">
                     
-                            Nom :
-                   
-                            <input type=text name=\"nom\" value=\"" . $nom . "\">
-                      
-                    
-                   <input type=\"submit\" value=\"Rechercher\"></form><br /><br />";
+               <input type=\"submit\" value=\"Rechercher\"></form><br /><br />";
          
     
     $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaire()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape2\">";
@@ -442,16 +440,14 @@ function genererProposerStage($tabEntreprise) {
     // si l'utilisateur a déjà entré un nom d'entreprise
     if (isset($_POST['nom'])){
         
-        
         // on affiche le radio bouton "ajouter une entreprise"
-        // si aucune entreprise existe dans la base on la selectionne
-        if ((!isset($_POST['nom'])) && ($tabEntreprise == NULL)){
+        if ($tabEntreprise == NULL){
 
-            $corps .= "<br /><input type=\"radio\" name=\"idEntreprise\" value=\"ajouter\" id=\"ajouter\" /> <label for=\"autre\">Ajouter une entreprise :</label>";
+            $corps .= "<br />Aucune entreprise ayant un nom similaire n'&eacute;xiste dans la base. Vous devez l'ajouter :";
+            
         }else{
-            $corps .= "<br /><input type=\"radio\" name=\"idEntreprise\" value=\"ajouter\" id=\"ajouter\"  checked=\"checked\" /> <label for=\"autre\">Ajouter une entreprise :</label>";
+            $corps .= "<br /><input type=\"radio\" name=\"idEntreprise\" value=\"ajouter\" id=\"ajouter\" /> <label for=\"autre\">Ajouter une entreprise :</label>";
         }
-        
 
         $corps .= " <br /><br />
                     
@@ -466,7 +462,7 @@ function genererProposerStage($tabEntreprise) {
                                 Nom de l'entreprise <etoile>*</etoile> : 
                             </td>
                             <td>
-                                <input type=text name=\"nom_entreprise\" id=\"nom_entreprise\">
+                                <input type=text name=\"nom_entreprise\" id=\"nom_entreprise\" value=\"carrefour\">
                             </td>
                         </tr>
                         <tr>
@@ -479,7 +475,7 @@ function genererProposerStage($tabEntreprise) {
                                 N°, Rue <etoile>*</etoile> : 
                             </td>
                             <td>
-                                <input type=text name=\"num_rue\" id=\"num_rue\">
+                                <input type=text name=\"num_rue\" id=\"num_rue\" value=\"10 avenue de libe\">
                             </td>
                         </tr>
                         <tr>
@@ -487,7 +483,7 @@ function genererProposerStage($tabEntreprise) {
                                 Code postal <etoile>*</etoile> :
                             </td>
                             <td>
-                                <input type=text name=\"code_postal\" id=\"code_postal\">
+                                <input type=text name=\"code_postal\" id=\"code_postal\" value=\"287637\">
                             </td>
                         </tr>
                         <tr>
@@ -495,7 +491,7 @@ function genererProposerStage($tabEntreprise) {
                                 Ville <etoile>*</etoile> : 
                             </td>
                             <td>
-                                 <input type=text name=\"ville\" id=\"ville\">
+                                 <input type=text name=\"ville\" id=\"ville\" value=\"Lyon\">
                             </td>
                         </tr>
                         <tr>
@@ -503,7 +499,7 @@ function genererProposerStage($tabEntreprise) {
                                 Pays <etoile>*</etoile> : 
                             </td>
                             <td>
-                                 <input type=text name=\"pays\" id=\"pays\">
+                                 <input type=text name=\"pays\" id=\"pays\" value=\"france\">
                             </td>
                         </tr>
                         <tr>
@@ -511,7 +507,7 @@ function genererProposerStage($tabEntreprise) {
                                 T&eacute;l&eacute;phone accueil <etoile>*</etoile> : 
                             </td>
                             <td>
-                                 <input type=text name=\"tel_accueil\" id=\"tel_accueil\">
+                                 <input type=text name=\"tel_accueil\" id=\"tel_accueil\" value=\"86866\">
                             </td>
                         </tr>
                         <tr>

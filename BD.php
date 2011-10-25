@@ -121,26 +121,33 @@ class BD {
         return NULL;
     }
 
-    public static function ajouterEntreprise($nom, $adresse, $ville, $pays, $numeroTel, $numeroSiret, $urlSiteInternet) {
+    public static function ajouterEntreprise($nom, $numRue, $ville, $codePostal, $pays, $numeroTel, $urlSiteInternet) {
 
         BD::getConnection();
         $nom = mysql_real_escape_string(htmlspecialchars($nom));
-        $adresse = mysql_real_escape_string(htmlspecialchars($adresse));
+        $numRue = mysql_real_escape_string(htmlspecialchars($numRue));
         $ville = mysql_real_escape_string(htmlspecialchars($ville));
         $pays = mysql_real_escape_string(htmlspecialchars($pays));
         $numeroTel = mysql_real_escape_string(htmlspecialchars($numeroTel));
-        $numeroSiret = mysql_real_escape_string(htmlspecialchars($numeroSiret));
         $urlSiteInternet = mysql_real_escape_string(htmlspecialchars($urlSiteInternet));
+echo'nom'.$nom;
+echo'$numRue'.$numRue;
+echo'$ville'.$ville;
+echo'$pays'.$pays;
+echo'$numeroTel'.$numeroTel;
+echo'$urlSiteInternet'.$urlSiteInternet;
 
-        if ($nom != FALSE && $adresse != FALSE
+        if ($nom != FALSE && $numRue != FALSE
                 && $ville != FALSE && $pays != FALSE
-                && $numeroTel != FALSE && $numeroSiret != FALSE
+                && $numeroTel != FALSE 
                 && $urlSiteInternet != FALSE) {
-
-            $requete = "INSERT INTO entreprise (nomentreprise, adresseentreprise, villeentreprise, paysentreprise, numerotelephone, numerosiret, urlsiteinternet) 
-                VALUES ('$nom', '$adresse', '$ville', '$pays', '$numeroTel', '$numeroSiret, '$urlSiteInternet')";
-
-            mysql_query($requete);
+echo "ikop";
+            $requete = "INSERT INTO entreprise (nomentreprise, adresseentreprise, villeentreprise, paysentreprise, numerotelephone, urlsiteinternet) 
+                VALUES ('$nom', '$numRue', '$ville', '$pays', '$numeroTel', '$urlSiteInternet')";
+            echo $requete;
+            mysql_query($requete)  or die(mysql_error());
+        }else{
+            echo "pasbien";
         }
     }
 
@@ -286,6 +293,36 @@ class BD {
             $requete = "UPDATE stage SET etatstage = 'valide' WHERE idstage = '$idStage'";
             mysql_query($requete);
         }
+    }
+    
+    /**
+     * return true si $nom est le nom d'une entreprise dans la base, false sinon
+     * @param type $nom
+     * @return type 
+     */
+    public static function entrepriseExistante($nom){
+        
+        BD::getConnection();
+        $nom = mysql_real_escape_string(htmlspecialchars($nom));
+        
+        if($nom != FALSE){
+            
+            $i = 0;
+
+            $requete = "SELECT nomentreprise FROM entreprise WHERE nomentreprise ='".$nom."'";
+            $retour = mysql_query($requete);
+
+            while ($tableau = mysql_fetch_array($retour)) {
+                
+                $i++;
+            }
+            
+            if ($i > 0){
+                return TRUE ;
+            }
+        }
+        
+        return FALSE ;
     }
 
 }

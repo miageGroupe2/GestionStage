@@ -115,6 +115,10 @@ function call_action() {
                 case 'proposerStageEtape1' :
                     $action = 'proposerStageEtape1' ;
                     break;
+                
+                case 'proposerStageEtape2' :
+                    $action = 'proposerStageEtape2' ;
+                    break;
 
 //                case 'validerProposerStage':
 //                    $action = 'validerProposerStage' ;
