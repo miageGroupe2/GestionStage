@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.7deb5build0.10.10.1
+-- version 3.3.2deb1
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Mar 25 Octobre 2011 à 11:00
--- Version du serveur: 5.1.49
--- Version de PHP: 5.3.3-1ubuntu9.5
+-- Généré le : Mar 25 Octobre 2011 à 15:53
+-- Version du serveur: 5.1.41
+-- Version de PHP: 5.3.2-1ubuntu4.10
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -195,8 +195,8 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`idutilisateur`, `idpromotion`, `mailutilisateur`, `passwordutilisateur`, `nomutilisateur`, `prenomutilisateur`, `numetudiant`, `admin`) VALUES
-(0, 2, 'khalid.benali@loria.fr', 'khalid', 'benali', 'khalid', NULL, 1),
-(1, 2, 'ludo@gmail.com', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', 'fort', 'ludovic', '1234567', 0);
+(0, 2, 'khalid.benali@loria.fr', '94ca247fff5ad413788a1c8d8c80394a246dba1c', 'benali', 'khalid', NULL, 1),
+(1, 2, 'ludo@gmail.com', 'ae5a3c4fa3c5d1c2cc98e43b1899f88bce0e3569', 'fort', 'ludovic', '1234567', 0);
 
 --
 -- Contraintes pour les tables exportées
@@ -212,18 +212,18 @@ ALTER TABLE `contact`
 -- Contraintes pour la table `proposition`
 --
 ALTER TABLE `proposition`
-  ADD CONSTRAINT `fk_utilisateur_proposition` FOREIGN KEY (`idutilisateur`) REFERENCES `utilisateur` (`idutilisateur`),
   ADD CONSTRAINT `fk_propoentreprise` FOREIGN KEY (`identreprise`) REFERENCES `entreprise` (`identreprise`),
-  ADD CONSTRAINT `fk_propositionstage2` FOREIGN KEY (`idstage`) REFERENCES `stage` (`idstage`);
+  ADD CONSTRAINT `fk_propositionstage2` FOREIGN KEY (`idstage`) REFERENCES `stage` (`idstage`),
+  ADD CONSTRAINT `fk_utilisateur_proposition` FOREIGN KEY (`idutilisateur`) REFERENCES `utilisateur` (`idutilisateur`);
 
 --
 -- Contraintes pour la table `stage`
 --
 ALTER TABLE `stage`
-  ADD CONSTRAINT `fk_utilistateur_stage` FOREIGN KEY (`idutilisateur`) REFERENCES `utilisateur` (`idutilisateur`),
   ADD CONSTRAINT `fk_propositionstage` FOREIGN KEY (`idproposition`) REFERENCES `proposition` (`idproposition`),
   ADD CONSTRAINT `fk_stage_contact` FOREIGN KEY (`idcontact`) REFERENCES `contact` (`idcontact`),
-  ADD CONSTRAINT `fk_stage_entreprise` FOREIGN KEY (`identreprise`) REFERENCES `entreprise` (`identreprise`);
+  ADD CONSTRAINT `fk_stage_entreprise` FOREIGN KEY (`identreprise`) REFERENCES `entreprise` (`identreprise`),
+  ADD CONSTRAINT `fk_utilistateur_stage` FOREIGN KEY (`idutilisateur`) REFERENCES `utilisateur` (`idutilisateur`);
 
 --
 -- Contraintes pour la table `utilisateur`

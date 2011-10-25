@@ -39,7 +39,9 @@ function verifierAutorisationAction($action) {
                 }
             } else if ($_SESSION['admin'] == 0) {
                 // Specifique ETUDIANT
-                if ($action == "proposerStage") {
+                if ($action == "proposerStageEtape1") {
+                    return TRUE;
+                } else if ($action == "proposerStageEtape2") {
                     return TRUE;
                 } else if ($action == "completerPropositionStage") {
                     return TRUE;
