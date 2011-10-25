@@ -1,7 +1,6 @@
 <?php
 
 function genererPageAccueil() {
-    echo sha1("khalid");
     $corps = "<table>
                     <tr>
                         <td id=\"corps_log\">
@@ -380,12 +379,14 @@ function genererProposerStage($tabEntreprise) {
         $nom = htmlspecialchars($_POST['nom']);
     }
 
-    $corps = "<td id = \"corps\">
+    
+    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormPropoStageEtape1.js\" type=\"text/javascript\"></script>";
+    $corps .= "<td id = \"corps\">
                 <h2>Recherche d'une entreprise</h2>                
                 
                 
                 
-                <form method=\"post\" action=\"" . RACINE . "?action=proposerStage\">
+                <form method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape1\">
                     
                             Nom :
                    
@@ -393,7 +394,9 @@ function genererProposerStage($tabEntreprise) {
                       
                     
                    <input type=\"submit\" value=\"Rechercher\"></form><br /><br />";
-
+         
+    
+    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaire()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape2\">";
 
     // on liste les entreprises ayant un nom similaire
     if ($tabEntreprise != NULL) {
@@ -434,95 +437,99 @@ function genererProposerStage($tabEntreprise) {
         $corps .="</table>";
     }
 
-    if (isset($_POST['nom'])) {
+   
+    
+    // si l'utilisateur a déjà entré un nom d'entreprise
+    if (isset($_POST['nom'])){
+        
+        
+        // on affiche le radio bouton "ajouter une entreprise"
+        // si aucune entreprise existe dans la base on la selectionne
+        if ((!isset($_POST['nom'])) && ($tabEntreprise == NULL)){
 
-        echo "ééé";
+            $corps .= "<br /><input type=\"radio\" name=\"idEntreprise\" value=\"ajouter\" id=\"ajouter\" /> <label for=\"autre\">Ajouter une entreprise :</label>";
+        }else{
+            $corps .= "<br /><input type=\"radio\" name=\"idEntreprise\" value=\"ajouter\" id=\"ajouter\"  checked=\"checked\" /> <label for=\"autre\">Ajouter une entreprise :</label>";
+        }
+        
+
+        $corps .= " <br /><br />
+                    
+                    <table>
+                        <tr>
+                            <td colspam=\"2\">
+                                <h3>Coordonn&eacute;es  entreprise : </h3>
+                             </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Nom de l'entreprise <etoile>*</etoile> : 
+                            </td>
+                            <td>
+                                <input type=text name=\"nom_entreprise\" id=\"nom_entreprise\">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspam=\"2\">
+                                <br/><h3>Adresse de l'entreprise :</h3><br/>
+                             </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                N°, Rue <etoile>*</etoile> : 
+                            </td>
+                            <td>
+                                <input type=text name=\"num_rue\" id=\"num_rue\">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Code postal <etoile>*</etoile> :
+                            </td>
+                            <td>
+                                <input type=text name=\"code_postal\" id=\"code_postal\">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Ville <etoile>*</etoile> : 
+                            </td>
+                            <td>
+                                 <input type=text name=\"ville\" id=\"ville\">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Pays <etoile>*</etoile> : 
+                            </td>
+                            <td>
+                                 <input type=text name=\"pays\" id=\"pays\">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                T&eacute;l&eacute;phone accueil <etoile>*</etoile> : 
+                            </td>
+                            <td>
+                                 <input type=text name=\"tel_accueil\" id=\"tel_accueil\">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Site internet : 
+                            </td>
+                            <td>
+                                 <input type=text name=\"siteinternet\">
+                            </td>
+                        </tr>
+                        </table>
+
+                    <br /><input type=\"submit\" value=\"Etape suivante\"></form><br /><br />";
+
+
+            $corps .="</form>";
     }
-    // on affiche le radio bouton "ajouter une entreprise"
-    // si aucune entreprise exsiste dans la base on la selectionne
-    if ((isset($_POST['nom']) == FALSE) && $tabEntreprise == NULL) {
-
-        $corps .= "<br /><input type=\"radio\" name=\"idEntreprise\" value=\"ajouter\" id=\"ajouter\"  checked=\"checked\" /> <label for=\"autre\">Ajouter une entreprise :</label>";
-    } else {
-        $corps .= "<br /><input type=\"radio\" name=\"idEntreprise\" value=\"ajouter\" id=\"ajouter\" /> <label for=\"autre\">Ajouter une entreprise :</label>";
-    }
-
-    $corps .= " <br /><br />
-                <form method=\"post\" action=\"" . RACINE . "?action=proposerStage\">
-                <table>
-                    <tr>
-                        <td colspam=\"2\">
-                            <h3>Coordonn&eacute;es  entreprise : </h3>
-                         </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Nom de l'entreprise <etoile>*</etoile> : 
-                        </td>
-                        <td>
-                            <input type=text name=\"nom_entreprise\">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspam=\"2\">
-                            <br/><h3>Adresse de l'entreprise :</h3><br/>
-                         </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            N°, Rue <etoile>*</etoile> : 
-                        </td>
-                        <td>
-                            <input type=text name=\"num_rue\">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Code postal <etoile>*</etoile> :
-                        </td>
-                        <td>
-                            <input type=text name=\"code_postal\">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Ville <etoile>*</etoile> : 
-                        </td>
-                        <td>
-                             <input type=text name=\"ville\">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Pays <etoile>*</etoile> : 
-                        </td>
-                        <td>
-                             <input type=text name=\"pays\">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            T&eacute;l&eacute;phone accueil <etoile>*</etoile> : 
-                        </td>
-                        <td>
-                             <input type=text name=\"tel_accueil\">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Site internet : 
-                        </td>
-                        <td>
-                             <input type=text name=\"siteinternet\">
-                        </td>
-                    </tr>
-                    </table>
-                                
-                <br /><input type=\"submit\" value=\"Ajouter l'entreprise\"></form><br /><br />";
-
-
-    $corps .="</form>
-        </td> </tr> </table>";
+        $corps .="</td> </tr> </table>";
     return $corps;
 }
 
