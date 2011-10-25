@@ -241,9 +241,9 @@ function genererListeResultatRechercheEntreprise($tabEntreprise) {
     return $corps;
 }
 
-function genererListePropositionStage() {
+function genererListePropositionStageResponsable() {
 
-    $tabStage = BD::recherherToutesPropositions();
+    $tabProp = BD::recherherToutesPropositions();
     $corps = "<td id = \"corps\">
                 <table class=\"tableau\">
                     <tr>
@@ -261,17 +261,17 @@ function genererListePropositionStage() {
                         </td>
                     </tr>
             ";
-    if ($tabStage != null) {
-        foreach ($tabStage as $stage) {
+    if ($tabProp != null) {
+        foreach ($tabProp as $prop) {
             $corps = $corps . "
                         <tr>
-                            <td class=\"tableau\">" . $stage->getNometudiant()
+                            <td class=\"tableau\">" . $prop->getEtudiant()->getNom()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getPrenometudiant()
+                            <td class=\"tableau\">" . $prop->getEtudiant()->getPrenome()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getNomentreprise()
+                            <td class=\"tableau\">" . $prop->getNomEntreprise()
                     . "</td>
-                            <td class=\"tableau\"><a href=\"" . RACINE . "?action=detailStage&idstage=" . $stage->getIdstage() . "\">D&eacute;tails</a>
+                            <td class=\"tableau\"><a href=\"" . RACINE . "?action=detailProp&idprop=" . $prop->getIdProposition() . "\">D&eacute;tails</a>
                             </td>
                         </tr>";
         }
@@ -282,13 +282,13 @@ function genererListePropositionStage() {
 
 function genererDetailPropositionStage() {
 
-    $stage = BD::rechercherProposition($_GET['idstage']);
+    $stage = BD::rechercherProposition($_GET['idsprop']);
 
     $corps = NULL;
 
     if ($stage != NULL) {
 
-        $entreprise = BD::rechercherEntrepriseById($_GET['idstage']);
+        $entreprise = BD::rechercherEntrepriseById($_GET['idprop']);
 
         // la liste des entreprises ayant un nom similaire
         $tabEntreprise = BD::rechercherEntreprise($stage->getNomentreprise());

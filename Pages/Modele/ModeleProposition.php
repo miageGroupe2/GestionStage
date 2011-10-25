@@ -12,6 +12,9 @@
  */
 class ModeleProposition {
     private $idProposition;
+    private $idEntreprise;
+    private $idUtilisateur;
+    private $idStage;
     private $nomEntreprise;
     private $dateProposition;
     private $adresseEntreprise;
@@ -21,10 +24,15 @@ class ModeleProposition {
     private $numTelephone;
     private $urlSite;
     private $sujet;
-    private $etatProposition;
-    
-    function __construct($idProposition, $nomEntreprise, $dateProposition, $adresseEntreprise, $codePostal, $ville, $pays, $numTelephone, $urlSite, $sujet, $etatProposition) {
+    private $estValidee;
+    private $etudiant;
+
+
+    function __construct($idProposition, $idEntreprise, $idUtilisateur, $idStage, $nomEntreprise, $dateProposition, $adresseEntreprise, $codePostal, $ville, $pays, $numTelephone, $urlSite, $sujet, $estValidee, $etudiant) {
         $this->idProposition = $idProposition;
+        $this->idEntreprise = $idEntreprise;
+        $this->idUtilisateur = $idUtilisateur;
+        $this->idStage = $idStage;
         $this->nomEntreprise = $nomEntreprise;
         $this->dateProposition = $dateProposition;
         $this->adresseEntreprise = $adresseEntreprise;
@@ -34,15 +42,48 @@ class ModeleProposition {
         $this->numTelephone = $numTelephone;
         $this->urlSite = $urlSite;
         $this->sujet = $sujet;
-        $this->etatProposition = $etatProposition;
+        $this->estValidee = $estValidee;
+        $this->etudiant = $etudiant;
+    }
+    
+    public function getEtudiant() {
+        return $this->etudiant;
     }
 
-    public function getIdProposition() {
+    public function setEtudiant($etudiant) {
+        $this->etudiant = $etudiant;
+    }
+
+        public function getIdProposition() {
         return $this->idProposition;
     }
 
     public function setIdProposition($idProposition) {
         $this->idProposition = $idProposition;
+    }
+
+    public function getIdEntreprise() {
+        return $this->idEntreprise;
+    }
+
+    public function setIdEntreprise($idEntreprise) {
+        $this->idEntreprise = $idEntreprise;
+    }
+
+    public function getIdUtilisateur() {
+        return $this->idUtilisateur;
+    }
+
+    public function setIdUtilisateur($idUtilisateur) {
+        $this->idUtilisateur = $idUtilisateur;
+    }
+
+    public function getIdStage() {
+        return $this->idStage;
+    }
+
+    public function setIdStage($idStage) {
+        $this->idStage = $idStage;
     }
 
     public function getNomEntreprise() {
@@ -117,17 +158,15 @@ class ModeleProposition {
         $this->sujet = $sujet;
     }
 
-    public function getEtatProposition() {
-        return $this->etatProposition;
+    public function getEstValidee() {
+        return $this->estValidee;
     }
 
-    public function setEtatProposition($etatProposition) {
-        $this->etatProposition = $etatProposition;
+    public function setEstValidee($estValidee) {
+        $this->estValidee = $estValidee;
     }
 
 
-    
-    
 }
 
 ?>

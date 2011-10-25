@@ -6,9 +6,9 @@ require_once RACINE_VUE . 'VueCorps.php';
 require_once 'BD.php';
 
 
-function afficherListePropositionStageResponsable() {
+function ListePropositionStageResponsable() {
     $menuGauche = genererMenuGauche();
-    $corps = genererListePropositionStage();
+    $corps = genererListePropositionStageResponsable();
     AffichePage($menuGauche, $corps);
 }
 
