@@ -17,59 +17,59 @@ function verifierAutorisationAction($action) {
             if ($_SESSION['admin'] == 1) {
                 // specifique ADMIN
                 if ($action == "listePropositionStageResponsable") {
-                    return TRUE;
-                } else if ($action == "detailStage") {
-                    return TRUE;
+                    return $action;
+                } else if ($action == "detailProp") {
+                    return $action;
                 } else if ($action == "listeStageAnneeCourante") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "consulterStage") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "creerCompteAdmin") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "accesDonneesEtudiants") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "pagePrincipale") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "connexion") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "deconnexion") {
-                    return TRUE;
+                   return $action;
                 } else {
-                    return FALSE;
+                    return "pagePrincipale";
                 }
             } else if ($_SESSION['admin'] == 0) {
                 // Specifique ETUDIANT
                 if ($action == "proposerStageEtape1") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "proposerStageEtape2") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "completerPropositionStage") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "completerStage") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "listePropositionStageEtudiant") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "listeStageEtudiant") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "modifierInformations") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "pagePrincipale") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "connexion") {
-                    return TRUE;
+                    return $action;
                 } else if ($action == "deconnexion") {
-                    return TRUE;
+                    return $action;
                 } else {
-                    return FALSE;
+                    return "pagePrincipale";
                 }
             }
         }
-    }else{
+    } else {
         if ($action == "connexion") {
-                return TRUE;
-            } else {
-                return FALSE;
-            }
+            return $action;
+        } else {
+            return "afficherAccueil";
+        }
     }
 }
 
@@ -81,97 +81,100 @@ function call_action() {
         $action = 'afficherAccueil';
     } else {
         $action = $_REQUEST['action'];
-        if (!verifierAutorisationAction($action)) {
-            $action = "afficherAccueil";
-        } else {
-            switch ($_REQUEST['action']) {
-                // Partie commune
-                case 'pagePrincipale' :
-                    $action = 'afficherPagePrincipale';
-                    break;
+        // Si l'action n'est pas autorisee pour l'utilisateur  (Admin/etudiant/guest)
+        
+        $action = verifierAutorisationAction($action);  
+        switch ($action) {
+            // Partie commune
+            case 'afficherAccueil':
+                $action = 'afficherAccueil';
+                break;
+            
+            case 'pagePrincipale' :
+                $action = 'afficherPagePrincipale';
+                break;
 
-                case 'connexion' :
-                    $action = 'connecterUtilisateur';
-                    break;
+            case 'connexion' :
+                $action = 'connecterUtilisateur';
+                break;
 
-                case 'deconnexion' :
-                    $action = 'deconnecterUtilisateur';
-                    break;
-                /*
-                  case 'rechercherEntreprise':
-                  $action = 'afficherRechercherEntreprise';
-                  break;
+            case 'deconnexion' :
+                $action = 'deconnecterUtilisateur';
+                break;
+            /*
+              case 'rechercherEntreprise':
+              $action = 'afficherRechercherEntreprise';
+              break;
 
-                  case 'effectuerRechercheEntreprise':
-                  $action = 'effectuerRechercheEntreprise';
-                  break;
+              case 'effectuerRechercheEntreprise':
+              $action = 'effectuerRechercheEntreprise';
+              break;
 
-                  case 'choisirEntreprise':
-                  $action = 'afficherContactParEntreprise';
-                  break;
-                 */
-                // partie etudiant
+              case 'choisirEntreprise':
+              $action = 'afficherContactParEntreprise';
+              break;
+             */
+            // partie etudiant
 
-                case 'proposerStageEtape1' :
-                    $action = 'proposerStageEtape1' ;
-                    break;
+            case 'proposerStageEtape1' :
+                $action = 'proposerStageEtape1';
+                break;
 
 //                case 'validerProposerStage':
 //                    $action = 'validerProposerStage' ;
 //                    break;
 
-                case 'completerPropositionStage' :
-                    $action = 'afficherCompleterStage';
-                    break;
+            case 'completerPropositionStage' :
+                $action = 'afficherCompleterStage';
+                break;
 
-                case 'completerStage' :
-                    $action = 'afficherCompleterStage';
-                    break;
+            case 'completerStage' :
+                $action = 'afficherCompleterStage';
+                break;
 
-                case 'listePropositionStageEtudiant' :
-                    $action = 'afficherListePropositionStageEtudiant';
-                    break;
+            case 'listePropositionStageEtudiant' :
+                $action = 'afficherListePropositionStageEtudiant';
+                break;
 
-                case 'listeStageEtudiant' :
-                    $action = 'afficherListeStageEtudiant';
-                    break;
+            case 'listeStageEtudiant' :
+                $action = 'afficherListeStageEtudiant';
+                break;
 
-                case 'modifierInformations' :
-                    $action = 'afficherModifierInformations';
-                    break;
+            case 'modifierInformations' :
+                $action = 'afficherModifierInformations';
+                break;
 
-                // Partie responsable
+            // Partie responsable
 
-                case 'listePropositionStageResponsable' :
-                    $action = 'afficherListePropositionStageResponsable';
-                    break;
+            case 'listePropositionStageResponsable' :
+                $action = 'listePropositionStageResponsable';
+                break;
 
-                case 'detailStage' :
-                    $action = 'afficherDetailStage';
-                    break;
+            case 'detailProp' :
+                $action = 'afficherDetailPropositionStage';
+                break;
 
-                case 'listeStageAnneeCourante' :
-                    $action = 'afficherListeStageAnneeCourante';
-                    break;
+            case 'listeStageAnneeCourante' :
+                $action = 'afficherListeStageAnneeCourante';
+                break;
 
-                case 'consulterStage' :
-                    $action = 'afficherConsulterStage';
-                    break;
+            case 'consulterStage' :
+                $action = 'afficherConsulterStage';
+                break;
 
-                case 'creerCompteAdmin' :
-                    $action = 'afficherCreerCompteAdmin';
-                    break;
+            case 'creerCompteAdmin' :
+                $action = 'afficherCreerCompteAdmin';
+                break;
 
-                case 'accesDonneesEtudiants' :
-                    $action = 'afficherAccesDonneesEtudiants';
-                    break;
+            case 'accesDonneesEtudiants' :
+                $action = 'afficherAccesDonneesEtudiants';
+                break;
 
-                // DEFAUT 
+            // DEFAUT 
 
-                default :
-                    $action = 'afficherPagePrincipale';
-                    break;
-            }
+            default :
+                $action = 'afficherPagePrincipale';
+                break;
         }
     }
     $action();
