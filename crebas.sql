@@ -107,27 +107,6 @@ create table proposition
 )
 type = innodb;
 
-/*==============================================================*/
-/* index : "propoetudiant_fk"                                            */
-/*==============================================================*/
-create index propoetudiant_fk
-(
-   idetudiant
-);
-/*==============================================================*/
-/* index : "propoentreprise_fk"                                            */
-/*==============================================================*/
-create index propoentreprise_fk
-(
-   identreprise
-);
-/*==============================================================*/
-/* index : "propositionstage2_fk"                                            */
-/*==============================================================*/
-create index propositionstage2_fk
-(
-   idstage
-);
 
 /*==============================================================*/
 /* Table : responsable                                          */
@@ -169,35 +148,6 @@ create table stage
    primary key (idstage)
 )
 type = innodb;
-
-/*==============================================================*/
-/* index : "stage_entreprise_fk"                                            */
-/*==============================================================*/
-create index stage_entreprise_fk
-(
-   identreprise
-);
-/*==============================================================*/
-/* index : "stage_contact_fk"                                            */
-/*==============================================================*/
-create index stage_contact_fk
-(
-   idcontact
-);
-/*==============================================================*/
-/* index : "stageetudiant_fk"                                            */
-/*==============================================================*/
-create index stageetudiant_fk
-(
-   idetudiant
-);
-/*==============================================================*/
-/* index : "propositionstage_fk"                                            */
-/*==============================================================*/
-create index propositionstage_fk
-(
-   idproposition
-);
 
 alter table contact add constraint fk_entreprise_contact foreign key (identreprise)
       references entreprise (identreprise) on delete restrict on update restrict;
