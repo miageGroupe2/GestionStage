@@ -15,8 +15,8 @@
                 $menuGauche = "<table>
                             <tr>
                                 <td id=\"menu_gauche\">
-                                    Vous &ecirc;tes connect&eacute; en tant que " . $_SESSION['login'] . "
-                                    <a href=\"".RACINE."?action=deconnexion\">(Se d&eacuteconnecter)</a><br/>
+                                    Connect&eacute; en tant que " . $_SESSION['login'] . "
+                                    <a href=\"".RACINE."?action=deconnexion\"><br/>(Se d&eacuteconnecter)</a><br/><br/>
                                  
                              ";
         } else {

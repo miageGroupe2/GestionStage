@@ -18,7 +18,7 @@ function connecterUtilisateur() {
         if ($_POST['login'] != NULL AND $_POST['password'] != NULL) {
 
             $login = $_POST['login'];
-            $password = sha1($_POST['password']);
+            $password = $_POST['password'];
 
             $utilisateurExistant = BD::authentification($login, $password);
 
