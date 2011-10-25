@@ -57,7 +57,6 @@ class BD {
                 
                 return TRUE;
             } else {
-
                 return FALSE;
             }
         }

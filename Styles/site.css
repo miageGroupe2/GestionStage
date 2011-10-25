@@ -15,6 +15,14 @@ root {
     display: block;
 }
 
+.erreur{
+    width: 1000px;
+    color: red;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid black;
+}
+
 .submit{
     text-align: center;
     width: 840px;

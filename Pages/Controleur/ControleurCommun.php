@@ -8,7 +8,7 @@ function deconnecterUtilisateur() {
         session_destroy();
     }
 
-    afficherPagePrincipale();
+    afficherAccueil();
 }
 
 function connecterUtilisateur() {
@@ -26,16 +26,25 @@ function connecterUtilisateur() {
 
                 $_SESSION['connecte'] = 1;
                 $_SESSION['login'] = $login;
+                afficherPagePrincipale();
+            }else{
+                afficherAccueilErreur();
             }
         }
     }
 
-    afficherPagePrincipale();
+    
 }
 
 function afficherAccueil() {
     $menuGauche = "";
     $corps = genererPageAccueil();
+    AffichePage($menuGauche, $corps);
+}
+
+function afficherAccueilErreur() {
+    $menuGauche = "";
+    $corps = genererPageAccueilErreue();
     AffichePage($menuGauche, $corps);
 }
 
