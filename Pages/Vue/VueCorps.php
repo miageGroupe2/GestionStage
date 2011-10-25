@@ -160,36 +160,7 @@ return $corps;
 }
 
 
-function genererProposerStage() {
 
-    $nom = NULL ;
-    if (isset($_POST['nom'])){
-        
-        $nom = htmlspecialchars($_POST['nom']);
-    }
-    
-    $corps = "<td id = \"corps\">
-                <h2>Recherche d'une entreprise</h2>                
-                
-                <table class=\"tableau\">
-                
-                <form method=\"post\" action=\"" . RACINE . "?action=validerProposerStage\">
-                    <tr>
-                        <td>
-                            Nom :
-                        </td>
-                        <td>
-                            <input type=text name=\"nom\" value=\"".$nom."\">
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td colspan =\"2\"><input type=\"submit\" value=\"Rechercher\"></td>
-                    </tr>
-                </form>
-                </table></td> </tr> </table>";
-    return $corps;
-}
 
 function genererListePropositionStage(){
     
@@ -325,6 +296,52 @@ function genererDetailPropositionStage(){
             </table>";
                       
     }
+    return $corps;
+}
+
+function genererProposerStage() {
+
+    $nom = NULL ;
+    if (isset($_POST['nom'])){
+        
+        $nom = htmlspecialchars($_POST['nom']);
+    }
+    
+    $corps = "<td id = \"corps\">
+                <h2>Recherche d'une entreprise</h2>                
+                
+                <table class=\"tableau\">
+                
+                <form method=\"post\" action=\"" . RACINE . "?action=validerProposerStage\">
+                    <tr>
+                        <td>
+                            Nom :
+                        </td>
+                        <td>
+                            <input type=text name=\"nom\" value=\"".$nom."\">
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan =\"2\"><input type=\"submit\" value=\"Rechercher\"></td>
+                    </tr>";
+    
+    if ($nom != NULL){
+        
+        $corps .= "<tr>
+                  <td class=\"tableau\"> Choix </td>
+                  <td class=\"tableau\"> Nom entreprise </td>
+                  <td class=\"tableau\"> Adresse </td>
+                  <td class=\"tableau\"> Ville </td>
+                  <td class=\"tableau\"> Pays </td>
+                  <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
+                  <td class=\"tableau\"> Numéro de Siret </td>
+                  <td class=\"tableau\"> Site web </td>
+                  </tr>";
+    }
+                 
+        $corps .="</form>
+        </table></td> </tr> </table>";
     return $corps;
 }
 
