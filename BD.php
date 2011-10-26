@@ -268,19 +268,20 @@ echo "ikop";
         if ($id != FALSE) {
 
             $i = 0;
-            $tabStage = null;
+            $tabProp = null;
 
-            $requete = "SELECT p.idproposition, p.nomentreprisep, p.dateproposition, p.adresseentreprisep, p.villeentreprisep, p.codepostalentreprisep, p.paysentreprisep, p.numerotelephonep, p.urlsiteinternetp, p.sujetstagep, p.estalidee, u.nomutilisateur, u.prenomutilisateur, u.mail, pr.nompromotion
+            $requete = "SELECT p.idproposition, p.nomentreprisep, p.dateproposition, p.adresseentreprisep, p.villeentreprisep, p.codepostalentreprisep, p.paysentreprisep, p.numerotelephonep, p.urlsiteinternetp, p.sujetstagep, p.estvalidee, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, pr.nompromotion
                         FROM proposition p, utilisateur u, promotion pr
                         WHERE p.idproposition =".$id." 
-                        AND p.idpromotion = pr.idpromotion
-                        AND p.idutilisateur = u.idutilisateur";
+                        AND p.idutilisateur = u.idutilisateur
+                        AND u.idpromotion = pr.idpromotion";
             $retour = mysql_query($requete) or die(mysql_error());
 
             while ($tableau = mysql_fetch_array($retour)) {
-                $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mail']);
+                $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur']);
                 $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nometreprisep'], $tableau['dateproposition'], $tableau['promotion'], $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['estvalidee'], $tableau['noteobtenue'], $etudiant, $tableau['nompromotion']);
                 $i++;
+                echo "yeaj";
             }
             
             if ($i > 0) {

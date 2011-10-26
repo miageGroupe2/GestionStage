@@ -12,9 +12,9 @@ function ListePropositionStageResponsable() {
     AffichePage(TRUE, $corps);
 }
 
-function afficherDetailPropositionStage(){
+function afficherDetailProposition(){
 
-    $corps = genererDetailPropositionStage();
+    $corps = genererDetailProposition();
     AffichePage(TRUE, $corps);        
 }
 
