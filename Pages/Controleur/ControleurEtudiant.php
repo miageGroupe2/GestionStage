@@ -7,11 +7,17 @@ require_once 'BD.php';
 
 function proposerStageEtape2() {
     
-    //si l'utilisateur a sélectionné une entreprise exsitante
+    $continuer = FALSE ;
+    
+    //si l'utilisateur a sélectionné une entreprise existante
     if (isset($_POST['idEntreprise']) && $_POST['idEntreprise'] != "ajouter"){
         
         
-    
+        $entreprise = BD::rechercherEntrepriseById($_POST['idEntreprise']);
+        if ( $entreprise != NULL){
+        
+            $continuer = TRUE ;
+        }
         
     }else{
     // si l'utilisateur a ajouté une entreprise
@@ -26,28 +32,45 @@ function proposerStageEtape2() {
             
             
             $existe = BD::entrepriseExistante($_POST['nom_entreprise']);
-            echo "ici";
+            
             if (!$existe){
-echo "ici2";
+
+                $continuer = TRUE ;
+                
                 $siteInternet = "" ;
                 if (isset($_POST['siteinternet']) && $_POST['siteinternet'] != NULL){
                     $siteInternet = $_POST['siteinternet'] ;
                 }
-                BD::ajouterEntreprise($_POST['nom_entreprise'], $_POST['num_rue'], $_POST['ville'], $_POST['code_postal'], $_POST['pays'], $_POST['tel_accueil'], $_POST['siteinternet']);
-                $menuGauche = genererMenuGauche();
-//                $corps = genererProposerStageEtape2();
+                $numeroSiret = "" ;
+                if (isset($_POST['numerosiret']) && $_POST['numerosiret'] != NULL){
+                    $numeroSiret = $_POST['numerosiret'] ;
+                }
+
+                $entreprise = new ModeleEntreprise(NULL, $_POST['nom_entreprise'], $_POST['num_rue'], $_POST['code_postal'], $_POST['ville'], $_POST['pays'], $_POST['tel_accueil'], $numeroSiret, $siteInternet);
+                
+
 //                AffichePage($menuGauche, $corps);
             }else{
-                echo "ici3";
-//                $_REQUEST['action'] = "pagePrincipale";
-//                call_action();
+
+                $_REQUEST['action'] = "pagePrincipale";
+                call_action();
             }
         }else{
             $_REQUEST['action'] = "pagePrincipale";
             call_action();
         }
+    }
+    if ($continuer){
+            
+        $tabContact = NULL ;
+        // ici l'utilisteur a ajouté une entreprise (qui n'est pas encore en BD) ou en a
+        // choisit une qui est dans la base. Si c'est le cas on va récupérer 
+        // les contacts de cette entreprise dans la base
+        if ( $entreprise->getId() != NULL){
+            $tabContact = BD::rechercherContactParEntreprise($entreprise->getId());
+        }
         
-        
+        $corps = genererProposerStageEtape2($tabContact);
     }
 }
 
@@ -63,21 +86,20 @@ function proposerStageEtape1() {
         $tabEntreprise = BD::rechercherEntreprise($_POST['nom']);
     }
     
-    $menuGauche = genererMenuGauche();
+    
     $corps = genererProposerStage($tabEntreprise);
-    AffichePage($menuGauche, $corps);
+    AffichePage(TRUE, $corps);
 }
 
 function afficherListePropositionStageEtudiant() {
-    $menuGauche = genererMenuGauche();
+    
     $corps = genererListePropositionStage();
-    AffichePage($menuGauche, $corps);
+    AffichePage(TRUE, $corps);
 }
 
 function afficherCompleterStage() {
-    $menuGauche = genererMenuGauche();
     $corps = genererPageAccueil();
-    AffichePage($menuGauche, $corps);
+    AffichePage(TRUE, $corps);
 }
 
     function validerProposerStage(){
@@ -103,8 +125,7 @@ function afficherCompleterStage() {
         }
         //htmlspecialchars
         
-        $menuGauche = genererMenuGauche();
-        AffichePage($menuGauche, $corps);
+        AffichePage(TRUE, $corps);
     }
 
 /*

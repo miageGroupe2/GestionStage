@@ -1,7 +1,13 @@
 <?php
 
 //function AffichePage( $menuleft, $content,$menuright) {
-function AffichePage($menuGauche, $corps) {
+function AffichePage($afficherMenuGauche, $corps) {
+    
+    $menuGauche = "" ;
+    if ($afficherMenuGauche){
+     
+        $menuGauche = genererMenuGauche();
+    }
 
 //	if (isset ($_SESSION['logge'])) {
 //		if ($_SESSION['logge']==1){	//l'utilisateur est loggé on affiche le menu d'admnistration

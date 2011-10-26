@@ -7,25 +7,20 @@ require_once 'BD.php';
 
 
 function ListePropositionStageResponsable() {
-    $menuGauche = genererMenuGauche();
+
     $corps = genererListePropositionStageResponsable();
-    AffichePage($menuGauche, $corps);
+    AffichePage(TRUE, $corps);
 }
 
 function afficherDetailPropositionStage(){
-        $menuGauche = genererMenuGauche();
-        $corps = genererDetailPropositionStage();
-        AffichePage($menuGauche, $corps);        
+
+    $corps = genererDetailPropositionStage();
+    AffichePage(TRUE, $corps);        
 }
 
 function afficherDetailStage(){
-        $menuGauche = genererMenuGauche();
-        $corps = genererDetailStage();
-        AffichePage($menuGauche, $corps);
-    }
+    $corps = genererDetailStage();
+    AffichePage(TRUE, $corps);
+}
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 ?>

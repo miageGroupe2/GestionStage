@@ -6,17 +6,19 @@
         private $nom ;
         private $adresse ;
         private $ville ;
+        private $codePostal ;
         private $pays ;
         private $numeroTelephone ;
         private $numeroSiret ;
         private $urlSiteInternet ;
         
-        function __construct($id, $nom, $adresse, $ville, $pays, $numeroTelephone, $numeroSiret, $urlSiteInternet) {
+        function __construct($id, $nom, $adresse, $ville, $codePostal, $pays, $numeroTelephone, $numeroSiret, $urlSiteInternet) {
             $this->id = $id;
             $this->nom = $nom;
             $this->adresse = $adresse;
             $this->ville = $ville;
             $this->pays = $pays;
+            $this->codePostal= $codePostal;
             $this->numeroTelephone = $numeroTelephone;
             $this->numeroSiret = $numeroSiret;
             $this->urlSiteInternet = $urlSiteInternet;
@@ -52,6 +54,10 @@
 
         public function getUrlSiteInternet() {
             return $this->urlSiteInternet;
+        }
+
+        public function getCodePostal() {
+            return $this->codePostal;
         }
 
 
