@@ -22,12 +22,16 @@ function connecterUtilisateur() {
             $login = $_POST['login'];
             $password = $_POST['password'];
 
-            $utilisateurExistant = BD::authentification($login, $password);
-
-            if ($utilisateurExistant == TRUE) {
+            $utilisateur = BD::authentification($login, $password);
+            
+            if ($utilisateur != NULL) {
 
                 $_SESSION['connecte'] = 1;
                 $_SESSION['login'] = $login;
+                
+                //on stock en session l'utilisateur connecté
+                $_SESSION['modeleUtilisateur'] = $utilisateur;
+                
                 afficherPagePrincipale();
             }else{
                 afficherAccueilErreur();

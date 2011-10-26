@@ -52,17 +52,16 @@ class BD {
             $nombreDeLignes = mysql_num_rows($retour);
             
             if ($nombreDeLignes > 0) {
+                
+                $modeleUtilisateur = NULL ;
                 while ($tableau = mysql_fetch_array($retour)) {
                     
                     $modeleUtilisateur = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], $tableau['numetudiant'], $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], $tableau['admin']);
-                                       
-                    //on stock en session l'utilisateur connecté
-                    $_SESSION['modeleUtilisateur'] = $modeleUtilisateur;
                 }
                 
-                return TRUE;
+                return $modeleUtilisateur;
             } else {
-                return FALSE;
+                return NULL;
             }
         }
     }
@@ -135,24 +134,16 @@ class BD {
         $pays = mysql_real_escape_string(htmlspecialchars($pays));
         $numeroTel = mysql_real_escape_string(htmlspecialchars($numeroTel));
         $urlSiteInternet = mysql_real_escape_string(htmlspecialchars($urlSiteInternet));
-echo'nom'.$nom;
-echo'$numRue'.$numRue;
-echo'$ville'.$ville;
-echo'$pays'.$pays;
-echo'$numeroTel'.$numeroTel;
-echo'$urlSiteInternet'.$urlSiteInternet;
 
         if ($nom != FALSE && $numRue != FALSE
                 && $ville != FALSE && $pays != FALSE
                 && $numeroTel != FALSE 
                 && $urlSiteInternet != FALSE) {
-echo "ikop";
-            $requete = "INSERT INTO entreprise (nomentreprise, adresseentreprise, villeentreprise, paysentreprise, numerotelephone, urlsiteinternet) 
-                VALUES ('$nom', '$numRue', '$ville', '$pays', '$numeroTel', '$urlSiteInternet')";
-            echo $requete;
+
+            $requete = "INSERT INTO entreprise (identreprise, nomentreprise, adresseentreprise, villeentreprise, paysentreprise, numerotelephone, urlsiteinternet) 
+                VALUES ('', '$nom', '$numRue', '$ville', '$pays', '$numeroTel', '$urlSiteInternet')";
+
             mysql_query($requete)  or die(mysql_error());
-        }else{
-            echo "pasbien";
         }
     }
 
@@ -208,6 +199,7 @@ echo "ikop";
     }
 
     public static function ajouterPropositionStage($nom, $prenom, $pormation, $nom_entreprise, $num_rue, $code_postal, $ville, $tel_accueil, $sujet) {
+        
         $Nom = mysql_real_escape_string(htmlspecialchars($nom));
         $Prenom = mysql_real_escape_string(htmlspecialchars($prenom));
         $Pormation = mysql_real_escape_string(htmlspecialchars($formation));
