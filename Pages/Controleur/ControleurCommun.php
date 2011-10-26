@@ -37,28 +37,24 @@ function connecterUtilisateur() {
 }
 
 function afficherAccueil() {
-    $menuGauche = "";
     $corps = genererPageAccueil();
-    AffichePage($menuGauche, $corps);
+    AffichePage(FALSE, $corps);
 }
 
 function afficherAccueilErreur() {
-    $menuGauche = "";
     $corps = genererPageAccueilErreue();
-    AffichePage($menuGauche, $corps);
+    AffichePage(FALSE, $corps);
 }
 
 function afficherPagePrincipale() {
-    $menuGauche = genererMenuGauche();
     $corps = genererPagePrincipal();
-    AffichePage($menuGauche, $corps);
+    AffichePage(TRUE, $corps);
 }
 
 
 function afficherRechercherEntreprise() {
-    $menuGauche = genererMenuGauche();
     $corps = genererRechercheEntreprise();
-    AffichePage($menuGauche, $corps);
+    AffichePage(TRUE, $corps);
 }
 
 function effectuerRechercheEntreprise() {
@@ -69,8 +65,7 @@ function effectuerRechercheEntreprise() {
         $tabEntreprise = BD::rechercherEntreprise($_POST['nomEntreprise']);
 
         $corps = genererListeResultatRechercheEntreprise($tabEntreprise);
-        $menuGauche = genererMenuGauche();
-        AffichePage($menuGauche, $corps);
+        AffichePage(TRUE, $corps);
     } else {
 
         afficherRechercherEntreprise();
@@ -84,8 +79,7 @@ function afficherContactParEntreprise() {
 
         $tabContact = BD::rechercherContactParEntreprise($_POST['idEntreprise']);
         $corps = genererListeResultatRechercheContact($tabContact);
-        $menuGauche = genererMenuGauche();
-        AffichePage($menuGauche, $corps);
+        AffichePage(TRUE, $corps);
     } else {
         afficherPagePrincipale();
     }

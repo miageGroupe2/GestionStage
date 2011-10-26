@@ -1,6 +1,7 @@
 <?php
 
     function genererMenuGauche() {
+        
         $utilisateurConnecte = FALSE ;        
         if (isset($_SESSION['connecte'])) {
             

@@ -135,56 +135,7 @@ function genererRechercheEntreprise() {
     return $corps;
 }
 
-/**
- *
- * @param type $tabContact 
- */
-function genererListeResultatRechercheContact($tabContact) {
 
-    $corps = "<td id = \"corps\">
-                  <table class=\"tableau\"><tr>
-                  <td class=\"tableau\"> Choix </td>
-                  <td class=\"tableau\"> Pr&eacute;nom </td>
-                  <td class=\"tableau\"> Nom </td>
-                  <td class=\"tableau\"> Fonction </td>
-                  <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
-                  <td class=\"tableau\"> T&eacute;l&eacute;phone Portable </td>
-                  <td class=\"tableau\"> Mail </td>
-                  </tr>";
-
-    if ($tabContact != null) {
-
-        foreach ($tabContact as $contactCourant) {
-
-            $corps .= "<tr><td class=\"tableau\"> ";
-
-            $corps .= "<input type=\"radio\" name=\"idEntreprise\" value=\"" . $contactCourant->getIdContact() . "\" id=\"" . $contactCourant->getIdContact() . "\" />";
-            $corps .= "</td><td class=\"tableau\">";
-            $corps .= $contactCourant->getPrenomContact();
-            $corps .= "</td><td class=\"tableau\">";
-            $corps .= $contactCourant->getNomContact();
-            $corps .= "</td><td class=\"tableau\">";
-            $corps .= $contactCourant->getFonctionContact();
-            $corps .= "</td><td class=\"tableau\">";
-            $corps .= $contactCourant->getTelephoneFixeContact();
-            $corps .= "</td><td class=\"tableau\">";
-            $corps .= $contactCourant->getTelephoneMobileContact();
-            $corps .= "</td><td class=\"tableau\">";
-            $corps .= $contactCourant->getMailContact();
-
-
-            $corps .= "</td></tr>";
-        }
-    }
-
-    $corps .= "
-                    </table>
-                </td>
-            </tr>
-        </table>";
-
-    return $corps;
-}
 
 /**
  * Permet de générer l'affichage des entreprises correspondantes à une recherche 
@@ -324,10 +275,6 @@ function genererDetailPropositionStage() {
                     "<tr>
                 <td class=\"tableau\" colspan=\"8\"> Entreprise similaire dans la base :</td>
             </tr>
-            
-
-            
-          
                     <tr>
                   <td class=\"tableau\"> Choix </td>
                   <td class=\"tableau\"> Nom entreprise </td>
@@ -372,7 +319,50 @@ function genererDetailPropositionStage() {
 }
 
 
-function genererProposerStageEtape2() {
+function genererProposerStageEtape2($tabContact) {
+    $corps = "<td id = \"corps\">
+                  <table class=\"tableau\"><tr>
+                  <td class=\"tableau\"> Choix </td>
+                  <td class=\"tableau\"> Pr&eacute;nom </td>
+                  <td class=\"tableau\"> Nom </td>
+                  <td class=\"tableau\"> Fonction </td>
+                  <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
+                  <td class=\"tableau\"> T&eacute;l&eacute;phone Portable </td>
+                  <td class=\"tableau\"> Mail </td>
+                  </tr>";
+
+    if ($tabContact != null) {
+
+        foreach ($tabContact as $contactCourant) {
+
+            $corps .= "<tr><td class=\"tableau\"> ";
+
+            $corps .= "<input type=\"radio\" name=\"idEntreprise\" value=\"" . $contactCourant->getIdContact() . "\" id=\"" . $contactCourant->getIdContact() . "\" />";
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $contactCourant->getPrenomContact();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $contactCourant->getNomContact();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $contactCourant->getFonctionContact();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $contactCourant->getTelephoneFixeContact();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $contactCourant->getTelephoneMobileContact();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $contactCourant->getMailContact();
+
+
+            $corps .= "</td></tr>";
+        }
+    }
+
+    $corps .= "
+                    </table>
+                </td>
+            </tr>
+        </table>";
+
+    return $corps;
     
 }
 function genererProposerStage($tabEntreprise) {
@@ -516,6 +506,14 @@ function genererProposerStage($tabEntreprise) {
                             </td>
                             <td>
                                  <input type=text name=\"siteinternet\">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Num&eacute;ro de siret : 
+                            </td>
+                            <td>
+                                 <input type=text name=\"numerosiret\">
                             </td>
                         </tr>
                         </table>
