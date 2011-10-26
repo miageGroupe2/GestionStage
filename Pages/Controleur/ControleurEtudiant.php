@@ -45,7 +45,7 @@ require_once 'BD.php';
                         $$mail = $_POST['mail'] ;
                     }
 
-                    $contact = new ModeleContact($_POST['idContact'], $_POST['prenom_tuteur'], $_POST['nom_tuteur'], $_POST['fonction_tuteur'], $_POST['tel_fixe'], $_POST['tel_port'], $_POST['mail']);
+                    $contact = new ModeleContact(NULL, $_POST['prenom_tuteur'], $_POST['nom_tuteur'], $_POST['fonction_tuteur'], $_POST['tel_fixe'], $_POST['tel_port'], $_POST['mail']);
                     
 
             }else{

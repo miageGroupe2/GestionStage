@@ -479,36 +479,56 @@ function genererProposerStageEtape2($tabContact) {
 
 function genererProposerStageEtape3($tabContact) {
     
+    $utilisateur = $_SESSION['modeleUtilisateur'];
     
     $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
     $corps .= "<form method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape3\">
                 <td id = \"corps\">
                     <h2>Sujet de stage</h2>   
-                    <br /><br />
-                    <h3>Etudiant</h3>
+                    
                 <table> 
+                    <tr>
+                        <td>
+                            <h3>Etudiant</h3>
+                        </td>
+                    </tr>
                     <tr>
                         <td>
                             Nom :
                         </td>
                         <td>
-                            <input type=text value=\"Fort\" readonly=\"true\">
+                            <input type=text readonly=\"true\" value=\"".$utilisateur->getNom()."\" >
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Pr&eacute;nom <etoile>*</etoile>:
+                            Pr&eacute;nom :
                         </td>
                         <td>
-                            <input type=text name=\"prenom_tuteur\" id=\"prenom_tuteur\" value=\"Bertrand\">
+                            <input type=text readonly=\"true\" value=\"".$utilisateur->getPrenom()."\" >
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Fonction :
+                            Promotion :
                         </td>
                         <td>
-                            <input type=text name=\"fonction_tuteur\">
+                            <input type=text readonly=\"true\" value=\"".$utilisateur->getPromotion()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>Entreprise</h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>Tuteur</h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>Sujet de stage</h3>
                         </td>
                     </tr>";
     
