@@ -269,7 +269,7 @@ class BD {
         BD::getConnection();
         $i = 0;
         $tabProp = null;
-        $idUser = $_SESSION['modeleUtilisateur']->getIdetudiant();
+        $idUser = $_SESSION['modeleUtilisateur']->getId();
         $requete = "SELECT p.idproposition, p.nomentreprisep, p.dateproposition, p.adresseentreprisep, p.villeentreprisep, p.codepostalentreprisep, p.paysentreprisep, p.numerotelephonep, p.urlsiteinternetp, p.sujetstagep, p.estvalidee
                         FROM proposition p
                         WHERE p.idutilisateur = ".$idUser.";";
