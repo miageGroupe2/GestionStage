@@ -8,6 +8,10 @@ require_once RACINE_MODELE . 'ModeleProposition.php';
 
 class BD {
 
+    //-----------------------------------------------------------------------------------------
+    // PARTIE DES ACCES BASES COMMUNS A TOUS LESUTILISATEURS
+    //-----------------------------------------------------------------------------------------
+    
     private static $connection;
 
     private static function getConnection() {
@@ -20,13 +24,6 @@ class BD {
             return self::$connection;
         }
     }
-
-    //
-    //    public static function seDeconnecter() {
-    //        if (isset($_SESSION['logge'])) {
-    //            session_destroy();
-    //        }
-    //    }
 
     /**
      * Permet de vérifier que l'utilisateur existe dans la base
@@ -66,6 +63,11 @@ class BD {
         }
     }
 
+//-----------------------------------------------------------------------------------------
+    // PARTIE DES ACCES BASES UTILISATEUR
+    //-----------------------------------------------------------------------------------------        
+    
+    
     /**
      * Permet de rechercher toutes les entreprises ayant le pattern $nom dans 
      * leur nom
@@ -229,6 +231,63 @@ class BD {
         }
     }
 
+     /**
+     * return true si $nom est le nom d'une entreprise dans la base, false sinon
+     * @param type $nom
+     * @return type 
+     */
+    
+    public static function entrepriseExistante($nom){
+        
+        BD::getConnection();
+        $nom = mysql_real_escape_string(htmlspecialchars($nom));
+        
+        if($nom != FALSE){
+            
+            $i = 0;
+
+            $requete = "SELECT nomentreprise FROM entreprise WHERE nomentreprise ='".$nom."'";
+            $retour = mysql_query($requete);
+
+            while ($tableau = mysql_fetch_array($retour)) {
+                
+                $i++;
+            }
+            
+            if ($i > 0){
+                return TRUE ;
+            }
+        }
+        
+        return FALSE ;
+    }
+    
+    /**
+     * Permet d'afficher toutes les propositions de stage
+     */
+    public static function recherherPropositionsEtudiant() {
+        BD::getConnection();
+        $i = 0;
+        $tabProp = null;
+        $idUser = $_SESSION['modeleUtilisateur']->getIdetudiant();
+        $requete = "SELECT p.idproposition, p.nomentreprisep, p.dateproposition, p.adresseentreprisep, p.villeentreprisep, p.codepostalentreprisep, p.paysentreprisep, p.numerotelephonep, p.urlsiteinternetp, p.sujetstagep, p.estvalidee
+                        FROM proposition p
+                        WHERE p.idutilisateur = ".$idUser.";";
+        $retour = mysql_query($requete) or die(mysql_error());
+
+        while ($tableau = mysql_fetch_array($retour)) {
+            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['estvalidee'], null, null);
+            $i++;
+        }
+        return $tabProp;
+    }
+
+    
+    //-----------------------------------------------------------------------------------------
+    // PARTIE DES ACCES BASES ADMIN
+    //-----------------------------------------------------------------------------------------    
+    
+    
     /**
      * Permet d'afficher toutes les propositions de stage
      */
@@ -302,36 +361,6 @@ class BD {
         }
     }
     
-    /**
-     * return true si $nom est le nom d'une entreprise dans la base, false sinon
-     * @param type $nom
-     * @return type 
-     */
-    public static function entrepriseExistante($nom){
-        
-        BD::getConnection();
-        $nom = mysql_real_escape_string(htmlspecialchars($nom));
-        
-        if($nom != FALSE){
-            
-            $i = 0;
-
-            $requete = "SELECT nomentreprise FROM entreprise WHERE nomentreprise ='".$nom."'";
-            $retour = mysql_query($requete);
-
-            while ($tableau = mysql_fetch_array($retour)) {
-                
-                $i++;
-            }
-            
-            if ($i > 0){
-                return TRUE ;
-            }
-        }
-        
-        return FALSE ;
-    }
-
 }
 
 ?>

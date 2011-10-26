@@ -121,6 +121,7 @@ function call_action() {
               $action = 'afficherContactParEntreprise';
               break;
              */
+            
             // partie etudiant
 
             case 'proposerStageEtape1' :

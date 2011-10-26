@@ -112,7 +112,7 @@ require_once 'BD.php';
 
     function afficherListePropositionStageEtudiant() {
 
-        $corps = genererListePropositionStage();
+        $corps = genererListePropositionStageEtudiant();
         AffichePage(TRUE, $corps);
     }
 
