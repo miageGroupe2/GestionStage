@@ -326,8 +326,17 @@ function genererDetailPropositionStage() {
 
 
 function genererProposerStageEtape2($tabContact) {
-    $corps = "<td id = \"corps\">
-                  <table class=\"tableau\"><tr>
+    
+    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
+    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaireEtape2()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape3\">";
+    $corps .= "<td id = \"corps\">
+                <h2>Choix du tuteur</h2>";
+    
+    
+    // si il existe des contacts dans la base, on les affiche 
+    if ($tabContact != null) {
+        
+        $corps .= "<table class=\"tableau\"><tr>
                   <td class=\"tableau\"> Choix </td>
                   <td class=\"tableau\"> Pr&eacute;nom </td>
                   <td class=\"tableau\"> Nom </td>
@@ -337,13 +346,11 @@ function genererProposerStageEtape2($tabContact) {
                   <td class=\"tableau\"> Mail </td>
                   </tr>";
 
-    if ($tabContact != null) {
-
         foreach ($tabContact as $contactCourant) {
 
             $corps .= "<tr><td class=\"tableau\"> ";
 
-            $corps .= "<input type=\"radio\" name=\"idEntreprise\" value=\"" . $contactCourant->getIdContact() . "\" id=\"" . $contactCourant->getIdContact() . "\" />";
+            $corps .= "<input type=\"radio\" name=\"idContact\" value=\"" . $contactCourant->getIdContact() . "\" id=\"" . $contactCourant->getIdContact() . "\" />";
             $corps .= "</td><td class=\"tableau\">";
             $corps .= $contactCourant->getPrenomContact();
             $corps .= "</td><td class=\"tableau\">";
@@ -360,15 +367,81 @@ function genererProposerStageEtape2($tabContact) {
 
             $corps .= "</td></tr>";
         }
+        
+        $corps .= "</table>";
     }
+    
+    // on affiche le formulaire de saisie d'un nouveau tuteur
+    if ($tabContact == NULL){
+        $corps .= "<br />Il n'existe aucun tuteur pour cette entreprise dans la base. Vous devez l'ajouter :";
+    }else{
+        $corps .= "<br /><input type=\"radio\" name=\"idContact\" value=\"ajouter\" id=\"ajouter\" checked=\"checked\"/> <label for=\"autre\">Ajouter un tuteur :</label>";
+    }
+    
+    $corps .= "<table> 
+            <tr>
+                <td>
+                    Nom <etoile>*</etoile>:
+                </td>
+                <td>
+                    <input type=text name=\"nom_tuteur\" id=\"nom_tuteur\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Pr&eacute;nom <etoile>*</etoile>:
+                </td>
+                <td>
+                    <input type=text name=\"prenom_tuteur\" id=\"prenom_tuteur\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Fonction :
+                </td>
+                <td>
+                    <input type=text name=\"fonction_tuteur\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    T&eacute;l&eacute;phone fixe :
+                </td>
+                <td>
+                    <input type=text name=\"tel_fixe\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    T&eacute;l&eacute;phone portable :
+                </td>
+                <td>
+                    <input type=text name=\"tel_port\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Mail :
+                </td>
+                <td>
+                    <input type=text name=\"mail\">
+                </td>
+            </tr></table>
+            <br /><input type=\"submit\" value=\"Etape suivante\"></form><br /><br />";
 
     $corps .= "
-                    </table>
+                    
                 </td>
             </tr>
         </table>";
 
     return $corps;
+    
+}
+
+function genererProposerStageEtape3($tabContact) {
+    
+    
     
 }
 function genererProposerStage($tabEntreprise) {
@@ -380,9 +453,9 @@ function genererProposerStage($tabEntreprise) {
     }
 
     
-    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormPropoStageEtape1.js\" type=\"text/javascript\"></script>";
+    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
     $corps .= "<td id = \"corps\">
-                <h2>Recherche d'une entreprise</h2>                
+                <h2>Choix de l'entreprise</h2>                
                 
                 <form method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape1\">
                             Nom : <input type=text name=\"nom\" value=\"" . $nom . "\">
@@ -390,7 +463,7 @@ function genererProposerStage($tabEntreprise) {
                <input type=\"submit\" value=\"Rechercher\"></form><br /><br />";
          
     
-    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaire()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape2\">";
+    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaireEtape1()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape2\">";
 
     // on liste les entreprises ayant un nom similaire
     if ($tabEntreprise != NULL) {
@@ -434,15 +507,16 @@ function genererProposerStage($tabEntreprise) {
    
     
     // si l'utilisateur a déjà entré un nom d'entreprise
+    // on affiche le formulaire de saisie d'une nouvelle entreprise
     if (isset($_POST['nom'])){
         
-        // on affiche le radio bouton "ajouter une entreprise"
+        
         if ($tabEntreprise == NULL){
 
-            $corps .= "<br />Aucune entreprise ayant un nom similaire n'&eacute;xiste dans la base. Vous devez l'ajouter :";
+            $corps .= "<br />Il n'existe aucune entreprise ayant un nom similaire dans la base. Vous devez l'ajouter :";
             
         }else{
-            $corps .= "<br /><input type=\"radio\" name=\"idEntreprise\" value=\"ajouter\" id=\"ajouter\" /> <label for=\"autre\">Ajouter une entreprise :</label>";
+            $corps .= "<br /><input type=\"radio\" name=\"idEntreprise\" value=\"ajouter\" id=\"ajouter\" checked=\"checked\"/> <label for=\"autre\">Ajouter une entreprise :</label>";
         }
 
         $corps .= " <br /><br />
