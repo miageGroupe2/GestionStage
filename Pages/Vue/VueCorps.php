@@ -237,7 +237,45 @@ function genererListePropositionStageResponsable() {
     return $corps;
 }
 
-function genererDetailPropositionStage() {
+function genererDetailProposition() {
+    $prop = BD::rechercherProposition($_GET['idprop']);
+    $corps ="";
+    if($prop != NULL){
+        
+        $corps = "<td id = \"corps\">
+        <table>
+            <tr>
+                <td>Pr&eacute;nom</td>
+                <td>Nom</td>
+                <td>Promotion</td>
+            </tr>
+            <tr>
+                <td>
+                    ".$prop[0]->getEtudiant()->getPrenom()." 
+                <td>
+                <td>
+                    ".$prop[0]->getEtudiant()->getNom()."
+                <td>
+                <td>
+                    ".$prop[0]->getPromotionEtudiant()."
+                <td>
+            </tr>
+        </table>
+
+        ";
+        
+        
+        
+    }
+    
+    $corps .= "</td>
+                </tr>
+            </table>";
+    return $corps;
+}
+
+// fonction a refaire pour coller avec les nouveux modèles
+function genererDetailPropositionARefaireHahahahaha() {
 
     $stage = BD::rechercherProposition($_GET['idprop']);
 

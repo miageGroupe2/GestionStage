@@ -160,7 +160,7 @@ function call_action() {
                 break;
 
             case 'detailProp' :
-                $action = 'afficherDetailPropositionStage';
+                $action = 'afficherDetailProposition';
                 break;
 
             case 'listeStageAnneeCourante' :
