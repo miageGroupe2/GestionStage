@@ -267,7 +267,7 @@ function genererListePropositionStageResponsable() {
                         <tr>
                             <td class=\"tableau\">" . $prop->getEtudiant()->getNom()
                     . "</td>
-                            <td class=\"tableau\">" . $prop->getEtudiant()->getPrenome()
+                            <td class=\"tableau\">" . $prop->getEtudiant()->getPrenom()
                     . "</td>
                             <td class=\"tableau\">" . $prop->getNomEntreprise()
                     . "</td>
@@ -282,7 +282,7 @@ function genererListePropositionStageResponsable() {
 
 function genererDetailPropositionStage() {
 
-    $stage = BD::rechercherProposition($_GET['idsprop']);
+    $stage = BD::rechercherProposition($_GET['idprop']);
 
     $corps = NULL;
 
