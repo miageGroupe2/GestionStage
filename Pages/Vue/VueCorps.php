@@ -359,6 +359,100 @@ function genererDetailProposition() {
     return $corps;
 }
 
+function genererListePropositionStageEtudiant(){
+    $tabProp = BD::recherherPropositionsEtudiant();
+
+    if($tabProp != NULL){
+        $corps ="<td id = \"corps\">
+            <h2>Proposition de stage</h2><br/>";
+        foreach($tabProp as $prop){
+            $corps .="
+            <table>
+            <tr>
+                <td>
+                    Date de proposition :
+                </td>
+                <td>
+                    <input type=text readonly=\"true\" name=\"dateproposition\" value=\"".htmlentities($prop->getDateProposition())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Nom Entreprise :
+                </td>
+                <td>
+                    <input type=text readonly=\"true\" name=\"nomentreprise\" value=\"".htmlentities($prop->getNomEntreprise())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Adresse :
+                </td>
+                <td>
+                    <input type=\"text\" readonly=\"true\" size=\"35\" name=\"adresseentreprise\" value=\"".htmlentities($prop->getAdresseEntreprise())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Code postal :
+                </td>
+                <td>
+                    <input type=\"text\" readonly=\"true\" name=\"codepostalentreprise\" value=\"".htmlentities($prop->getCodePostal())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Ville :
+                </td>
+                <td>
+                    <input type=\"text\" readonly=\"true\" name=\"villeentreprise\" value=\"".htmlentities($prop->getVille())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Pays :
+                </td>
+                <td>
+                    <input type=\"text\" readonly=\"true\" name=\"paysentreprise\" value=\"".htmlentities($prop->getPays())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    N&deg; Tel :
+                </td>
+                <td>
+                    <input type=\"text\" readonly=\"true\" name=\"telentreprise\" value=\"".htmlentities($prop->getNumTelephone())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    URL Site :
+                </td>
+                <td>
+                    <input type=\"text\" readonly=\"true\" name=\"urlsite\" value=\"".htmlentities($prop->getUrlSite())."\">
+                </td>
+            </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <h2>Sujet :</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ".htmlentities($prop->getSujet())."
+                    </td>
+                </tr>
+            </table>
+            ";
+        }
+        $corps .="</td></tr></table>";
+    }
+    return $corps;
+}
+
+
 // fonction a refaire pour coller avec les nouveux modèles
 function genererDetailPropositionARefaireHahahahaha() {
 
