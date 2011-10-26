@@ -388,7 +388,7 @@ function genererProposerStageEtape2($tabContact) {
 
             $corps .= "<tr><td class=\"tableau\"> ";
 
-            $corps .= "<input type=\"radio\" name=\"idContact\" value=\"" . $contactCourant->getId() . "\" id=\"" . $contactCourant->getIdContact() . "\" />";
+            $corps .= "<input type=\"radio\" name=\"idContact\" value=\"" . $contactCourant->getId() . "\" id=\"" . $contactCourant->getId() . "\" />";
             $corps .= "</td><td class=\"tableau\">";
             $corps .= $contactCourant->getPrenom();
             $corps .= "</td><td class=\"tableau\">";
