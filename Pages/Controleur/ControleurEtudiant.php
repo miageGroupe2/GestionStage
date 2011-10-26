@@ -5,6 +5,76 @@ require_once RACINE_VUE . 'VueMenuGauche.php';
 require_once RACINE_VUE . 'VueCorps.php';
 require_once 'BD.php';
 
+    function proposerStageEtape3() {
+        
+        $continuer = FALSE ;
+        
+        //si l'utilisateur a sélectionné un tuteur existant
+        if (isset($_POST['idEntreprise']) && $_POST['idEntreprise'] != "ajouter"){
+
+
+            $entreprise = BD::rechercherEntrepriseById($_POST['idEntreprise']);
+            if ( $entreprise != NULL){
+
+                $continuer = TRUE ;
+            }
+
+        }else{
+        // si l'utilisateur a ajouté une entreprise
+            //on vérifie que tous les champs obligatoires sont remplis
+            if (isset($_POST['nom_entreprise']) && $_POST['nom_entreprise'] != NULL
+                && isset($_POST['num_rue']) && $_POST['num_rue'] != NULL 
+                && isset($_POST['code_postal']) && $_POST['code_postal'] != NULL 
+                && isset($_POST['ville']) && $_POST['ville'] != NULL 
+                && isset($_POST['pays']) && $_POST['pays'] != NULL 
+                && isset($_POST['tel_accueil']) && $_POST['tel_accueil'] != NULL  
+                    ){
+
+
+                $existe = BD::entrepriseExistante($_POST['nom_entreprise']);
+
+                if (!$existe){
+
+                    $continuer = TRUE ;
+
+                    $siteInternet = "" ;
+                    if (isset($_POST['siteinternet']) && $_POST['siteinternet'] != NULL){
+                        $siteInternet = $_POST['siteinternet'] ;
+                    }
+                    $numeroSiret = "" ;
+                    if (isset($_POST['numerosiret']) && $_POST['numerosiret'] != NULL){
+                        $numeroSiret = $_POST['numerosiret'] ;
+                    }
+
+                    $entreprise = new ModeleEntreprise(NULL, $_POST['nom_entreprise'], $_POST['num_rue'], $_POST['code_postal'], $_POST['ville'], $_POST['pays'], $_POST['tel_accueil'], $numeroSiret, $siteInternet);
+
+
+    //                AffichePage($menuGauche, $corps);
+                }else{
+
+                    $_REQUEST['action'] = "pagePrincipale";
+                    call_action();
+                }
+            }else{
+                $_REQUEST['action'] = "pagePrincipale";
+                call_action();
+            }
+        }
+        if ($continuer){
+
+            $tabContact = NULL ;
+            // ici l'utilisteur a ajouté une entreprise (qui n'est pas encore en BD) ou en a
+            // choisit une qui est dans la base. Si c'est le cas on va récupérer 
+            // les contacts de cette entreprise dans la base
+            if ( $entreprise->getId() != NULL){
+                $tabContact = BD::rechercherContactParEntreprise($entreprise->getId());
+            }
+
+            $corps = genererProposerStageEtape2($tabContact);
+            AffichePage(TRUE, $corps);
+        }
+    }
+
     function proposerStageEtape2() {
 
         $continuer = FALSE ;

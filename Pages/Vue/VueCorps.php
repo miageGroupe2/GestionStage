@@ -432,6 +432,12 @@ function genererProposerStageEtape2($tabContact) {
     return $corps;
     
 }
+
+function genererProposerStageEtape3($tabContact) {
+    
+    
+    
+}
 function genererProposerStage($tabEntreprise) {
 
     $nom = NULL;
