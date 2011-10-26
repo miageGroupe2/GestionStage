@@ -13,8 +13,12 @@ function verifierAutorisationAction($action) {
     if (isset($_SESSION['connecte'])) {
         // IDEM si on est conecte
         if ($_SESSION['connecte'] == 1) {
+            
+            //on récupère l'utilisateur connecté 
+            $utilisateur = $_SESSION['modeleUtilisateur'];
+            
             // Si admin, SINON etudiant
-            if ($_SESSION['admin'] == 1) {
+            if ($utilisateur->getAdmin()) {
                 // specifique ADMIN
                 if ($action == "listePropositionStageResponsable") {
                     return $action;
@@ -37,11 +41,13 @@ function verifierAutorisationAction($action) {
                 } else {
                     return "pagePrincipale";
                 }
-            } else if ($_SESSION['admin'] == 0) {
+            } else {
                 // Specifique ETUDIANT
                 if ($action == "proposerStageEtape1") {
                     return $action;
                 } else if ($action == "proposerStageEtape2") {
+                    return $action;
+                } else if ($action == "proposerStageEtape3") {
                     return $action;
                 } else if ($action == "completerPropositionStage") {
                     return $action;

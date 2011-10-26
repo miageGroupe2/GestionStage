@@ -28,8 +28,10 @@
                          ";
             
         }
-
-        if($_SESSION['admin'] == 1){
+        //on récupère l'utilisateur connecté 
+        $utilisateur = $_SESSION['modeleUtilisateur'];
+        
+        if ($utilisateur->getAdmin()) {
             $menuGauche .= "               
                         <a href=\"".RACINE."?action=listePropositionStageResponsable\">Voir les propositions de stage</a><br/>
                         <a href=\"".RACINE."?action=listeStageAnneeCourante\">Voir les stages de l'ann&eacute;e courante</a><br/>

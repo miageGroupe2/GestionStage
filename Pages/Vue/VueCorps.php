@@ -473,19 +473,19 @@ function genererProposerStageEtape2($tabContact) {
 
             $corps .= "<tr><td class=\"tableau\"> ";
 
-            $corps .= "<input type=\"radio\" name=\"idContact\" value=\"" . $contactCourant->getIdContact() . "\" id=\"" . $contactCourant->getIdContact() . "\" />";
+            $corps .= "<input type=\"radio\" name=\"idContact\" value=\"" . $contactCourant->getId() . "\" id=\"" . $contactCourant->getId() . "\" />";
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= $contactCourant->getPrenomContact();
+            $corps .= $contactCourant->getPrenom();
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= $contactCourant->getNomContact();
+            $corps .= $contactCourant->getNom();
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= $contactCourant->getFonctionContact();
+            $corps .= $contactCourant->getFonction();
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= $contactCourant->getTelephoneFixeContact();
+            $corps .= $contactCourant->getTelephoneFixe();
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= $contactCourant->getTelephoneMobileContact();
+            $corps .= $contactCourant->getTelephoneMobile();
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= $contactCourant->getMailContact();
+            $corps .= $contactCourant->getMail();
 
 
             $corps .= "</td></tr>";
@@ -507,7 +507,7 @@ function genererProposerStageEtape2($tabContact) {
                     Nom <etoile>*</etoile>:
                 </td>
                 <td>
-                    <input type=text name=\"nom_tuteur\" id=\"nom_tuteur\">
+                    <input type=text name=\"nom_tuteur\" id=\"nom_tuteur\" value=\"Fort\">
                 </td>
             </tr>
             <tr>
@@ -515,7 +515,7 @@ function genererProposerStageEtape2($tabContact) {
                     Pr&eacute;nom <etoile>*</etoile>:
                 </td>
                 <td>
-                    <input type=text name=\"prenom_tuteur\" id=\"prenom_tuteur\">
+                    <input type=text name=\"prenom_tuteur\" id=\"prenom_tuteur\" value=\"Bertrand\">
                 </td>
             </tr>
             <tr>
@@ -562,9 +562,172 @@ function genererProposerStageEtape2($tabContact) {
     
 }
 
-function genererProposerStageEtape3($tabContact) {
+function genererProposerStageEtape3($entreprise, $contact) {
+    
+    $utilisateur = $_SESSION['modeleUtilisateur'];
+    
+    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
+    $corps .= "<form method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape3\">
+                <td id = \"corps\">
+                    <h2>Sujet de stage</h2>   
+                    
+                <table> 
+                    <tr>
+                        <td>
+                            <h3>Etudiant</h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Nom :
+                        </td>
+                        <td>
+                            <input type=text readonly=\"true\" value=\"".$utilisateur->getNom()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Pr&eacute;nom :
+                        </td>
+                        <td>
+                            <input type=text readonly=\"true\" value=\"".$utilisateur->getPrenom()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Promotion :
+                        </td>
+                        <td>
+                            <input type=text readonly=\"true\" value=\"".$utilisateur->getPromotion()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>Entreprise</h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Nom de l'entreprise : 
+                        </td>
+                        <td>
+                            <input type=text readonly=\"true\" value=\"".$entreprise->getNom()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            N°, Rue : 
+                        </td>
+                        <td>
+                            <input type=text readonly=\"true\" value=\"".$entreprise->getAdresse()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Code postal :
+                        </td>
+                        <td>
+                            <input type=text readonly=\"true\" value=\"".$entreprise->getCodePostal()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Ville : 
+                        </td>
+                        <td>
+                             <input type=text readonly=\"true\" value=\"".$entreprise->getVille()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Pays : 
+                        </td>
+                        <td>
+                             <input type=text readonly=\"true\" value=\"".$entreprise->getPays()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            T&eacute;l&eacute;phone accueil : 
+                        </td>
+                        <td>
+                             <input type=text readonly=\"true\" value=\"".$entreprise->getNumeroTelephone()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Site internet : 
+                        </td>
+                        <td>
+                             <input type=text readonly=\"true\" value=\"".$entreprise->getUrlSiteInternet()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>Tuteur</h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Nom :
+                        </td>
+                        <td>
+                            <input type=text readonly=\"true\" value=\"".$contact->getNom()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Pr&eacute;nom :
+                        </td>
+                        <td>
+                            <input type=text readonly=\"true\" value=\"".$contact->getPrenom()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Fonction :
+                        </td>
+                        <td>
+                            <input type=text readonly=\"true\" value=\"".$contact->getFonction()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            T&eacute;l&eacute;phone fixe :
+                        </td>
+                        <td>
+                            <input type=text readonly=\"true\" value=\"".$contact->getTelephoneFixe()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            T&eacute;l&eacute;phone portable :
+                        </td>
+                        <td>
+                            <input type=text readonly=\"true\" value=\"".$contact->getTelephoneMobile()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Mail :
+                        </td>
+                        <td>
+                            <input type=text readonly=\"true\" value=\"".$contact->getMail()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>Sujet de stage</h3>
+                        </td>
+                    </tr>";
     
     
+    $corps .= "
+                    
+                </td>
+            </tr>
+        </table>";
+    return $corps ;
     
 }
 function genererProposerStage($tabEntreprise) {
@@ -596,6 +759,7 @@ function genererProposerStage($tabEntreprise) {
                   <td class=\"tableau\"> Nom entreprise </td>
                   <td class=\"tableau\"> Adresse </td>
                   <td class=\"tableau\"> Ville </td>
+                  <td class=\"tableau\"> Code postal </td>
                   <td class=\"tableau\"> Pays </td>
                   <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
                   <td class=\"tableau\"> Numéro de Siret </td>
@@ -613,6 +777,8 @@ function genererProposerStage($tabEntreprise) {
             $corps .= $entrepriseCourante->getAdresse();
             $corps .= "</td><td class=\"tableau\">";
             $corps .= $entrepriseCourante->getVille();
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= $entrepriseCourante->getCodePostal();
             $corps .= "</td><td class=\"tableau\">";
             $corps .= $entrepriseCourante->getPays();
             $corps .= "</td><td class=\"tableau\">";

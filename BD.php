@@ -5,6 +5,7 @@ require_once RACINE_MODELE . 'ModeleStage.php';
 require_once RACINE_MODELE . 'ModeleContact.php';
 require_once RACINE_MODELE . 'ModeleUtilisateur.php';
 require_once RACINE_MODELE . 'ModeleProposition.php';
+
 class BD {
 
     private static $connection;
@@ -31,7 +32,7 @@ class BD {
      * Permet de vérifier que l'utilisateur existe dans la base
      * @param type $login
      * @param type $password
-     * @return type TRUE si le couple login/password est correct, false sinon
+     * @return type un modèleUtilisateur si l'authentification est OK, NULL sinon
      */
     public static function authentification($login, $password) {
 
@@ -41,8 +42,7 @@ class BD {
         
         if ($login != FALSE && $password != FALSE) {
 
-            $requete = "SELECT mailutilisateur, admin FROM utilisateur WHERE mailutilisateur = '$login' AND passwordutilisateur = '$password' ";
-            
+            $requete = "SELECT idutilisateur, nompromotion, mailutilisateur, passwordutilisateur, nomutilisateur, prenomutilisateur, numetudiant, admin FROM utilisateur, promotion WHERE mailutilisateur = '$login' AND passwordutilisateur = '$password' AND  utilisateur.idpromotion = promotion.idpromotion";
             try {
                 $retour = mysql_query($requete);
             } catch (Exception $e) {
@@ -53,7 +53,11 @@ class BD {
             
             if ($nombreDeLignes > 0) {
                 while ($tableau = mysql_fetch_array($retour)) {
-                    $_SESSION['admin'] = $tableau['admin'];
+                    
+                    $modeleUtilisateur = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], $tableau['numetudiant'], $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], $tableau['admin']);
+                                       
+                    //on stock en session l'utilisateur connecté
+                    $_SESSION['modeleUtilisateur'] = $modeleUtilisateur;
                 }
                 
                 return TRUE;
