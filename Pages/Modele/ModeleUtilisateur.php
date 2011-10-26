@@ -3,19 +3,21 @@
     class ModeleUtilisateur {
         
         private $idetudiant ;
-        private $idpromotion ;
+        private $promotion ;
         private $prenom ;
         private $nom ;
         private $numeroetudiant ;
         private $mail ;
+        private $admin ;
         
-        function __construct($idetudiant, $promotion, $numeroetudiant, $prenom, $nom, $mail) {
+        function __construct($idetudiant, $promotion, $numeroetudiant, $prenom, $nom, $mail, $admin) {
             $this->idetudiant = $idetudiant;
-            $this->idpromotion = $promotion;
+            $this->promotion = $promotion;
             $this->numeroetudiant = $numeroetudiant;
             $this->prenom = $prenom;
             $this->nom = $nom;
             $this->mail = $mail;
+            $this->admin = $admin;
         }
         
         public function getIdetudiant() {
@@ -26,12 +28,12 @@
             $this->idetudiant = $idetudiant;
         }
 
-        public function getIdPromotion() {
-            return $this->idpromotion;
+        public function getPromotion() {
+            return $this->promotion;
         }
 
-        public function setIdPromotion($idpromotion) {
-            $this->idpromotion = $idpromotion;
+        public function setPromotion($promotion) {
+            $this->idpromotion = $promotion;
         }
 
         public function getNumeroetudiant() {
@@ -65,6 +67,11 @@
         public function setMail($mail) {
             $this->mail = $mail;
         }
+        public function getAdmin() {
+            return $this->admin;
+        }
+
+
 
     }
 ?>

@@ -42,8 +42,7 @@ class BD {
         
         if ($login != FALSE && $password != FALSE) {
 
-            $requete = "SELECT idutilisateur, idpromotion, mailutilisateur, passwordutilisateur, nomutilisateur, prenomutilisateur, numetudiant, admin FROM utilisateur WHERE mailutilisateur = '$login' AND passwordutilisateur = '$password' ";
-            
+            $requete = "SELECT idutilisateur, nompromotion, mailutilisateur, passwordutilisateur, nomutilisateur, prenomutilisateur, numetudiant, admin FROM utilisateur, promotion WHERE mailutilisateur = '$login' AND passwordutilisateur = '$password' AND  utilisateur.idpromotion = promotion.idpromotion";
             try {
                 $retour = mysql_query($requete);
             } catch (Exception $e) {
@@ -54,8 +53,11 @@ class BD {
             
             if ($nombreDeLignes > 0) {
                 while ($tableau = mysql_fetch_array($retour)) {
-                    $modeleUtilisateur = NULL ;
-                    $_SESSION['admin'] = $tableau['admin'];
+                    
+                    $modeleUtilisateur = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], $tableau['numetudiant'], $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], $tableau['admin']);
+                                       
+                    //on stock en session l'utilisateur connecté
+                    $_SESSION['modeleUtilisateur'] = $modeleUtilisateur;
                 }
                 
                 return TRUE;

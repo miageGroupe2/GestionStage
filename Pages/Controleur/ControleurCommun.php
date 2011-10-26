@@ -5,6 +5,8 @@ function deconnecterUtilisateur() {
     if (isset($_SESSION['connecte'])) {
 
         unset($_SESSION['connecte']);
+        unset($_SESSION['modeleUtilisateur']);
+        unset($_SESSION['modeleEntreprise']);
         session_destroy();
     }
 
