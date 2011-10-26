@@ -83,7 +83,7 @@ class BD {
             $i = 0;
             while ($tableau = mysql_fetch_array($retour)) {
                 
-                $tabEntreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet']);
+                $tabEntreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet']);
                 $i++;
             }
         }
@@ -102,13 +102,13 @@ class BD {
 
         if ($id != FALSE) {
 
-            $requete = "SELECT identreprise, nomentreprise, adresseentreprise, villeentreprise, paysentreprise, numerotelephone, numerosiret FROM entreprise WHERE identreprise=" . $id;
+            $requete = "SELECT identreprise, nomentreprise, adresseentreprise, villeentreprise, codepostalentreprise, paysentreprise, numerotelephone, numerosiret FROM entreprise WHERE identreprise=" . $id;
             $retour = mysql_query($requete);
 
             $i = 0;
             while ($tableau = mysql_fetch_array($retour)) {
 
-                $entreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], NULL);
+                $entreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], NULL);
                 $i++;
             }
             if ($i > 0) {
@@ -165,13 +165,13 @@ echo "ikop";
         if ($idEntreprise != FALSE) {
 
             $requete = "SELECT idcontact, prenomcontact, nomcontact, fonctioncontact, 
-            telephonefixecontact, telmobilecontact, mailcontact FROM contact WHERE identreprise = $idEntreprise ";
+            telfixecontact, telmobilecontact, mailcontact FROM contact WHERE identreprise = $idEntreprise ";
 
             $retour = mysql_query($requete);
 
             while ($tableau = mysql_fetch_array($retour)) {
 
-                $tabContact[$i] = new ModeleContact($tableau['idcontact'], $tableau['prenomcontact'], $tableau['nomcontact'], $tableau['fonctioncontact'], $tableau['telephonefixecontact'], $tableau['telmobilecontact'], $tableau['mailcontact']);
+                $tabContact[$i] = new ModeleContact($tableau['idcontact'], $tableau['prenomcontact'], $tableau['nomcontact'], $tableau['fonctioncontact'], $tableau['telfixecontact'], $tableau['telmobilecontact'], $tableau['mailcontact']);
                 $i++;
             }
         }

@@ -20,7 +20,7 @@ function afficherDetailPropositionStage(){
 
 function afficherDetailStage(){
     $corps = genererDetailStage();
-    AffichePage(TRUE, $corps);
+    AffichePage($corps);
 }
 
 ?>

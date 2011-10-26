@@ -120,9 +120,14 @@ function call_action() {
             case 'proposerStageEtape1' :
                 $action = 'proposerStageEtape1';
                 break;
+            
             case 'proposerStageEtape2' :
-                    $action = 'proposerStageEtape2' ;
-                    break;
+                $action = 'proposerStageEtape2' ;
+                break;
+            
+            case 'proposerStageEtape3' :
+                $action = 'proposerStageEtape3' ;
+                break;
 
 //                case 'validerProposerStage':
 //                    $action = 'validerProposerStage' ;

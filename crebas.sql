@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.2deb1
+-- version 3.3.7deb5build0.10.10.1
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Mar 25 Octobre 2011 à 15:53
--- Version du serveur: 5.1.41
--- Version de PHP: 5.3.2-1ubuntu4.10
+-- Généré le : Mer 26 Octobre 2011 à 10:23
+-- Version du serveur: 5.1.49
+-- Version de PHP: 5.3.3-1ubuntu9.5
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -45,7 +45,9 @@ CREATE TABLE IF NOT EXISTS `contact` (
 --
 
 INSERT INTO `contact` (`idcontact`, `identreprise`, `prenomcontact`, `nomcontact`, `fonctioncontact`, `dateajout`, `datederniereactivite`, `telfixecontact`, `telmobilecontact`, `mailcontact`) VALUES
-(1, 2, 'Luc', 'Dubois', 'Ingénieur', '2011-10-19', '2011-10-19', '07 89 76 87 98', '03 45 21 24 56', 'dubois@gmail.fr');
+(0, 2, 'Nicolas', 'Dupond', 'Développeur', '2011-10-26', '2011-10-26', '1928393', '9283938', 'nico@mail.de'),
+(1, 2, 'Luc', 'Dubois', 'Ingénieur', '2011-10-19', '2011-10-19', '07 89 76 87 98', '03 45 21 24 56', 'dubois@gmail.fr'),
+(2, 2, 'Nicolas', 'Dupond', 'Développeur', '2011-10-26', '2011-10-26', '1928393', '9283938', 'nico@mail.de');
 
 -- --------------------------------------------------------
 
