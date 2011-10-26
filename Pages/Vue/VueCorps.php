@@ -1,5 +1,11 @@
 <?php
 
+// fonction utilisateur
+
+// fonction responsable
+
+// fonction communes
+
 function genererPageAccueil() {
     $corps = "<table>
                     <tr>

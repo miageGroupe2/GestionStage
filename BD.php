@@ -249,7 +249,7 @@ echo "ikop";
 
         while ($tableau = mysql_fetch_array($retour)) {
             $etudiant = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null);
-            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], null, null, $tableau['nomentreprisep'], null, null, null, null, null, null, null, null, null, $etudiant);
+            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], null, null, $tableau['nomentreprisep'], null, null, null, null, null, null, null, null, null, $etudiant, null);
             $i++;
         }
         return $tabProp;
@@ -268,16 +268,21 @@ echo "ikop";
             $i = 0;
             $tabStage = null;
 
-            $requete = "SELECT stage.idstage, stage.identreprise, entreprise.nomentreprise, stage.idcontact, stage.nometudiant, stage.prenometudiant, stage.promotion, stage.datedeproposition, stage.sujetstage, stage.datevalidation, stage.datedebut, stage.datefin, stage.datesoutenance, stage.lieusoutenance, stage.etatstage, stage.noteobtenue, stage.appreciationobtenue, stage.remuneration, stage.embauche, stage.dateembauche FROM stage, entreprise  WHERE stage.identreprise = entreprise.identreprise AND stage.idstage = " . $id;
+            $requete = "SELECT p.idproposition, p.nomentreprisep, p.dateproposition, p.adresseentreprisep, p.villeentreprisep, p.codepostalentreprisep, p.paysentreprisep, p.numerotelephonep, p.urlsiteinternetp, p.sujetstagep, p.estalidee, u.nomutilisateur, u.prenomutilisateur, u.mail, pr.nompromotion
+                        FROM proposition p, utilisateur u, promotion pr
+                        WHERE p.idproposition =".$id." 
+                        AND p.idpromotion = pr.idpromotion
+                        AND p.idutilisateur = u.idutilisateur";
             $retour = mysql_query($requete) or die(mysql_error());
 
             while ($tableau = mysql_fetch_array($retour)) {
-                $tabStage[$i] = new ModeleStage($tableau['idstage'], $tableau['identreprise'], $tableau['nomentreprise'], $tableau['idcontact'], $tableau['nometudiant'], $tableau['prenometudiant'], $tableau['promotion'], $tableau['datedeproposition'], $tableau['sujetstage'], $tableau['datevalidation'], $tableau['datedebut'], $tableau['datefin'], $tableau['datesoutenance'], $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], $tableau['dateembauche']);
+                $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mail']);
+                $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nometreprisep'], $tableau['dateproposition'], $tableau['promotion'], $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['estvalidee'], $tableau['noteobtenue'], $etudiant, $tableau['nompromotion']);
                 $i++;
             }
+            
             if ($i > 0) {
-
-                return $tabStage[0];
+                return $tabProp;
             } else {
                 return NULL;
             }
