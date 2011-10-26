@@ -47,8 +47,6 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if ($action == "proposerStageEtape2") {
                     return $action;
-                } else if ($action == "proposerStageEtape3") {
-                    return $action;
                 } else if ($action == "completerPropositionStage") {
                     return $action;
                 } else if ($action == "completerStage") {
@@ -129,10 +127,6 @@ function call_action() {
             
             case 'proposerStageEtape2' :
                 $action = 'proposerStageEtape2' ;
-                break;
-            
-            case 'proposerStageEtape3' :
-                $action = 'proposerStageEtape3' ;
                 break;
 
 //                case 'validerProposerStage':
