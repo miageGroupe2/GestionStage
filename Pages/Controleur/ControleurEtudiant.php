@@ -5,66 +5,31 @@ require_once RACINE_VUE . 'VueMenuGauche.php';
 require_once RACINE_VUE . 'VueCorps.php';
 require_once 'BD.php';
 
-//    function proposerStageEtape3() {
-//        
-//        $continuer = FALSE ;
-//        
-//        //si l'utilisateur a sélectionné un tuteur existant
-//        if (isset($_POST['idContact']) && $_POST['idContact'] != "ajouter"){
-//
-//
-//            $contact = BD::rechercherContactById($_POST['idContact']);
-//            if ( $contact != NULL){
-//
-//                $continuer = TRUE ;
-//            }
-//
-//        }else{
-//        // si l'utilisateur a ajouté un tuteur
-//            //on vérifie que tous les champs obligatoires sont remplis
-//            if (isset($_POST['nom_tuteur']) && $_POST['nom_tuteur'] != NULL
-//                && isset($_POST['prenom_tuteur']) && $_POST['prenom_tuteur'] != NULL 
-//                ){
-//
-//                    $continuer = TRUE ;
-//
-//                    $fonctionTuteur = "" ;
-//                    if (isset($_POST['fonction_tuteur']) && $_POST['fonction_tuteur'] != NULL){
-//                        $fonctionTuteur = $_POST['fonction_tuteur'] ;
-//                    }
-//                    $telFixe = "" ;
-//                    if (isset($_POST['tel_fixe']) && $_POST['tel_fixe'] != NULL){
-//                        $telFixe = $_POST['tel_fixe'] ;
-//                    }
-//                    $telPort = "" ;
-//                    if (isset($_POST['tel_port']) && $_POST['tel_port'] != NULL){
-//                        $telPort = $_POST['tel_port'] ;
-//                    }
-//                    $mail = "" ;
-//                    if (isset($_POST['mail']) && $_POST['mail'] != NULL){
-//                        $$mail = $_POST['mail'] ;
-//                    }
-//
-//                    $contact = new ModeleContact(NULL, $_POST['prenom_tuteur'], $_POST['nom_tuteur'], $_POST['fonction_tuteur'], $_POST['tel_fixe'], $_POST['tel_port'], $_POST['mail']);
-//                    
-//
-//            }else{
-//                $_REQUEST['action'] = "pagePrincipale";
-//                call_action();
-//            }
-//        }
-//        if ($continuer){
-//
-//            //on récupère l'entreprise qui était en session
-//            $entreprise = $_SESSION['modeleEntreprise'];
-//            
-//            if ($entreprise != NULL){
-//                
-//                $corps = genererProposerStageEtape3($entreprise, $contact);
-//                AffichePage(TRUE, $corps);
-//            }
-//        }
-//    }
+    function proposerStageEtape3() {
+        
+        // on vérifie que l'utilisateur a renseigné un sujet
+        if (isset($_POST['sujetStage']) && $_POST['sujetStage'] != ""){
+            
+            $entreprise = $_SESSION['modeleEntreprise'];
+            
+            //si l'entreprise n'a pas d'id c'est quelle n'existe pas
+            //dans la base. Donc on l'ajoute
+            if ($entreprise->getId() == NULL){
+                
+                BD::ajouterEntreprise($entreprise->getNom(), $entreprise->getAdresse(),
+                        $entreprise->getVille(), $entreprise->getCodePostal(),
+                        $entreprise->getPays(),
+                        $entreprise->getNumeroTelephone(),
+                        $entreprise->getUrlSiteInternet());
+            }
+            BD::ajouterPropositionStage($nom, $prenom, $pormation, $nom_entreprise, $num_rue, $code_postal, $ville, $tel_accueil, $sujet);
+        }else{
+
+            $_REQUEST['action'] = "pagePrincipale";
+            call_action();
+        }
+        
+    }
 
     function proposerStageEtape2() {
 
@@ -106,7 +71,7 @@ require_once 'BD.php';
                     if (isset($_POST['numerosiret']) && $_POST['numerosiret'] != NULL){
                         $numeroSiret = $_POST['numerosiret'] ;
                     }
-
+                        
                     $entreprise = new ModeleEntreprise(NULL, $_POST['nom_entreprise'], $_POST['num_rue'], $_POST['code_postal'], $_POST['ville'], $_POST['pays'], $_POST['tel_accueil'], $numeroSiret, $siteInternet);
 
                 }else{
@@ -121,14 +86,10 @@ require_once 'BD.php';
         }
         if ($continuer){
 
-            //on récupère l'entreprise qui était en session
-            $entreprise = $_SESSION['modeleEntreprise'];
-            
-            if ($entreprise != NULL){
+            $_SESSION['modeleEntreprise'] = $entreprise ;
                 
-                $corps = genererProposerStageEtape2($entreprise);
-                AffichePage(TRUE, $corps);
-            }
+            $corps = genererProposerStageEtape2($entreprise);
+            AffichePage(TRUE, $corps);
         }
     }
 

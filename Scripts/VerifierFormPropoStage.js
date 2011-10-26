@@ -43,41 +43,12 @@ function verifierFormulaireEtape1(){
 }
 function verifierFormulaireEtape2(){
     
-    //si les radios boutons existent (cad l'utilisateur doit choisir entre sélectionner 
-    //un tuteur existant ou en ajouter un)
-    var radioBoutonExist = document.formulaire.idContact ;
-    var besoinDeVerifierFormulaire = false ;
-    
-    if (radioBoutonExist){
-
-        var nbRadiosBouton = document.formulaire.idContact.length ;
-        if(document.formulaire.idContact[nbRadiosBouton - 1 ].checked){
+    if (document.getElementById("sujetStage").value == ""){
         
-            besoinDeVerifierFormulaire = true ;
-    
-        }else{
-            return true ;
-        }   
-        
+        alert("Veuillez indiquer un sujet de stage.");
+        return false ;
     }else{
-
-        besoinDeVerifierFormulaire = true ;
-    }
-    
-    if (besoinDeVerifierFormulaire){
         
-        if (document.getElementById("nom_tuteur").value == ""
-            || document.getElementById("prenom_tuteur").value == ""
-            ){
-
-            alert("Veuillez remplir tous les champs marqués d'une étoile.");
-            return false;
-        }else{
-
-            return true ;
-        }
-    }else{
-        //inutile juste pour éviter un warning
-        return TRUE ;
+        return true ;
     }
 }

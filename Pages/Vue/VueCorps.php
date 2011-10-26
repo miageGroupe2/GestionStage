@@ -661,7 +661,7 @@ function genererProposerStageEtape2($entreprise) {
     $utilisateur = $_SESSION['modeleUtilisateur'];
     
     $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
-    $corps .= "<form method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape3\">
+    $corps .= "<form onsubmit=\"return verifierFormulaireEtape2()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape3\">
                 <td id = \"corps\">
                     <h2>Sujet de stage</h2>   
                     
@@ -760,7 +760,12 @@ function genererProposerStageEtape2($entreprise) {
                         <td>
                             <h3>Sujet de stage</h3>
                         </td>
-                    </tr>";
+                    </tr>
+                </table>
+                <textarea rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" ></textarea>
+                <br />
+                <input type=\"submit\" value=\"Valider la proposition\"></form><br /><br />
+                </form>";
     
     
     $corps .= "

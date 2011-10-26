@@ -55,7 +55,7 @@ INSERT INTO `contact` (`idcontact`, `identreprise`, `prenomcontact`, `nomcontact
 --
 
 CREATE TABLE IF NOT EXISTS `entreprise` (
-  `identreprise` int(11) NOT NULL,
+  `identreprise` int(11) NOT NULL AUTO_INCREMENT,
   `nomentreprise` varchar(50) DEFAULT NULL,
   `adresseentreprise` varchar(200) DEFAULT NULL,
   `villeentreprise` varchar(50) DEFAULT NULL,
