@@ -384,7 +384,7 @@ function genererProposerStageEtape2($tabContact) {
                     Nom <etoile>*</etoile>:
                 </td>
                 <td>
-                    <input type=text name=\"nom_tuteur\" id=\"nom_tuteur\">
+                    <input type=text name=\"nom_tuteur\" id=\"nom_tuteur\" value=\"Fort\">
                 </td>
             </tr>
             <tr>
@@ -392,7 +392,7 @@ function genererProposerStageEtape2($tabContact) {
                     Pr&eacute;nom <etoile>*</etoile>:
                 </td>
                 <td>
-                    <input type=text name=\"prenom_tuteur\" id=\"prenom_tuteur\">
+                    <input type=text name=\"prenom_tuteur\" id=\"prenom_tuteur\" value=\"Bertrand\">
                 </td>
             </tr>
             <tr>
@@ -442,6 +442,45 @@ function genererProposerStageEtape2($tabContact) {
 function genererProposerStageEtape3($tabContact) {
     
     
+    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
+    $corps .= "<form method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape3\">
+                <td id = \"corps\">
+                    <h2>Sujet de stage</h2>   
+                    <br /><br />
+                    <h3>Etudiant</h3>
+                <table> 
+                    <tr>
+                        <td>
+                            Nom :
+                        </td>
+                        <td>
+                            <input type=text value=\"Fort\" readonly=\"true\">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Pr&eacute;nom <etoile>*</etoile>:
+                        </td>
+                        <td>
+                            <input type=text name=\"prenom_tuteur\" id=\"prenom_tuteur\" value=\"Bertrand\">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Fonction :
+                        </td>
+                        <td>
+                            <input type=text name=\"fonction_tuteur\">
+                        </td>
+                    </tr>";
+    
+    
+    $corps .= "
+                    
+                </td>
+            </tr>
+        </table>";
+    return $corps ;
     
 }
 function genererProposerStage($tabEntreprise) {

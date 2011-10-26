@@ -43,6 +43,8 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if ($action == "proposerStageEtape2") {
                     return $action;
+                } else if ($action == "proposerStageEtape3") {
+                    return $action;
                 } else if ($action == "completerPropositionStage") {
                     return $action;
                 } else if ($action == "completerStage") {
