@@ -2,78 +2,78 @@
 
     class ModeleContact {
         
-        private $idContact ;
-        private $prenomContact ;
-        private $nomContact ;
-        private $fonctionContact ;
-        private $telephoneFixeContact ;
-        private $telephoneMobileContact ;
+        private $id ;
+        private $prenom ;
+        private $nom ;
+        private $fonction ;
+        private $telephoneFixe ;
+        private $telephoneMobile ;
         private $mailContact ;
         
-        function __construct($idContact, $prenomContact, $nomContact, $fonctionContact, $telephoneFixeContact, $telephoneMobileContact, $mailContact) {
-            $this->idContact = $idContact;
-            $this->prenomContact = $prenomContact;
-            $this->nomContact = $nomContact;
-            $this->fonctionContact = $fonctionContact;
-            $this->telephoneFixeContact = $telephoneFixeContact;
-            $this->telephoneMobileContact = $telephoneMobileContact;
-            $this->mailContact = $mailContact;
+        function __construct($id, $prenom, $nom, $fonction, $telephoneFixe, $telephoneMobile, $mail) {
+            $this->id = $id;
+            $this->prenom = $prenom;
+            $this->nom = $nom;
+            $this->fonction = $fonction;
+            $this->telephoneFixe = $telephoneFixe;
+            $this->telephoneMobile = $telephoneMobile;
+            $this->mail = $mail;
         }
 
-        public function getIdContact() {
-            return $this->idContact;
+        public function getId() {
+            return $this->id;
         }
 
-        public function setIdContact($idContact) {
-            $this->idContact = $idContact;
+        public function setId($id) {
+            $this->id = $id;
         }
 
-        public function getPrenomContact() {
-            return $this->prenomContact;
+        public function getPrenom() {
+            return $this->prenom;
         }
 
-        public function setPrenomContact($prenomContact) {
-            $this->prenomContact = $prenomContact;
+        public function setPrenom($prenom) {
+            $this->prenom = $prenom;
         }
 
-        public function getNomContact() {
-            return $this->nomContact;
+        public function getNom() {
+            return $this->nom;
         }
 
-        public function setNomContact($nomContact) {
-            $this->nomContact = $nomContact;
+        public function setNom($nom) {
+            $this->nom = $nom;
         }
 
-        public function getFonctionContact() {
-            return $this->fonctionContact;
+        public function getFonction() {
+            return $this->fonction;
         }
 
-        public function setFonctionContact($fonctionContact) {
-            $this->fonctionContact = $fonctionContact;
+        public function setFonction($fonction) {
+            $this->fonction = $fonction;
         }
 
-        public function getTelephoneFixeContact() {
-            return $this->telephoneFixeContact;
+        public function getTelephoneFixe() {
+            return $this->telephoneFixe;
         }
 
-        public function setTelephoneFixeContact($telephoneFixeContact) {
-            $this->telephoneFixeContact = $telephoneFixeContact;
+        public function setTelephoneFixe($telephoneFixe) {
+            $this->telephoneFixe = $telephoneFixe;
         }
 
-        public function getTelephoneMobileContact() {
-            return $this->telephoneMobileContact;
+        public function getTelephoneMobile() {
+            return $this->telephoneMobile;
         }
 
-        public function setTelephoneMobileContact($telephoneMobileContact) {
-            $this->telephoneMobileContact = $telephoneMobileContact;
+        public function setTelephoneMobile($telephoneMobile) {
+            $this->telephoneMobile = $telephoneMobile;
         }
 
-        public function getMailContact() {
-            return $this->mailContact;
+        public function getMail() {
+            return $this->mail;
         }
 
-        public function setMailContact($mailContact) {
-            $this->mailContact = $mailContact;
+        public function setMail($mail) {
+            $this->mail = $mail;
         }
 
 
