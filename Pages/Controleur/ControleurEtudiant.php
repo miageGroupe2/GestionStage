@@ -22,7 +22,7 @@ require_once 'BD.php';
                         $entreprise->getNumeroTelephone(),
                         $entreprise->getUrlSiteInternet());
             }
-            BD::ajouterPropositionStage($nom, $prenom, $pormation, $nom_entreprise, $num_rue, $code_postal, $ville, $tel_accueil, $sujet);
+            //BD::ajouterPropositionStage($nom, $prenom, $pormation, $nom_entreprise, $num_rue, $code_postal, $ville, $tel_accueil, $sujet);
         }else{
 
             $_REQUEST['action'] = "pagePrincipale";
