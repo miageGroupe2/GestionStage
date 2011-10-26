@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.7deb5build0.10.10.1
+-- version 3.3.2deb1
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Mer 26 Octobre 2011 à 10:23
--- Version du serveur: 5.1.49
--- Version de PHP: 5.3.3-1ubuntu9.5
+-- Généré le : Mer 26 Octobre 2011 à 11:26
+-- Version du serveur: 5.1.41
+-- Version de PHP: 5.3.2-1ubuntu4.10
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -46,8 +46,7 @@ CREATE TABLE IF NOT EXISTS `contact` (
 
 INSERT INTO `contact` (`idcontact`, `identreprise`, `prenomcontact`, `nomcontact`, `fonctioncontact`, `dateajout`, `datederniereactivite`, `telfixecontact`, `telmobilecontact`, `mailcontact`) VALUES
 (0, 2, 'Nicolas', 'Dupond', 'Développeur', '2011-10-26', '2011-10-26', '1928393', '9283938', 'nico@mail.de'),
-(1, 2, 'Luc', 'Dubois', 'Ingénieur', '2011-10-19', '2011-10-19', '07 89 76 87 98', '03 45 21 24 56', 'dubois@gmail.fr'),
-(2, 2, 'Nicolas', 'Dupond', 'Développeur', '2011-10-26', '2011-10-26', '1928393', '9283938', 'nico@mail.de');
+(1, 2, 'Luc', 'Dubois', 'Ingénieur', '2011-10-19', '2011-10-19', '07 89 76 87 98', '03 45 21 24 56', 'dubois@gmail.fr');
 
 -- --------------------------------------------------------
 
@@ -134,6 +133,9 @@ CREATE TABLE IF NOT EXISTS `proposition` (
 -- Contenu de la table `proposition`
 --
 
+INSERT INTO `proposition` (`idproposition`, `identreprise`, `idutilisateur`, `idstage`, `nomentreprisep`, `dateproposition`, `adresseentreprisep`, `villeentreprisep`, `codepostalentreprisep`, `paysentreprisep`, `numerotelephonep`, `urlsiteinternetp`, `sujetstagep`, `estvalidee`) VALUES
+(0, NULL, 1, NULL, 'Logica', '2011-10-26', '21 rue des pavé d''or', 'Luxembourg', '1021', 'Luxembourg', '00352303040506', 'http://www.logica.com', 'La chasse de l''alouette ambrée au Mexique ne succite-elle pas l''inquiétude des Hongrois ?', 0),
+(1, NULL, 1, NULL, 'Sopra', '2011-10-24', '28 avenue Montaigne', 'Luxembourg', '1234', 'Luxembourg', '00352123456', 'http://www.sopra.lu', 'Garantir la survie des opposoms en Alabama du Sud', 0);
 
 -- --------------------------------------------------------
 

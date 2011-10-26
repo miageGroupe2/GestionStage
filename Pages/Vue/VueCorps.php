@@ -241,33 +241,118 @@ function genererDetailProposition() {
     $prop = BD::rechercherProposition($_GET['idprop']);
     $corps ="";
     if($prop != NULL){
-        
         $corps = "<td id = \"corps\">
-        <table>
+            <h2>Proposition de stage</h2><br/>
+            <form method=\"post\" action=\"" . RACINE . "?action=validerProposition&idprop=".htmlentities($prop[0]->getIdProposition())."\">
+            <table>
             <tr>
-                <td>Pr&eacute;nom</td>
-                <td>Nom</td>
-                <td>Promotion</td>
+                <td>
+                    Date de proposition :
+                </td>
+                <td>
+                    <input type=text readonly=\"true\" name=\"dateproposition\" value=\"".htmlentities($prop[0]->getDateProposition())."\">
+                </td>
             </tr>
             <tr>
                 <td>
-                    ".$prop[0]->getEtudiant()->getPrenom()." 
+                    Nom :
+                </td>
                 <td>
-                <td>
-                    ".$prop[0]->getEtudiant()->getNom()."
-                <td>
-                <td>
-                    ".$prop[0]->getPromotionEtudiant()."
-                <td>
+                    <input type=text readonly=\"true\" name=\"nom\" value=\"".htmlentities($prop[0]->getEtudiant()->getNom())."\">
+                </td>
             </tr>
-        </table>
-
+            <tr>
+                <td>
+                    Pr&eacute;om :
+                </td>
+                <td>
+                    <input type=text readonly=\"true\" name=\"prenom\" value=\"".htmlentities($prop[0]->getEtudiant()->getPrenom())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Promotion :
+                </td>
+                <td>
+                    <input type=text readonly=\"true\" name=\"promotionetudiant\" value=\"".htmlentities($prop[0]->getPromotionEtudiant())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Nom Entreprise :
+                </td>
+                <td>
+                    <input type=text readonly=\"true\" name=\"nomentreprise\" value=\"".htmlentities($prop[0]->getNomEntreprise())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Adresse :
+                </td>
+                <td>
+                    <input type=\"text\" readonly=\"true\" size=\"35\" name=\"adresseentreprise\" value=\"".htmlentities($prop[0]->getAdresseEntreprise())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Code postal :
+                </td>
+                <td>
+                    <input type=\"text\" readonly=\"true\" name=\"codepostalentreprise\" value=\"".htmlentities($prop[0]->getCodePostal())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Ville :
+                </td>
+                <td>
+                    <input type=\"text\" readonly=\"true\" name=\"villeentreprise\" value=\"".htmlentities($prop[0]->getVille())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Pays :
+                </td>
+                <td>
+                    <input type=\"text\" readonly=\"true\" name=\"paysentreprise\" value=\"".htmlentities($prop[0]->getPays())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    N&deg; Tel :
+                </td>
+                <td>
+                    <input type=\"text\" readonly=\"true\" name=\"telentreprise\" value=\"".htmlentities($prop[0]->getNumTelephone())."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    URL Site :
+                </td>
+                <td>
+                    <input type=\"text\" readonly=\"true\" name=\"urlsite\" value=\"".htmlentities($prop[0]->getUrlSite())."\">
+                </td>
+            </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <h2>Sujet :</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ".htmlentities($prop[0]->getSujet())."
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input id=\"submit_valid_prop\" type=\"submit\" value=\"Valider cette proposition\"/>
+                    </td>
+                </tr>
+            </table>
         ";
-        
-        
-        
     }
-    
     $corps .= "</td>
                 </tr>
             </table>";

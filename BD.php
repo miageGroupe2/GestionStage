@@ -274,12 +274,11 @@ echo "ikop";
                         AND p.idutilisateur = u.idutilisateur
                         AND u.idpromotion = pr.idpromotion";
             $retour = mysql_query($requete) or die(mysql_error());
-
+            
             while ($tableau = mysql_fetch_array($retour)) {
                 $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur']);
-                $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nometreprisep'], $tableau['dateproposition'], $tableau['promotion'], $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['estvalidee'], $tableau['noteobtenue'], $etudiant, $tableau['nompromotion']);
+                $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['estvalidee'], $etudiant, $tableau['nompromotion']);
                 $i++;
-                echo "yeaj";
             }
             
             if ($i > 0) {
