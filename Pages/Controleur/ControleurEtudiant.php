@@ -11,18 +11,24 @@ require_once 'BD.php';
         if (isset($_POST['sujetStage']) && $_POST['sujetStage'] != ""){
             
             $entreprise = $_SESSION['modeleEntreprise'];
+            $idEntreprise = $entreprise->getId() ;
             
-            //si l'entreprise n'a pas d'id c'est quelle n'existe pas
+            //si l'entreprise n'a pas d'id c'est qu'elle n'existe pas
             //dans la base. Donc on l'ajoute
-            if ($entreprise->getId() == NULL){
+            if ($idEntreprise == NULL || $idEntreprise == ""){
                 
-                BD::ajouterEntreprise($entreprise->getNom(), $entreprise->getAdresse(),
+                $idEntreprise = BD::ajouterEntreprise($entreprise->getNom(), $entreprise->getAdresse(),
                         $entreprise->getVille(), $entreprise->getCodePostal(),
                         $entreprise->getPays(),
                         $entreprise->getNumeroTelephone(),
                         $entreprise->getUrlSiteInternet());
+                
             }
-            //BD::ajouterPropositionStage($nom, $prenom, $pormation, $nom_entreprise, $num_rue, $code_postal, $ville, $tel_accueil, $sujet);
+            
+            BD::ajouterPropositionStage($idEntreprise, $_POST['sujetStage']);
+            
+            $corps = genererProposerStageEtape3($entreprise);
+            AffichePage(TRUE, $corps);
         }else{
 
             $_REQUEST['action'] = "pagePrincipale";
@@ -72,7 +78,7 @@ require_once 'BD.php';
                         $numeroSiret = $_POST['numerosiret'] ;
                     }
                         
-                    $entreprise = new ModeleEntreprise(NULL, $_POST['nom_entreprise'], $_POST['num_rue'], $_POST['code_postal'], $_POST['ville'], $_POST['pays'], $_POST['tel_accueil'], $numeroSiret, $siteInternet);
+                    $entreprise = new ModeleEntreprise(NULL, $_POST['nom_entreprise'], $_POST['num_rue'], $_POST['ville'], $_POST['code_postal'], $_POST['pays'], $_POST['tel_accueil'], $numeroSiret, $siteInternet);
 
                 }else{
 
