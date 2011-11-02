@@ -124,13 +124,54 @@ require_once 'BD.php';
     
     function editerPropositionStage(){
         
-        if (isset ($_GET['idProposition'])){
+        //si le sujet de stage a déjà été modifié
+        if (isset ($_GET['sujetModifie']) && $_GET['sujetModifie']=="true"){
+            
+            $operationPermise = BD::autorisationEditerProposition($_GET['idProposition']);
+
+            if($operationPermise){
+    
+                $proposition = BD::editerPropositionStage($_GET['idProposition'], $_POST['sujetStage']);
+            }
+
+            $_REQUEST['action'] = "pagePrincipale";
+            call_action();
+            
+        }
+        //sinon affichage de la page editer stage
+        else if (isset ($_GET['idProposition'])){
             
             $operationPermise = BD::autorisationEditerProposition($_GET['idProposition']);
             
-            $corps = genererListePropositionStageEtudiant();
-            AffichePage(TRUE, $corps);
+            if($operationPermise){
+    
+                $proposition = BD::rechercherProposition($_GET['idProposition']);
+                $corps = genererEditerPropositionEtudiant($proposition);
+                AffichePage(TRUE, $corps);    
+                
+            }else{
+
+                $_REQUEST['action'] = "pagePrincipale";
+                call_action();
+            }
+
         }
+    }
+    
+    function supprimerProposition(){
+
+        if (isset ($_GET['idProposition'])){
+
+            $operationPermise = BD::autorisationEditerProposition($_GET['idProposition']);
+            
+            if($operationPermise){
+
+                BD::supprimerProposition($_GET['idProposition']);
+            }
+        }
+        
+        $_REQUEST['action'] = "pagePrincipale";
+        call_action();
     }
 
     function afficherCompleterStage() {

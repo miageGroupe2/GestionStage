@@ -114,6 +114,86 @@ function genererAjoutPropositionStageOk() {
 }
 
 /**
+ * Permet d'afficher la page permettant d'éditer une proposition de stage (côté étudiant)
+ */
+function genererEditerPropositionEtudiant($proposition){
+    
+    $corps = "<td id = \"corps\">
+                <h2>Edition d'une proposition de stage</h2>
+                <script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormEditerProposition.js\" type=\"text/javascript\"></script>
+                <form onsubmit=\"return verifierEditerProposition()\" action=\"" . RACINE . "?action=editerPropositionStage&idProposition=".$proposition->getIdProposition()."&sujetModifie=true\" method=\"post\">
+                <table class = \"tableau\">
+                    <tr>
+                        <td class = \"tableau\">
+                            Date de proposition :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($proposition->getDateProposition())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Nom de l'entreprise :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($proposition->getNomEntreprise())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Adresse :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($proposition->getAdresseEntreprise())."<br/>".
+                            htmlentities($proposition->getCodePostal())."<br/>".
+                            htmlentities($proposition->getVille())."<br/>".
+                            htmlentities($proposition->getPays())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Num&eacute;ro de t&eacute;l&eacute;phone :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($proposition->getNumTelephone())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Site Web :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($proposition->getUrlSite())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Sujet :
+                        </td>
+                        <td class = \"tableau\">
+                            <textarea rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" >".htmlentities($proposition->getSujet())."</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Etat de la proposition :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($proposition->getEtat())."
+                        </td>
+                    </tr>
+                </table>
+                <input type=\"button\" value=\"Supprimer\" onclick=\"confirmerAvantSuppression(".$proposition->getIdProposition().")\">
+                <input type=\"submit\" value=\"Valider\">
+
+
+                </td>
+            </tr>
+        </table>";
+    return $corps;
+}
+
+/**
  * 
  */
 function genererRechercheEntreprise() {
@@ -238,19 +318,19 @@ function genererListePropositionStageResponsable() {
 }
 
 function genererDetailProposition() {
-    $prop = BD::rechercherProposition($_GET['idprop']);
+    $proposition = BD::rechercherProposition($_GET['idprop']);
     $corps ="";
-    if($prop != NULL){
+    if($proposition != NULL){
         $corps = "<td id = \"corps\">
             <h2>Proposition de stage</h2><br/>
-            <form method=\"post\" action=\"" . RACINE . "?action=validerProp&idprop=".htmlentities($prop[0]->getIdProposition())."\">
+            <form method=\"post\" action=\"" . RACINE . "?action=validerProp&idprop=".htmlentities($proposition->getIdProposition())."\">
             <table>
             <tr>
                 <td>
                     Date de proposition :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"dateproposition\" value=\"".htmlentities($prop[0]->getDateProposition())."\">
+                    <input type=text readonly=\"true\" name=\"dateproposition\" value=\"".htmlentities($proposition->getDateProposition())."\">
                 </td>
             </tr>
             <tr>
@@ -258,7 +338,7 @@ function genererDetailProposition() {
                     Nom :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"nom\" value=\"".htmlentities($prop[0]->getEtudiant()->getNom())."\">
+                    <input type=text readonly=\"true\" name=\"nom\" value=\"".htmlentities($proposition->getEtudiant()->getNom())."\">
                 </td>
             </tr>
             <tr>
@@ -266,7 +346,7 @@ function genererDetailProposition() {
                     Pr&eacute;om :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"prenom\" value=\"".htmlentities($prop[0]->getEtudiant()->getPrenom())."\">
+                    <input type=text readonly=\"true\" name=\"prenom\" value=\"".htmlentities($proposition->getEtudiant()->getPrenom())."\">
                 </td>
             </tr>
             <tr>
@@ -274,7 +354,7 @@ function genererDetailProposition() {
                     Promotion :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"promotionetudiant\" value=\"".htmlentities($prop[0]->getPromotionEtudiant())."\">
+                    <input type=text readonly=\"true\" name=\"promotionetudiant\" value=\"".htmlentities($proposition->getPromotionEtudiant())."\">
                 </td>
             </tr>
             <tr>
@@ -282,7 +362,7 @@ function genererDetailProposition() {
                     Nom Entreprise :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"nomentreprise\" value=\"".htmlentities($prop[0]->getNomEntreprise())."\">
+                    <input type=text readonly=\"true\" name=\"nomentreprise\" value=\"".htmlentities($proposition->getNomEntreprise())."\">
                 </td>
             </tr>
             <tr>
@@ -290,7 +370,7 @@ function genererDetailProposition() {
                     Adresse :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" size=\"35\" name=\"adresseentreprise\" value=\"".htmlentities($prop[0]->getAdresseEntreprise())."\">
+                    <input type=\"text\" readonly=\"true\" size=\"35\" name=\"adresseentreprise\" value=\"".htmlentities($proposition->getAdresseEntreprise())."\">
                 </td>
             </tr>
             <tr>
@@ -298,7 +378,7 @@ function genererDetailProposition() {
                     Code postal :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"codepostalentreprise\" value=\"".htmlentities($prop[0]->getCodePostal())."\">
+                    <input type=\"text\" readonly=\"true\" name=\"codepostalentreprise\" value=\"".htmlentities($proposition->getCodePostal())."\">
                 </td>
             </tr>
             <tr>
@@ -306,7 +386,7 @@ function genererDetailProposition() {
                     Ville :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"villeentreprise\" value=\"".htmlentities($prop[0]->getVille())."\">
+                    <input type=\"text\" readonly=\"true\" name=\"villeentreprise\" value=\"".htmlentities($proposition->getVille())."\">
                 </td>
             </tr>
             <tr>
@@ -314,7 +394,7 @@ function genererDetailProposition() {
                     Pays :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"paysentreprise\" value=\"".htmlentities($prop[0]->getPays())."\">
+                    <input type=\"text\" readonly=\"true\" name=\"paysentreprise\" value=\"".htmlentities($proposition->getPays())."\">
                 </td>
             </tr>
             <tr>
@@ -322,7 +402,7 @@ function genererDetailProposition() {
                     N&deg; Tel :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"telentreprise\" value=\"".htmlentities($prop[0]->getNumTelephone())."\">
+                    <input type=\"text\" readonly=\"true\" name=\"telentreprise\" value=\"".htmlentities($proposition->getNumTelephone())."\">
                 </td>
             </tr>
             <tr>
@@ -330,7 +410,7 @@ function genererDetailProposition() {
                     URL Site :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"urlsite\" value=\"".htmlentities($prop[0]->getUrlSite())."\">
+                    <input type=\"text\" readonly=\"true\" name=\"urlsite\" value=\"".htmlentities($proposition->getUrlSite())."\">
                 </td>
             </tr>
             </table>
@@ -342,7 +422,7 @@ function genererDetailProposition() {
                 </tr>
                 <tr>
                     <td>
-                        ".htmlentities($prop[0]->getSujet())."
+                        ".htmlentities($proposition->getSujet())."
                     </td>
                 </tr>
                 <tr>
@@ -384,10 +464,10 @@ function genererListePropositionStageEtudiant(){
     $tabProp = BD::rechercherPropositionsEtudiant();
     $i=1;
     
-    if($tabProp != NULL){
-    
-        $corps ="<td id = \"corps\">
+    $corps ="<td id = \"corps\">
             <h2>Proposition de stage</h2><br/>";
+    
+    if($tabProp != NULL){
         
         foreach($tabProp as $prop){
             $corps .="
@@ -457,99 +537,12 @@ function genererListePropositionStageEtudiant(){
             ";
             $i++;
         }
-        $corps .="</td></tr></table>";
+        
     }
+    $corps .="</td></tr></table>";
     return $corps;
 }
 
-
-// fonction a refaire pour coller avec les nouveux modèles
-function genererDetailPropositionARefaireHahahahaha() {
-
-    $stage = BD::rechercherProposition($_GET['idprop']);
-
-    $corps = NULL;
-
-    if ($stage != NULL) {
-
-        $entreprise = BD::rechercherEntrepriseById($_GET['idprop']);
-
-        // la liste des entreprises ayant un nom similaire
-        $tabEntreprise = BD::rechercherEntreprise($stage->getNomentreprise());
-
-        //on construit l'affichage des données de l'étudiant et de l'entreprise
-        $corps = "<td id = \"corps\">
-
-                      <form method=\"post\" action=\"" . RACINE . "?action=editerStage\">
-                      <table class=\"tableau\">
-                      <tr>
-                        <td class=\"tableau\" colspan=\"8\"> Etudiant </td>
-                      </tr>
-                      <tr>
-                        <td class=\"tableau\"> Pr&eacute;nom : " . $stage->getPrenometudiant() . "</td>
-                        <td class=\"tableau\"> Nom : " . $stage->getNometudiant() . "</td>
-                        <td class=\"tableau\"> Promotion : " . $stage->getPromotion() . "</td>
-                      </tr>
-                      <tr>
-                        <td class=\"tableau\" colspan=\"8\"> Entreprise </td>
-                      </tr>
-                      <tr>
-                        <td class=\"tableau\"> Nom : " . $entreprise->getNom() . "</td>
-                        <td class=\"tableau\"> " . $entreprise->getAdresse() . " " . $entreprise->getVille() . " " . $entreprise->getPays() . "</td>
-                        <td class=\"tableau\"> Tel :" . $entreprise->getNumeroTelephone() . "</td>
-                        <td class=\"tableau\"> Siret :" . $entreprise->getNumeroSiret() . "</td>
-                      </tr>";
-
-        // si il existe des entreprises au nom similaire dans la base on construit 
-        // l'affichage correspondant
-        if ($tabEntreprise != NULL) {
-
-            $corps .=
-                    "<tr>
-                <td class=\"tableau\" colspan=\"8\"> Entreprise similaire dans la base :</td>
-            </tr>
-                    <tr>
-                  <td class=\"tableau\"> Choix </td>
-                  <td class=\"tableau\"> Nom entreprise </td>
-                  <td class=\"tableau\"> Adresse </td>
-                  <td class=\"tableau\"> Ville </td>
-                  <td class=\"tableau\"> Pays </td>
-                  <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
-                  <td class=\"tableau\"> Numéro de Siret </td>
-                  <td class=\"tableau\"> Site web </td>
-                  </tr>";
-
-            foreach ($tabEntreprise as $entrepriseCourante) {
-
-                $corps .= "<tr><td class=\"tableau\"> ";
-                $corps .= "<input type=\"radio\" name=\"idEntreprise\" value=\"" . $entrepriseCourante->getId() . "\" id=\"" . $entrepriseCourante->getId() . "\" />";
-                $corps .= "</td><td class=\"tableau\">";
-                $corps .= $entrepriseCourante->getNom();
-                $corps .= "</td><td class=\"tableau\">";
-                $corps .= $entrepriseCourante->getAdresse();
-                $corps .= "</td><td class=\"tableau\">";
-                $corps .= $entrepriseCourante->getVille();
-                $corps .= "</td><td class=\"tableau\">";
-                $corps .= $entrepriseCourante->getPays();
-                $corps .= "</td><td class=\"tableau\">";
-                $corps .= $entrepriseCourante->getNumeroTelephone();
-                $corps .= "</td><td class=\"tableau\">";
-                $corps .= $entrepriseCourante->getNumeroSiret();
-                $corps .= "</td><td class=\"tableau\">";
-                $corps .= $entrepriseCourante->getUrlSiteInternet();
-
-                $corps .= "</tr>";
-            }
-        }
-        $corps .= "</table>";
-
-
-        $corps .= "</td>
-                </tr>
-            </table>";
-    }
-    return $corps;
-}
 
 
 //function genererProposerStageEtape2($tabContact) {

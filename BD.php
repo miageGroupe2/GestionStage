@@ -274,17 +274,20 @@ class BD {
      * Permet d'afficher toutes les propositions de stage de l'étudiant connecté
      */
     public static function rechercherPropositionsEtudiant() {
+        
         BD::getConnection();
         $i = 0;
         $tabProp = null;
         $idUser = $_SESSION['modeleUtilisateur']->getId();
-        $requete = "SELECT p.idproposition, p.nomentreprisep, p.dateproposition, p.adresseentreprisep, p.villeentreprisep, p.codepostalentreprisep, p.paysentreprisep, p.numerotelephonep, p.urlsiteinternetp, p.sujetstagep, p.etat
-                        FROM proposition p
-                        WHERE p.idutilisateur = " . $idUser . ";";
+        $requete = "SELECT p.idproposition, e.nomentreprise, p.dateproposition, e.adresseentreprise, e.villeentreprise, e.codepostalentreprise, e.paysentreprise, e.numerotelephone, e.urlsiteinternet, p.sujetstagep, p.etat
+                        FROM proposition p, entreprise e
+                        WHERE p.idutilisateur = '$idUser'
+                        AND p.identreprise = e.identreprise";
+        
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {
-            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprisep'], $tableau['dateproposition'], $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], null, null);
+            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprise'], $tableau['dateproposition'], $tableau['adresseentreprise'], $tableau['codepostalentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['urlsiteinternet'], $tableau['sujetstagep'], $tableau['etat'], null, null);
             $i++;
         }
         return $tabProp;
@@ -299,10 +302,52 @@ class BD {
         
         BD::getConnection();
         $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+        $utilisateur = $_SESSION['modeleUtilisateur'];
+        $idUtilisateur = $utilisateur->getId() ;
         
         if ($idProposition != FALSE) {
         
-            $requete = "SELECT * FROM proposition WHERE idproposition='$idProposition";
+            $requete = "SELECT * FROM proposition WHERE idproposition='$idProposition' AND idutilisateur='$idUtilisateur'";
+            $retour = mysql_query($requete);
+            $nombreDeLignes = mysql_num_rows($retour);
+
+            if ($nombreDeLignes > 0) {
+                
+                return TRUE ;
+            }else{
+                
+                return FALSE ;
+            }
+        }else{
+            
+            return FALSE ;
+        }
+    }
+    
+    public static function supprimerProposition ($idProposition){
+        
+        BD::getConnection();
+        $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+        
+        if ($idProposition != FALSE) {
+            
+            $requete = "DELETE FROM proposition WHERE idproposition='$idProposition'";
+            echo $requete;
+            mysql_query($requete);
+        }
+    }
+    
+    public static function editerPropositionStage($idProposition, $sujetStage){
+    
+        BD::getConnection();
+        $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+        $sujetStage = mysql_real_escape_string(htmlspecialchars($sujetStage));
+        
+        if ($idProposition != FALSE && $sujetStage != FALSE) {
+            
+            
+            $requete = "UPDATE proposition SET sujetstagep = '$sujetStage' WHERE idproposition = '$idProposition'";
+            mysql_query($requete);
         }
     }
 
@@ -345,8 +390,8 @@ class BD {
 
         BD::getConnection();
 
-        $id = mysql_real_escape_string(htmlspecialchars($id));
-        if ($id != FALSE) {
+        $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+        if ($idProposition != FALSE) {
             $i = 0;
             $tabProp = null;
 
@@ -394,7 +439,7 @@ class BD {
             }
             
             if ($i > 0) {
-                return $tabProp;
+                return $tabProp[0];
             } else {
                 return NULL;
             }

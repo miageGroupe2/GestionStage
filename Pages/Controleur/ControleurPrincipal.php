@@ -55,6 +55,8 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if ($action == "editerPropositionStage") {
                     return $action;
+                } else if ($action == "supprimerProposition") {
+                    return $action;
                 } else if ($action == "completerStage") {
                     return $action;
                 } else if ($action == "listePropositionStageEtudiant") {
@@ -142,6 +144,10 @@ function call_action() {
 
             case 'editerPropositionStage' :
                 $action = 'editerPropositionStage' ;
+                break;
+            
+            case 'supprimerProposition':
+                $action = 'supprimerProposition' ;
                 break;
 //                case 'validerProposerStage':
 //                    $action = 'validerProposerStage' ;
