@@ -24,11 +24,11 @@ class ModeleProposition {
     private $numTelephone;
     private $urlSite;
     private $sujet;
-    private $estValidee;
+    private $etat;
     private $etudiant;
     private $promotionEtudiant;
 
-    function __construct($idProposition, $idEntreprise, $idUtilisateur, $idStage, $nomEntreprise, $dateProposition, $adresseEntreprise, $codePostal, $ville, $pays, $numTelephone, $urlSite, $sujet, $estValidee, $etudiant, $promotionEtudiant) {
+    function __construct($idProposition, $idEntreprise, $idUtilisateur, $idStage, $nomEntreprise, $dateProposition, $adresseEntreprise, $codePostal, $ville, $pays, $numTelephone, $urlSite, $sujet, $etat, $etudiant, $promotionEtudiant) {
         $this->idProposition = $idProposition;
         $this->idEntreprise = $idEntreprise;
         $this->idUtilisateur = $idUtilisateur;
@@ -42,7 +42,7 @@ class ModeleProposition {
         $this->numTelephone = $numTelephone;
         $this->urlSite = $urlSite;
         $this->sujet = $sujet;
-        $this->estValidee = $estValidee;
+        $this->etat = $etat;
         $this->etudiant = $etudiant;
         $this->promotionEtudiant = $promotionEtudiant;
     }
@@ -169,12 +169,12 @@ class ModeleProposition {
         $this->sujet = $sujet;
     }
 
-    public function getEstValidee() {
-        return $this->estValidee;
+    public function getEtat() {
+        return $this->etat;
     }
 
-    public function setEstValidee($estValidee) {
-        $this->estValidee = $estValidee;
+    public function setEtat($etat) {
+        $this->etat = $etat;
     }
 
 

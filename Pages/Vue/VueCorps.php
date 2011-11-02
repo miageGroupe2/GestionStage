@@ -380,11 +380,15 @@ function genererValiderProposition(){
 
 
 function genererListePropositionStageEtudiant(){
-    $tabProp = BD::recherherPropositionsEtudiant();
+    
+    $tabProp = BD::rechercherPropositionsEtudiant();
     $i=1;
+    
     if($tabProp != NULL){
+    
         $corps ="<td id = \"corps\">
             <h2>Proposition de stage</h2><br/>";
+        
         foreach($tabProp as $prop){
             $corps .="
                 <h3>Proposition ".$i." :</h3>
@@ -426,7 +430,7 @@ function genererListePropositionStageEtudiant(){
                     </tr>
                     <tr>
                         <td class = \"tableau\">
-                            URL Site Web :
+                            Site Web :
                         </td>
                         <td class = \"tableau\">
                             ".htmlentities($prop->getUrlSite())."
@@ -438,6 +442,14 @@ function genererListePropositionStageEtudiant(){
                         </td>
                         <td class = \"tableau\">
                             ".htmlentities($prop->getSujet())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Etat de la proposition :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($prop->getEtat())."
                         </td>
                     </tr>
                 </table><br/>
