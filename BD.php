@@ -230,8 +230,8 @@ class BD {
             if ($nombreDeLignes == 0) {
                 
                 $requete = "INSERT into proposition (idproposition, identreprise, idutilisateur, 
-                    sujetstagep, estvalidee, dateproposition, idstage) 
-                    VALUES ('', '$idEntreprise', '$idUtilisateur', '$sujetStage', '0', NOW(), NULL)";
+                    sujetstagep, etat, dateproposition, idstage) 
+                    VALUES ('', '$idEntreprise', '$idUtilisateur', '$sujetStage', 'en attente', NOW(), NULL)";
 
                 mysql_query($requete);
                 
@@ -311,7 +311,7 @@ class BD {
             FROM proposition p, utilisateur u, promotion pr
             WHERE p.idutilisateur = u.idutilisateur
             AND pr.idpromotion = u.idpromotion
-            AND p.estvalidee = '0'";
+            AND p.etat = 'en attente'";
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {
@@ -337,7 +337,7 @@ class BD {
 
             // test si entreprise existe pour recup donnes ds table entreprise sinon faire comme en 
             
-            $requete = "SELECT p.idproposition, p.nomentreprisep, p.dateproposition, p.adresseentreprisep, p.villeentreprisep, p.codepostalentreprisep, p.paysentreprisep, p.numerotelephonep, p.urlsiteinternetp, p.sujetstagep, p.estvalidee, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, pr.nompromotion
+            $requete = "SELECT p.idproposition, p.nomentreprisep, p.dateproposition, p.adresseentreprisep, p.villeentreprisep, p.codepostalentreprisep, p.paysentreprisep, p.numerotelephonep, p.urlsiteinternetp, p.sujetstagep, p.etat, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, pr.nompromotion
                         FROM proposition p, utilisateur u, promotion pr
                         WHERE p.idproposition =".$id." 
                         AND p.idutilisateur = u.idutilisateur
@@ -346,7 +346,7 @@ class BD {
             
             while ($tableau = mysql_fetch_array($retour)) {
                 $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur'], null);
-                $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['estvalidee'], $etudiant, $tableau['nompromotion']);
+                $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion']);
                 $i++;
             }
             
@@ -367,15 +367,15 @@ class BD {
         $idProp = mysql_real_escape_string(htmlspecialchars($idProp));
         
         if($idProp != FALSE){
-            // 1) Modification de l'etat estValidee dans l'entité proposition à TRUE
-            $requete = "UPDATE proposition SET estvalidee = 1 WHERE idproposition = ".$idProp.";";
+            // 1) Modification de l'etat etat dans l'entité proposition à TRUE
+            $requete = "UPDATE proposition SET etat = \"validee\" WHERE idproposition = ".$idProp.";";
             if(mysql_query($requete)){
                 echo "update ok";
                 // 2) On recupere la proposition dans la base pourextraire les infos necessaires a la creation d'un stage
                 $requete = "SELECT * FROM proposition WHERE idproposition = ".$idProp.";";
                 $retour = mysql_query($requete);
                 while ($tableau = mysql_fetch_array($retour)) {
-                    $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], $tableau['idutilisateur'], null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['estvalidee'], null, null);
+                    $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], $tableau['idutilisateur'], null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], null, null);
                     $i++;
                 }
                 $prop = $tabProp[0];
