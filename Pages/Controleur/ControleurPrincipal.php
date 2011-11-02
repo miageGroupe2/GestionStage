@@ -24,6 +24,8 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if ($action == "detailProp") {
                     return $action;
+                }else if ($action == "validerProp") {
+                    return $action;
                 } else if ($action == "listeStageAnneeCourante") {
                     return $action;
                 } else if ($action == "consulterStage") {
@@ -169,7 +171,11 @@ function call_action() {
             case 'detailProp' :
                 $action = 'afficherDetailProposition';
                 break;
-
+            
+            case 'validerProp' :
+                $action = 'validerProposition';
+                break;
+            
             case 'listeStageAnneeCourante' :
                 $action = 'afficherListeStageAnneeCourante';
                 break;

@@ -316,13 +316,15 @@ class BD {
     public static function rechercherProposition($id) {
 
         BD::getConnection();
-
+        
         $id = mysql_real_escape_string(htmlspecialchars($id));
         if ($id != FALSE) {
 
             $i = 0;
             $tabProp = null;
 
+            // test si entreprise existe pour recup donnes ds table entreprise sinon faire comme en 
+            
             $requete = "SELECT p.idproposition, p.nomentreprisep, p.dateproposition, p.adresseentreprisep, p.villeentreprisep, p.codepostalentreprisep, p.paysentreprisep, p.numerotelephonep, p.urlsiteinternetp, p.sujetstagep, p.estvalidee, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, pr.nompromotion
                         FROM proposition p, utilisateur u, promotion pr
                         WHERE p.idproposition =".$id." 
@@ -345,6 +347,60 @@ class BD {
         return NULL;
     }
 
+    public static function validerProposition($idProp){
+        $ok = false;
+        $i=0;
+        $tabProp = null;
+        BD::getConnection();
+        $idProp = mysql_real_escape_string(htmlspecialchars($idProp));
+        
+        if($idProp != FALSE){
+            // 1) Modification de l'etat estValidee dans l'entité proposition à TRUE
+            $requete = "UPDATE proposition SET estvalidee = 1 WHERE idproposition = ".$idProp.";";
+            if(mysql_query($requete)){
+                echo "update ok";
+                // 2) On recupere la proposition dans la base pourextraire les infos necessaires a la creation d'un stage
+                $requete = "SELECT * FROM proposition WHERE idproposition = ".$idProp.";";
+                $retour = mysql_query($requete);
+                while ($tableau = mysql_fetch_array($retour)) {
+                    $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], $tableau['idutilisateur'], null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['estvalidee'], null, null);
+                    $i++;
+                }
+                $prop = $tabProp[0];
+                
+                // 3) Creation d'un stage a partir des données de la proposition
+                // 3.1) On recupere le nom de la promotion de l'utilisateur
+                $requete = "SELECT pr.nompromotion FROM promotion pr, utilisateur u 
+                            WHERE u.idutilisateur = ".$prop->getIdUtilisateur()."
+                            AND pr.idpromotion = u.idpromotion;    
+                            ";
+                $retour = mysql_query($requete);
+                while ($tableau = mysql_fetch_array($retour)) {
+                    $promo = $tableau['nompromotion'];
+                }
+                echo "rch promo ok ".$promo;
+                
+                // 3.2) On insert le stage dans la bdd
+                
+                $requete = "INSERT INTO (idstage ,identreprise ,idcontact ,idproposition ,
+                     idutilisateur ,sujetstage ,datevalidation ,datedebut ,datefin ,datesoutenance ,
+                    lieusoutenance ,etatstage ,noteobtenue ,appreciationobtenue ,remuneration ,embauche ,
+                    dateembauche ,respcivil ,promotionstagiaire VALUES (\"\", ".$prop->getIdEntreprise().", null, 
+                    ".$prop->getIdProposition().", ".$prop->getIdUtilisateur().", ".$prop->getSujet()." NOW(), null, null, 
+                        null, null, \"conv à signer entreprise\", null, null, null, null, null, 0, ".$promo." )";
+                
+                if(mysql_query($requete)){
+                    $ok = true;
+                    echo "insert stage ok ";
+                }else{
+                    echo "ERREUR : ".mysql_errno();
+                }
+                
+            }
+        }
+        return $ok;
+    }
+    
     /**
      * Permet de valider un stage, c'est à dire de passer son état à "validé"
      * @param type $idStage 

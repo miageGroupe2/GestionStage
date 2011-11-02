@@ -18,6 +18,12 @@ function afficherDetailProposition(){
     AffichePage(TRUE, $corps);        
 }
 
+function validerProposition(){
+    $corps = genererValiderProposition();
+    AffichePage(TRUE, $corps);     
+}
+
+
 function afficherDetailStage(){
     $corps = genererDetailStage();
     AffichePage($corps);
