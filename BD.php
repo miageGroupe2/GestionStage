@@ -271,7 +271,7 @@ class BD {
     }
 
     /**
-     * Permet d'afficher toutes les propositions de stage
+     * Permet d'afficher toutes les propositions de stage de l'étudiant connecté
      */
     public static function rechercherPropositionsEtudiant() {
         BD::getConnection();
@@ -297,53 +297,86 @@ class BD {
     /**
      * Permet d'afficher toutes les propositions de stage
      */
-    public static function recherherToutesPropositions() {
+    public static function rechercherToutesPropositions() {
         BD::getConnection();
         $i = 0;
         $tabProp = null;
-        $requete = "SELECT p.idproposition, p.nomentreprisep, p.identreprise, u.idutilisateur, u.nomutilisateur, u.prenomutilisateur, pr.nompromotion 
-            FROM proposition p, utilisateur u, promotion pr
+        
+        $entreprise = NULL ;
+        $requete = "SELECT identreprise FROM proposition";
+        $retour = mysql_query($requete) ;
+        
+        $requete = "SELECT p.idproposition, e.nomentreprise, p.identreprise, u.idutilisateur, u.nomutilisateur, u.prenomutilisateur, pr.nompromotion 
+            FROM proposition p, utilisateur u, promotion pr, entreprise e
             WHERE p.idutilisateur = u.idutilisateur
             AND pr.idpromotion = u.idpromotion
-            AND p.etat = 'en attente'";
+            AND p.etat = 'en attente'
+            AND p.identreprise = e.identreprise";
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {
             $etudiant = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null);
-            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], null, null, $tableau['nomentreprisep'], null, null, null, null, null, null, null, null, null, $etudiant, null);
+            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], null, null, $tableau['nomentreprise'], null, null, null, null, null, null, null, null, null, $etudiant, null);
             $i++;
         }
         return $tabProp;
     }
 
     /**
-     * Permet d'afficher toutes les propositions de stage
+     * Permet d'obtenir la proposition $idProposition
      */
-    public static function rechercherProposition($id) {
+    public static function rechercherProposition($idProposition) {
 
         BD::getConnection();
 
         $id = mysql_real_escape_string(htmlspecialchars($id));
         if ($id != FALSE) {
-
             $i = 0;
             $tabProp = null;
 
-            // test si entreprise existe pour recup donnes ds table entreprise sinon faire comme en 
 
-            $requete = "SELECT p.idproposition, p.nomentreprisep, p.dateproposition, p.adresseentreprisep, p.villeentreprisep, p.codepostalentreprisep, p.paysentreprisep, p.numerotelephonep, p.urlsiteinternetp, p.sujetstagep, p.etat, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, pr.nompromotion
+            $entreprise = NULL ;
+            $requete = "SELECT identreprise FROM proposition WHERE idproposition='$idProposition'";
+            $retour = mysql_query($requete) ;
+            
+            while ($tableau = mysql_fetch_array($retour)) {
+                
+                // si l'idEntreprise != NULL on va chercher les données de l'entreprise dans la table entreprise
+                if ($tableau['identreprise'] != NULL){
+                    
+                    $entreprise = BD::rechercherEntrepriseById($tableau['identreprise']);
+                    $requete = "SELECT p.idproposition, p.dateproposition, p.sujetstagep, p.etat, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, pr.nompromotion
                         FROM proposition p, utilisateur u, promotion pr
-                        WHERE p.idproposition =" . $id . " 
+                        WHERE p.idproposition =".$idProposition." 
                         AND p.idutilisateur = u.idutilisateur
                         AND u.idpromotion = pr.idpromotion";
-            $retour = mysql_query($requete) or die(mysql_error());
+            
+                    $retour = mysql_query($requete) or die(mysql_error());
 
-            while ($tableau = mysql_fetch_array($retour)) {
-                $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur'], null);
-                $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprisep'], $tableau['dateproposition'], $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion']);
-                $i++;
+                    while ($tableau = mysql_fetch_array($retour)) {
+                        $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur'], null);
+                        $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $entreprise->getNom(), $tableau['dateproposition'],  $entreprise->getAdresse(), $entreprise->getCodePostal(), $entreprise->getVille(), $entreprise->getPays(), $entreprise->getNumeroTelephone(), $entreprise->getUrlSiteInternet(), $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion']);
+                        $i++;
+                    }
+                }else{
+                    
+                    //sinon les informations de l'entreprise sont à prendre dans la table proposition
+                    $requete = "SELECT p.idproposition, p.nomentreprisep, p.dateproposition, p.adresseentreprisep, p.villeentreprisep, p.codepostalentreprisep, p.paysentreprisep, p.numerotelephonep, p.urlsiteinternetp, p.sujetstagep, p.etat, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, pr.nompromotion
+                        FROM proposition p, utilisateur u, promotion pr
+                        WHERE p.idproposition =".$idProposition." 
+                        AND p.idutilisateur = u.idutilisateur
+                        AND u.idpromotion = pr.idpromotion";
+            
+                    $retour = mysql_query($requete) or die(mysql_error());
+
+                    while ($tableau = mysql_fetch_array($retour)) {
+                        $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur'], null);
+                        $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion']);
+                        $i++;
+                    }
+                }
             }
-
+            
             if ($i > 0) {
                 return $tabProp;
             } else {

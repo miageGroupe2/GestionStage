@@ -200,7 +200,7 @@ function genererListeResultatRechercheEntreprise($tabEntreprise) {
 
 function genererListePropositionStageResponsable() {
 
-    $tabProp = BD::recherherToutesPropositions();
+    $tabProp = BD::rechercherToutesPropositions();
     $corps = "<td id = \"corps\">
                 <table class=\"tableau\">
                     <tr>
@@ -453,6 +453,7 @@ function genererListePropositionStageEtudiant(){
                         </td>
                     </tr>
                 </table><br/>
+                <a href=\"" . RACINE . "?action=editerPropositionStage&idProposition=" . $prop->getIdProposition() . "\">Editer cette proposition</a>
             ";
             $i++;
         }
