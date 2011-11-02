@@ -332,7 +332,6 @@ class BD {
         if ($idProposition != FALSE) {
             
             $requete = "DELETE FROM proposition WHERE idproposition='$idProposition'";
-            echo $requete;
             mysql_query($requete);
         }
     }
