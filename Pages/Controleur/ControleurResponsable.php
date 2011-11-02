@@ -23,6 +23,11 @@ function validerProposition(){
     AffichePage(TRUE, $corps);     
 }
 
+function afficherListeStage(){
+    $corps = genererListeStage();
+    AffichePage(TRUE, $corps);     
+}
+
 
 function afficherDetailStage(){
     $corps = genererDetailStage();

@@ -93,6 +93,7 @@ function genererPageAccueilErreue() {
 function genererPagePrincipal() {
     $corps = "<td id = \"corps\">
                    Bienvenue
+                   
                 </td>
             </tr>
         </table>";
@@ -365,13 +366,63 @@ function genererValiderProposition(){
 
     $corps ="<td id =   \"corps\">"; 
     if($ok){
-        $corps .="La proposition de stage a bien &eacute;t&eacute; valid&eacute;e";
-        
-        
-        
+        $corps .="La proposition de stage a bien &eacute;t&eacute; valid&eacute;e";        
     }else{
         $corps .="ERREUR - Probl&egrave;me lors de la validation, transaction annul&eacute;e";
     }
+    $corps .= "</td>
+                </tr>
+            </table>";
+    return $corps;
+}
+
+function genererListeStage(){
+    $tabStage = BD::rechercherStage();
+    $corps = "<td id = \"corps\">
+                <table class=\"tableau\">
+                    <tr>
+                        <td class=\"tableau\">
+                            Date validation
+                        </td>
+                        <td class=\"tableau\">
+                            Nom &eacute;tudiant
+                        </td>
+                        <td class=\"tableau\">
+                            Pr&eacute;nom &eacute;tudiant
+                        </td>
+                        <td class=\"tableau\">
+                            Nom de l'entreprise
+                        </td>
+                        <td class=\"tableau\">
+                            Note obtenue
+                        </td>
+                        <td class=\"tableau\">
+                            Nom promotion
+                        </td>
+                    </tr>
+            ";
+    if ($tabStage != null) {
+        foreach ($tabStage as $stage) {
+            $corps = $corps . "
+                        <tr>
+                            <td class=\"tableau\">" . $stage->getDatevalidation()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getEtudiant()->getNom()
+                    . "</td>
+                            <td class=\"tableau\">" . $prop->getEtudiant()->getPrenom()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getEntreprise()->getNom()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getNoteobtenue()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getPromotion()->getNompromotion()
+                    . "</td>
+                            <td class=\"tableau\"><a href=\"" . RACINE . "?action=detailProp&idprop=" . $prop->getIdProposition() . "\">D&eacute;tails</a>
+                            </td>
+                     </tr>";
+        }
+    }
+    
     $corps .= "</td>
                 </tr>
             </table>";

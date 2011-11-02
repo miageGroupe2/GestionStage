@@ -14,10 +14,6 @@ class ModeleStage {
     private $idstage;
     private $identreprise;
     private $idcontact;
-    private $nometudiant;
-    private $prenometudiant;
-    private $promotion;
-    private $datedepoposition;
     private $sujetstage;
     private $datevalidation;
     private $datedebut;
@@ -30,17 +26,17 @@ class ModeleStage {
     private $remuneration;
     private $embauche;
     private $dateembauche;
-    // Utile pour certaines requetes d'affichage, cet attribut ne fait pas parti de la table stage de la BDD
-    private $nomentreprise;
     
-    function __construct($idstage, $identreprise, $nomentreprise, $idcontact, $nometudiant, $prenometudiant, $promotion, $datedepoposition, $sujetstage, $datevalidation, $datedebut, $datefin, $datesoutenance, $lieusoutenance, $etatstage, $noteobtenue, $appreciationobtenue, $remuneration, $embauche, $dateembauche) {
+    // Utile pour certaines requetes d'affichage, cet attribut ne fait pas parti de la table stage de la BDD
+    private $utilisateur;
+    private $entreprise;
+    private $contact;
+    private $promotion;
+    
+    function __construct($idstage, $identreprise, $idcontact, $sujetstage, $datevalidation, $datedebut, $datefin, $datesoutenance, $lieusoutenance, $etatstage, $noteobtenue, $appreciationobtenue, $remuneration, $embauche, $dateembauche, $utilisateur, $entreprise, $contact, $promotion) {
         $this->idstage = $idstage;
         $this->identreprise = $identreprise;
         $this->idcontact = $idcontact;
-        $this->nometudiant = $nometudiant;
-        $this->prenometudiant = $prenometudiant;
-        $this->promotion = $promotion;
-        $this->datedepoposition = $datedepoposition;
         $this->sujetstage = $sujetstage;
         $this->datevalidation = $datevalidation;
         $this->datedebut = $datedebut;
@@ -53,7 +49,10 @@ class ModeleStage {
         $this->remuneration = $remuneration;
         $this->embauche = $embauche;
         $this->dateembauche = $dateembauche;
-        $this->nomentreprise = $nomentreprise;
+        $this->utilisateur = $utilisateur;
+        $this->entreprise = $entreprise;
+        $this->contact = $contact;
+        $this->promotion = $promotion;
     }
 
     public function getIdstage() {
@@ -78,46 +77,6 @@ class ModeleStage {
 
     public function setIdcontact($idcontact) {
         $this->idcontact = $idcontact;
-    }
-
-    public function getNometudiant() {
-        return $this->nometudiant;
-    }
-
-    public function setNometudiant($nometudiant) {
-        $this->nometudiant = $nometudiant;
-    }
-    
-    public function getNomentreprise() {
-        return $this->nomentreprise;
-    }
-
-    public function setNomentreprise($nometudiant) {
-        $this->nomentreprise = $nomentreprise;
-    }
-
-    public function getPrenometudiant() {
-        return $this->prenometudiant;
-    }
-
-    public function setPrenometudiant($prenometudiant) {
-        $this->prenometudiant = $prenometudiant;
-    }
-
-    public function getPromotion() {
-        return $this->promotion;
-    }
-
-    public function setPromotion($promotion) {
-        $this->promotion = $promotion;
-    }
-
-    public function getDatedepoposition() {
-        return $this->datedepoposition;
-    }
-
-    public function setDatedepoposition($datedepoposition) {
-        $this->datedepoposition = $datedepoposition;
     }
 
     public function getSujetstage() {
@@ -216,6 +175,37 @@ class ModeleStage {
         $this->dateembauche = $dateembauche;
     }
 
+    public function getUtilisateur() {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur($utilisateur) {
+        $this->utilisateur = $utilisateur;
+    }
+
+    public function getEntreprise() {
+        return $this->entreprise;
+    }
+
+    public function setEntreprise($entreprise) {
+        $this->entreprise = $entreprise;
+    }
+
+    public function getContact() {
+        return $this->contact;
+    }
+
+    public function setContact($contact) {
+        $this->contact = $contact;
+    }
+
+    public function getPromotion() {
+        return $this->promotion;
+    }
+
+    public function setPromotion($promotion) {
+        $this->promotion = $promotion;
+    }
 
 }
 

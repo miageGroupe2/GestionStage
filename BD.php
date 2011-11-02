@@ -5,6 +5,7 @@ require_once RACINE_MODELE . 'ModeleStage.php';
 require_once RACINE_MODELE . 'ModeleContact.php';
 require_once RACINE_MODELE . 'ModeleUtilisateur.php';
 require_once RACINE_MODELE . 'ModeleProposition.php';
+require_once RACINE_MODELE . 'ModelePromotion.php';
 
 class BD {
 
@@ -302,10 +303,6 @@ class BD {
         $i = 0;
         $tabProp = null;
         
-        $entreprise = NULL ;
-        $requete = "SELECT identreprise FROM proposition";
-        $retour = mysql_query($requete) ;
-        
         $requete = "SELECT p.idproposition, e.nomentreprise, p.identreprise, u.idutilisateur, u.nomutilisateur, u.prenomutilisateur, pr.nompromotion 
             FROM proposition p, utilisateur u, promotion pr, entreprise e
             WHERE p.idutilisateur = u.idutilisateur
@@ -322,6 +319,7 @@ class BD {
         return $tabProp;
     }
 
+ 
     /**
      * Permet d'obtenir la proposition $idProposition
      */
@@ -329,8 +327,8 @@ class BD {
 
         BD::getConnection();
 
-        $id = mysql_real_escape_string(htmlspecialchars($id));
-        if ($id != FALSE) {
+        $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+        if ($idProposition != FALSE) {
             $i = 0;
             $tabProp = null;
 
@@ -420,13 +418,13 @@ class BD {
             if ($prop->getIdEntreprise() == '') {
                 $requete = "INSERT INTO stage (idstage, identreprise, idcontact, idproposition, idutilisateur,
                     sujetstage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
-                    appreciationobtenue, remuneration, embauche, dateembauche, respcivil, promotionstagiaire) 
-                    VALUES ('', null, null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', NOW(), null, null, null, null, 'conv a signer entreprise', null, null, null, null, null, 0, '" . $promo . "')";
+                    appreciationobtenue, remuneration, embauche, dateembauche, respcivil) 
+                    VALUES ('', null, null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', NOW(), null, null, null, null, 'a valider', null, null, null, null, null, 0)";
             } else {
                 $requete = "INSERT INTO stage (idstage, identreprise, idcontact, idproposition, idutilisateur,
                     sujetstage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
-                    appreciationobtenue, remuneration, embauche, dateembauche, respcivil, promotionstagiaire) 
-                    VALUES ('', " . $prop->getIdEntreprise() . ", null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', NOW(), null, null, null, null, 'conv a signer entreprise', null, null, null, null, null, 0, '" . $promo . "')";
+                    appreciationobtenue, remuneration, embauche, dateembauche, respcivil) 
+                    VALUES ('', " . $prop->getIdEntreprise() . ", null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', NOW(), null, null, null, null, 'a valider', null, null, null, null, null, 0)";
             }
 
             if (mysql_query($requete)) {
@@ -442,6 +440,32 @@ class BD {
         return $ok;
     }
 
+    
+      
+   public static function rechercherStage(){
+        BD::getConnection();
+        $tabStage = null;
+        $requete = "SELECT s.idstage, s.datevalidation, u.nomutilisateur, u.prenomutilisateur, e.nomentreprise, s.noteobtenue, pr.nompromotion
+                    FROM stage s, entreprise e, utilisateur u, promotion pr
+                    WHERE s.identreprise = e.identreprise
+                    AND u.idpromotion = pr.idpromotion
+        ";
+        
+        $retour = mysql_query($requete) or die(mysql_error());
+
+        while ($tableau = mysql_fetch_array($retour)) {
+            $promotion = new ModelePromotion(null, $tableau['nompromotion'], null);
+            $etudiant = new ModeleUtilisateur(null, null, null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null);
+            $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, null, null, null, null, null, null);
+            $tabStage = new ModeleStage($tableau['idstage'], null, null, null, $tableau['datevalidation'], null, null, null, null, null, $tableau['noteobtenue'], null, null, null, null, $etudiant, $entreprise, null, $promotion);
+        }
+        
+        return $tabStage;
+    }
+     
+    
+    
+    
     /**
      * Permet de valider un stage, c'est à dire de passer son état à "validé"
      * @param type $idStage 

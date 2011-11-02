@@ -28,7 +28,7 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if ($action == "listeStageAnneeCourante") {
                     return $action;
-                } else if ($action == "consulterStage") {
+                } else if ($action == "listeStages") {
                     return $action;
                 } else if ($action == "creerCompteAdmin") {
                     return $action;
@@ -51,11 +51,11 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if ($action == "proposerStageEtape3") {
                     return $action;
-                } else if ($action == "completerPropositionStage") {
+                } else if ($action == "editerPropositionStage") {
                     return $action;
                 } else if ($action == "editerPropositionStage") {
                     return $action;
-                } else if ($action == "completerStage") {
+                } else if ($action == "editerStage") {
                     return $action;
                 } else if ($action == "listePropositionStageEtudiant") {
                     return $action;
@@ -143,13 +143,10 @@ function call_action() {
             case 'editerPropositionStage' :
                 $action = 'editerPropositionStage' ;
                 break;
+            
 //                case 'validerProposerStage':
 //                    $action = 'validerProposerStage' ;
 //                    break;
-
-            case 'completerPropositionStage' :
-                $action = 'afficherCompleterStage';
-                break;
 
             case 'completerStage' :
                 $action = 'afficherCompleterStage';
@@ -185,8 +182,8 @@ function call_action() {
                 $action = 'afficherListeStageAnneeCourante';
                 break;
 
-            case 'consulterStage' :
-                $action = 'afficherConsulterStage';
+            case 'listeStages' :
+                $action = 'afficherListeStage';
                 break;
 
             case 'creerCompteAdmin' :
