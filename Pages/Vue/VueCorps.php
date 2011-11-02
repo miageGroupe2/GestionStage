@@ -656,6 +656,15 @@ function genererDetailPropositionARefaireHahahahaha() {
 //    
 //}
 
+function genererProposerStageEtape3() {
+    
+    $corps = "<td id = \"corps\">
+                <h2>Proposition de stage effectuée</h2>    ";            
+     
+    $corps .="</td> </tr> </table>";
+    return $corps;
+}
+
 function genererProposerStageEtape2($entreprise) {
     
     $utilisateur = $_SESSION['modeleUtilisateur'];

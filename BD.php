@@ -107,13 +107,13 @@ class BD {
 
         if ($id != FALSE) {
 
-            $requete = "SELECT identreprise, nomentreprise, adresseentreprise, villeentreprise, codepostalentreprise, paysentreprise, numerotelephone, numerosiret FROM entreprise WHERE identreprise=" . $id;
+            $requete = "SELECT identreprise, nomentreprise, adresseentreprise, villeentreprise, codepostalentreprise, paysentreprise, numerotelephone, numerosiret, urlsiteinternet FROM entreprise WHERE identreprise=" . $id;
             $retour = mysql_query($requete);
 
             $i = 0;
             while ($tableau = mysql_fetch_array($retour)) {
 
-                $entreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], NULL);
+                $entreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet']);
                 $i++;
             }
             if ($i > 0) {
@@ -133,20 +133,27 @@ class BD {
         $nom = mysql_real_escape_string(htmlspecialchars($nom));
         $numRue = mysql_real_escape_string(htmlspecialchars($numRue));
         $ville = mysql_real_escape_string(htmlspecialchars($ville));
+        $codePostal = mysql_real_escape_string(htmlspecialchars($codePostal));
         $pays = mysql_real_escape_string(htmlspecialchars($pays));
         $numeroTel = mysql_real_escape_string(htmlspecialchars($numeroTel));
         $urlSiteInternet = mysql_real_escape_string(htmlspecialchars($urlSiteInternet));
-
+        
+        $idEntreprise = NULL ;
+        
+        // on ne teste pas le site web car il peut être null (l' utilisateur n'est pas obligé de le renseigner)
         if ($nom != FALSE && $numRue != FALSE
                 && $ville != FALSE && $pays != FALSE
-                && $numeroTel != FALSE 
-                && $urlSiteInternet != FALSE) {
+                && $numeroTel != FALSE ) {
 
-            $requete = "INSERT INTO entreprise (identreprise, nomentreprise, adresseentreprise, villeentreprise, paysentreprise, numerotelephone, urlsiteinternet) 
-                VALUES ('', '$nom', '$numRue', '$ville', '$pays', '$numeroTel', '$urlSiteInternet')";
+            $requete = "INSERT INTO entreprise (identreprise, nomentreprise, adresseentreprise, villeentreprise, codepostalentreprise, paysentreprise, numerotelephone, urlsiteinternet) 
+                VALUES ('', '$nom', '$numRue', '$ville', '$codePostal',  '$pays', '$numeroTel', '$urlSiteInternet')";
 
             mysql_query($requete)  or die(mysql_error());
+            // on récupère l'id de l'entreprise que l'on vient d'insérer
+            $idEntreprise = mysql_insert_id();
         }
+        
+        return $idEntreprise ;
     }
 
     /**
@@ -178,6 +185,7 @@ class BD {
 
     public static function ajouterContact($identreprise, $nom, $prenom, $fonction, $telephoneFixe, $telephoneMobile, $mail) {
 
+        BD::getConnection();
         $idEntreprise = mysql_real_escape_string(htmlspecialchars($idEntreprise));
         $nom = mysql_real_escape_string(htmlspecialchars($nom));
         $prenom = mysql_real_escape_string(htmlspecialchars($prenom));
@@ -200,34 +208,38 @@ class BD {
         }
     }
 
-    public static function ajouterPropositionStage($nom, $prenom, $pormation, $nom_entreprise, $num_rue, $code_postal, $ville, $tel_accueil, $sujet) {
+    public static function ajouterPropositionStage($idEntreprise, $sujetStage){
         
-        $Nom = mysql_real_escape_string(htmlspecialchars($nom));
-        $Prenom = mysql_real_escape_string(htmlspecialchars($prenom));
-        $Pormation = mysql_real_escape_string(htmlspecialchars($formation));
-        $Nom_entreprise = mysql_real_escape_string(htmlspecialchars($nom_entreprise));
-        $Num_rue = mysql_real_escape_string(htmlspecialchars($num_rue));
-        $Code_postal = mysql_real_escape_string(htmlspecialchars($code_postal));
-        $Ville = mysql_real_escape_string(htmlspecialchars($ville));
-        $Tel_accueil = mysql_real_escape_string(htmlspecialchars($tel_accueil));
-        $Sujet = mysql_real_escape_string(htmlspecialchars($sujet));
+        BD::getConnection();
+        
+        $idEntreprise = mysql_real_escape_string(htmlspecialchars($idEntreprise));
+        $sujetStage = mysql_real_escape_string(htmlspecialchars($sujetStage));
+        
+        if ($idEntreprise != FALSE && $sujetStage != FALSE) {
+                
+            $modeleUtilisateur = $_SESSION['modeleUtilisateur'] ;
+            $idUtilisateur = $modeleUtilisateur->getId();
+            
+            //avant d'insérer une proposition on vérifie que celle-ci n'existe pas dans la base
+            //(pour empêcher les doublons suite à un F5 dans le navigateur, par exemple)
+            $requete = "SELECT idproposition FROM proposition WHERE idutilisateur='$idUtilisateur' AND identreprise='$idEntreprise' AND sujetstagep='$sujetStage'";
+            $retour = mysql_query($requete);
+            
+            $nombreDeLignes = mysql_num_rows($retour);
+            
+            if ($nombreDeLignes == 0) {
+                
+                $requete = "INSERT into proposition (idproposition, identreprise, idutilisateur, 
+                    sujetstagep, estvalidee, dateproposition, idstage) 
+                    VALUES ('', '$idEntreprise', '$idUtilisateur', '$sujetStage', '0', NOW(), NULL)";
 
-        if ($Nom != FALSE && $Prenom != FALSE && $Formation != FALSE && $Nom_entreprise != FALSE
-                && $Num_rue != FALSE && $Code_postal != FALSE && $Ville != FALSE
-                && $Tel_accueil != FALSE && Sujet != FALSE) {
-
-            // Soit Recuperer identreprise 
-            // SOIT on ajoute un champ nom entreprise temporaire, 
-            // SOIT creer une table proposition stage qui sera par la suite
-
-            $requete = "INSERT into stage (idstage, identreprise, idcontact, 
-                nometudiant, prenometudiant, promotion, datedeproposition, sujetstage, 
-                datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, 
-                noteobtenue, appreciationobtenue, remuneration, embauche, dateembauche) 
-                VALUES ('$Idstage', '$Identreprise', '$Idcontact', '$Nom', '$Prenom', '$Promotion'
-                " . getdate() . "', NULL, 'A valider', NULL, NULL, NULL, NULL, NULL)";
-
-            mysql_query($requete);
+                mysql_query($requete);
+                
+                
+            } else {
+                
+                // il y a un doublon, donc on ne fait rien
+            }
         }
     }
 
