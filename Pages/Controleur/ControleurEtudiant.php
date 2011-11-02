@@ -126,7 +126,10 @@ require_once 'BD.php';
         
         if (isset ($_GET['idProposition'])){
             
+            $operationPermise = BD::autorisationEditerProposition($_GET['idProposition']);
             
+            $corps = genererListePropositionStageEtudiant();
+            AffichePage(TRUE, $corps);
         }
     }
 

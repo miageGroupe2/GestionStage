@@ -293,6 +293,22 @@ class BD {
         }
         return $tabProp;
     }
+    
+    /**
+     * Permet de savoir si un étudiant à le droit d'éditer une proposition de stage
+     * (c'est à dire si la proposition de stage $idProposition correspond à une de ses propositions)
+     * @param type $idProposition 
+     */
+    public static function autorisationEditerProposition($idProposition){
+        
+        BD::getConnection();
+        $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+        
+        if ($idProposition != FALSE) {
+        
+            $requete = "SELECT * FROM proposition WHERE idproposition='$idProposition";
+        }
+    }
 
     
     //-----------------------------------------------------------------------------------------
