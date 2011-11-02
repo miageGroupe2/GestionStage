@@ -148,7 +148,7 @@ function call_action() {
             case 'supprimerProposition':
                 $action = 'supprimerProposition' ;
                 break;
-            
+                
 //                case 'validerProposerStage':
 //                    $action = 'validerProposerStage' ;
 //                    break;

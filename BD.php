@@ -505,19 +505,24 @@ class BD {
    public static function rechercherStage(){
         BD::getConnection();
         $tabStage = null;
+        $i=0;
         $requete = "SELECT s.idstage, s.datevalidation, u.nomutilisateur, u.prenomutilisateur, e.nomentreprise, s.noteobtenue, pr.nompromotion
                     FROM stage s, entreprise e, utilisateur u, promotion pr
-                    WHERE s.identreprise = e.identreprise
+                    WHERE u.idutilisateur = s.idutilisateur
                     AND u.idpromotion = pr.idpromotion
+                    AND s.identreprise = e.identreprise
+                    
         ";
-        
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {
+            
             $promotion = new ModelePromotion(null, $tableau['nompromotion'], null);
             $etudiant = new ModeleUtilisateur(null, null, null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null);
             $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, null, null, null, null, null, null);
-            $tabStage = new ModeleStage($tableau['idstage'], null, null, null, $tableau['datevalidation'], null, null, null, null, null, $tableau['noteobtenue'], null, null, null, null, $etudiant, $entreprise, null, $promotion);
+            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, null, $tableau['datevalidation'], null, null, null, null, null, $tableau['noteobtenue'], null, null, null, null, $etudiant, $entreprise, null, $promotion);
+            $i++;
+            
         }
         
         return $tabStage;

@@ -487,9 +487,9 @@ function genererListeStage(){
                         <tr>
                             <td class=\"tableau\">" . $stage->getDatevalidation()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getEtudiant()->getNom()
+                            <td class=\"tableau\">" . $stage->getUtilisateur()->getNom()
                     . "</td>
-                            <td class=\"tableau\">" . $prop->getEtudiant()->getPrenom()
+                            <td class=\"tableau\">" . $stage->getUtilisateur()->getPrenom()
                     . "</td>
                             <td class=\"tableau\">" . $stage->getEntreprise()->getNom()
                     . "</td>
@@ -497,10 +497,11 @@ function genererListeStage(){
                     . "</td>
                             <td class=\"tableau\">" . $stage->getPromotion()->getNompromotion()
                     . "</td>
-                            <td class=\"tableau\"><a href=\"" . RACINE . "?action=detailProp&idprop=" . $prop->getIdProposition() . "\">D&eacute;tails</a>
+                            <td class=\"tableau\"><a href=\"" . RACINE . "?action=detailStage&idstage=" . $stage->getIdstage() . "\">D&eacute;tails</a>
                             </td>
                      </tr>";
         }
+        $corps .= "</table>";
     }
     
     $corps .= "</td>
