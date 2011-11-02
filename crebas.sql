@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Mer 02 Novembre 2011 à 17:07
+-- Généré le : Mer 02 Novembre 2011 à 17:11
 -- Version du serveur: 5.1.49
 -- Version de PHP: 5.3.3-1ubuntu9.5
 
@@ -26,7 +26,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 CREATE TABLE IF NOT EXISTS `contact` (
-  `idcontact` int(11) NOT NULL,
+  `idcontact` int(11) NOT NULL AUTO_INCREMENT,
   `identreprise` int(11) NOT NULL,
   `prenomcontact` varchar(50) DEFAULT NULL,
   `nomcontact` varchar(50) DEFAULT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `contact` (
   `mailcontact` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idcontact`),
   KEY `fk_entreprise_contact` (`identreprise`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Contenu de la table `contact`
@@ -54,7 +54,7 @@ INSERT INTO `contact` (`idcontact`, `identreprise`, `prenomcontact`, `nomcontact
 --
 
 CREATE TABLE IF NOT EXISTS `entreprise` (
-  `identreprise` int(11) NOT NULL,
+  `identreprise` int(11) NOT NULL AUTO_INCREMENT,
   `nomentreprise` varchar(50) DEFAULT NULL,
   `adresseentreprise` varchar(200) DEFAULT NULL,
   `villeentreprise` varchar(50) DEFAULT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `entreprise` (
   `urlsiteinternet` varchar(50) DEFAULT NULL,
   `statutjuridique` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`identreprise`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Contenu de la table `entreprise`
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `proposition` (
 --
 
 CREATE TABLE IF NOT EXISTS `stage` (
-  `idstage` int(11) NOT NULL,
+  `idstage` int(11) NOT NULL AUTO_INCREMENT,
   `identreprise` int(11) DEFAULT NULL,
   `idcontact` int(11) DEFAULT NULL,
   `idpromotion` int(11) DEFAULT NULL,
@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `stage` (
   KEY `fk_stage_contact` (`idcontact`),
   KEY `fk_stage_entreprise` (`identreprise`),
   KEY `fk_utilistateur_stage` (`idutilisateur`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Contenu de la table `stage`
@@ -222,11 +222,11 @@ ALTER TABLE `proposition`
 -- Contraintes pour la table `stage`
 --
 ALTER TABLE `stage`
-  ADD CONSTRAINT `fk_utilistateur_stage` FOREIGN KEY (`idutilisateur`) REFERENCES `utilisateur` (`idutilisateur`),
   ADD CONSTRAINT `fk_association_9` FOREIGN KEY (`idpromotion`) REFERENCES `promotion` (`idpromotion`),
   ADD CONSTRAINT `fk_propositionstage` FOREIGN KEY (`idproposition`) REFERENCES `proposition` (`idproposition`),
   ADD CONSTRAINT `fk_stage_contact` FOREIGN KEY (`idcontact`) REFERENCES `contact` (`idcontact`),
-  ADD CONSTRAINT `fk_stage_entreprise` FOREIGN KEY (`identreprise`) REFERENCES `entreprise` (`identreprise`);
+  ADD CONSTRAINT `fk_stage_entreprise` FOREIGN KEY (`identreprise`) REFERENCES `entreprise` (`identreprise`),
+  ADD CONSTRAINT `fk_utilistateur_stage` FOREIGN KEY (`idutilisateur`) REFERENCES `utilisateur` (`idutilisateur`);
 
 --
 -- Contraintes pour la table `utilisateur`
