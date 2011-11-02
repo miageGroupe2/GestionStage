@@ -144,12 +144,11 @@ function call_action() {
                 $action = 'editerPropositionStage' ;
                 break;
             
-<<<<<<< HEAD
-=======
+
             case 'supprimerProposition':
                 $action = 'supprimerProposition' ;
                 break;
->>>>>>> 46b9a77c8775f94277f977be366d6317f6d03da8
+            
 //                case 'validerProposerStage':
 //                    $action = 'validerProposerStage' ;
 //                    break;
