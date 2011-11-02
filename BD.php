@@ -275,7 +275,7 @@ class BD {
     }
     
     /**
-     * Permet d'afficher toutes les propositions de stage
+     * Permet d'afficher toutes les propositions de stage de l'étudiant connecté
      */
     public static function rechercherPropositionsEtudiant() {
         BD::getConnection();
@@ -303,7 +303,7 @@ class BD {
     /**
      * Permet d'afficher toutes les propositions de stage
      */
-    public static function recherherToutesPropositions() {
+    public static function rechercherToutesPropositions() {
         BD::getConnection();
         $i = 0;
         $tabProp = null;
@@ -323,25 +323,34 @@ class BD {
     }
 
     /**
-     * Permet d'afficher toutes les propositions de stage
+     * Permet d'obtenir la proposition $idProposition
      */
-    public static function rechercherProposition($id) {
+    public static function rechercherProposition($idProposition) {
 
         BD::getConnection();
         
-        $id = mysql_real_escape_string(htmlspecialchars($id));
-        if ($id != FALSE) {
+        $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+        if ($idProposition != FALSE) {
 
             $i = 0;
             $tabProp = null;
 
             // test si entreprise existe pour recup donnes ds table entreprise sinon faire comme en 
+            $requete = "SELECT identreprise FROM proposition WHERE idproposition='$idProposition'";
+            $retour = mysql_query($requete) ;
+            while ($tableau = mysql_fetch_array($retour)) {
+                
+                if ($tableau['identreprise'] == NULL){
+                    
+                }
+            }
             
             $requete = "SELECT p.idproposition, p.nomentreprisep, p.dateproposition, p.adresseentreprisep, p.villeentreprisep, p.codepostalentreprisep, p.paysentreprisep, p.numerotelephonep, p.urlsiteinternetp, p.sujetstagep, p.etat, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, pr.nompromotion
                         FROM proposition p, utilisateur u, promotion pr
-                        WHERE p.idproposition =".$id." 
+                        WHERE p.idproposition =".$idProposition." 
                         AND p.idutilisateur = u.idutilisateur
                         AND u.idpromotion = pr.idpromotion";
+            
             $retour = mysql_query($requete) or die(mysql_error());
             
             while ($tableau = mysql_fetch_array($retour)) {

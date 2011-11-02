@@ -121,6 +121,14 @@ require_once 'BD.php';
         $corps = genererListePropositionStageEtudiant();
         AffichePage(TRUE, $corps);
     }
+    
+    function editerPropositionStage(){
+        
+        if (isset ($_GET['idProposition'])){
+            
+            
+        }
+    }
 
     function afficherCompleterStage() {
         $corps = genererPageAccueil();
