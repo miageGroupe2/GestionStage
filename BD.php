@@ -552,7 +552,7 @@ class BD {
             
             $promotion = new ModelePromotion(null, $tableau['nompromotion'], null);
             $etudiant = new ModeleUtilisateur(null, null, null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null);
-            $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, null, null, null, null, null, null);
+            $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, null, null, null, null, null, null, null);
             $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, null, $tableau['datevalidation'], null, null, null, null, null, $tableau['noteobtenue'], null, null, null, null, $etudiant, $entreprise, null, $promotion);
             $i++;
             
@@ -561,7 +561,32 @@ class BD {
         return $tabStage;
     }
      
-    
+    public function rechercheStageByID($idstage){
+        BD::getConnection();
+        $tabStage = null;
+        $i=0;
+        
+        $requete = "SELECT s.idstage, s.datevalidation, u.numeroetudiant, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, e.nomentreprise, e.adresseentreprise, e.villeentreprise, e.codepostalentreprise, e.paysentreprise, e.numerotelephone, e.numerosiret, e.urlsiteinternet, e.statutjuridiques, s.datedebut, s.datefin, s.datesoutenance, s.lieusoutenance, s.etatstage, s.noteobtenue, s.appreciationobtenue, s.remuneration, s.embauche, s.dateembauche, s.respcivil, pr.nompromotion, c.nomcontact, c.prenomcontact, c.mailcontact, c.fonctioncontact, c.telfixecontact, c.telmobilecontact
+                    FROM stage s, entreprise e, utilisateur u, promotion pr, contact c
+                    WHERE s.idstage = ".$idstage."
+                    AND u.idutilisateur = s.idutilisateur
+                    AND u.idpromotion = pr.idpromotion
+                    AND s.identreprise = e.identreprise
+                    AND s.idcontact = c.idcontact";
+        
+        while ($tableau = mysql_fetch_array($retour)) {
+            
+            $promotion = new ModelePromotion(null, $tableau['nompromotion'], null);
+            $etudiant = new ModeleUtilisateur(null, $tableau['mailutilisateur'], null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['numetudiant'], null);
+            $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet'], $tableau['statutjuridique']);
+            $contact = new ModeleContact(null, null, $tableau['prenomcontact'], $tableau['nomcontact'], $tableau['fonctioncontact'], $tableau['telfixecontact'], $tableau['telmobilecontact'], $tableau['mailcontact']);
+            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, $tableau['sujetstage'], $tableau['datevalidation'], $tableau['datedebut'], $tableau['datefin'], $tableau['datesoutenance'], $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], $tableau['dateembauche'], $etudiant, $entreprise, null, $promotion);
+            $i++;
+            
+        }
+        
+        return $tabStage;
+    }
     
     
     /**

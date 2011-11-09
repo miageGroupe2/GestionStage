@@ -31,7 +31,7 @@ function afficherListeStage(){
 
 function afficherDetailStage(){
     $corps = genererDetailStage();
-    AffichePage($corps);
+    AffichePage(TRUE, $corps);
 }
 
 ?>

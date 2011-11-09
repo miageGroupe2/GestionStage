@@ -26,7 +26,9 @@ function verifierAutorisationAction($action) {
                     return $action;
                 }else if ($action == "validerProp") {
                     return $action;
-                } else if ($action == "listeStageAnneeCourante") {
+                } else if($action == 'detailStage'){
+                    return $action;
+                }else if ($action == "listeStageAnneeCourante") {
                     return $action;
                 } else if ($action == "listeStages") {
                     return $action;
@@ -186,7 +188,11 @@ function call_action() {
             case 'listeStages' :
                 $action = 'afficherListeStage';
                 break;
-
+            
+            case 'detailStage' :
+                $action = 'afficherDetailStage';
+                break;
+            
             case 'creerCompteAdmin' :
                 $action = 'afficherCreerCompteAdmin';
                 break;
