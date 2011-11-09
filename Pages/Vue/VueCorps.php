@@ -1022,9 +1022,102 @@ function genererProposerStage($tabEntreprise) {
     return $corps;
 }
 
-function genererVoirStageEtudiant(){
+function genererVoirStageEtudiant($stage){
+    $corps = "<td id = \"corps\">
+                   Bienvenue
+                   
+                ";
+    $corps .="
+                <table class = \"tableau\">
+                    <tr>
+                        <td class = \"tableau\">
+                            Etat stage :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($stage->getEtatstage())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Nom de l'entreprise :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($stage->getEntreprise()->getNom())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Sujet :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($stage->getSujetstage())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Date de d&eacute;but : 
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($stage->getDatedebut())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Date de fin : 
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($stage->getDatefin())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Responsabilit&eacute;e civile : 
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($stage->getDatefin())."
+                        </td>
+                    </tr>
+                    
+                </table><br/>";
+            
+    if ( $stage->getContact() == null){
+        
+        $corps .="<a href=\"" . RACINE . "?action=ajouterContact&idStage=" . $stage->getIdstage() . "\">Ajouter un parrain</a>";
+        
+    }else{
+        
     
+        $corps .="
+                    Parrain :
+                    <table class = \"tableau\">
+                        <tr>
+                            <td class = \"tableau\">
+                                Nom :
+                            </td>
+                            <td class = \"tableau\">
+                                ".htmlentities($stage->getContact()->getNom())."
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class = \"tableau\">
+                                Pr&eacute;nom :
+                            </td>
+                            <td class = \"tableau\">
+                                ".htmlentities($stage->getContact()->getPrenom())."
+                            </td>
+                        </tr>
+                    </table>
+                    <a href=\"" . RACINE . "?action=modifierContact&idStage=" . $stage->getIdstage() . "\">Modifier le parrain</a>
+
+
+                ";
+    }
     
+    $corps .= "</td>
+            </tr>
+        </table>";
+    
+    return $corps ;
 }
 
 /* ancienne fonction genererProposerStage :
