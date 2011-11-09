@@ -1006,7 +1006,78 @@ function genererProposerStage($tabEntreprise) {
     return $corps;
 }
 
-function genererVoirStageEtudiant(){
+function genererVoirStageEtudiant($stage){
+    $corps = "<td id = \"corps\">
+                   Bienvenue
+                   
+                ";
+    $corps .="
+                <h3>Voir mon stage :</h3>
+                <table class = \"tableau\">
+                    <tr>
+                        <td class = \"tableau\">
+                            Date de proposition :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($prop->getDateProposition())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Nom de l'entreprise :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($prop->getNomEntreprise())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Adresse :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($prop->getAdresseEntreprise())."<br/>".
+                            htmlentities($prop->getCodePostal())."<br/>".
+                            htmlentities($prop->getVille())."<br/>".
+                            htmlentities($prop->getPays())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Num&eacute;ro de t&eacute;l&eacute;phone :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($prop->getNumTelephone())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Site Web :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($prop->getUrlSite())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Sujet :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($prop->getSujet())."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Etat de la proposition :
+                        </td>
+                        <td class = \"tableau\">
+                            ".htmlentities($prop->getEtat())."
+                        </td>
+                    </tr>
+                </table><br/>";
+    
+    $corps .= "</td>
+            </tr>
+        </table>";
     
     
 }

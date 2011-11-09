@@ -59,7 +59,7 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if ($action == "listePropositionStageEtudiant") {
                     return $action;
-                } else if ($action == "voirMonStageEtudiant") {
+                } else if ($action == "voirStageEtudiant") {
                     return $action;
                 } else if ($action == "modifierInformations") {
                     return $action;
@@ -157,7 +157,7 @@ function call_action() {
                 $action = 'afficherListePropositionStageEtudiant';
                 break;
 
-            case 'voirMonStageEtudiant' :
+            case 'voirStageEtudiant' :
                 $action = 'afficherStageEtudiant';
                 break;
 

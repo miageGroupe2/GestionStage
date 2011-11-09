@@ -180,9 +180,12 @@ require_once 'BD.php';
 
     function afficherStageEtudiant() {
         
+        
         $utilisateur = $_SESSION['modeleUtilisateur'];
-        BD::rechercherStage();
-        $corps = genererPageAccueil();
+        $stage = BD::rechercherStageEtudiant($utilisateur->getId());
+        
+        
+        $corps = genererVoirStageEtudiant($stage);
         AffichePage(TRUE, $corps);
     }
 
