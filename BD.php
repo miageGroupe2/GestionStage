@@ -360,24 +360,25 @@ class BD {
         
         $stage = null;
         $requete = "SELECT stage.idstage, stage.identreprise, stage.idcontact,
-                    stage.sujetstage, stage.datevalidation, stage.datedebut, stage.datefin, stage.datesoutenance,
+                    stage.sujetstage, stage.datedebut, stage.datefin, stage.datesoutenance,
                     stage.remuneration, stage.lieusoutenance, stage.etatstage, stage.respcivil, entreprise.nomentreprise,
                     contact.prenomcontact, contact.nomcontact
                     FROM stage, entreprise, contact, utilisateur
                     WHERE stage.identreprise = entreprise.identreprise
-                    AND entreprise.identreprise = contact.identreprise
+                    
                     AND stage.idutilisateur = utilisateur.idutilisateur
+                    AND stage.idcontact = contact.idcontact
                     AND utilisateur.idutilisateur = '$idUtilisateur'
                     
         ";
-        
+
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {
             
             $contact = new ModeleContact(null, $tableau['prenomcontact'], $tableau['nomcontact'], null, null, null, null);
             $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, null, null, null, null, null, null, null);
-            $stage = new ModeleStage($tableau['idstage'], null, $tableau['idcontact'], $tableau['sujetstage'], $tableau['datevalidation'], $tableau['datedebut'], $tableau['datefin'], $tableau['datesoutenance'], null, $tableau['etatstage'], null, null, $tableau['remuneration'], null, null, null, $entreprise, $contact, null);
+            $stage = new ModeleStage($tableau['idstage'], null, $tableau['idcontact'], $tableau['sujetstage'], null, $tableau['datedebut'], $tableau['datefin'], null, null, $tableau['etatstage'], null, null, $tableau['remuneration'], null, null, null, $entreprise, $contact, null, $tableau['respcivil']);
             
         }
         
