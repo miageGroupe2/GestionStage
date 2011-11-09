@@ -510,6 +510,10 @@ function genererListeStage(){
     return $corps;
 }
 
+function genererDetailStage(){
+    
+}
+
 
 function genererListePropositionStageEtudiant(){
     
