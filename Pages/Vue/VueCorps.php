@@ -511,7 +511,19 @@ function genererListeStage(){
 }
 
 function genererDetailStage(){
-    
+    $stage = BD::rechercherStageByID($_GET['idstage']);
+    $corps ="";
+    if($stage != NULL){
+        $corps = "<td id = \"corps\">
+            <h2>D&eacute;tail du Stage</h2><br/>
+            
+        ";
+    }
+    $corps .= "</td>
+                </tr>
+            </table>";
+    return $corps;
+            
 }
 
 
