@@ -59,7 +59,7 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if ($action == "listePropositionStageEtudiant") {
                     return $action;
-                } else if ($action == "listeStageEtudiant") {
+                } else if ($action == "voirMonStageEtudiant") {
                     return $action;
                 } else if ($action == "modifierInformations") {
                     return $action;
@@ -153,16 +153,12 @@ function call_action() {
 //                    $action = 'validerProposerStage' ;
 //                    break;
 
-            case 'completerStage' :
-                $action = 'afficherCompleterStage';
-                break;
-
             case 'listePropositionStageEtudiant' :
                 $action = 'afficherListePropositionStageEtudiant';
                 break;
 
-            case 'listeStageEtudiant' :
-                $action = 'afficherListeStageEtudiant';
+            case 'voirMonStageEtudiant' :
+                $action = 'afficherStageEtudiant';
                 break;
 
             case 'modifierInformations' :

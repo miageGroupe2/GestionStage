@@ -299,12 +299,11 @@ class BD {
      * (c'est à dire si la proposition de stage $idProposition correspond à une de ses propositions)
      * @param type $idProposition 
      */
-    public static function autorisationEditerProposition($idProposition){
+    public static function autorisationEditerProposition($idProposition, $idUtilisateur){
         
         BD::getConnection();
         $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
-        $utilisateur = $_SESSION['modeleUtilisateur'];
-        $idUtilisateur = $utilisateur->getId() ;
+        
         
         if ($idProposition != FALSE) {
         

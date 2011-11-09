@@ -1006,6 +1006,11 @@ function genererProposerStage($tabEntreprise) {
     return $corps;
 }
 
+function genererVoirStageEtudiant(){
+    
+    
+}
+
 /* ancienne fonction genererProposerStage :
  * $messageErreurRemplissage = '';
 

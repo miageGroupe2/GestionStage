@@ -124,10 +124,13 @@ require_once 'BD.php';
     
     function editerPropositionStage(){
         
+        $utilisateur = $_SESSION['modeleUtilisateur'];
+        
         //si le sujet de stage a déjà été modifié
         if (isset ($_GET['sujetModifie']) && $_GET['sujetModifie']=="true"){
             
-            $operationPermise = BD::autorisationEditerProposition($_GET['idProposition']);
+            
+            $operationPermise = BD::autorisationEditerProposition($_GET['idProposition'], $utilisateur->getId());
 
             if($operationPermise){
     
@@ -141,7 +144,7 @@ require_once 'BD.php';
         //sinon affichage de la page editer stage
         else if (isset ($_GET['idProposition'])){
             
-            $operationPermise = BD::autorisationEditerProposition($_GET['idProposition']);
+            $operationPermise = BD::autorisationEditerProposition($_GET['idProposition'], $utilisateur->getId());
             
             if($operationPermise){
     
@@ -162,7 +165,8 @@ require_once 'BD.php';
 
         if (isset ($_GET['idProposition'])){
 
-            $operationPermise = BD::autorisationEditerProposition($_GET['idProposition']);
+            $utilisateur = $_SESSION['modeleUtilisateur'];
+            $operationPermise = BD::autorisationEditerProposition($_GET['idProposition'], $utilisateur->getId());
             
             if($operationPermise){
 
@@ -174,7 +178,10 @@ require_once 'BD.php';
         call_action();
     }
 
-    function afficherCompleterStage() {
+    function afficherStageEtudiant() {
+        
+        $utilisateur = $_SESSION['modeleUtilisateur'];
+        BD::rechercherStage();
         $corps = genererPageAccueil();
         AffichePage(TRUE, $corps);
     }

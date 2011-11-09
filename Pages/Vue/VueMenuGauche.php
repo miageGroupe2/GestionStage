@@ -42,7 +42,7 @@
         }else{
             $menuGauche .= "<a href=\"".RACINE."?action=proposerStageEtape1\">Proposer un Stage</a><br/>
                         <a href=\"".RACINE."?action=listePropositionStageEtudiant\">Voir mes propositions de stage</a><br/>
-                        <a href=\"".RACINE."?action=listeStageEtudiant\">Voir mon stage</a><br/>
+                        <a href=\"".RACINE."?action=voirStageEtudiant\">Voir mon stage</a><br/>
                         </td>";
         }
 
