@@ -78,7 +78,7 @@ require_once 'BD.php';
                         $numeroSiret = $_POST['numerosiret'] ;
                     }
                         
-                    $entreprise = new ModeleEntreprise(NULL, $_POST['nom_entreprise'], $_POST['num_rue'], $_POST['ville'], $_POST['code_postal'], $_POST['pays'], $_POST['tel_accueil'], $numeroSiret, $siteInternet);
+                    $entreprise = new ModeleEntreprise(NULL, $_POST['nom_entreprise'], $_POST['num_rue'], $_POST['ville'], $_POST['code_postal'], $_POST['pays'], $_POST['tel_accueil'], $numeroSiret, $siteInternet, null);
 
                 }else{
 
