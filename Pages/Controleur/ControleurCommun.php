@@ -57,7 +57,6 @@ function afficherPagePrincipale() {
     AffichePage(TRUE, $corps);
 }
 
-
 function afficherRechercherEntreprise() {
     $corps = genererRechercheEntreprise();
     AffichePage(TRUE, $corps);

@@ -18,6 +18,11 @@ function afficherDetailProposition(){
     AffichePage(TRUE, $corps);        
 }
 
+function afficherEditerStage(){
+    $corps = genererEditerStage();
+    AffichePage(TRUE, $corps);   
+}
+
 function validerProposition(){
     $corps = genererValiderProposition();
     AffichePage(TRUE, $corps);     

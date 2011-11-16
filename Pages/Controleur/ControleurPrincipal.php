@@ -28,6 +28,8 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if($action == 'detailStage'){
                     return $action;
+                }else if ($action == "editerStage") {
+                    return $action;
                 }else if ($action == "listeStageAnneeCourante") {
                     return $action;
                 } else if ($action == "listeStages") {
@@ -54,8 +56,6 @@ function verifierAutorisationAction($action) {
                 } else if ($action == "proposerStageEtape3") {
                     return $action;
                 } else if ($action == "editerPropositionStage") {
-                    return $action;
-                } else if ($action == "editerStage") {
                     return $action;
                 } else if ($action == "supprimerProposition") {
                     return $action;
@@ -191,6 +191,9 @@ function call_action() {
             
             case 'detailStage' :
                 $action = 'afficherDetailStage';
+                break;
+            case 'editerStage':
+                $action = 'afficherEditerStage';
                 break;
             
             case 'creerCompteAdmin' :
