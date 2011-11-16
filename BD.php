@@ -88,7 +88,7 @@ class BD {
             $i = 0;
             while ($tableau = mysql_fetch_array($retour)) {
 
-                $tabEntreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet']);
+                $tabEntreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet'], null);
                 $i++;
             }
         }
@@ -113,7 +113,7 @@ class BD {
             $i = 0;
             while ($tableau = mysql_fetch_array($retour)) {
 
-                $entreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet']);
+                $entreprise[$i] = new ModeleEntreprise($tableau['identreprise'], $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet'], null);
                 $i++;
             }
             if ($i > 0) {
@@ -182,29 +182,51 @@ class BD {
 
         return $tabContact;
     }
+    public static function modifierContactDansStage($idContact,$idStage, $idUtilisateur){
+        
+        BD::getConnection();
+        $idContact = mysql_real_escape_string(htmlspecialchars($idContact));
+        $idStage = mysql_real_escape_string(htmlspecialchars($idStage));
+        $idUtilisateur = mysql_real_escape_string(htmlspecialchars($idUtilisateur));
+        
+        if ($idContact != FALSE && $idStage != FALSE
+                && $idUtilisateur != FALSE ) {
+
+            //on vérifie qu'on modifie un stage appartenant à l'utilisateur
+            $requete = "SELECT idutilisateur, idstage FROM stage WHERE idutilisateur='$idUtilisateur' AND idstage='$idStage'";
+            $retour = mysql_query($requete);
+
+            while ($tableau = mysql_fetch_array($retour)) {
+
+                $requete = "UPDATE stage SET idcontact = '$idContact' WHERE idstage='$idStage'";
+                mysql_query($requete);
+            }
+        }
+    }
 
     public static function ajouterContact($identreprise, $nom, $prenom, $fonction, $telephoneFixe, $telephoneMobile, $mail) {
 
         BD::getConnection();
-        $idEntreprise = mysql_real_escape_string(htmlspecialchars($idEntreprise));
+        $idEntreprise = mysql_real_escape_string(htmlspecialchars($identreprise));
         $nom = mysql_real_escape_string(htmlspecialchars($nom));
-        $prenom = mysql_real_escape_string(htmlspecialchars($prenom));
-        $fonction = mysql_real_escape_string(htmlspecialchars($fonction));
-        $telephoneFixe = mysql_real_escape_string(htmlspecialchars($telephoneFixe));
-        $telephoneMobile = mysql_real_escape_string(htmlspecialchars($telephoneMobile));
+        $prenom = mysql_real_escape_string(htmlspecialchars($prenom));        
         $mail = mysql_real_escape_string(htmlspecialchars($mail));
 
         if ($idEntreprise != FALSE && $nom != FALSE
-                && $prenom != FALSE && $fonction != FALSE
-                && $telephoneFixe != FALSE && $telephoneMobile != FALSE
+                && $prenom != FALSE 
                 && $mail != FALSE) {
 
 
             $requete = "INSERT INTO contact (identreprise, prenomcontact, nomcontact, fonctioncontact,
-                dateajout, datederniereactivite, telephonefixecontact, telmobilecontact, mailcontact) 
-                VALUES ('$idEntreprise', '$prenom', '$nom', '$fonction', 'CURDATE()', 'CURDATE()', '$telephoneFixe', '$telephoneMobile', '$mail')";
+                dateajout, datederniereactivite, telfixecontact, telmobilecontact, mailcontact) 
+                VALUES ('$idEntreprise', '$prenom', '$nom', '$fonction', NOW(), NOW(), '$telephoneFixe', '$telephoneMobile', '$mail')";
 
             mysql_query($requete);
+            $id = mysql_insert_id();
+            return $id ;
+        }else{
+            
+            return -1;
         }
     }
 
@@ -283,7 +305,8 @@ class BD {
         $requete = "SELECT p.idproposition, e.nomentreprise, p.dateproposition, e.adresseentreprise, e.villeentreprise, e.codepostalentreprise, e.paysentreprise, e.numerotelephone, e.urlsiteinternet, p.sujetstagep, p.etat
                         FROM proposition p, entreprise e
                         WHERE p.idutilisateur = '$idUser'
-                        AND p.identreprise = e.identreprise";
+                        AND p.identreprise = e.identreprise
+                        AND p.etat!='validee'";
         
         $retour = mysql_query($requete) or die(mysql_error());
 
@@ -330,6 +353,7 @@ class BD {
         $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
         
         if ($idProposition != FALSE) {
+            
             
             $requete = "DELETE FROM proposition WHERE idproposition='$idProposition'";
             mysql_query($requete);
@@ -378,7 +402,7 @@ class BD {
             
             $contact = new ModeleContact(null, $tableau['prenomcontact'], $tableau['nomcontact'], null, null, null, null);
             $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, null, null, null, null, null, null, null);
-            $stage = new ModeleStage($tableau['idstage'], null, $tableau['idcontact'], $tableau['sujetstage'], null, $tableau['datedebut'], $tableau['datefin'], null, null, $tableau['etatstage'], null, null, $tableau['remuneration'], null, null, null, $entreprise, $contact, null, $tableau['respcivil']);
+            $stage = new ModeleStage($tableau['idstage'], $tableau['identreprise'], $tableau['idcontact'], $tableau['sujetstage'], null, $tableau['datedebut'], $tableau['datefin'], null, null, $tableau['etatstage'], null, null, $tableau['remuneration'], null, null, null, $entreprise, $contact, null, $tableau['respcivil']);
             
         }
         

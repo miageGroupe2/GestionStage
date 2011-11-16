@@ -527,9 +527,9 @@ function genererDetailStage(){
 }
 
 
-function genererListePropositionStageEtudiant(){
+function genererListePropositionStageEtudiant($tabProp){
     
-    $tabProp = BD::rechercherPropositionsEtudiant();
+    
     $i=1;
     
     $corps ="<td id = \"corps\">
@@ -856,6 +856,123 @@ function genererProposerStageEtape2($entreprise) {
     return $corps ;
     
 }
+
+//permet à un étudiant de modifier son tuteur en entreprise
+function genererModifierContact($tabContact, $idEntreprise, $idStage){
+    
+    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "verifierModiferContactEtudiant.js\" type=\"text/javascript\"></script>";
+    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaireModifierContact()\" method=\"post\" action=\"" . RACINE . "?action=modifierContactEtape2\">";
+    $corps .= "<td id = \"corps\">
+                <h2>Modification du tuteur</h2>";
+    
+    
+    // si il existe des contacts dans la base, on les affiche 
+    if ($tabContact != null) {
+        
+        $corps .= "<table class=\"tableau\"><tr>
+                  <td class=\"tableau\"> Choix </td>
+                  <td class=\"tableau\"> Pr&eacute;nom </td>
+                  <td class=\"tableau\"> Nom </td>
+                  <td class=\"tableau\"> Fonction </td>
+                  <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
+                  <td class=\"tableau\"> T&eacute;l&eacute;phone Portable </td>
+                  <td class=\"tableau\"> Mail </td>
+                  </tr>";
+
+        foreach ($tabContact as $contactCourant) {
+
+            $corps .= "<tr><td class=\"tableau\"> ";
+
+            $corps .= "<input type=\"radio\" name=\"idContact\" value=\"" . $contactCourant->getId() . "\" id=\"" . $contactCourant->getId() . "\" />";
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= htmlentities($contactCourant->getPrenom());
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= htmlentities($contactCourant->getNom());
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= htmlentities($contactCourant->getFonction());
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= htmlentities($contactCourant->getTelephoneFixe());
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= htmlentities($contactCourant->getTelephoneMobile());
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= htmlentities($contactCourant->getMail());
+
+
+            $corps .= "</td></tr>";
+        }
+        
+        $corps .= "</table>";
+    }
+    
+    // on affiche le formulaire de saisie d'un nouveau tuteur
+    if ($tabContact == NULL){
+        $corps .= "<br />Il n'existe aucun tuteur pour cette entreprise dans la base. Vous devez l'ajouter :";
+    }else{
+        $corps .= "<br /><input type=\"radio\" name=\"idContact\" value=\"ajouter\" id=\"ajouter\" checked=\"checked\"/> <label for=\"autre\">Ajouter un tuteur :</label>";
+    }
+    
+    $corps .= "
+            <input type=hidden id=\"idEntreprise\" name=\"idEntreprise\" value=\"$idEntreprise\">
+            <input type=hidden id=\"idStage\" name=\"idStage\" value=\"$idStage\">
+            <table> 
+            <tr>
+                <td>
+                    Nom <etoile>*</etoile>:
+                </td>
+                <td>
+                    <input type=text name=\"nom_tuteur\" id=\"nom_tuteur\" value=\"Fort\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Pr&eacute;nom <etoile>*</etoile>:
+                </td>
+                <td>
+                    <input type=text name=\"prenom_tuteur\" id=\"prenom_tuteur\" value=\"Bertrand\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Fonction :
+                </td>
+                <td>
+                    <input type=text name=\"fonction_tuteur\" id=\"fonction_tuteur\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    T&eacute;l&eacute;phone fixe :
+                </td>
+                <td>
+                    <input type=text name=\"tel_fixe\" id=\"tel_fixe\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    T&eacute;l&eacute;phone portable :
+                </td>
+                <td>
+                    <input type=text name=\"tel_port\" id=\"tel_port\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Mail <etoile>*</etoile>:
+                </td>
+                <td>
+                    <input type=text name=\"mail_tuteur\" id=\"mail_tuteur\">
+                </td>
+            </tr></table>
+            <br /><input type=\"submit\" value=\"Valider\"></form><br /><br />";
+
+    $corps .= "
+                    
+                </td>
+            </tr>
+        </table>";
+
+    return $corps;
+}
 function genererProposerStage($tabEntreprise) {
 
     $nom = NULL;
@@ -1023,10 +1140,19 @@ function genererProposerStage($tabEntreprise) {
 }
 
 function genererVoirStageEtudiant($stage){
-    $corps = "<td id = \"corps\">
-                   Bienvenue
-                   
+    $corps = "<td id = \"corps\">                   
                 ";
+    if($stage == null){
+        
+        $corps .= "Vous n'avez aucun stage validé pour l'instant.";
+        
+        $corps .= "</td>
+            </tr>
+        </table>";
+        
+        return $corps ;
+    }
+    
     $corps .="
                 <table class = \"tableau\">
                     <tr>
@@ -1082,13 +1208,13 @@ function genererVoirStageEtudiant($stage){
             
     if ( $stage->getContact() == null){
         
-        $corps .="<a href=\"" . RACINE . "?action=ajouterContact&idStage=" . $stage->getIdstage() . "\">Ajouter un parrain</a>";
+        $corps .="<a href=\"" . RACINE . "?action=ajouterContact&idStage=" . $stage->getIdstage() . "&idEntreprise=".$stage->getIdentreprise()."\">Ajouter un tuteur</a>";
         
     }else{
         
     
         $corps .="
-                    Parrain :
+                    Tuteur :
                     <table class = \"tableau\">
                         <tr>
                             <td class = \"tableau\">
@@ -1107,7 +1233,8 @@ function genererVoirStageEtudiant($stage){
                             </td>
                         </tr>
                     </table>
-                    <a href=\"" . RACINE . "?action=modifierContact&idStage=" . $stage->getIdstage() . "\">Modifier le parrain</a>
+                    
+                    <a href=\"" . RACINE . "?action=modifierContact&idStage=" . $stage->getIdstage() . "&idEntreprise=".$stage->getIdentreprise()."\">Modifier le tuteur</a>
 
 
                 ";

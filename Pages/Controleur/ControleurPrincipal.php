@@ -63,6 +63,10 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if ($action == "voirStageEtudiant") {
                     return $action;
+                }else if ($action == "modifierContact") {
+                    return $action;
+                }else if ($action == "modifierContactEtape2") {
+                    return $action;
                 } else if ($action == "modifierInformations") {
                     return $action;
                 } else if ($action == "pagePrincipale") {
@@ -162,7 +166,12 @@ function call_action() {
             case 'voirStageEtudiant' :
                 $action = 'afficherStageEtudiant';
                 break;
-
+            case 'modifierContact' :
+                $action = 'modifierContactEtape1';
+                break;
+            case 'modifierContactEtape2':
+                $action = 'modifierContactEtape2';
+                break;
             case 'modifierInformations' :
                 $action = 'afficherModifierInformations';
                 break;

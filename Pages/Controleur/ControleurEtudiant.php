@@ -118,7 +118,8 @@ require_once 'BD.php';
 
     function afficherListePropositionStageEtudiant() {
 
-        $corps = genererListePropositionStageEtudiant();
+        $tabProp = BD::rechercherPropositionsEtudiant();
+        $corps = genererListePropositionStageEtudiant($tabProp);
         AffichePage(TRUE, $corps);
     }
     
@@ -184,11 +185,62 @@ require_once 'BD.php';
         $utilisateur = $_SESSION['modeleUtilisateur'];
         $stage = BD::rechercherStageEtudiant($utilisateur->getId());
         
-        
         $corps = genererVoirStageEtudiant($stage);
         AffichePage(TRUE, $corps);
     }
 
+    function modifierContactEtape1(){
+        
+        if (isset($_GET['idEntreprise']) && ($_GET['idEntreprise'] != null)) {
+
+            
+            $tabContact = BD::rechercherContactParEntreprise($_GET['idEntreprise']);
+            $corps = genererModifierContact($tabContact, $_GET['idEntreprise'], $_GET['idStage']);
+            AffichePage(TRUE, $corps);
+            
+        }else {
+            afficherPagePrincipale();
+        }
+    }
+    
+    function modifierContactEtape2(){
+        
+        $continuer = false ;
+        $idContact = -1 ;
+        
+        //si l'utilisateur a sélectionné un contact existant
+        if (isset($_POST['idContact']) && $_POST['idContact'] != "ajouter"){
+
+            $continuer = TRUE ;
+            $idContact = $_POST['idContact'] ;
+
+        }else{
+            
+            // si l'utilisateur a ajouté un contact
+            //on vérifie que tous les champs obligatoires sont remplis
+            if (isset($_POST['nom_tuteur']) && $_POST['nom_tuteur'] != NULL
+                && isset($_POST['prenom_tuteur']) && $_POST['prenom_tuteur'] != NULL 
+                && isset($_POST['mail_tuteur']) && $_POST['mail_tuteur'] != NULL   
+                    ){
+
+                $idContact = BD::ajouterContact($_POST['idEntreprise'],$_POST['nom_tuteur'], $_POST['prenom_tuteur'], $_POST['fonction_tuteur'], $_POST['tel_fixe'], $_POST['tel_port'], $_POST['mail_tuteur']);
+                
+                $continuer = true ;
+                
+            }else{
+                $_REQUEST['action'] = "pagePrincipale";
+                call_action();
+            }
+        }
+        if ($continuer){
+
+            $utilisateur = $_SESSION['modeleUtilisateur'];
+            BD::modifierContactDansStage($idContact, $_POST['idStage'], $utilisateur->getId());
+            $_REQUEST['action'] = "voirStageEtudiant";
+            call_action();
+        }
+    }
+    
     function validerProposerStage(){
         
         // on vérifie que les champs obligatoire sont remplis

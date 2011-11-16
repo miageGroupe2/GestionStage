@@ -8,7 +8,7 @@
         private $fonction ;
         private $telephoneFixe ;
         private $telephoneMobile ;
-        private $mailContact ;
+        private $mail ;
         
         function __construct($id, $prenom, $nom, $fonction, $telephoneFixe, $telephoneMobile, $mail) {
             $this->id = $id;

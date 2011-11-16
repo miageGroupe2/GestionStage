@@ -78,18 +78,6 @@ function effectuerRechercheEntreprise() {
     }
 }
 
-function afficherContactParEntreprise() {
-
-    if (isset($_POST['idEntreprise']) && ($_POST['idEntreprise'] != null)) {
-
-
-        $tabContact = BD::rechercherContactParEntreprise($_POST['idEntreprise']);
-        $corps = genererListeResultatRechercheContact($tabContact);
-        AffichePage(TRUE, $corps);
-    } else {
-        afficherPagePrincipale();
-    }
-}
 
 /*
  * To change this template, choose Tools | Templates
