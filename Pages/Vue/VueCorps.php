@@ -509,7 +509,98 @@ function genererListeStage(){
             </table>";
     return $corps;
 }
+function genererGererCompteAdmin($tabAdmin, $tabPromotion){
+    
+    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "verifierModiferContactEtudiant.js\" type=\"text/javascript\"></script>";
+    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaireModifierContact()\" method=\"post\" action=\"" . RACINE . "?action=modifierContactEtape2\">";
+    $corps .= "<td id = \"corps\">
+                <h2>Gestion des administrateurs</h2>";
+    
+    
+    
+    if ($tabAdmin != null) {
+        
+        $corps .= "<table class=\"tableau\"><tr>
+                  <td class=\"tableau\"> Choix </td>
+                  <td class=\"tableau\"> Pr&eacute;nom </td>
+                  <td class=\"tableau\"> Nom </td>
+                  <td class=\"tableau\"> Promotion </td>
+                  <td class=\"tableau\"> Mail </td>
+                  </tr>";
 
+        foreach ($tabAdmin as $adminCourant) {
+
+            $corps .= "<tr><td class=\"tableau\"> ";
+
+            $corps .= "<input type=\"radio\" name=\"idUtilisateur\" value=\"" . $adminCourant->getId() . "\" id=\"" . $adminCourant->getId() . "\" />";
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= htmlentities($adminCourant->getPrenom());
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= htmlentities($adminCourant->getNom());
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= htmlentities($adminCourant->getPromotion());
+            $corps .= "</td><td class=\"tableau\">";
+            $corps .= htmlentities($adminCourant->getMail());
+
+
+            $corps .= "</td></tr>";
+        }
+        
+        $corps .= "</table>
+            <input type=\"button\" value=\"Modifier\" >
+                ";
+        
+        
+        $corps .= "
+        
+            <table> 
+            <tr>
+                <td>
+                    Nom <etoile>*</etoile>:
+                </td>
+                <td>
+                    <input type=text name=\"nom_admin\" id=\"nom_admin\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Pr&eacute;nom <etoile>*</etoile>:
+                </td>
+                <td>
+                    <input type=text name=\"prenom_admin\" id=\"prenom_admin\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Promotion :
+                </td>
+                <td>
+                    <select name=\"promotion\" id=\"promotion\">";
+               
+                        foreach ($tabPromotion as $promoCourante) {
+
+
+                            $corps .= "<option value=\"".$promoCourante->getIdpromotion()."\">".$promoCourante->getNompromotion()."</option>";
+                        }
+
+                   $corps .= "</select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Mail <etoile>*</etoile>:
+                </td>
+                <td>
+                    <input type=text name=\"mail_admin\" id=\"mail_admin\">
+                </td>
+            </tr></table>
+            <br /><input type=\"submit\" value=\"Valider\"></form><br /><br />";
+        
+        return $corps ;
+    }
+    
+    
+}
 function genererDetailStage(){
     $stage = BD::rechercherStageByID($_GET['idstage']);
     if($stage[0]->getRespcivil() == 1){

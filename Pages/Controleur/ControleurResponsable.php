@@ -6,37 +6,45 @@ require_once RACINE_VUE . 'VueCorps.php';
 require_once 'BD.php';
 
 
-function ListePropositionStageResponsable() {
+    function ListePropositionStageResponsable() {
 
-    $corps = genererListePropositionStageResponsable();
-    AffichePage(TRUE, $corps);
-}
+        $corps = genererListePropositionStageResponsable();
+        AffichePage(TRUE, $corps);
+    }
 
-function afficherDetailProposition(){
+    function afficherDetailProposition(){
 
-    $corps = genererDetailProposition();
-    AffichePage(TRUE, $corps);        
-}
+        $corps = genererDetailProposition();
+        AffichePage(TRUE, $corps);        
+    }
 
-function afficherEditerStage(){
-    $corps = genererEditerStage();
-    AffichePage(TRUE, $corps);   
-}
+    function afficherEditerStage(){
+        $corps = genererEditerStage();
+        AffichePage(TRUE, $corps);   
+    }
 
-function validerProposition(){
-    $corps = genererValiderProposition();
-    AffichePage(TRUE, $corps);     
-}
+    function validerProposition(){
+        $corps = genererValiderProposition();
+        AffichePage(TRUE, $corps);     
+    }
 
-function afficherListeStage(){
-    $corps = genererListeStage();
-    AffichePage(TRUE, $corps);     
-}
+    function afficherListeStage(){
+        $corps = genererListeStage();
+        AffichePage(TRUE, $corps);     
+    }
 
 
-function afficherDetailStage(){
-    $corps = genererDetailStage();
-    AffichePage(TRUE, $corps);
-}
+    function afficherDetailStage(){
+        $corps = genererDetailStage();
+        AffichePage(TRUE, $corps);
+    }
+
+    function afficherGererCompteAdmin(){
+
+        $tabAdmin = BD::rechercheListeAdmin();
+        $tabPromotion = BD::recherchePromotion();
+        $corps = genererGererCompteAdmin($tabAdmin, $tabPromotion);
+        AffichePage(TRUE, $corps);
+    }
 
 ?>

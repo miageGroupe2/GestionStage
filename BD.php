@@ -413,6 +413,46 @@ class BD {
     // PARTIE DES ACCES BASES ADMIN
     //-----------------------------------------------------------------------------------------    
 
+    //retourne toutes les promotions
+    public static function recherchePromotion(){
+        
+        BD::getConnection();
+        $tabPromo = NULL ;
+        $requete = "SELECT *
+            FROM promotion ";
+        
+        $retour = mysql_query($requete) ;
+        
+        $i = 0 ;
+        while ($tableau = mysql_fetch_array($retour)) {
+            
+            $tabPromo[$i] = new ModelePromotion($tableau['idpromotion'], $tableau['nompromotion'], $tableau['accesentreprises']);
+            $i++;
+        }
+        return $tabPromo;
+        
+    }
+    
+    // permet de retourner la liste des admin
+    public static function rechercheListeAdmin(){
+        
+        BD::getConnection();
+        $tabAdmin = NULL ;
+        $requete = "SELECT idutilisateur, idpromotion, mailutilisateur, nomutilisateur, prenomutilisateur, admin
+            FROM utilisateur 
+            WHERE admin='1'";
+        
+        $retour = mysql_query($requete) ;
+        
+        $i = 0 ;
+        while ($tableau = mysql_fetch_array($retour)) {
+            
+            $tabAdmin[$i] = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['idpromotion'], null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], $tableau['admin']);
+            $i++;
+        }
+        return $tabAdmin;
+    }
+    
     /**
      * Permet d'afficher toutes les propositions de stage
      */

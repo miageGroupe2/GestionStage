@@ -34,7 +34,7 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if ($action == "listeStages") {
                     return $action;
-                } else if ($action == "creerCompteAdmin") {
+                } else if ($action == "gererCompteAdmin") {
                     return $action;
                 } else if ($action == "accesDonneesEtudiants") {
                     return $action;
@@ -205,8 +205,8 @@ function call_action() {
                 $action = 'afficherEditerStage';
                 break;
             
-            case 'creerCompteAdmin' :
-                $action = 'afficherCreerCompteAdmin';
+            case 'gererCompteAdmin' :
+                $action = 'afficherGererCompteAdmin';
                 break;
 
             case 'accesDonneesEtudiants' :
