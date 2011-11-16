@@ -512,11 +512,69 @@ function genererListeStage(){
 
 function genererDetailStage(){
     $stage = BD::rechercherStageByID($_GET['idstage']);
+    if($stage[0]->getRespcivil() == 1){
+        $respcivil = "OK";
+    }else{
+        $respcivil = "en attente";
+    }
+    if($stage[0]->getEmbauche() == 1){
+        $embauche = "OUI";
+    }else{
+        $embauche = "NON";
+    }
+    
     $corps ="";
     if($stage != NULL){
         $corps = "<td id = \"corps\">
             <h2>D&eacute;tail du Stage</h2><br/>
-            
+            <table class = \"tableau\">
+                <tr>
+                    <td class = \"tableau\">
+                        N° Etudiant : ".$stage[0]->getUtilisateur()->getNumeroetudiant()."<br/><br/>".
+                        $stage[0]->getUtilisateur()->getPrenom()." ".$stage[0]->getUtilisateur()->getNom()."<br/>
+                        Formation : ".$stage[0]->getPromotion()->getNompromotion()."<br/>
+                        Mail : ".$stage[0]->getUtilisateur()->getMail()."<br/>    
+                    </td>
+                     <td class = \"tableau\">
+                        Contact Entreprise : <br/><br/>".
+                        $stage[0]->getContact()->getPrenom()." ".$stage[0]->getContact()->getNom()."<br/>
+                        Fonction : ".htmlentities($stage[0]->getContact()->getFonction())."<br/>
+                        Tel fixe : ".$stage[0]->getContact()->getTelephoneFixe()."<br/>    
+                        Tel mobile : ".$stage[0]->getContact()->getTelephoneMobile()."<br/>    
+                        Mail : ".$stage[0]->getContact()->getMail()."<br/>    
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan=\"2\" class = \"tableau\">
+                        Entreprise : <br/><br/>".
+                        $stage[0]->getEntreprise()->getNom()."<br/>
+                        Siret : ".$stage[0]->getEntreprise()->getNumeroSiret()."<br/>    
+                        Adresse : <br/><br/>".$stage[0]->getEntreprise()->getAdresse()."<br/>".
+                        $stage[0]->getEntreprise()->getCodePostal()."<br/>".$stage[0]->getEntreprise()->getVille()."<br/>".
+                        $stage[0]->getEntreprise()->getPays()."<br/><br/> Tel : ".
+                        $stage[0]->getEntreprise()->getNumeroTelephone()."<br/>Site Web : ".
+                        $stage[0]->getEntreprise()->getUrlSiteInternet()."
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan=\"2\" class = \"tableau\">
+                        Stage : ".$stage[0]->getEtatstage()."<br/>Responsabilité civile : ".$respcivil."<br/><br/>
+                        Date de validation : ".$stage[0]->getDatevalidation()."<br/>
+                        Date de d&eacute;but : ".$stage[0]->getDatedebut()."<br/>
+                        Date de fin : ".$stage[0]->getDatefin()."<br/>
+                        Date de soutenance : ".$stage[0]->getDatesoutenance()."<br/>
+                        Lieu de soutenance : ".$stage[0]->getLieusoutenance()."<br/>
+                        Note obtenue : ".$stage[0]->getNoteobtenue()."<br/>
+                        Appr&eacute;ciation obtenue : ".$stage[0]->getAppreciationobtenue()."<br/>
+                        R&eacute;mun&eacute;ration : ".$stage[0]->getRemuneration()."<br/>
+                        Embauche : ".$embauche."<br/>
+                        Date embauche : ".$stage[0]->getDateembauche()."<br/><br/>
+                        Sujet :<br/><br/>".
+                        $stage[0]->getSujetstage()."
+                        <br/><br/><a href=\"" . RACINE . "?action=editerStage&idstage=" . $stage[0]->getIdstage() . "\">Modifier les donn&eacute;es du stage</a>
+                    </td>
+                </tr>
+            </table>
         ";
     }
     $corps .= "</td>
@@ -526,6 +584,114 @@ function genererDetailStage(){
             
 }
 
+function genererEditerStage(){
+    $stage = BD::rechercherStageByID($_GET['idstage']); 
+    $corps ="<td id = \"corps\"";
+    
+    if($stage != NULL){
+        $corps .= "<form method=\"post\" action=\"" . RACINE . "?action=detailStage&idstage=".$_GET['idstage']."\">
+                <h2>Editer les informations du stage</h2><br/>
+                <table class=\"tableau\">
+                    <tr>
+                        <td>
+                            Etat du stage :
+                        </td>
+                        <td>
+                            <input type=text value=\"".$stage[0]->getEtatstage()."\" >
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            Responsabilit&eacute; civile :
+                        </td>
+                        <td>
+                            <input type=text value=\"".$stage[0]->getRespcivil()."\" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Date de d&eacute;but :
+                        </td>
+                        <td>
+                            <input type=text value=\"".$stage[0]->getDatedebut()."\" >
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            Date de fin :
+                        </td>
+                        <td>
+                            <input type=text value=\"".$stage[0]->getDatefin()."\" >
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            Date de soutenance :
+                        </td>
+                        <td>
+                            <input type=text value=\"".$stage[0]->getDatesoutenance()."\" >
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            Lieu desoutenance :
+                        </td>
+                        <td>
+                            <input type=text value=\"".$stage[0]->getLieusoutenance()."\" >
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            Note obtenue :
+                        </td>
+                        <td>
+                            <input type=text value=\"".$stage[0]->getNoteobtenue()."\" >
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            Appr&eacute;ciation obtenue :
+                        </td>
+                        <td>
+                            <input type=text value=\"".$stage[0]->getAppreciationobtenue()."\" >
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            R&eacute;mun&eacute;ration :
+                        </td>
+                        <td>
+                            <input type=text value=\"".$stage[0]->getRemuneration()."\" >
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            Enbauche :
+                        </td>
+                        <td>
+                            <input type=text value=\"".$stage[0]->getEmbauche()."\" >
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            Date embauche :
+                        </td>
+                        <td>
+                            <input type=text value=\"".$stage[0]->getDateembauche()."\" >
+                        </td>
+                    </tr>
+                </table>
+                 
+                <input type=\"submit\" value=\"Valider les modifications\"></form><br/><br />
+                </form>
+        ";
+    }
+     
+     $corps .= "</td>
+                </tr>
+            </table>";
+    return $corps;
+}
 
 function genererListePropositionStageEtudiant($tabProp){
     

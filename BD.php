@@ -603,9 +603,9 @@ class BD {
         while ($tableau = mysql_fetch_array($retour)) {
             
             $promotion = new ModelePromotion(null, $tableau['nompromotion'], null);
-            $etudiant = new ModeleUtilisateur(null, $tableau['mailutilisateur'], null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['numetudiant'], null);
+            $etudiant = new ModeleUtilisateur(null, null, $tableau['numetudiant'], $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], null);
             $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet'], $tableau['statutjuridique']);
-            $contact = new ModeleContact(null, null, $tableau['prenomcontact'], $tableau['nomcontact'], $tableau['fonctioncontact'], $tableau['telfixecontact'], $tableau['telmobilecontact'], $tableau['mailcontact']);
+            $contact = new ModeleContact(null, $tableau['prenomcontact'], $tableau['nomcontact'], $tableau['fonctioncontact'], $tableau['telfixecontact'], $tableau['telmobilecontact'], $tableau['mailcontact']);
             $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, $tableau['sujetstage'], $tableau['datevalidation'], $tableau['datedebut'], $tableau['datefin'], $tableau['datesoutenance'], $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], $tableau['dateembauche'], $etudiant, $entreprise, $contact, $promotion, $tableau['respcivil']);
             $i++;
             
