@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.7deb5build0.10.10.1
+-- version 3.3.2deb1
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Mer 02 Novembre 2011 à 17:11
--- Version du serveur: 5.1.49
--- Version de PHP: 5.3.3-1ubuntu9.5
+-- Généré le : Mer 16 Novembre 2011 à 11:56
+-- Version du serveur: 5.1.41
+-- Version de PHP: 5.3.2-1ubuntu4.10
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -38,14 +38,15 @@ CREATE TABLE IF NOT EXISTS `contact` (
   `mailcontact` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idcontact`),
   KEY `fk_entreprise_contact` (`identreprise`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Contenu de la table `contact`
 --
 
 INSERT INTO `contact` (`idcontact`, `identreprise`, `prenomcontact`, `nomcontact`, `fonctioncontact`, `dateajout`, `datederniereactivite`, `telfixecontact`, `telmobilecontact`, `mailcontact`) VALUES
-(1, 2, 'Luc', 'Dubois', 'Ingénieur', '2011-10-19', '2011-10-19', '07 89 76 87 98', '03 45 21 24 56', 'dubois@gmail.fr');
+(1, 2, 'Luc', 'Dubois', 'Ingénieur', '2011-10-19', '2011-10-19', '07 89 76 87 98', '03 45 21 24 56', 'dubois@gmail.fr'),
+(2, 1, 'Robert', 'Graviaud', 'Chef de projet', '2011-11-24', '2011-11-30', '0383828181', '0676554433', 'robert.g@toto.fr');
 
 -- --------------------------------------------------------
 
@@ -72,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `entreprise` (
 --
 
 INSERT INTO `entreprise` (`identreprise`, `nomentreprise`, `adresseentreprise`, `villeentreprise`, `codepostalentreprise`, `paysentreprise`, `numerotelephone`, `numerosiret`, `urlsiteinternet`, `statutjuridique`) VALUES
-(1, 'sopra france', 'adresse sopra', 'paris', NULL, 'france', '0329391919', '118288383838', 'sopra.fr', NULL),
+(1, 'sopra france', '22 rue Montaigne', 'paris', '75000', 'france', '0329391919', '118288383838', 'http://www.sopra.fr', 'SAS'),
 (2, 'Info Sopra', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (3, 'sopra', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (4, 'sassopra', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -126,12 +127,14 @@ CREATE TABLE IF NOT EXISTS `proposition` (
   KEY `fk_propoentreprise` (`identreprise`),
   KEY `fk_propositionstage2` (`idstage`),
   KEY `fk_utilisateur_proposition` (`idutilisateur`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Contenu de la table `proposition`
 --
 
+INSERT INTO `proposition` (`idproposition`, `identreprise`, `idutilisateur`, `idstage`, `nomentreprisep`, `dateproposition`, `adresseentreprisep`, `villeentreprisep`, `codepostalentreprisep`, `paysentreprisep`, `numerotelephonep`, `urlsiteinternetp`, `sujetstagep`, `etat`) VALUES
+(1, 1, 1, NULL, NULL, '2011-11-02', NULL, NULL, NULL, NULL, NULL, NULL, 'Les canards sont ils suffisemet nourri au Srilanka ?', 'validee');
 
 -- --------------------------------------------------------
 
@@ -165,12 +168,15 @@ CREATE TABLE IF NOT EXISTS `stage` (
   KEY `fk_stage_contact` (`idcontact`),
   KEY `fk_stage_entreprise` (`identreprise`),
   KEY `fk_utilistateur_stage` (`idutilisateur`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Contenu de la table `stage`
 --
 
+INSERT INTO `stage` (`idstage`, `identreprise`, `idcontact`, `idpromotion`, `idproposition`, `idutilisateur`, `sujetstage`, `datevalidation`, `datedebut`, `datefin`, `datesoutenance`, `lieusoutenance`, `etatstage`, `noteobtenue`, `appreciationobtenue`, `remuneration`, `embauche`, `dateembauche`, `respcivil`) VALUES
+(1, 1, 2, 3, 1, 1, 'Les canards sont ils suffisemet nourri au Srilanka ?', '2011-11-02', NULL, NULL, NULL, NULL, 'a valider', NULL, NULL, NULL, NULL, NULL, 0),
+(2, 1, 1, 3, 1, 4, 'Les canards sont ils suffisemet nourri au Srilanka ?', '2011-11-09', NULL, NULL, NULL, NULL, 'a valider', NULL, NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -189,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `admin` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idutilisateur`),
   KEY `fk_utilisateurpromotion` (`idpromotion`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Contenu de la table `utilisateur`
@@ -198,6 +204,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 INSERT INTO `utilisateur` (`idutilisateur`, `idpromotion`, `mailutilisateur`, `passwordutilisateur`, `nomutilisateur`, `prenomutilisateur`, `numetudiant`, `admin`) VALUES
 (1, 2, 'ludo@gmail.com', 'ae5a3c4fa3c5d1c2cc98e43b1899f88bce0e3569', 'fort', 'ludovic', '1234567', 0),
 (3, 1, 'laurent@gmail.com', 'f1b010126f61b5c59e7d5eb42c5c68f6105c5914', 'Dubois', 'Laurent', '283983', 0),
+(4, 3, 'anthony.avola@gmail.com', '7a79f9450d349278985d7ff04b2bd7d48ddcf42a', 'AVOLA', 'Anthony', '27004612', 0),
 (10, 2, 'khalid.benali@loria.fr', '94ca247fff5ad413788a1c8d8c80394a246dba1c', 'benali', 'khalid', NULL, 1);
 
 --
