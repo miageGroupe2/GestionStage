@@ -671,6 +671,23 @@ class BD {
         }
     }
 
+    public static function modifierDonneesStage($idStage, $etatstage, $respcivile, $datedeb, $datefin, $datesoutenance, $lieusoutenance, $noteobtenue, $appreiationobtenue, $remuneration, $embauche, $datembauche) {
+        BD::getConnection();
+        $idStage = mysql_real_escape_string(htmlspecialchars($idStage));
+        $etatstage = mysql_real_escape_string(htmlspecialchars($etatstage));
+        $respcivile = mysql_real_escape_string(htmlspecialchars($respcivile));
+        $datedeb = mysql_real_escape_string(htmlspecialchars($datedeb));
+        $datefin = mysql_real_escape_string(htmlspecialchars($datefin));
+        $datesoutenance = mysql_real_escape_string(htmlspecialchars($datesoutenance));
+        $lieusoutenance = mysql_real_escape_string(htmlspecialchars($lieusoutenance));
+        $noteobtenue = mysql_real_escape_string(htmlspecialchars($noteobtenue));
+        $appreiationobtenue = mysql_real_escape_string(htmlspecialchars($appreiationobtenue));
+        $remuneration = mysql_real_escape_string(htmlspecialchars($remuneration));
+        $embauche = mysql_real_escape_string(htmlspecialchars($embauche));
+        $datembauche = mysql_real_escape_string(htmlspecialchars($datembauche));
+        
+    }    
+    
 }
 
 ?>
