@@ -805,7 +805,7 @@ function genererDetailStage($stage) {
 
 function genererEditerStage($stage) {
 
-    $corps = "<td id = \"corps\"";
+    $corps = "<td id = \"corps\">";
 
     if ($stage != NULL) {
         $corps .= "<form name=\"editionStage\" method=\"post\" action=\"" . RACINE . "?action=validerModifStage&idstage=" . $_GET['idstage'] . "\">
