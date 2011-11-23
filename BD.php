@@ -698,22 +698,31 @@ class BD {
     
     
     
-    public static function modifierDonneesStage($idStage, $etatstage, $respcivile, $datedeb, $datefin, $datesoutenance, $lieusoutenance, $noteobtenue, $appreiationobtenue, $remuneration, $embauche, $datembauche) {
-        BD::getConnection();
-        $idStage = mysql_real_escape_string(htmlspecialchars($idStage));
-        $etatstage = mysql_real_escape_string(htmlspecialchars($etatstage));
-        $respcivile = mysql_real_escape_string(htmlspecialchars($respcivile));
-        $datedeb = mysql_real_escape_string(htmlspecialchars($datedeb));
-        $datefin = mysql_real_escape_string(htmlspecialchars($datefin));
-        $datesoutenance = mysql_real_escape_string(htmlspecialchars($datesoutenance));
-        $lieusoutenance = mysql_real_escape_string(htmlspecialchars($lieusoutenance));
-        $noteobtenue = mysql_real_escape_string(htmlspecialchars($noteobtenue));
-        $appreiationobtenue = mysql_real_escape_string(htmlspecialchars($appreiationobtenue));
-        $remuneration = mysql_real_escape_string(htmlspecialchars($remuneration));
-        $embauche = mysql_real_escape_string(htmlspecialchars($embauche));
-        $datembauche = mysql_real_escape_string(htmlspecialchars($datembauche));
+    public static function modifierDonneesStage() {
+        $idStage = mysql_real_escape_string(htmlspecialchars($_GET['idstage']));
+        $etatstage = mysql_real_escape_string(htmlspecialchars($_POST['etatstage']));
+        $respcivile = mysql_real_escape_string(htmlspecialchars($_POST['respcivil']));
+        $datedeb = mysql_real_escape_string(htmlspecialchars($_POST['datedeb']));
+        $datefin = mysql_real_escape_string(htmlspecialchars($_POST['datefin']));
+        $datesoutenance = mysql_real_escape_string(htmlspecialchars($_POST['datesoutenance']));
+        $lieusoutenance = mysql_real_escape_string(htmlspecialchars($_POST['lieusoutenance']));
+        $noteobtenue = mysql_real_escape_string(htmlspecialchars($_POST['noteobtenue']));
+        $appreiationobtenue = mysql_real_escape_string(htmlspecialchars($_POST['appreiationobtenue']));
+        $remuneration = mysql_real_escape_string(htmlspecialchars($_POST['$remuneration']));
+        $embauche = mysql_real_escape_string(htmlspecialchars($_POST['embauche']));
+        $datembauche = mysql_real_escape_string(htmlspecialchars($_POST['datembauche']));
         
-        $requete = "UPDATE stage SET etatstage = $etatstage, respcivil = $respcivile, datedebut = $datedeb, datefin = $datefin, datesoutenance = $datesoutenance, lieusoutenance = $lieusoutenance";
+        $requete = "UPDATE stage SET etatstage = $etatstage, respcivil = $respcivile, datedebut = $datedeb, 
+        datefin = $datefin, datesoutenance = $datesoutenance, lieusoutenance = $lieusoutenance
+        noteobtenue = $noteobtenue, appreciationobtenue = $appreiationobtenue, 
+        remuneration = $reùuneration, embauche = $embauche, dateembauche = $datembauche
+        WHERE idstage = $idstage";
+        
+        if(mysql_query($requete)){
+            return true;
+        }else{
+            return false;
+        }
         
     }    
     

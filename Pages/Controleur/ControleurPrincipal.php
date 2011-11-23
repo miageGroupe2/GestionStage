@@ -46,6 +46,8 @@ function verifierAutorisationAction($action) {
                    return $action;
                 } else if ($action == "ajouterAdmin") {
                    return $action;
+                }else if ($action == "validerModifStage") {
+                   return $action;
                 }
                 else {
                     return "pagePrincipale";
@@ -219,7 +221,9 @@ function call_action() {
             case 'accesDonneesEtudiants' :
                 $action = 'afficherAccesDonneesEtudiants';
                 break;
-
+            case 'validerModifStage' :
+                $action = 'validerModifStage';
+                break;
             // DEFAUT 
 
             default :

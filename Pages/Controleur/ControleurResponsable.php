@@ -5,6 +5,11 @@ require_once RACINE_VUE . 'VueMenuGauche.php';
 require_once RACINE_VUE . 'VueCorps.php';
 require_once 'BD.php';
 
+    function validerModifStage(){
+        $ok = BD::modifierDonneesStage();
+        $corps = genererValiderModificationsStage($ok);
+        AffichePage(TRUE, $corps);
+    }
 
     function ListePropositionStageResponsable() {
         $tabProp = BD::rechercherToutesPropositions();
