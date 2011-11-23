@@ -50,5 +50,32 @@ require_once 'BD.php';
         $corps = genererGererCompteAdmin($tabAdmin, $tabPromotion);
         AffichePage(TRUE, $corps);
     }
+    
+    function ajouterAdmin(){
+
+        if (isset($_POST['nom_admin']) && $_POST['nom_admin'] != ""
+                && isset($_POST['prenom_admin']) && $_POST['prenom_admin'] != ""
+                && isset($_POST['mail_admin']) && $_POST['mail_admin'] != ""
+                && isset($_POST['mdp_admin']) && $_POST['mdp_admin'] != ""
+                && isset($_POST['mdp2_admin']) && $_POST['mdp2_admin'] != ""
+                ){
+            
+            if ( $_POST['mdp_admin'] ==  $_POST['mdp2_admin']){
+                
+                BD::ajouterAdmin($_POST['nom_admin'], $_POST['prenom_admin'], $_POST['mail_admin'], $_POST['mdp_admin'], $_POST['promotion']);
+                $_REQUEST['action'] = "gererCompteAdmin";
+                
+            }else{
+                $_REQUEST['action'] = "gererCompteAdmin";
+            }
+            
+        }else{
+            
+            $_REQUEST['action'] = "gererCompteAdmin";
+
+        }
+        
+        call_action();
+    }
 
 ?>

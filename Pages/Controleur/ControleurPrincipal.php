@@ -44,7 +44,10 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if ($action == "deconnexion") {
                    return $action;
-                } else {
+                } else if ($action == "ajouterAdmin") {
+                   return $action;
+                }
+                else {
                     return "pagePrincipale";
                 }
             } else {
@@ -180,6 +183,10 @@ function call_action() {
 
             case 'listePropositionStageResponsable' :
                 $action = 'listePropositionStageResponsable';
+                break;
+            
+             case 'ajouterAdmin' :
+                $action = 'ajouterAdmin';
                 break;
 
             case 'detailProp' :

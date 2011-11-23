@@ -509,8 +509,8 @@ function genererListeStage($tabStage){
 }
 function genererGererCompteAdmin($tabAdmin, $tabPromotion){
     
-    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "verifierModiferContactEtudiant.js\" type=\"text/javascript\"></script>";
-    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaireModifierContact()\" method=\"post\" action=\"" . RACINE . "?action=modifierContactEtape2\">";
+    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
+    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierContactEtape2\">";
     $corps .= "<td id = \"corps\">
                 <h2>Gestion des administrateurs</h2>";
     
@@ -546,11 +546,12 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
         
         $corps .= "</table>
             <input type=\"button\" value=\"Modifier\" >
+            </form>
                 ";
         
         
         $corps .= "
-        
+            <form name=\"formulaire\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=ajouterAdmin\">
             <table> 
             <tr>
                 <td>
@@ -591,8 +592,25 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
                 <td>
                     <input type=text name=\"mail_admin\" id=\"mail_admin\">
                 </td>
-            </tr></table>
-            <br /><input type=\"submit\" value=\"Valider\"></form><br /><br />";
+            </tr>
+            <tr>
+                <td>
+                    Mot de passe <etoile>*</etoile>:
+                </td>
+                <td>
+                    <input type=password name=\"mdp_admin\" id=\"mdp_admin\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Mot de passe v&eacute;rification <etoile>*</etoile>:
+                </td>
+                <td>
+                    <input type=password name=\"mdp2_admin\" id=\"mdp2_admin\">
+                </td>
+            </tr>
+            </table>
+            <br /><input type=\"submit\" value=\"Ajouter\"></form><br /><br />";
         
         return $corps ;
     }
