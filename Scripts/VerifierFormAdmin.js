@@ -7,13 +7,15 @@ function verifierAjouterAdmin(){
         && document.getElementById("mdp2_admin").value != ""
         ){
         
-        if (document.getElementById("mdp_admin")== document.getElementById("mdp2_admin")){
-            
+        var mdp = document.getElementById("mdp_admin").value ;
+        var mdp2 = document.getElementById("mdp2_admin").value ;
+        
+        if (mdp == mdp2){
             
             return true ;
         }else{
             
-            alert("Les deux mots de passe ne sont pas identique.");
+            alert("Les deux mots de passe ne sont pas identique." + mdp + mdp2);
             return false ;
         }
         

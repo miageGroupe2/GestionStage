@@ -229,6 +229,29 @@ class BD {
             return -1;
         }
     }
+    
+    public static function ajouterAdmin($nom, $prenom, $mail, $mdp, $idPromotion) {
+
+        BD::getConnection();
+        $nom = mysql_real_escape_string(htmlspecialchars($nom));
+        $prenom = mysql_real_escape_string(htmlspecialchars($prenom));        
+        $mail = mysql_real_escape_string(htmlspecialchars($mail));
+        $mdp = mysql_real_escape_string(htmlspecialchars($mdp));
+        $idPromotion = mysql_real_escape_string(htmlspecialchars($idPromotion));
+
+        if ($nom != FALSE && $prenom != FALSE 
+                && $mail != FALSE 
+                && $idPromotion != FALSE 
+                && $mdp != FALSE) {
+
+
+            $requete = "INSERT INTO utilisateur (idpromotion, prenomutilisateur, nomutilisateur, mailutilisateur,
+                passwordutilisateur, admin) 
+                VALUES ('$idPromotion','$prenom', '$nom', '$mail', '".sha1($mdp)."', '1')";
+
+            mysql_query($requete);   
+        }
+    }
 
     public static function ajouterPropositionStage($idEntreprise, $sujetStage) {
 
