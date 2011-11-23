@@ -7,35 +7,39 @@ require_once 'BD.php';
 
 
     function ListePropositionStageResponsable() {
-
-        $corps = genererListePropositionStageResponsable();
+        $tabProp = BD::rechercherToutesPropositions();
+        $corps = genererListePropositionStageResponsable($tabProp);
         AffichePage(TRUE, $corps);
     }
 
     function afficherDetailProposition(){
-
-        $corps = genererDetailProposition();
+        $proposition = BD::rechercherProposition($_GET['idprop']);
+        $corps = genererDetailProposition($proposition);
         AffichePage(TRUE, $corps);        
     }
 
     function afficherEditerStage(){
-        $corps = genererEditerStage();
+        $stage = BD::rechercherStageByID($_GET['idstage']); 
+        $corps = genererEditerStage($stage);
         AffichePage(TRUE, $corps);   
     }
 
     function validerProposition(){
-        $corps = genererValiderProposition();
+        $ok = BD::validerProposition($idProp);
+        $corps = genererValiderProposition($ok);
         AffichePage(TRUE, $corps);     
     }
 
     function afficherListeStage(){
-        $corps = genererListeStage();
+        $tabStage = BD::rechercherStage();
+        $corps = genererListeStage($tabStage);
         AffichePage(TRUE, $corps);     
     }
 
 
     function afficherDetailStage(){
-        $corps = genererDetailStage();
+        $stage = BD::rechercherStageByID($_GET['idstage']);
+        $corps = genererDetailStage($stage);
         AffichePage(TRUE, $corps);
     }
 

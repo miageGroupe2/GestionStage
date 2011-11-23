@@ -671,6 +671,9 @@ class BD {
         }
     }
 
+    
+    
+    
     public static function modifierDonneesStage($idStage, $etatstage, $respcivile, $datedeb, $datefin, $datesoutenance, $lieusoutenance, $noteobtenue, $appreiationobtenue, $remuneration, $embauche, $datembauche) {
         BD::getConnection();
         $idStage = mysql_real_escape_string(htmlspecialchars($idStage));

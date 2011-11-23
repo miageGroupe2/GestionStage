@@ -279,9 +279,9 @@ function genererListeResultatRechercheEntreprise($tabEntreprise) {
     return $corps;
 }
 
-function genererListePropositionStageResponsable() {
+function genererListePropositionStageResponsable($tabProp) {
 
-    $tabProp = BD::rechercherToutesPropositions();
+    
     $corps = "<td id = \"corps\">
                 <table class=\"tableau\">
                     <tr>
@@ -318,8 +318,7 @@ function genererListePropositionStageResponsable() {
     return $corps;
 }
 
-function genererDetailProposition() {
-    $proposition = BD::rechercherProposition($_GET['idprop']);
+function genererDetailProposition($proposition) {
     $corps ="";
     if($proposition != NULL){
         $corps = "<td id = \"corps\">
@@ -440,9 +439,9 @@ function genererDetailProposition() {
     return $corps;
 }
 
-function genererValiderProposition(){
+function genererValiderProposition($ok){
     $idProp = $_GET['idprop'];
-    $ok = BD::validerProposition($idProp);
+    
 
     $corps ="<td id =   \"corps\">"; 
     if($ok){
@@ -456,8 +455,7 @@ function genererValiderProposition(){
     return $corps;
 }
 
-function genererListeStage(){
-    $tabStage = BD::rechercherStage();
+function genererListeStage($tabStage){
     $corps = "<td id = \"corps\">
                 <table class=\"tableau\">
                     <tr>
@@ -601,8 +599,8 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
     
     
 }
-function genererDetailStage(){
-    $stage = BD::rechercherStageByID($_GET['idstage']);
+function genererDetailStage($stage){
+    
     if($stage[0]->getRespcivil() == 1){
         $respcivil = "OK";
     }else{
@@ -675,8 +673,8 @@ function genererDetailStage(){
             
 }
 
-function genererEditerStage(){
-    $stage = BD::rechercherStageByID($_GET['idstage']); 
+function genererEditerStage($stage){
+    
     $corps ="<td id = \"corps\"";
     
     if($stage != NULL){
