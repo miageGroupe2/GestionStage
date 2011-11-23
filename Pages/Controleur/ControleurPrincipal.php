@@ -49,12 +49,13 @@ function verifierAutorisationAction($action) {
                 }else if ($action == "validerModifStage") {
                     return $action;
                 }else if ($action == "modifierAdmin") {
-
                    return $action;
                 }else if ($action == "modifierAdminEtape2") {
-
+                   return $action;
+                }else if ($action == "supprimerAdmin") {
                    return $action;
                 }
+                
                 else {
                     return "pagePrincipale";
                 }
@@ -192,6 +193,10 @@ function call_action() {
             
             case 'listePropositionStageResponsable' :
                 $action = 'listePropositionStageResponsable';
+                break;
+            
+            case 'supprimerAdmin' :
+                $action = 'supprimerAdmin';
                 break;
             
             case 'modifierAdminEtape2' :

@@ -282,6 +282,30 @@ class BD {
             mysql_query($requete);   
         }
     }
+    
+    public static function supprimerAdmin($idUtilisateur) {
+
+        BD::getConnection();
+        $idUtilisateur = mysql_real_escape_string(htmlspecialchars($idUtilisateur));
+        
+        if ($idUtilisateur != FALSE) {
+            
+            $requete = "SELECT count(*) as count FROM `utilisateur` WHERE admin = '1'";
+            
+            $retour = mysql_query($requete);
+
+            while ($tableau = mysql_fetch_array($retour)) {
+
+                if ($tableau['count'] < 2){
+                    //on ne peut pas supprimer le dernier admin
+                    return ;
+                }
+            }
+            
+            $requete = "DELETE FROM utilisateur WHERE idutilisateur='$idUtilisateur'";
+            mysql_query($requete);
+        }
+    }
 
     public static function ajouterPropositionStage($idEntreprise, $sujetStage) {
 

@@ -50,3 +50,15 @@ function verifierSelectionnerAdmin(){
         return false ;
     }
 }
+
+function confirmerAvantSuppression(idAdmin){
+    
+    
+    var retour = confirm("Etes vous sur de vouloir supprimer cet administrateur ?");
+    
+    if (retour == true){
+        
+        window.location = "?action=supprimerAdmin&idAdmin="+idAdmin;
+        
+    }
+}
