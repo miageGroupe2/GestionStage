@@ -713,7 +713,9 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
             </td>
         </tr>
         </table>
-        <br /><input type=\"submit\" value=\"Modifier\"></form><br /><br />";
+        <br />
+        <input type=\"button\" value=\"Supprimer\" onclick=\"confirmerAvantSuppression(" . $modeleUtilisateur->getId() . ")\">
+        <input type=\"submit\" value=\"Modifier\"></form><br /><br />";
 
     $corps .= "</td>
             </tr>

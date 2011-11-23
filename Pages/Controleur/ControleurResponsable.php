@@ -126,5 +126,17 @@ require_once 'BD.php';
         
         call_action();
     }
+    
+    function supprimerAdmin(){
+        
+        if (isset ($_GET['idAdmin'])){
+
+
+            BD::supprimerAdmin($_GET['idAdmin']);
+        }
+        
+        $_REQUEST['action'] = "gererCompteAdmin";
+        call_action();
+    }
 
 ?>
