@@ -529,12 +529,10 @@ function genererListeStage($tabStage) {
 function genererGererCompteAdmin($tabAdmin, $tabPromotion){
     
     $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
-    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierContactEtape2\">";
+    $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierModifierAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdmin\">";
 
     $corps .= "<td id = \"corps\">
                 <h2>Gestion des administrateurs</h2>";
-
-
 
     if ($tabAdmin != null) {
 
@@ -565,7 +563,7 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
         }
 
         $corps .= "</table>
-            <input type=\"button\" value=\"Modifier\" >
+            <input type=\"submit\" value=\"Modifier\" >
             </form>
                 ";
 
@@ -635,6 +633,80 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
         
         return $corps ;
     }
+}
+
+function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
+    
+    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
+    $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierModifierAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdmin\">";
+
+    $corps .= "<td id = \"corps\">
+                <h2>Modifier un compte administrateur</h2>
+
+            <form name=\"formulaire\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=ajouterAdmin\">
+            <table> 
+            <tr>
+                <td>
+                    Nom <etoile>*</etoile>:
+                </td>
+                <td>
+                    <input type=text name=\"nom_admin\" id=\"nom_admin\" value=\"".$modeleUtilisateur->getNom()."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Pr&eacute;nom <etoile>*</etoile>:
+                </td>
+                <td>
+                    <input type=text name=\"prenom_admin\" id=\"prenom_admin\" value=\"".$modeleUtilisateur->getPrenom()."\">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Promotion :
+                </td>
+                <td>
+                    <select name=\"promotion\" id=\"promotion\">";
+
+        foreach ($tabPromotion as $promoCourante) {
+
+            //if ($modeleUtilisateur->get)
+            $corps .= "<option value=\"" . $promoCourante->getIdpromotion() . "\">" . $promoCourante->getNompromotion() . "</option>";
+        }
+
+    $corps .= "</select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Mail <etoile>*</etoile>:
+            </td>
+            <td>
+                <input type=text name=\"mail_admin\" id=\"mail_admin\" value=\"".$modeleUtilisateur->getMail()."\">
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                Mot de passe <etoile>*</etoile>:
+            </td>
+            <td>
+                <input type=password name=\"mdp_admin\" id=\"mdp_admin\">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Mot de passe v&eacute;rification <etoile>*</etoile>:
+            </td>
+            <td>
+                <input type=password name=\"mdp2_admin\" id=\"mdp2_admin\">
+            </td>
+        </tr>
+        </table>
+        <br /><input type=\"submit\" value=\"Ajouter\"></form><br /><br />";
+
+    return $corps ;
+    
 }
 
 function genererDetailStage($stage) {

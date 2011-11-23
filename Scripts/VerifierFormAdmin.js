@@ -26,3 +26,27 @@ function verifierAjouterAdmin(){
         return false ;
     }
 }
+
+function verifierModifierAdmin(){
+    
+    //si les radios boutons existent 
+    var radioBoutonExist = document.formulaireModifierAdmin.idUtilisateur ;
+
+    if (radioBoutonExist){
+        
+        var nbRadiosBouton = document.formulaireModifierAdmin.idUtilisateur.length ;
+        
+        for (var i = 0 ; i < nbRadiosBouton; i++ ){
+        
+            if(document.formulaireModifierAdmin.idUtilisateur[i].checked){
+                
+                return true ;
+            }
+        }
+        alert("Veuillez sélectionner un admin.");
+        return false;
+        
+    }else{
+        return false ;
+    }
+}

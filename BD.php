@@ -63,6 +63,8 @@ class BD {
             }
         }
     }
+    
+    
 
 //-----------------------------------------------------------------------------------------
     // PARTIE DES ACCES BASES UTILISATEUR
@@ -436,6 +438,34 @@ class BD {
     // PARTIE DES ACCES BASES ADMIN
     //-----------------------------------------------------------------------------------------    
 
+    
+    public static function getAdminById($idUtilisateur) {
+
+        BD::getConnection();
+        $idUtilisateur = mysql_real_escape_string(htmlspecialchars($idUtilisateur));
+
+        if ($idUtilisateur != FALSE ) {
+
+            $requete = "SELECT idutilisateur, utilisateur.idpromotion, nompromotion, mailutilisateur, passwordutilisateur, nomutilisateur, prenomutilisateur FROM utilisateur, promotion WHERE utilisateur.idpromotion = promotion.idpromotion AND admin= '1' AND idutilisateur = '$idUtilisateur'";
+            try {
+                $retour = mysql_query($requete);
+            } catch (Exception $e) {
+                echo "erreur lors de l'authentification :" . $e;
+            }
+
+            $modeleUtilisateur = NULL;
+            while ($tableau = mysql_fetch_array($retour)) {
+
+                $modeleUtilisateur = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], NULL, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], 1);
+            }
+
+            return $modeleUtilisateur;
+        }
+        
+        return NULL ;
+    }
+    
+    
     //retourne toutes les promotions
     public static function recherchePromotion(){
         

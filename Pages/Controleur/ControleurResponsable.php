@@ -82,5 +82,21 @@ require_once 'BD.php';
         
         call_action();
     }
+    
+    function modifierAdmin(){
+
+        if (isset($_POST['idUtilisateur']) && $_POST['idUtilisateur'] != ""){
+            
+            $modeleUtilisateur = BD::getAdminById($_POST['idUtilisateur']);
+            $tabPromotion = BD::recherchePromotion();
+            $corps = genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion);
+            AffichePage(TRUE, $corps);
+            
+        }else{
+            
+            $_REQUEST['action'] = "gererCompteAdmin";
+            call_action();
+        }
+    }
 
 ?>

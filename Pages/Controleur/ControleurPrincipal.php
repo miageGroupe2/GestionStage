@@ -47,6 +47,9 @@ function verifierAutorisationAction($action) {
                 } else if ($action == "ajouterAdmin") {
                    return $action;
                 }else if ($action == "validerModifStage") {
+                    return $action;
+                }else if ($action == "modifierAdmin") {
+
                    return $action;
                 }
                 else {
@@ -183,8 +186,13 @@ function call_action() {
 
             // Partie responsable
 
+            
             case 'listePropositionStageResponsable' :
                 $action = 'listePropositionStageResponsable';
+                break;
+            
+            case 'modifierAdmin' :
+                $action = 'modifierAdmin';
                 break;
             
              case 'ajouterAdmin' :
