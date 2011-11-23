@@ -35,7 +35,7 @@ function verifierSelectionnerAdmin(){
     if (radioBoutonExist){
         
         var nbRadiosBouton = document.formulaireModifierAdmin.idUtilisateur.length ;
-        
+        alert("taille"+ nbRadiosBouton); 
         for (var i = 0 ; i < nbRadiosBouton; i++ ){
         
             if(document.formulaireModifierAdmin.idUtilisateur[i].checked){

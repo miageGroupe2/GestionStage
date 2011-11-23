@@ -54,6 +54,8 @@ function verifierAutorisationAction($action) {
                    return $action;
                 }else if ($action == "supprimerAdmin") {
                    return $action;
+                }else if ($action == "option") {
+                   return $action;
                 }
                 
                 else {
@@ -193,6 +195,10 @@ function call_action() {
             
             case 'listePropositionStageResponsable' :
                 $action = 'listePropositionStageResponsable';
+                break;
+            
+            case 'option' :
+                $action = 'afficherOption';
                 break;
             
             case 'supprimerAdmin' :

@@ -724,6 +724,40 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
 
 }
 
+function genererAfficherOption($tabPromotion) {
+    
+    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
+    $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdminEtape2\">";
+
+
+    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=ajouterAdmin\">";
+            
+    $corps .= "<td id = \"corps\">
+                <h1>Ajouter une promotion</h1>";
+    
+
+            foreach ($tabPromotion as $promoCourante) {
+
+                $tab = preg_split('/ /', $promoCourante->getNompromotion());
+                $taille = sizeof($tab) ;
+               
+               
+                $aff = "" ;
+                for ( $i = 0 ; $i < $taille-1 ; $i ++){
+                    
+                    $aff .= $tab[$i] . " ";
+                }
+                $corps .= "<input type=\"radio\" name=\"idPromo\" value=\"" . $promoCourante->getIdpromotion() . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
+                            <label for=". $promoCourante->getIdpromotion() .">". $aff ."</label><br />";
+            }
+    
+
+    $corps .= "</td>
+            </tr>
+        </table>";
+    return $corps ;
+}
+
 function genererDetailStage($stage) {
 
     $corps = "";

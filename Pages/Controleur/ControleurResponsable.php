@@ -138,5 +138,12 @@ require_once 'BD.php';
         $_REQUEST['action'] = "gererCompteAdmin";
         call_action();
     }
+    
+    function afficherOption(){
+        
+        $tabPromotion = BD::recherchePromotion();
+        $corps = genererAfficherOption($tabPromotion);
+        AffichePage(TRUE, $corps);
+    }
 
 ?>

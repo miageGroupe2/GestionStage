@@ -37,6 +37,7 @@
                         <a href=\"".RACINE."?action=listeStageAnneeCourante\">Voir les stages de l'ann&eacute;e courante</a><br/>
                         <a href=\"".RACINE."?action=listeStages\">Consulter les stages</a><br/>
                         <a href=\"".RACINE."?action=gererCompteAdmin\">G&eacute;rer les comptes administrateur</a><br/>
+                        <a href=\"".RACINE."?action=option\">Option</a><br/>
                         <a href=\"".RACINE."?action=accesDonneesEtudiant\">Acc&egrave;s donn&eacute;es &eacute;tudiant</a><br/>
                         </td>";
         }else{
