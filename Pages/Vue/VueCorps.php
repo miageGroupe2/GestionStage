@@ -816,7 +816,42 @@ function genererEditerStage($stage) {
                             Etat du stage :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"etatstage\" value=\"" . $stage[0]->getEtatstage() . "\" >
+                            <select name=\"etatstage\" id=\"etatstage\">
+                                <option value=\"" . $stage[0]->getEtatstage() . "\">".$stage[0]->getEtatstage()."</option>
+                                    
+        ";
+        if($stage[0]->getEtatstage() == "valide"){
+            $corps .="
+              <option value=\"attente signature entreprise\">attente signature entreprise</option>
+              <option value=\"attente signature universite\">attente signature universite</option>
+            ";
+        }else if($stage[0]->getEtatstage() == "attente signature entreprise"){
+            $corps .="
+              <option value=\"valide\">valide</option>
+              <option value=\"attente signature universite\">attente signature universite</option>
+            ";
+        }else if($stage[0]->getEtatstage() == "attente signature universite"){
+            $corps .="
+              <option value=\"valide\">
+              <option value=\"attente signature entreprise\">
+            ";
+        }else if($stage[0]->getEtatstage() == ""){
+            $corps .="
+              <option value=\"valide\">valide</option>
+              <option value=\"attente signature entreprise\">attente signature entreprise</option>
+              <option value=\"attente signature universite\">attente signature universite</option>
+            ";
+        }else if($stage[0]->getEtatstage() == NULL){
+            $corps .="
+              <option value=\"valide\">valide</option>
+              <option value=\"attente signature entreprise\">attente signature entreprise</option>
+              <option value=\"attente signature universite\">attente signature universite</option>
+            ";
+        }
+        
+        
+        $corps .="
+                            </select>
                         </td>
                     </tr>
                      <tr>
@@ -919,7 +954,7 @@ function genererEditerStage($stage) {
 }
 
 function genererValiderModificationsStage($ok) {
-    if (ok) {
+    if ($ok) {
         $corps = "
                 <td id = \"corps\">
                     Les donn&eacute;es ont bien &eacute;t&eacute; modifi&eacute;es.
