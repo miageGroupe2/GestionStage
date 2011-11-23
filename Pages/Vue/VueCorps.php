@@ -545,11 +545,18 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
                   <td class=\"tableau\"> Mail </td>
                   </tr>";
 
+        $i = 0 ;
         foreach ($tabAdmin as $adminCourant) {
 
             $corps .= "<tr><td class=\"tableau\"> ";
-
-            $corps .= "<input type=\"radio\" name=\"idUtilisateur\" value=\"" . $adminCourant->getId() . "\" id=\"" . $adminCourant->getId() . "\" />";
+            if ($i == 0 ){
+                
+                $corps .= "<input type=\"radio\" name=\"idUtilisateur\" value=\"" . $adminCourant->getId() . "\" id=\"" . $adminCourant->getId() . "\" checked=\"checked\"/>";    
+            }else{
+                
+                $corps .= "<input type=\"radio\" name=\"idUtilisateur\" value=\"" . $adminCourant->getId() . "\" id=\"" . $adminCourant->getId() . "\" />";    
+            }
+            $i++ ;
             $corps .= "</td><td class=\"tableau\">";
             $corps .= htmlentities($adminCourant->getPrenom());
             $corps .= "</td><td class=\"tableau\">";

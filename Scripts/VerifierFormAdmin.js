@@ -35,16 +35,22 @@ function verifierSelectionnerAdmin(){
     if (radioBoutonExist){
         
         var nbRadiosBouton = document.formulaireModifierAdmin.idUtilisateur.length ;
-        alert("taille"+ nbRadiosBouton); 
+        
         for (var i = 0 ; i < nbRadiosBouton; i++ ){
         
             if(document.formulaireModifierAdmin.idUtilisateur[i].checked){
                 
                 return true ;
             }
+            
+            if ( $i == nbRadiosBouton - 1){
+             
+                alert("Veuillez sélectionner un admin.");
+                return false ;
+            }
         }
-        alert("Veuillez sélectionner un admin.");
-        return false;
+        
+        return true;
         
     }else{
         return false ;
