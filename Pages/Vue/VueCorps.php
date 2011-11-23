@@ -529,7 +529,7 @@ function genererListeStage($tabStage) {
 function genererGererCompteAdmin($tabAdmin, $tabPromotion){
     
     $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
-    $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierModifierAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdmin\">";
+    $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierSelectionnerAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdmin\">";
 
     $corps .= "<td id = \"corps\">
                 <h2>Gestion des administrateurs</h2>";
@@ -631,6 +631,9 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
             </table>
             <br /><input type=\"submit\" value=\"Ajouter\"></form><br /><br />";
         
+        $corps .= "</td>
+            </tr>
+        </table>";
         return $corps ;
     }
 }
@@ -638,12 +641,14 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
 function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
     
     $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
-    $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierModifierAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdmin\">";
+    $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdminEtape2\">";
 
     $corps .= "<td id = \"corps\">
                 <h2>Modifier un compte administrateur</h2>
 
             <form name=\"formulaire\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=ajouterAdmin\">
+            
+            <input type=hidden id=\"idUtilisateur\" name=\"idUtilisateur\" value=\"".$modeleUtilisateur->getId()."\">
             <table> 
             <tr>
                 <td>
@@ -670,8 +675,14 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
 
         foreach ($tabPromotion as $promoCourante) {
 
-            //if ($modeleUtilisateur->get)
-            $corps .= "<option value=\"" . $promoCourante->getIdpromotion() . "\">" . $promoCourante->getNompromotion() . "</option>";
+            if ($modeleUtilisateur->getIdPromotion() == $promoCourante->getIdpromotion()){
+                
+                $corps .= "<option value=\"" . $promoCourante->getIdpromotion() . "\"selected>" . $promoCourante->getNompromotion() . "</option>";
+            }else{
+                
+                $corps .= "<option value=\"" . $promoCourante->getIdpromotion() . "\">" . $promoCourante->getNompromotion() . "</option>";
+            }
+            
         }
 
     $corps .= "</select>
@@ -703,8 +714,11 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
             </td>
         </tr>
         </table>
-        <br /><input type=\"submit\" value=\"Ajouter\"></form><br /><br />";
+        <br /><input type=\"submit\" value=\"Modifier\"></form><br /><br />";
 
+    $corps .= "</td>
+            </tr>
+        </table>";
     return $corps ;
     
 }

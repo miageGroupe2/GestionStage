@@ -4,15 +4,17 @@
         
         private $id ;
         private $promotion ;
+        private $idpromotion ;
         private $prenom ;
         private $nom ;
         private $numeroetudiant ;
         private $mail ;
         private $admin ;
         
-        function __construct($id, $promotion, $numeroetudiant, $prenom, $nom, $mail, $admin) {
+        function __construct($id, $promotion, $numeroetudiant, $prenom, $nom, $mail, $admin, $idpromotion) {
             $this->id = $id;
             $this->promotion = $promotion;
+            $this->idpromotion = $idpromotion;
             $this->numeroetudiant = $numeroetudiant;
             $this->prenom = $prenom;
             $this->nom = $nom;
@@ -30,6 +32,10 @@
 
         public function getPromotion() {
             return $this->promotion;
+        }
+        
+        public function getIdPromotion() {
+            return $this->idpromotion;
         }
 
         public function setPromotion($promotion) {
