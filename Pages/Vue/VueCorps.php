@@ -485,6 +485,9 @@ function genererListeStage($tabStage) {
                             Nom de l'entreprise
                         </td>
                         <td class=\"tableau\">
+                            Etat stage
+                        </td>
+                        <td class=\"tableau\">
                             Note obtenue
                         </td>
                         <td class=\"tableau\">
@@ -503,6 +506,8 @@ function genererListeStage($tabStage) {
                             <td class=\"tableau\">" . $stage->getUtilisateur()->getPrenom()
                     . "</td>
                             <td class=\"tableau\">" . $stage->getEntreprise()->getNom()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getEtatstage()
                     . "</td>
                             <td class=\"tableau\">" . $stage->getNoteobtenue()
                     . "</td>

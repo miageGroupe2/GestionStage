@@ -605,7 +605,7 @@ class BD {
         BD::getConnection();
         $tabStage = null;
         $i=0;
-        $requete = "SELECT s.idstage, s.datevalidation, u.nomutilisateur, u.prenomutilisateur, e.nomentreprise, s.noteobtenue, pr.nompromotion
+        $requete = "SELECT s.idstage, s.etatstage, s.datevalidation, u.nomutilisateur, u.prenomutilisateur, e.nomentreprise, s.noteobtenue, pr.nompromotion
                     FROM stage s, entreprise e, utilisateur u, promotion pr
                     WHERE u.idutilisateur = s.idutilisateur
                     AND u.idpromotion = pr.idpromotion
@@ -619,7 +619,7 @@ class BD {
             $promotion = new ModelePromotion(null, $tableau['nompromotion'], null);
             $etudiant = new ModeleUtilisateur(null, null, null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null);
             $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, null, null, null, null, null, null, null);
-            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, null, $tableau['datevalidation'], null, null, null, null, null, $tableau['noteobtenue'], null, null, null, null, $etudiant, $entreprise, null, $promotion,null);
+            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, null, $tableau['datevalidation'], null, null, null, null, $tableau['etatstage'], $tableau['noteobtenue'], null, null, null, null, $etudiant, $entreprise, null, $promotion,null);
             $i++;
             
         }
@@ -689,6 +689,8 @@ class BD {
         $remuneration = mysql_real_escape_string(htmlspecialchars($remuneration));
         $embauche = mysql_real_escape_string(htmlspecialchars($embauche));
         $datembauche = mysql_real_escape_string(htmlspecialchars($datembauche));
+        
+        $requete = "UPDATE stage SET etatstage = $etatstage, respcivil = $respcivile, datedebut = $datedeb, datefin = $datefin, datesoutenance = $datesoutenance, lieusoutenance = $lieusoutenance";
         
     }    
     
