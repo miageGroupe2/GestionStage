@@ -54,7 +54,7 @@ class BD {
                 $modeleUtilisateur = NULL;
                 while ($tableau = mysql_fetch_array($retour)) {
 
-                    $modeleUtilisateur = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], $tableau['numetudiant'], $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], $tableau['admin']);
+                    $modeleUtilisateur = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], $tableau['numetudiant'], $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], $tableau['admin'], NULL);
                 }
 
                 return $modeleUtilisateur;
@@ -250,6 +250,34 @@ class BD {
             $requete = "INSERT INTO utilisateur (idpromotion, prenomutilisateur, nomutilisateur, mailutilisateur,
                 passwordutilisateur, admin) 
                 VALUES ('$idPromotion','$prenom', '$nom', '$mail', '".sha1($mdp)."', '1')";
+
+            mysql_query($requete);   
+        }
+    }
+    
+    public static function modifierAdmin($idUtilisateur, $nom, $prenom, $mail, $mdp, $idPromotion) {
+
+        BD::getConnection();
+        $idUtilisateur = mysql_real_escape_string(htmlspecialchars($idUtilisateur));
+        $nom = mysql_real_escape_string(htmlspecialchars($nom));
+        $prenom = mysql_real_escape_string(htmlspecialchars($prenom));        
+        $mail = mysql_real_escape_string(htmlspecialchars($mail));
+        $mdp = mysql_real_escape_string(htmlspecialchars($mdp));
+        $idPromotion = mysql_real_escape_string(htmlspecialchars($idPromotion));
+
+        if ($idUtilisateur != FALSE && $nom != FALSE && $prenom != FALSE 
+                && $mail != FALSE 
+                && $idPromotion != FALSE 
+                && $mdp != FALSE) {
+
+            
+            $requete = "UPDATE utilisateur SET nomutilisateur = '$nom',
+                                            prenomutilisateur = '$prenom',
+                                            mailutilisateur = '$mail',
+                                            idpromotion = '$idPromotion',
+                                            passwordutilisateur = '".sha1($mdp)."'  
+                                            WHERE idutilisateur ='".$idUtilisateur."'";
+
 
             mysql_query($requete);   
         }
@@ -456,7 +484,7 @@ class BD {
             $modeleUtilisateur = NULL;
             while ($tableau = mysql_fetch_array($retour)) {
 
-                $modeleUtilisateur = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], NULL, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], 1);
+                $modeleUtilisateur = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], NULL, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], 1, $tableau['idpromotion']);
             }
 
             return $modeleUtilisateur;
@@ -471,8 +499,7 @@ class BD {
         
         BD::getConnection();
         $tabPromo = NULL ;
-        $requete = "SELECT *
-            FROM promotion ";
+        $requete = "SELECT idpromotion, nompromotion, accesentreprises FROM promotion ";
         
         $retour = mysql_query($requete) ;
         
@@ -501,7 +528,7 @@ class BD {
         $i = 0 ;
         while ($tableau = mysql_fetch_array($retour)) {
             
-            $tabAdmin[$i] = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], $tableau['admin']);
+            $tabAdmin[$i] = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], $tableau['admin'], NULL);
             $i++;
         }
         return $tabAdmin;
@@ -524,7 +551,7 @@ class BD {
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {
-            $etudiant = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null);
+            $etudiant = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null, NULL);
             $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], null, null, $tableau['nomentreprise'], null, null, null, null, null, null, null, null, null, $etudiant, null);
             $i++;
         }
@@ -564,7 +591,7 @@ class BD {
                     $retour = mysql_query($requete) or die(mysql_error());
 
                     while ($tableau = mysql_fetch_array($retour)) {
-                        $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur'], null);
+                        $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur'], null, NULL);
                         $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $entreprise->getNom(), $tableau['dateproposition'],  $entreprise->getAdresse(), $entreprise->getCodePostal(), $entreprise->getVille(), $entreprise->getPays(), $entreprise->getNumeroTelephone(), $entreprise->getUrlSiteInternet(), $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion']);
                         $i++;
                     }
@@ -580,7 +607,7 @@ class BD {
                     $retour = mysql_query($requete) or die(mysql_error());
 
                     while ($tableau = mysql_fetch_array($retour)) {
-                        $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur'], null);
+                        $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur'], null, NULL);
                         $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion']);
                         $i++;
                     }
@@ -670,7 +697,7 @@ class BD {
         while ($tableau = mysql_fetch_array($retour)) {
             
             $promotion = new ModelePromotion(null, $tableau['nompromotion'], null);
-            $etudiant = new ModeleUtilisateur(null, null, null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null);
+            $etudiant = new ModeleUtilisateur(null, null, null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null, NULL);
             $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, null, null, null, null, null, null, null);
             $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, null, $tableau['datevalidation'], null, null, null, null, $tableau['etatstage'], $tableau['noteobtenue'], null, null, null, null, $etudiant, $entreprise, null, $promotion,null);
             $i++;
@@ -697,7 +724,7 @@ class BD {
         while ($tableau = mysql_fetch_array($retour)) {
             
             $promotion = new ModelePromotion(null, $tableau['nompromotion'], null);
-            $etudiant = new ModeleUtilisateur(null, null, $tableau['numetudiant'], $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], null);
+            $etudiant = new ModeleUtilisateur(null, null, $tableau['numetudiant'], $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], null, NULL);
             $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet'], $tableau['statutjuridique']);
             $contact = new ModeleContact(null, $tableau['prenomcontact'], $tableau['nomcontact'], $tableau['fonctioncontact'], $tableau['telfixecontact'], $tableau['telmobilecontact'], $tableau['mailcontact']);
             $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, $tableau['sujetstage'], $tableau['datevalidation'], $tableau['datedebut'], $tableau['datefin'], $tableau['datesoutenance'], $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], $tableau['dateembauche'], $etudiant, $entreprise, $contact, $promotion, $tableau['respcivil']);

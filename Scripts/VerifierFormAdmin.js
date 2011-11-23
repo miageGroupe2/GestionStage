@@ -27,7 +27,7 @@ function verifierAjouterAdmin(){
     }
 }
 
-function verifierModifierAdmin(){
+function verifierSelectionnerAdmin(){
     
     //si les radios boutons existent 
     var radioBoutonExist = document.formulaireModifierAdmin.idUtilisateur ;

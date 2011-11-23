@@ -51,6 +51,9 @@ function verifierAutorisationAction($action) {
                 }else if ($action == "modifierAdmin") {
 
                    return $action;
+                }else if ($action == "modifierAdminEtape2") {
+
+                   return $action;
                 }
                 else {
                     return "pagePrincipale";
@@ -191,6 +194,10 @@ function call_action() {
                 $action = 'listePropositionStageResponsable';
                 break;
             
+            case 'modifierAdminEtape2' :
+                $action = 'modifierAdminEtape2';
+                break ;
+                
             case 'modifierAdmin' :
                 $action = 'modifierAdmin';
                 break;

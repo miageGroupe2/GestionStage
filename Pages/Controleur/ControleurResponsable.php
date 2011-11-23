@@ -98,5 +98,33 @@ require_once 'BD.php';
             call_action();
         }
     }
+    
+    function modifierAdminEtape2(){
+        
+        if (isset($_POST['idUtilisateur']) && $_POST['idUtilisateur'] != ""
+                && isset($_POST['nom_admin']) && $_POST['nom_admin'] != ""
+                && isset($_POST['prenom_admin']) && $_POST['prenom_admin'] != ""
+                && isset($_POST['mail_admin']) && $_POST['mail_admin'] != ""
+                && isset($_POST['mdp_admin']) && $_POST['mdp_admin'] != ""
+                && isset($_POST['mdp2_admin']) && $_POST['mdp2_admin'] != ""
+                ){
+            
+            if ( $_POST['mdp_admin'] ==  $_POST['mdp2_admin']){
+                
+                BD::modifierAdmin($_POST['idUtilisateur'], $_POST['nom_admin'], $_POST['prenom_admin'], $_POST['mail_admin'], $_POST['mdp_admin'], $_POST['promotion']);
+                $_REQUEST['action'] = "gererCompteAdmin";
+                
+            }else{
+                $_REQUEST['action'] = "gererCompteAdmin";
+            }
+            
+        }else{
+            
+            $_REQUEST['action'] = "gererCompteAdmin";
+
+        }
+        
+        call_action();
+    }
 
 ?>
