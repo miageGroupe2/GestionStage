@@ -1,9 +1,7 @@
 <?php
 
 // fonction utilisateur
-
 // fonction responsable
-
 // fonction communes
 
 function genererPageAccueil() {
@@ -117,19 +115,19 @@ function genererAjoutPropositionStageOk() {
 /**
  * Permet d'afficher la page permettant d'éditer une proposition de stage (côté étudiant)
  */
-function genererEditerPropositionEtudiant($proposition){
-    
-    $corps = "<td id = \"corps\">
+function genererEditerPropositionEtudiant($proposition) {
+    if ($proposition == NULL) {
+        $corps = "<td id = \"corps\">
                 <h2>Edition d'une proposition de stage</h2>
-                <script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormEditerProposition.js\" type=\"text/javascript\"></script>
-                <form onsubmit=\"return verifierEditerProposition()\" action=\"" . RACINE . "?action=editerPropositionStage&idProposition=".$proposition->getIdProposition()."&sujetModifie=true\" method=\"post\">
+                <script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormEditerProposition.js\" type=\"text/javascript\"></script>
+                <form onsubmit=\"return verifierEditerProposition()\" action=\"" . RACINE . "?action=editerPropositionStage&idProposition=" . $proposition->getIdProposition() . "&sujetModifie=true\" method=\"post\">
                 <table class = \"tableau\">
                     <tr>
                         <td class = \"tableau\">
                             Date de proposition :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($proposition->getDateProposition())."
+                            " . htmlentities($proposition->getDateProposition()) . "
                         </td>
                     </tr>
                     <tr>
@@ -137,7 +135,7 @@ function genererEditerPropositionEtudiant($proposition){
                             Nom de l'entreprise :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($proposition->getNomEntreprise())."
+                            " . htmlentities($proposition->getNomEntreprise()) . "
                         </td>
                     </tr>
                     <tr>
@@ -145,10 +143,10 @@ function genererEditerPropositionEtudiant($proposition){
                             Adresse :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($proposition->getAdresseEntreprise())."<br/>".
-                            htmlentities($proposition->getCodePostal())."<br/>".
-                            htmlentities($proposition->getVille())."<br/>".
-                            htmlentities($proposition->getPays())."
+                            " . htmlentities($proposition->getAdresseEntreprise()) . "<br/>" .
+                htmlentities($proposition->getCodePostal()) . "<br/>" .
+                htmlentities($proposition->getVille()) . "<br/>" .
+                htmlentities($proposition->getPays()) . "
                         </td>
                     </tr>
                     <tr>
@@ -156,7 +154,7 @@ function genererEditerPropositionEtudiant($proposition){
                             Num&eacute;ro de t&eacute;l&eacute;phone :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($proposition->getNumTelephone())."
+                            " . htmlentities($proposition->getNumTelephone()) . "
                         </td>
                     </tr>
                     <tr>
@@ -164,7 +162,7 @@ function genererEditerPropositionEtudiant($proposition){
                             Site Web :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($proposition->getUrlSite())."
+                            " . htmlentities($proposition->getUrlSite()) . "
                         </td>
                     </tr>
                     <tr>
@@ -172,7 +170,7 @@ function genererEditerPropositionEtudiant($proposition){
                             Sujet :
                         </td>
                         <td class = \"tableau\">
-                            <textarea rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" >".htmlentities($proposition->getSujet())."</textarea>
+                            <textarea rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" >" . htmlentities($proposition->getSujet()) . "</textarea>
                         </td>
                     </tr>
                     <tr>
@@ -180,17 +178,26 @@ function genererEditerPropositionEtudiant($proposition){
                             Etat de la proposition :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($proposition->getEtat())."
+                            " . htmlentities($proposition->getEtat()) . "
                         </td>
                     </tr>
                 </table>
-                <input type=\"button\" value=\"Supprimer\" onclick=\"confirmerAvantSuppression(".$proposition->getIdProposition().")\">
+                <input type=\"button\" value=\"Supprimer\" onclick=\"confirmerAvantSuppression(" . $proposition->getIdProposition() . ")\">
                 <input type=\"submit\" value=\"Valider\">
 
 
                 </td>
             </tr>
         </table>";
+    } else {
+        $corps = "
+                <td id = \"corps\">
+                    La proposition de stage semble ne pas avoir &eacute;t&eacute; remont&eacute;e.
+                </td>
+            </tr>
+        </table>
+        ";
+    }
     return $corps;
 }
 
@@ -221,8 +228,6 @@ function genererRechercheEntreprise() {
         </table>";
     return $corps;
 }
-
-
 
 /**
  * Permet de générer l'affichage des entreprises correspondantes à une recherche 
@@ -281,7 +286,7 @@ function genererListeResultatRechercheEntreprise($tabEntreprise) {
 
 function genererListePropositionStageResponsable($tabProp) {
 
-    
+
     $corps = "<td id = \"corps\">
                 <table class=\"tableau\">
                     <tr>
@@ -319,18 +324,18 @@ function genererListePropositionStageResponsable($tabProp) {
 }
 
 function genererDetailProposition($proposition) {
-    $corps ="";
-    if($proposition != NULL){
+    $corps = "";
+    if ($proposition != NULL) {
         $corps = "<td id = \"corps\">
             <h2>Proposition de stage</h2><br/>
-            <form method=\"post\" action=\"" . RACINE . "?action=validerProp&idprop=".htmlentities($proposition->getIdProposition())."\">
+            <form method=\"post\" action=\"" . RACINE . "?action=validerProp&idprop=" . htmlentities($proposition->getIdProposition()) . "\">
             <table>
             <tr>
                 <td>
                     Date de proposition :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"dateproposition\" value=\"".htmlentities($proposition->getDateProposition())."\">
+                    <input type=text readonly=\"true\" name=\"dateproposition\" value=\"" . htmlentities($proposition->getDateProposition()) . "\">
                 </td>
             </tr>
             <tr>
@@ -338,7 +343,7 @@ function genererDetailProposition($proposition) {
                     Nom :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"nom\" value=\"".htmlentities($proposition->getEtudiant()->getNom())."\">
+                    <input type=text readonly=\"true\" name=\"nom\" value=\"" . htmlentities($proposition->getEtudiant()->getNom()) . "\">
                 </td>
             </tr>
             <tr>
@@ -346,7 +351,7 @@ function genererDetailProposition($proposition) {
                     Pr&eacute;om :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"prenom\" value=\"".htmlentities($proposition->getEtudiant()->getPrenom())."\">
+                    <input type=text readonly=\"true\" name=\"prenom\" value=\"" . htmlentities($proposition->getEtudiant()->getPrenom()) . "\">
                 </td>
             </tr>
             <tr>
@@ -354,7 +359,7 @@ function genererDetailProposition($proposition) {
                     Promotion :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"promotionetudiant\" value=\"".htmlentities($proposition->getPromotionEtudiant())."\">
+                    <input type=text readonly=\"true\" name=\"promotionetudiant\" value=\"" . htmlentities($proposition->getPromotionEtudiant()) . "\">
                 </td>
             </tr>
             <tr>
@@ -362,7 +367,7 @@ function genererDetailProposition($proposition) {
                     Nom Entreprise :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"nomentreprise\" value=\"".htmlentities($proposition->getNomEntreprise())."\">
+                    <input type=text readonly=\"true\" name=\"nomentreprise\" value=\"" . htmlentities($proposition->getNomEntreprise()) . "\">
                 </td>
             </tr>
             <tr>
@@ -370,7 +375,7 @@ function genererDetailProposition($proposition) {
                     Adresse :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" size=\"35\" name=\"adresseentreprise\" value=\"".htmlentities($proposition->getAdresseEntreprise())."\">
+                    <input type=\"text\" readonly=\"true\" size=\"35\" name=\"adresseentreprise\" value=\"" . htmlentities($proposition->getAdresseEntreprise()) . "\">
                 </td>
             </tr>
             <tr>
@@ -378,7 +383,7 @@ function genererDetailProposition($proposition) {
                     Code postal :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"codepostalentreprise\" value=\"".htmlentities($proposition->getCodePostal())."\">
+                    <input type=\"text\" readonly=\"true\" name=\"codepostalentreprise\" value=\"" . htmlentities($proposition->getCodePostal()) . "\">
                 </td>
             </tr>
             <tr>
@@ -386,7 +391,7 @@ function genererDetailProposition($proposition) {
                     Ville :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"villeentreprise\" value=\"".htmlentities($proposition->getVille())."\">
+                    <input type=\"text\" readonly=\"true\" name=\"villeentreprise\" value=\"" . htmlentities($proposition->getVille()) . "\">
                 </td>
             </tr>
             <tr>
@@ -394,7 +399,7 @@ function genererDetailProposition($proposition) {
                     Pays :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"paysentreprise\" value=\"".htmlentities($proposition->getPays())."\">
+                    <input type=\"text\" readonly=\"true\" name=\"paysentreprise\" value=\"" . htmlentities($proposition->getPays()) . "\">
                 </td>
             </tr>
             <tr>
@@ -402,7 +407,7 @@ function genererDetailProposition($proposition) {
                     N&deg; Tel :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"telentreprise\" value=\"".htmlentities($proposition->getNumTelephone())."\">
+                    <input type=\"text\" readonly=\"true\" name=\"telentreprise\" value=\"" . htmlentities($proposition->getNumTelephone()) . "\">
                 </td>
             </tr>
             <tr>
@@ -410,7 +415,7 @@ function genererDetailProposition($proposition) {
                     URL Site :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"urlsite\" value=\"".htmlentities($proposition->getUrlSite())."\">
+                    <input type=\"text\" readonly=\"true\" name=\"urlsite\" value=\"" . htmlentities($proposition->getUrlSite()) . "\">
                 </td>
             </tr>
             </table>
@@ -422,7 +427,7 @@ function genererDetailProposition($proposition) {
                 </tr>
                 <tr>
                     <td>
-                        ".htmlentities($proposition->getSujet())."
+                        " . htmlentities($proposition->getSujet()) . "
                     </td>
                 </tr>
                 <tr>
@@ -431,22 +436,30 @@ function genererDetailProposition($proposition) {
                     </td>
                 </tr>
             </table>
+            </td>
+                </tr>
+            </table>
+        ";
+    } else {
+        $corps = "
+                <td id = \"corps\">
+                    La proposition de stage semble ne pas avoir &eacute;t&eacute; remont&eacute;e.
+                </td>
+            </tr>
+        </table>
         ";
     }
-    $corps .= "</td>
-                </tr>
-            </table>";
     return $corps;
 }
 
-function genererValiderProposition($ok){
+function genererValiderProposition($ok) {
     $idProp = $_GET['idprop'];
-    
 
-    $corps ="<td id =   \"corps\">"; 
-    if($ok){
-        $corps .="La proposition de stage a bien &eacute;t&eacute; valid&eacute;e";        
-    }else{
+
+    $corps = "<td id =   \"corps\">";
+    if ($ok) {
+        $corps .="La proposition de stage a bien &eacute;t&eacute; valid&eacute;e";
+    } else {
         $corps .="ERREUR - Probl&egrave;me lors de la validation, transaction annul&eacute;e";
     }
     $corps .= "</td>
@@ -455,7 +468,7 @@ function genererValiderProposition($ok){
     return $corps;
 }
 
-function genererListeStage($tabStage){
+function genererListeStage($tabStage) {
     $corps = "<td id = \"corps\">
                 <table class=\"tableau\">
                     <tr>
@@ -501,23 +514,24 @@ function genererListeStage($tabStage){
         }
         $corps .= "</table>";
     }
-    
+
     $corps .= "</td>
                 </tr>
             </table>";
     return $corps;
 }
-function genererGererCompteAdmin($tabAdmin, $tabPromotion){
-    
-    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "verifierModiferContactEtudiant.js\" type=\"text/javascript\"></script>";
+
+function genererGererCompteAdmin($tabAdmin, $tabPromotion) {
+
+    $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "verifierModiferContactEtudiant.js\" type=\"text/javascript\"></script>";
     $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaireModifierContact()\" method=\"post\" action=\"" . RACINE . "?action=modifierContactEtape2\">";
     $corps .= "<td id = \"corps\">
                 <h2>Gestion des administrateurs</h2>";
-    
-    
-    
+
+
+
     if ($tabAdmin != null) {
-        
+
         $corps .= "<table class=\"tableau\"><tr>
                   <td class=\"tableau\"> Choix </td>
                   <td class=\"tableau\"> Pr&eacute;nom </td>
@@ -543,12 +557,12 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
 
             $corps .= "</td></tr>";
         }
-        
+
         $corps .= "</table>
             <input type=\"button\" value=\"Modifier\" >
                 ";
-        
-        
+
+
         $corps .= "
         
             <table> 
@@ -574,14 +588,14 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
                 </td>
                 <td>
                     <select name=\"promotion\" id=\"promotion\">";
-               
-                        foreach ($tabPromotion as $promoCourante) {
+
+        foreach ($tabPromotion as $promoCourante) {
 
 
-                            $corps .= "<option value=\"".$promoCourante->getIdpromotion()."\">".$promoCourante->getNompromotion()."</option>";
-                        }
+            $corps .= "<option value=\"" . $promoCourante->getIdpromotion() . "\">" . $promoCourante->getNompromotion() . "</option>";
+        }
 
-                   $corps .= "</select>
+        $corps .= "</select>
                 </td>
             </tr>
             <tr>
@@ -593,92 +607,98 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
                 </td>
             </tr></table>
             <br /><input type=\"submit\" value=\"Valider\"></form><br /><br />";
-        
-        return $corps ;
+
+        return $corps;
     }
-    
-    
 }
-function genererDetailStage($stage){
-    
-    if($stage[0]->getRespcivil() == 1){
-        $respcivil = "OK";
-    }else{
-        $respcivil = "en attente";
-    }
-    if($stage[0]->getEmbauche() == 1){
-        $embauche = "OUI";
-    }else{
-        $embauche = "NON";
-    }
-    
-    $corps ="";
-    if($stage != NULL){
+
+function genererDetailStage($stage) {
+
+    $corps = "";
+    if ($stage != NULL) {
+        if ($stage[0]->getRespcivil() == 1) {
+            $respcivil = "OK";
+        } else {
+            $respcivil = "en attente";
+        }
+        if ($stage[0]->getEmbauche() == 1) {
+            $embauche = "OUI";
+        } else {
+            $embauche = "NON";
+        }
         $corps = "<td id = \"corps\">
             <h2>D&eacute;tail du Stage</h2><br/>
             <table class = \"tableau\">
                 <tr>
                     <td class = \"tableau\">
-                        N° Etudiant : ".$stage[0]->getUtilisateur()->getNumeroetudiant()."<br/><br/>".
-                        $stage[0]->getUtilisateur()->getPrenom()." ".$stage[0]->getUtilisateur()->getNom()."<br/>
-                        Formation : ".$stage[0]->getPromotion()->getNompromotion()."<br/>
-                        Mail : ".$stage[0]->getUtilisateur()->getMail()."<br/>    
+                        N° Etudiant : " . $stage[0]->getUtilisateur()->getNumeroetudiant() . "<br/><br/>" .
+                $stage[0]->getUtilisateur()->getPrenom() . " " . $stage[0]->getUtilisateur()->getNom() . "<br/>
+                        Formation : " . $stage[0]->getPromotion()->getNompromotion() . "<br/>
+                        Mail : " . $stage[0]->getUtilisateur()->getMail() . "<br/>    
                     </td>
                      <td class = \"tableau\">
-                        Contact Entreprise : <br/><br/>".
-                        $stage[0]->getContact()->getPrenom()." ".$stage[0]->getContact()->getNom()."<br/>
-                        Fonction : ".htmlentities($stage[0]->getContact()->getFonction())."<br/>
-                        Tel fixe : ".$stage[0]->getContact()->getTelephoneFixe()."<br/>    
-                        Tel mobile : ".$stage[0]->getContact()->getTelephoneMobile()."<br/>    
-                        Mail : ".$stage[0]->getContact()->getMail()."<br/>    
+                        Contact Entreprise : <br/><br/>" .
+                $stage[0]->getContact()->getPrenom() . " " . $stage[0]->getContact()->getNom() . "<br/>
+                        Fonction : " . htmlentities($stage[0]->getContact()->getFonction()) . "<br/>
+                        Tel fixe : " . $stage[0]->getContact()->getTelephoneFixe() . "<br/>    
+                        Tel mobile : " . $stage[0]->getContact()->getTelephoneMobile() . "<br/>    
+                        Mail : " . $stage[0]->getContact()->getMail() . "<br/>    
                     </td>
                 </tr>
                 <tr>
                     <td colspan=\"2\" class = \"tableau\">
-                        Entreprise : <br/><br/>".
-                        $stage[0]->getEntreprise()->getNom()."<br/>
-                        Siret : ".$stage[0]->getEntreprise()->getNumeroSiret()."<br/>    
-                        Adresse : <br/><br/>".$stage[0]->getEntreprise()->getAdresse()."<br/>".
-                        $stage[0]->getEntreprise()->getCodePostal()."<br/>".$stage[0]->getEntreprise()->getVille()."<br/>".
-                        $stage[0]->getEntreprise()->getPays()."<br/><br/> Tel : ".
-                        $stage[0]->getEntreprise()->getNumeroTelephone()."<br/>Site Web : ".
-                        $stage[0]->getEntreprise()->getUrlSiteInternet()."
+                        Entreprise : <br/><br/>" .
+                $stage[0]->getEntreprise()->getNom() . "<br/>
+                        Siret : " . $stage[0]->getEntreprise()->getNumeroSiret() . "<br/>    
+                        Adresse : <br/><br/>" . $stage[0]->getEntreprise()->getAdresse() . "<br/>" .
+                $stage[0]->getEntreprise()->getCodePostal() . "<br/>" . $stage[0]->getEntreprise()->getVille() . "<br/>" .
+                $stage[0]->getEntreprise()->getPays() . "<br/><br/> Tel : " .
+                $stage[0]->getEntreprise()->getNumeroTelephone() . "<br/>Site Web : " .
+                $stage[0]->getEntreprise()->getUrlSiteInternet() . "
                     </td>
                 </tr>
                 <tr>
                     <td colspan=\"2\" class = \"tableau\">
-                        Stage : ".$stage[0]->getEtatstage()."<br/>Responsabilité civile : ".$respcivil."<br/><br/>
-                        Date de validation : ".$stage[0]->getDatevalidation()."<br/>
-                        Date de d&eacute;but : ".$stage[0]->getDatedebut()."<br/>
-                        Date de fin : ".$stage[0]->getDatefin()."<br/>
-                        Date de soutenance : ".$stage[0]->getDatesoutenance()."<br/>
-                        Lieu de soutenance : ".$stage[0]->getLieusoutenance()."<br/>
-                        Note obtenue : ".$stage[0]->getNoteobtenue()."<br/>
-                        Appr&eacute;ciation obtenue : ".$stage[0]->getAppreciationobtenue()."<br/>
-                        R&eacute;mun&eacute;ration : ".$stage[0]->getRemuneration()."<br/>
-                        Embauche : ".$embauche."<br/>
-                        Date embauche : ".$stage[0]->getDateembauche()."<br/><br/>
-                        Sujet :<br/><br/>".
-                        $stage[0]->getSujetstage()."
+                        Stage : " . $stage[0]->getEtatstage() . "<br/>Responsabilité civile : " . $respcivil . "<br/><br/>
+                        Date de validation : " . $stage[0]->getDatevalidation() . "<br/>
+                        Date de d&eacute;but : " . $stage[0]->getDatedebut() . "<br/>
+                        Date de fin : " . $stage[0]->getDatefin() . "<br/>
+                        Date de soutenance : " . $stage[0]->getDatesoutenance() . "<br/>
+                        Lieu de soutenance : " . $stage[0]->getLieusoutenance() . "<br/>
+                        Note obtenue : " . $stage[0]->getNoteobtenue() . "<br/>
+                        Appr&eacute;ciation obtenue : " . $stage[0]->getAppreciationobtenue() . "<br/>
+                        R&eacute;mun&eacute;ration : " . $stage[0]->getRemuneration() . "<br/>
+                        Embauche : " . $embauche . "<br/>
+                        Date embauche : " . $stage[0]->getDateembauche() . "<br/><br/>
+                        Sujet :<br/><br/>" .
+                $stage[0]->getSujetstage() . "
                         <br/><br/><a href=\"" . RACINE . "?action=editerStage&idstage=" . $stage[0]->getIdstage() . "\">Modifier les donn&eacute;es du stage</a>
                     </td>
                 </tr>
             </table>
+             </td>
+            </tr>
+        </table>
+        ";
+    }else {
+        $corps = "
+                <td id = \"corps\">
+                    La proposition de stage semble ne pas avoir &eacute;t&eacute; remont&eacute;e.
+               </td>
+            </tr>
+        </table>
         ";
     }
-    $corps .= "</td>
-                </tr>
-            </table>";
+    
     return $corps;
-            
 }
 
-function genererEditerStage($stage){
-    
-    $corps ="<td id = \"corps\"";
-    
-    if($stage != NULL){
-        $corps .= "<form method=\"post\" action=\"" . RACINE . "?action=detailStage&idstage=".$_GET['idstage']."\">
+function genererEditerStage($stage) {
+
+    $corps = "<td id = \"corps\"";
+
+    if ($stage != NULL) {
+        $corps .= "<form method=\"post\" action=\"" . RACINE . "?action=detailStage&idstage=" . $_GET['idstage'] . "\">
                 <h2>Editer les informations du stage</h2><br/>
                 <table class=\"tableau\">
                     <tr>
@@ -686,7 +706,7 @@ function genererEditerStage($stage){
                             Etat du stage :
                         </td>
                         <td>
-                            <input type=text value=\"".$stage[0]->getEtatstage()."\" >
+                            <input type=text value=\"" . $stage[0]->getEtatstage() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -694,7 +714,7 @@ function genererEditerStage($stage){
                             Responsabilit&eacute; civile :
                         </td>
                         <td>
-                            <input type=text value=\"".$stage[0]->getRespcivil()."\" >
+                            <input type=text value=\"" . $stage[0]->getRespcivil() . "\" >
                         </td>
                     </tr>
                     <tr>
@@ -702,7 +722,7 @@ function genererEditerStage($stage){
                             Date de d&eacute;but :
                         </td>
                         <td>
-                            <input type=text value=\"".$stage[0]->getDatedebut()."\" >
+                            <input type=text value=\"" . $stage[0]->getDatedebut() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -710,7 +730,7 @@ function genererEditerStage($stage){
                             Date de fin :
                         </td>
                         <td>
-                            <input type=text value=\"".$stage[0]->getDatefin()."\" >
+                            <input type=text value=\"" . $stage[0]->getDatefin() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -718,7 +738,7 @@ function genererEditerStage($stage){
                             Date de soutenance :
                         </td>
                         <td>
-                            <input type=text value=\"".$stage[0]->getDatesoutenance()."\" >
+                            <input type=text value=\"" . $stage[0]->getDatesoutenance() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -726,7 +746,7 @@ function genererEditerStage($stage){
                             Lieu desoutenance :
                         </td>
                         <td>
-                            <input type=text value=\"".$stage[0]->getLieusoutenance()."\" >
+                            <input type=text value=\"" . $stage[0]->getLieusoutenance() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -734,7 +754,7 @@ function genererEditerStage($stage){
                             Note obtenue :
                         </td>
                         <td>
-                            <input type=text value=\"".$stage[0]->getNoteobtenue()."\" >
+                            <input type=text value=\"" . $stage[0]->getNoteobtenue() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -742,7 +762,7 @@ function genererEditerStage($stage){
                             Appr&eacute;ciation obtenue :
                         </td>
                         <td>
-                            <input type=text value=\"".$stage[0]->getAppreciationobtenue()."\" >
+                            <input type=text value=\"" . $stage[0]->getAppreciationobtenue() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -750,7 +770,7 @@ function genererEditerStage($stage){
                             R&eacute;mun&eacute;ration :
                         </td>
                         <td>
-                            <input type=text value=\"".$stage[0]->getRemuneration()."\" >
+                            <input type=text value=\"" . $stage[0]->getRemuneration() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -758,7 +778,7 @@ function genererEditerStage($stage){
                             Enbauche :
                         </td>
                         <td>
-                            <input type=text value=\"".$stage[0]->getEmbauche()."\" >
+                            <input type=text value=\"" . $stage[0]->getEmbauche() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -766,42 +786,49 @@ function genererEditerStage($stage){
                             Date embauche :
                         </td>
                         <td>
-                            <input type=text value=\"".$stage[0]->getDateembauche()."\" >
+                            <input type=text value=\"" . $stage[0]->getDateembauche() . "\" >
                         </td>
                     </tr>
                 </table>
                  
                 <input type=\"submit\" value=\"Valider les modifications\"></form><br/><br />
                 </form>
+                </td>
+                </tr>
+            </table>
+        ";
+    }else {
+        $corps = "
+                <td id = \"corps\">
+                    La proposition de stage semble ne pas avoir &eacute;t&eacute; remont&eacute;e.
+               </td>
+            </tr>
+        </table>
         ";
     }
-     
-     $corps .= "</td>
-                </tr>
-            </table>";
     return $corps;
 }
 
-function genererListePropositionStageEtudiant($tabProp){
-    
-    
-    $i=1;
-    
-    $corps ="<td id = \"corps\">
+function genererListePropositionStageEtudiant($tabProp) {
+
+
+    $i = 1;
+
+    $corps = "<td id = \"corps\">
             <h2>Proposition de stage</h2><br/>";
-    
-    if($tabProp != NULL){
-        
-        foreach($tabProp as $prop){
+
+    if ($tabProp != NULL) {
+
+        foreach ($tabProp as $prop) {
             $corps .="
-                <h3>Proposition ".$i." :</h3>
+                <h3>Proposition " . $i . " :</h3>
                 <table class = \"tableau\">
                     <tr>
                         <td class = \"tableau\">
                             Date de proposition :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($prop->getDateProposition())."
+                            " . htmlentities($prop->getDateProposition()) . "
                         </td>
                     </tr>
                     <tr>
@@ -809,7 +836,7 @@ function genererListePropositionStageEtudiant($tabProp){
                             Nom de l'entreprise :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($prop->getNomEntreprise())."
+                            " . htmlentities($prop->getNomEntreprise()) . "
                         </td>
                     </tr>
                     <tr>
@@ -817,10 +844,10 @@ function genererListePropositionStageEtudiant($tabProp){
                             Adresse :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($prop->getAdresseEntreprise())."<br/>".
-                            htmlentities($prop->getCodePostal())."<br/>".
-                            htmlentities($prop->getVille())."<br/>".
-                            htmlentities($prop->getPays())."
+                            " . htmlentities($prop->getAdresseEntreprise()) . "<br/>" .
+                    htmlentities($prop->getCodePostal()) . "<br/>" .
+                    htmlentities($prop->getVille()) . "<br/>" .
+                    htmlentities($prop->getPays()) . "
                         </td>
                     </tr>
                     <tr>
@@ -828,7 +855,7 @@ function genererListePropositionStageEtudiant($tabProp){
                             Num&eacute;ro de t&eacute;l&eacute;phone :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($prop->getNumTelephone())."
+                            " . htmlentities($prop->getNumTelephone()) . "
                         </td>
                     </tr>
                     <tr>
@@ -836,7 +863,7 @@ function genererListePropositionStageEtudiant($tabProp){
                             Site Web :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($prop->getUrlSite())."
+                            " . htmlentities($prop->getUrlSite()) . "
                         </td>
                     </tr>
                     <tr>
@@ -844,7 +871,7 @@ function genererListePropositionStageEtudiant($tabProp){
                             Sujet :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($prop->getSujet())."
+                            " . htmlentities($prop->getSujet()) . "
                         </td>
                     </tr>
                     <tr>
@@ -852,7 +879,7 @@ function genererListePropositionStageEtudiant($tabProp){
                             Etat de la proposition :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($prop->getEtat())."
+                            " . htmlentities($prop->getEtat()) . "
                         </td>
                     </tr>
                 </table><br/>
@@ -860,13 +887,18 @@ function genererListePropositionStageEtudiant($tabProp){
             ";
             $i++;
         }
-        
+        $corps .="</td></tr></table>";
+    }else {
+        $corps = "
+                <td id = \"corps\">
+                    Le stage semble ne pas avoir &eacute;t&eacute; remont&eacute;e.
+               </td>
+            </tr>
+        </table>
+        ";
     }
-    $corps .="</td></tr></table>";
     return $corps;
 }
-
-
 
 //function genererProposerStageEtape2($tabContact) {
 //    
@@ -983,19 +1015,19 @@ function genererListePropositionStageEtudiant($tabProp){
 //}
 
 function genererProposerStageEtape3() {
-    
+
     $corps = "<td id = \"corps\">
-                <h2>Proposition de stage effectuée</h2>    ";            
-     
+                <h2>Proposition de stage effectuée</h2>    ";
+
     $corps .="</td> </tr> </table>";
     return $corps;
 }
 
 function genererProposerStageEtape2($entreprise) {
-    
+
     $utilisateur = $_SESSION['modeleUtilisateur'];
-    
-    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
+
+    $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
     $corps .= "<form onsubmit=\"return verifierFormulaireEtape2()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape3\">
                 <td id = \"corps\">
                     <h2>Sujet de stage</h2>   
@@ -1011,7 +1043,7 @@ function genererProposerStageEtape2($entreprise) {
                             Nom :
                         </td>
                         <td>
-                            <input type=text readonly=\"true\" value=\"".$utilisateur->getNom()."\" >
+                            <input type=text readonly=\"true\" value=\"" . $utilisateur->getNom() . "\" >
                         </td>
                     </tr>
                     <tr>
@@ -1019,7 +1051,7 @@ function genererProposerStageEtape2($entreprise) {
                             Pr&eacute;nom :
                         </td>
                         <td>
-                            <input type=text readonly=\"true\" value=\"".$utilisateur->getPrenom()."\" >
+                            <input type=text readonly=\"true\" value=\"" . $utilisateur->getPrenom() . "\" >
                         </td>
                     </tr>
                     <tr>
@@ -1027,7 +1059,7 @@ function genererProposerStageEtape2($entreprise) {
                             Promotion :
                         </td>
                         <td>
-                            <input type=text readonly=\"true\" value=\"".$utilisateur->getPromotion()."\" >
+                            <input type=text readonly=\"true\" value=\"" . $utilisateur->getPromotion() . "\" >
                         </td>
                     </tr>
                     <tr>
@@ -1040,7 +1072,7 @@ function genererProposerStageEtape2($entreprise) {
                             Nom de l'entreprise : 
                         </td>
                         <td>
-                            <input type=text readonly=\"true\" value=\"".$entreprise->getNom()."\" >
+                            <input type=text readonly=\"true\" value=\"" . $entreprise->getNom() . "\" >
                         </td>
                     </tr>
                     <tr>
@@ -1048,7 +1080,7 @@ function genererProposerStageEtape2($entreprise) {
                             N°, Rue : 
                         </td>
                         <td>
-                            <input type=text readonly=\"true\" value=\"".$entreprise->getAdresse()."\" >
+                            <input type=text readonly=\"true\" value=\"" . $entreprise->getAdresse() . "\" >
                         </td>
                     </tr>
                     <tr>
@@ -1056,7 +1088,7 @@ function genererProposerStageEtape2($entreprise) {
                             Code postal :
                         </td>
                         <td>
-                            <input type=text readonly=\"true\" value=\"".$entreprise->getCodePostal()."\" >
+                            <input type=text readonly=\"true\" value=\"" . $entreprise->getCodePostal() . "\" >
                         </td>
                     </tr>
                     <tr>
@@ -1064,7 +1096,7 @@ function genererProposerStageEtape2($entreprise) {
                             Ville : 
                         </td>
                         <td>
-                             <input type=text readonly=\"true\" value=\"".$entreprise->getVille()."\" >
+                             <input type=text readonly=\"true\" value=\"" . $entreprise->getVille() . "\" >
                         </td>
                     </tr>
                     <tr>
@@ -1072,7 +1104,7 @@ function genererProposerStageEtape2($entreprise) {
                             Pays : 
                         </td>
                         <td>
-                             <input type=text readonly=\"true\" value=\"".$entreprise->getPays()."\" >
+                             <input type=text readonly=\"true\" value=\"" . $entreprise->getPays() . "\" >
                         </td>
                     </tr>
                     <tr>
@@ -1080,7 +1112,7 @@ function genererProposerStageEtape2($entreprise) {
                             T&eacute;l&eacute;phone accueil : 
                         </td>
                         <td>
-                             <input type=text readonly=\"true\" value=\"".$entreprise->getNumeroTelephone()."\" >
+                             <input type=text readonly=\"true\" value=\"" . $entreprise->getNumeroTelephone() . "\" >
                         </td>
                     </tr>
                     <tr>
@@ -1088,7 +1120,7 @@ function genererProposerStageEtape2($entreprise) {
                             Site internet : 
                         </td>
                         <td>
-                             <input type=text readonly=\"true\" value=\"".$entreprise->getUrlSiteInternet()."\" >
+                             <input type=text readonly=\"true\" value=\"" . $entreprise->getUrlSiteInternet() . "\" >
                         </td>
                     </tr>
                     <tr>
@@ -1101,29 +1133,28 @@ function genererProposerStageEtape2($entreprise) {
                 <br />
                 <input type=\"submit\" value=\"Valider la proposition\"></form><br /><br />
                 </form>";
-    
-    
+
+
     $corps .= "
                     
                 </td>
             </tr>
         </table>";
-    return $corps ;
-    
+    return $corps;
 }
 
 //permet à un étudiant de modifier son tuteur en entreprise
-function genererModifierContact($tabContact, $idEntreprise, $idStage){
-    
-    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "verifierModiferContactEtudiant.js\" type=\"text/javascript\"></script>";
+function genererModifierContact($tabContact, $idEntreprise, $idStage) {
+
+    $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "verifierModiferContactEtudiant.js\" type=\"text/javascript\"></script>";
     $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaireModifierContact()\" method=\"post\" action=\"" . RACINE . "?action=modifierContactEtape2\">";
     $corps .= "<td id = \"corps\">
                 <h2>Modification du tuteur</h2>";
-    
-    
+
+
     // si il existe des contacts dans la base, on les affiche 
     if ($tabContact != null) {
-        
+
         $corps .= "<table class=\"tableau\"><tr>
                   <td class=\"tableau\"> Choix </td>
                   <td class=\"tableau\"> Pr&eacute;nom </td>
@@ -1155,17 +1186,17 @@ function genererModifierContact($tabContact, $idEntreprise, $idStage){
 
             $corps .= "</td></tr>";
         }
-        
+
         $corps .= "</table>";
     }
-    
+
     // on affiche le formulaire de saisie d'un nouveau tuteur
-    if ($tabContact == NULL){
+    if ($tabContact == NULL) {
         $corps .= "<br />Il n'existe aucun tuteur pour cette entreprise dans la base. Vous devez l'ajouter :";
-    }else{
+    } else {
         $corps .= "<br /><input type=\"radio\" name=\"idContact\" value=\"ajouter\" id=\"ajouter\" checked=\"checked\"/> <label for=\"autre\">Ajouter un tuteur :</label>";
     }
-    
+
     $corps .= "
             <input type=hidden id=\"idEntreprise\" name=\"idEntreprise\" value=\"$idEntreprise\">
             <input type=hidden id=\"idStage\" name=\"idStage\" value=\"$idStage\">
@@ -1228,6 +1259,7 @@ function genererModifierContact($tabContact, $idEntreprise, $idStage){
 
     return $corps;
 }
+
 function genererProposerStage($tabEntreprise) {
 
     $nom = NULL;
@@ -1236,8 +1268,8 @@ function genererProposerStage($tabEntreprise) {
         $nom = htmlspecialchars($_POST['nom']);
     }
 
-    
-    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
+
+    $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
     $corps .= "<td id = \"corps\">
                 <h2>Choix de l'entreprise</h2>                
                 
@@ -1245,8 +1277,8 @@ function genererProposerStage($tabEntreprise) {
                             Nom : <input type=text name=\"nom\" value=\"" . $nom . "\">
                     
                <input type=\"submit\" value=\"Rechercher\"></form><br /><br />";
-         
-    
+
+
     $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaireEtape1()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape2\">";
 
     // on liste les entreprises ayant un nom similaire
@@ -1291,18 +1323,17 @@ function genererProposerStage($tabEntreprise) {
         $corps .="</table>";
     }
 
-   
-    
+
+
     // si l'utilisateur a déjà entré un nom d'entreprise
     // on affiche le formulaire de saisie d'une nouvelle entreprise
-    if (isset($_POST['nom'])){
-        
-        
-        if ($tabEntreprise == NULL){
+    if (isset($_POST['nom'])) {
+
+
+        if ($tabEntreprise == NULL) {
 
             $corps .= "<br />Il n'existe aucune entreprise ayant un nom similaire dans la base. Vous devez l'ajouter :";
-            
-        }else{
+        } else {
             $corps .= "<br /><input type=\"radio\" name=\"idEntreprise\" value=\"ajouter\" id=\"ajouter\" checked=\"checked\"/> <label for=\"autre\">Ajouter une entreprise :</label>";
         }
 
@@ -1388,26 +1419,26 @@ function genererProposerStage($tabEntreprise) {
                     <br /><input type=\"submit\" value=\"Etape suivante\"></form><br /><br />";
 
 
-            $corps .="</form>";
+        $corps .="</form>";
     }
-        $corps .="</td> </tr> </table>";
+    $corps .="</td> </tr> </table>";
     return $corps;
 }
 
-function genererVoirStageEtudiant($stage){
+function genererVoirStageEtudiant($stage) {
     $corps = "<td id = \"corps\">                   
                 ";
-    if($stage == null){
-        
+    if ($stage == null) {
+
         $corps .= "Vous n'avez aucun stage validé pour l'instant.";
-        
+
         $corps .= "</td>
             </tr>
         </table>";
-        
-        return $corps ;
+
+        return $corps;
     }
-    
+
     $corps .="
                 <table class = \"tableau\">
                     <tr>
@@ -1415,7 +1446,7 @@ function genererVoirStageEtudiant($stage){
                             Etat stage :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($stage->getEtatstage())."
+                            " . htmlentities($stage->getEtatstage()) . "
                         </td>
                     </tr>
                     <tr>
@@ -1423,7 +1454,7 @@ function genererVoirStageEtudiant($stage){
                             Nom de l'entreprise :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($stage->getEntreprise()->getNom())."
+                            " . htmlentities($stage->getEntreprise()->getNom()) . "
                         </td>
                     </tr>
                     <tr>
@@ -1431,7 +1462,7 @@ function genererVoirStageEtudiant($stage){
                             Sujet :
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($stage->getSujetstage())."
+                            " . htmlentities($stage->getSujetstage()) . "
                         </td>
                     </tr>
                     <tr>
@@ -1439,7 +1470,7 @@ function genererVoirStageEtudiant($stage){
                             Date de d&eacute;but : 
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($stage->getDatedebut())."
+                            " . htmlentities($stage->getDatedebut()) . "
                         </td>
                     </tr>
                     <tr>
@@ -1447,7 +1478,7 @@ function genererVoirStageEtudiant($stage){
                             Date de fin : 
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($stage->getDatefin())."
+                            " . htmlentities($stage->getDatefin()) . "
                         </td>
                     </tr>
                     <tr>
@@ -1455,19 +1486,18 @@ function genererVoirStageEtudiant($stage){
                             Responsabilit&eacute;e civile : 
                         </td>
                         <td class = \"tableau\">
-                            ".htmlentities($stage->getDatefin())."
+                            " . htmlentities($stage->getDatefin()) . "
                         </td>
                     </tr>
                     
                 </table><br/>";
-            
-    if ( $stage->getContact() == null){
-        
-        $corps .="<a href=\"" . RACINE . "?action=ajouterContact&idStage=" . $stage->getIdstage() . "&idEntreprise=".$stage->getIdentreprise()."\">Ajouter un tuteur</a>";
-        
-    }else{
-        
-    
+
+    if ($stage->getContact() == null) {
+
+        $corps .="<a href=\"" . RACINE . "?action=ajouterContact&idStage=" . $stage->getIdstage() . "&idEntreprise=" . $stage->getIdentreprise() . "\">Ajouter un tuteur</a>";
+    } else {
+
+
         $corps .="
                     Tuteur :
                     <table class = \"tableau\">
@@ -1476,7 +1506,7 @@ function genererVoirStageEtudiant($stage){
                                 Nom :
                             </td>
                             <td class = \"tableau\">
-                                ".htmlentities($stage->getContact()->getNom())."
+                                " . htmlentities($stage->getContact()->getNom()) . "
                             </td>
                         </tr>
                         <tr>
@@ -1484,22 +1514,22 @@ function genererVoirStageEtudiant($stage){
                                 Pr&eacute;nom :
                             </td>
                             <td class = \"tableau\">
-                                ".htmlentities($stage->getContact()->getPrenom())."
+                                " . htmlentities($stage->getContact()->getPrenom()) . "
                             </td>
                         </tr>
                     </table>
                     
-                    <a href=\"" . RACINE . "?action=modifierContact&idStage=" . $stage->getIdstage() . "&idEntreprise=".$stage->getIdentreprise()."\">Modifier le tuteur</a>
+                    <a href=\"" . RACINE . "?action=modifierContact&idStage=" . $stage->getIdstage() . "&idEntreprise=" . $stage->getIdentreprise() . "\">Modifier le tuteur</a>
 
 
                 ";
     }
-    
+
     $corps .= "</td>
             </tr>
         </table>";
-    
-    return $corps ;
+
+    return $corps;
 }
 
 /* ancienne fonction genererProposerStage :
