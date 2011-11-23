@@ -438,16 +438,17 @@ class BD {
         
         BD::getConnection();
         $tabAdmin = NULL ;
-        $requete = "SELECT idutilisateur, idpromotion, mailutilisateur, nomutilisateur, prenomutilisateur, admin
-            FROM utilisateur 
-            WHERE admin='1'";
+        $requete = "SELECT idutilisateur, nompromotion, mailutilisateur, nomutilisateur, prenomutilisateur, admin
+            FROM utilisateur, promotion 
+            WHERE utilisateur.idpromotion = promotion.idpromotion
+            AND  admin='1'";
         
         $retour = mysql_query($requete) ;
         
         $i = 0 ;
         while ($tableau = mysql_fetch_array($retour)) {
             
-            $tabAdmin[$i] = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['idpromotion'], null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], $tableau['admin']);
+            $tabAdmin[$i] = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], $tableau['admin']);
             $i++;
         }
         return $tabAdmin;
