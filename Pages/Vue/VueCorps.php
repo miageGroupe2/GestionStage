@@ -526,9 +526,9 @@ function genererListeStage($tabStage) {
     return $corps;
 }
 
-function genererGererCompteAdmin($tabAdmin, $tabPromotion){
-    
-    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
+function genererGererCompteAdmin($tabAdmin, $tabPromotion) {
+
+    $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
     $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierModifierAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdmin\">";
 
     $corps .= "<td id = \"corps\">
@@ -630,14 +630,14 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
             </tr>
             </table>
             <br /><input type=\"submit\" value=\"Ajouter\"></form><br /><br />";
-        
-        return $corps ;
+
+        return $corps;
     }
 }
 
-function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
-    
-    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
+function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion) {
+
+    $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
     $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierModifierAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdmin\">";
 
     $corps .= "<td id = \"corps\">
@@ -650,7 +650,7 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
                     Nom <etoile>*</etoile>:
                 </td>
                 <td>
-                    <input type=text name=\"nom_admin\" id=\"nom_admin\" value=\"".$modeleUtilisateur->getNom()."\">
+                    <input type=text name=\"nom_admin\" id=\"nom_admin\" value=\"" . $modeleUtilisateur->getNom() . "\">
                 </td>
             </tr>
             <tr>
@@ -658,7 +658,7 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
                     Pr&eacute;nom <etoile>*</etoile>:
                 </td>
                 <td>
-                    <input type=text name=\"prenom_admin\" id=\"prenom_admin\" value=\"".$modeleUtilisateur->getPrenom()."\">
+                    <input type=text name=\"prenom_admin\" id=\"prenom_admin\" value=\"" . $modeleUtilisateur->getPrenom() . "\">
                 </td>
             </tr>
             <tr>
@@ -668,11 +668,11 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
                 <td>
                     <select name=\"promotion\" id=\"promotion\">";
 
-        foreach ($tabPromotion as $promoCourante) {
+    foreach ($tabPromotion as $promoCourante) {
 
-            //if ($modeleUtilisateur->get)
-            $corps .= "<option value=\"" . $promoCourante->getIdpromotion() . "\">" . $promoCourante->getNompromotion() . "</option>";
-        }
+        //if ($modeleUtilisateur->get)
+        $corps .= "<option value=\"" . $promoCourante->getIdpromotion() . "\">" . $promoCourante->getNompromotion() . "</option>";
+    }
 
     $corps .= "</select>
             </td>
@@ -682,7 +682,7 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
                 Mail <etoile>*</etoile>:
             </td>
             <td>
-                <input type=text name=\"mail_admin\" id=\"mail_admin\" value=\"".$modeleUtilisateur->getMail()."\">
+                <input type=text name=\"mail_admin\" id=\"mail_admin\" value=\"" . $modeleUtilisateur->getMail() . "\">
             </td>
 
         </tr>
@@ -705,8 +705,7 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
         </table>
         <br /><input type=\"submit\" value=\"Ajouter\"></form><br /><br />";
 
-    return $corps ;
-    
+    return $corps;
 }
 
 function genererDetailStage($stage) {
@@ -777,7 +776,7 @@ function genererDetailStage($stage) {
             </tr>
         </table>
         ";
-    }else {
+    } else {
         $corps = "
                 <td id = \"corps\">
                     La proposition de stage semble ne pas avoir &eacute;t&eacute; remont&eacute;e.
@@ -786,7 +785,7 @@ function genererDetailStage($stage) {
         </table>
         ";
     }
-    
+
     return $corps;
 }
 
@@ -795,7 +794,7 @@ function genererEditerStage($stage) {
     $corps = "<td id = \"corps\"";
 
     if ($stage != NULL) {
-        $corps .= "<form method=\"post\" action=\"" . RACINE . "?action=validerModifStage&idstage=" . $_GET['idstage'] . "\">
+        $corps .= "<form name=\"editionStage\" method=\"post\" action=\"" . RACINE . "?action=validerModifStage&idstage=" . $_GET['idstage'] . "\">
                 <h2>Editer les informations du stage</h2><br/>
                 <table class=\"tableau\">
                     <tr>
@@ -803,7 +802,7 @@ function genererEditerStage($stage) {
                             Etat du stage :
                         </td>
                         <td>
-                            <input type=text name=\"etatstage\" value=\"" . $stage[0]->getEtatstage() . "\" >
+                            <input type=\"text\" name=\"etatstage\" value=\"" . $stage[0]->getEtatstage() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -811,7 +810,7 @@ function genererEditerStage($stage) {
                             Responsabilit&eacute; civile :
                         </td>
                         <td>
-                            <input type=text name=\"respcivil\" value=\"" . $stage[0]->getRespcivil() . "\" >
+                            <input type=\"text\" name=\"respcivil\" value=\"" . $stage[0]->getRespcivil() . "\" >
                         </td>
                     </tr>
                     <tr>
@@ -819,7 +818,7 @@ function genererEditerStage($stage) {
                             Date de d&eacute;but :
                         </td>
                         <td>
-                            <input type=text name=\"datedeb\" value=\"" . $stage[0]->getDatedebut() . "\" >
+                            <input type=\"text\" name=\"datedeb\" value=\"" . $stage[0]->getDatedebut() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -827,7 +826,7 @@ function genererEditerStage($stage) {
                             Date de fin :
                         </td>
                         <td>
-                            <input type=text name=\"datefin\" value=\"" . $stage[0]->getDatefin() . "\" >
+                            <input type=\"text\" name=\"datefin\" value=\"" . $stage[0]->getDatefin() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -835,7 +834,7 @@ function genererEditerStage($stage) {
                             Date de soutenance :
                         </td>
                         <td>
-                            <input type=text name=\"datesoutenance\" value=\"" . $stage[0]->getDatesoutenance() . "\" >
+                            <input type=\"text\" name=\"datesoutenance\" value=\"" . $stage[0]->getDatesoutenance() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -843,7 +842,7 @@ function genererEditerStage($stage) {
                             Lieu desoutenance :
                         </td>
                         <td>
-                            <input type=text name=\"lieusoutenance\" value=\"" . $stage[0]->getLieusoutenance() . "\" >
+                            <input type=\"text\" name=\"lieusoutenance\" value=\"" . $stage[0]->getLieusoutenance() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -851,7 +850,7 @@ function genererEditerStage($stage) {
                             Note obtenue :
                         </td>
                         <td>
-                            <input type=text name=\"noteobtenue\" value=\"" . $stage[0]->getNoteobtenue() . "\" >
+                            <input type=\"text\" name=\"noteobtenue\" value=\"" . $stage[0]->getNoteobtenue() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -859,7 +858,7 @@ function genererEditerStage($stage) {
                             Appr&eacute;ciation obtenue :
                         </td>
                         <td>
-                            <input type=text name=\"appreciationobtenue\" value=\"" . $stage[0]->getAppreciationobtenue() . "\" >
+                            <input type=\"text\" name=\"appreciationobtenue\" value=\"" . $stage[0]->getAppreciationobtenue() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -867,7 +866,7 @@ function genererEditerStage($stage) {
                             R&eacute;mun&eacute;ration :
                         </td>
                         <td>
-                            <input type=text name=\"remuneration\" value=\"" . $stage[0]->getRemuneration() . "\" >
+                            <input type=\"text\" name=\"remuneration\" value=\"" . $stage[0]->getRemuneration() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -875,7 +874,7 @@ function genererEditerStage($stage) {
                             Enbauche :
                         </td>
                         <td>
-                            <input type=text name=\"embauche\" value=\"" . $stage[0]->getEmbauche() . "\" >
+                            <input type=\"text\" name=\"embauche\" value=\"" . $stage[0]->getEmbauche() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -883,21 +882,20 @@ function genererEditerStage($stage) {
                             Date embauche :
                         </td>
                         <td>
-                            <input type=text name=\"dateembauche\" value=\"" . $stage[0]->getDateembauche() . "\" >
+                            <input type=\"text\" name=\"dateembauche\" value=\"" . $stage[0]->getDateembauche() . "\" >
                         </td>
                     </tr>
-                </table>
-                 
-                <input type=\"submit\" value=\"Valider les modifications\"></form><br/><br />
+                    </table><br/><br/>
+                    <input id=\"submit_valid_modif_stage\" type=\"submit\" name=\"Envoyer\" value=\"Envoyer\"><br/>
                 </form>
                 </td>
                 </tr>
             </table>
         ";
-    }else {
+    } else {
         $corps = "
                 <td id = \"corps\">
-                    La proposition de stage semble ne pas avoir &eacute;t&eacute; remont&eacute;e.
+                    Le stage semble ne pas avoir &eacute;t&eacute; remont&eacute;e.
                </td>
             </tr>
         </table>
@@ -906,8 +904,8 @@ function genererEditerStage($stage) {
     return $corps;
 }
 
-function genererValiderModificationsStage($ok){
-    if(ok){
+function genererValiderModificationsStage($ok) {
+    if (ok) {
         $corps = "
                 <td id = \"corps\">
                     Les donn&eacute;es ont bien &eacute;t&eacute; modifi&eacute;es.
@@ -915,7 +913,7 @@ function genererValiderModificationsStage($ok){
             </tr>
         </table>
         ";
-    }else{
+    } else {
         $corps = "
                 <td id = \"corps\">
                    Erreur, les modifications ne seront pas prises en compte
@@ -924,9 +922,8 @@ function genererValiderModificationsStage($ok){
         </table>
         ";
     }
+    return $corps;
 }
-
-
 
 function genererListePropositionStageEtudiant($tabProp) {
 
@@ -1007,7 +1004,7 @@ function genererListePropositionStageEtudiant($tabProp) {
             $i++;
         }
         $corps .="</td></tr></table>";
-    }else {
+    } else {
         $corps = "
                 <td id = \"corps\">
                     Le stage semble ne pas avoir &eacute;t&eacute; remont&eacute;e.
