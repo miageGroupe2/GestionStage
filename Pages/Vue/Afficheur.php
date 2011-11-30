@@ -46,7 +46,7 @@ function AffichePage($afficherMenuGauche, $corps) {
                     <table>
                         <tr>    
                             <td id=\"banniere\">
-                                <a href=\"".RACINE."\">Accueil</a>
+                                <img src=\"".RACINE_IMAGE."banniere.png\"</img>
                             </td>
                         </tr>    
                     </table>
