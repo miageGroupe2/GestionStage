@@ -40,7 +40,11 @@ class BD {
 
         if ($login != FALSE && $password != FALSE) {
 
-            $requete = "SELECT idutilisateur, nompromotion, mailutilisateur, passwordutilisateur, nomutilisateur, prenomutilisateur, numetudiant, admin FROM utilisateur, promotion WHERE mailutilisateur = '$login' AND passwordutilisateur = '$password' AND  utilisateur.idpromotion = promotion.idpromotion";
+            $requete = "SELECT u.idutilisateur, u.idpromotion, p.nompromotion, u.mailutilisateur, u.passwordutilisateur, u.nomutilisateur, u.prenomutilisateur, u.numetudiant, u.admin 
+            FROM utilisateur u, promotion p
+            WHERE u.mailutilisateur = '$login' 
+            AND u.passwordutilisateur = '$password' 
+            AND  u.idpromotion = p.idpromotion";
             try {
                 $retour = mysql_query($requete);
             } catch (Exception $e) {
@@ -54,9 +58,9 @@ class BD {
                 $modeleUtilisateur = NULL;
                 while ($tableau = mysql_fetch_array($retour)) {
 
-                    $modeleUtilisateur = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], $tableau['numetudiant'], $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], $tableau['admin'], NULL);
+                    $modeleUtilisateur = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], $tableau['numetudiant'], $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], $tableau['admin'], $tableau['idpromotion']);
                 }
-
+                
                 return $modeleUtilisateur;
             } else {
                 return NULL;
@@ -731,16 +735,17 @@ class BD {
         return $tabStage;
     }
     
-    public static function rechercherStageAnneeCourante(){
+    public static function rechercherStageAnneeCourante($promotion){
         BD::getConnection();
         $tabStage = null;
         $i=0;
+        
         $requete = "SELECT s.idstage, s.etatstage, s.datevalidation, u.nomutilisateur, u.prenomutilisateur, e.nomentreprise, s.noteobtenue, pr.nompromotion
                     FROM stage s, entreprise e, utilisateur u, promotion pr
                     WHERE u.idutilisateur = s.idutilisateur
                     AND u.idpromotion = pr.idpromotion
+                    AND u.idpromotion = $promotion
                     AND s.identreprise = e.identreprise
-                    
         ";
         $retour = mysql_query($requete) or die(mysql_error());
 

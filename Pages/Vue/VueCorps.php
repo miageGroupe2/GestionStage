@@ -529,7 +529,7 @@ function genererListeStage($tabStage) {
 
 function genererListeStageAnneeCourante($tabStage) {
     $corps = "<td id = \"corps\">
-            <h2>Liste des stages</h2>
+            <h2>Liste des stages de l'ann&eacute;e courante</h2>
                 <table class=\"tableau\">
                     <tr>
                         <td class=\"tableau\">
