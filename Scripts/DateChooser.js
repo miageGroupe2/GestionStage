@@ -124,7 +124,7 @@ function montrerSelect(){
  
 var enLigne = false ;
 var largeur = "175";
-var formatage = "/";
+var formatage = "-";
  
 /* ##################### FIN DE LA CONFIGURATION ##################### */
  

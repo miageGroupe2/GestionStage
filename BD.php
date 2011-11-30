@@ -690,10 +690,12 @@ class BD {
         if ($idProp != FALSE) {
             
             // 1) On recupere la proposition dans la base pourextraire les infos necessaires a la creation d'un stage
-            $requete = "SELECT * FROM proposition WHERE idproposition = " . $idProp . ";";
+
+            $requete = "SELECT * FROM proposition, utilisateur WHERE idproposition = " . $idProp . " AND proposition.idutilisateur = utilisateur.idutilisateur";
+
             $retour = mysql_query($requete);
             while ($tableau = mysql_fetch_array($retour)) {
-                $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], $tableau['idutilisateur'], null, $tableau['nomentreprisep'], $tableau['dateproposition'], $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], null, null);
+                $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], $tableau['idutilisateur'], null, $tableau['nomentreprisep'], $tableau['dateproposition'], $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], null, $tableau['idpromotion']);
                 $i++;
             }
             $prop = $tabProp[0];
@@ -716,11 +718,15 @@ class BD {
                     sujetstage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
                     appreciationobtenue, remuneration, embauche, dateembauche, respcivil) 
                     VALUES ('', null, null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', NOW(), null, null, null, null, 'a valider', null, null, null, null, null, 0)";
+            
+                
+                
             } else {
                 $requete = "INSERT INTO stage (idstage, identreprise, idcontact, idproposition, idutilisateur,
                     sujetstage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
-                    appreciationobtenue, remuneration, embauche, dateembauche, respcivil) 
-                    VALUES ('', " . $prop->getIdEntreprise() . ", null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', NOW(), null, null, null, null, 'a valider', null, null, null, null, null, 0)";
+                    appreciationobtenue, remuneration, embauche, dateembauche, respcivil, idpromotion) 
+                    VALUES ('', " . $prop->getIdEntreprise() . ", null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', NOW(), null, null, null, null, 'a valider', null, null, null, null, null, 0, ".$prop->getPromotionEtudiant().")";
+                
             }
 
             if (mysql_query($requete)) {
@@ -796,14 +802,19 @@ class BD {
         BD::getConnection();
         $tabStage = null;
         $i=0;
-        $requete = "SELECT s.idstage, s.datevalidation, s.sujetstage, u.numetudiant, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, e.nomentreprise, e.adresseentreprise, e.villeentreprise, e.codepostalentreprise, e.paysentreprise, e.numerotelephone, e.numerosiret, e.urlsiteinternet, e.statutjuridique, s.datedebut, s.datefin, s.datesoutenance, s.lieusoutenance, s.etatstage, s.noteobtenue, s.appreciationobtenue, s.remuneration, s.embauche, s.dateembauche, s.respcivil, pr.nompromotion, c.nomcontact, c.prenomcontact, c.mailcontact, c.fonctioncontact, c.telfixecontact, c.telmobilecontact
-                    FROM stage s, entreprise e, utilisateur u, promotion pr, contact c
+        $requete = "SELECT s.idstage, s.datevalidation, s.sujetstage, u.numetudiant, u.nomutilisateur, 
+            u.prenomutilisateur, u.mailutilisateur, e.nomentreprise, e.adresseentreprise, 
+            e.villeentreprise, e.codepostalentreprise, e.paysentreprise, e.numerotelephone, 
+            e.numerosiret, e.urlsiteinternet, e.statutjuridique, s.datedebut, s.datefin, 
+            s.datesoutenance, s.lieusoutenance, s.etatstage, s.noteobtenue, s.appreciationobtenue, 
+            s.remuneration, s.embauche, s.dateembauche, s.respcivil, pr.nompromotion, c.nomcontact, 
+            c.prenomcontact, c.mailcontact, c.fonctioncontact, c.telfixecontact, c.telmobilecontact
+                    FROM entreprise e, utilisateur u, promotion pr, contact c RIGHT JOIN stage s ON c.idcontact = s.idcontact
                     WHERE s.idstage = ".$idstage."
                     AND u.idutilisateur = s.idutilisateur
                     AND u.idpromotion = pr.idpromotion
-                    AND s.identreprise = e.identreprise
-                    AND s.idcontact = c.idcontact";
-        
+                    AND s.identreprise = e.identreprise";
+    
         $retour = mysql_query($requete) or die(mysql_error());
         
         while ($tableau = mysql_fetch_array($retour)) {
@@ -812,7 +823,7 @@ class BD {
             $etudiant = new ModeleUtilisateur(null, null, $tableau['numetudiant'], $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], null, NULL);
             $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet'], $tableau['statutjuridique']);
             $contact = new ModeleContact(null, $tableau['prenomcontact'], $tableau['nomcontact'], $tableau['fonctioncontact'], $tableau['telfixecontact'], $tableau['telmobilecontact'], $tableau['mailcontact']);
-            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, $tableau['sujetstage'], $tableau['datevalidation'], $tableau['datedebut'], $tableau['datefin'], $tableau['datesoutenance'], $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], $tableau['dateembauche'], $etudiant, $entreprise, $contact, $promotion, $tableau['respcivil']);
+            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, $tableau['sujetstage'], BD::dateENtoFR($tableau['datevalidation']), BD::dateENtoFR($tableau['datedebut']), BD::dateENtoFR($tableau['datefin']), BD::dateENtoFR($tableau['datesoutenance']), $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], BD::dateENtoFR($tableau['dateembauche']), $etudiant, $entreprise, $contact, $promotion, $tableau['respcivil']);
             $i++;
             
         }
@@ -839,6 +850,7 @@ class BD {
 
     
     public static function modifierDonneesStage() {
+        
         BD::getConnection();
         $idStage = mysql_real_escape_string(htmlspecialchars($_GET['idstage']));
         $etatstage = mysql_real_escape_string(htmlspecialchars($_POST['etatstage']));
@@ -886,11 +898,18 @@ class BD {
             $dateembauche = "NULL";
         }
         
-        $requete = "UPDATE stage SET etatstage = \"$etatstage\", respcivil = $respcivile, datedebut = $datedeb, 
-        datefin = $datefin, datesoutenance = $datesoutenance, lieusoutenance = \"$lieusoutenance\",
+        $datedeb = BD::dateFRtoEN($datedeb);
+        $dateembauche = BD::dateFRtoEN($dateembauche);
+        $datefin = BD::dateFRtoEN($datefin);
+        $datesoutenance = BD::dateFRtoEN($datesoutenance);
+        
+        
+        $requete = "UPDATE stage SET etatstage = \"$etatstage\", respcivil = $respcivile, datedebut = '$datedeb', 
+        datefin = '$datefin', datesoutenance = '$datesoutenance', lieusoutenance = \"$lieusoutenance\",
         noteobtenue = \"$noteobtenue\", appreciationobtenue = \"$appreciationobtenue\", 
-        remuneration = $remuneration, embauche = $embauche, dateembauche = $dateembauche
+        remuneration = $remuneration, embauche = $embauche, dateembauche = '$dateembauche'
         WHERE idstage = $idStage";
+        
         
         if(mysql_query($requete)){
             return true;
@@ -900,6 +919,38 @@ class BD {
         }
         
     }    
+    
+    // les dates sont "en francais" (jour/mois/annee)
+    // on les transforme en annee/jour/mois pour mysql
+    public static function dateFRtoEN($date){
+        
+        if ($date != "NULL" && $date != ""){
+            $tab = preg_split("/-/", $date);
+            $jour = $tab[0];
+            $mois = $tab[1];
+            $annee = $tab[2];
+            $date = $annee."-".$mois."-".$jour;
+            return $date ;
+        }else{
+            
+            return "NULL";
+        }
+    }
+    public static function dateENtoFR($date){
+        
+        if ($date != "NULL" && $date != ""){
+            $tab = preg_split("/-/", $date);
+            $jour = $tab[2];
+            $mois = $tab[1];
+            $annee = $tab[0];
+            $date = $jour."-".$mois."-".$annee;
+            return $date ;
+        }else{
+            
+            return "NULL";
+        }
+    }
+    
     
 }
 

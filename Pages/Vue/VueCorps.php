@@ -791,7 +791,7 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
 }
 
 function genererAfficherOption() {
-    
+
     $corps = "<td id = \"corps\">
                 <h1>Option</h1>
                  
@@ -810,7 +810,7 @@ function genererGererPromotion($tabPromotion){
     $corps .= "<form name=\"formulaireAjout\" onsubmit=\"return verifierAjoutPromotion()\" method=\"post\" action=\"" . RACINE . "?action=gererPromotion\">
                 <input type=hidden id=\"actionPromotion\" name=\"actionPromotion\" value=\"ajouter\">";
     $corps .= "<td id = \"corps\">
-                <h1>Gerer les promotions</h1>
+                <h1>G&eacute;rer les promotions</h1>
                 
                 <h2>Liste des promotions</h2>
                 
@@ -828,21 +828,40 @@ function genererGererPromotion($tabPromotion){
                  
                  S&eacute;lectionner la promotion :</br>";
     
+                $tabPromoDejaAffiche[0] = "nagagull" ;
+                $k=0;
+                
+                foreach ($tabPromotion as $promoCourante) {
 
-            foreach ($tabPromotion as $promoCourante) {
+                    $tab = preg_split('/ /', $promoCourante->getNompromotion());
+                    $taille = sizeof($tab) ;
 
-                $tab = preg_split('/ /', $promoCourante->getNompromotion());
-                $taille = sizeof($tab) ;
-               
-               
-                $aff = "" ;
-                for ( $i = 0 ; $i < $taille-1 ; $i ++){
+
+                    $aff = "" ;
+                    for ( $i = 0 ; $i < $taille-1 ; $i ++){
+
+                        $aff .= $tab[$i] . " ";
+                    }
+                    $aff = substr($aff, 0, strlen($aff)-1) ;
+                    $afficherPromo = TRUE ;
+                                        
+                    if (in_array($aff, $tabPromoDejaAffiche)){
+
+                        $afficherPromo = FALSE ;
+                    }else{
+                        
+                        $tabPromoDejaAffiche[$k] = $aff ;
+                        $k++;
+                    }
+                 
+                    if($afficherPromo){
+
+                        $corps .= "<input type=\"radio\" name=\"idPromo\" value=\"" . $aff . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
+                                    <label for=". $promoCourante->getIdpromotion() .">". $aff ."</label><br />";
+                    }
                     
-                    $aff .= $tab[$i] . " ";
                 }
-                $corps .= "<input type=\"radio\" name=\"idPromo\" value=\"" . $aff . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
-                            <label for=". $promoCourante->getIdpromotion() .">". $aff ."</label><br />";
-            }
+                
             
     $corps .= "</br>Année universitaire :
                 </br>(sous la forme \"2010-2011\")</br>
@@ -866,9 +885,6 @@ function genererGererPromotion($tabPromotion){
                 $corps .= "<input type=\"submit\" value=\"Supprimer\" >
                         </form>
                         ";
-
-                
-                
 
     $corps .= "</td>
             </tr>

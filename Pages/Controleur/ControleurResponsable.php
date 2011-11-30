@@ -30,7 +30,7 @@ require_once 'BD.php';
     }
 
     function validerProposition(){
-        $ok = BD::validerProposition($idProp);
+        $ok = BD::validerProposition($_GET['idprop']);
         $corps = genererValiderProposition($ok);
         AffichePage(TRUE, $corps);     
     }
