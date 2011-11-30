@@ -470,6 +470,7 @@ function genererValiderProposition($ok) {
 
 function genererListeStage($tabStage) {
     $corps = "<td id = \"corps\">
+            <h2>Liste des stages</h2>
                 <table class=\"tableau\">
                     <tr>
                         <td class=\"tableau\">
@@ -526,6 +527,64 @@ function genererListeStage($tabStage) {
     return $corps;
 }
 
+function genererListeStageAnneeCourante($tabStage) {
+    $corps = "<td id = \"corps\">
+            <h2>Liste des stages</h2>
+                <table class=\"tableau\">
+                    <tr>
+                        <td class=\"tableau\">
+                            Date validation
+                        </td>
+                        <td class=\"tableau\">
+                            Nom &eacute;tudiant
+                        </td>
+                        <td class=\"tableau\">
+                            Pr&eacute;nom &eacute;tudiant
+                        </td>
+                        <td class=\"tableau\">
+                            Nom de l'entreprise
+                        </td>
+                        <td class=\"tableau\">
+                            Etat stage
+                        </td>
+                        <td class=\"tableau\">
+                            Note obtenue
+                        </td>
+                        <td class=\"tableau\">
+                            Nom promotion
+                        </td>
+                    </tr>
+            ";
+    if ($tabStage != null) {
+        foreach ($tabStage as $stage) {
+            $corps = $corps . "
+                        <tr>
+                            <td class=\"tableau\">" . $stage->getDatevalidation()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getUtilisateur()->getNom()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getUtilisateur()->getPrenom()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getEntreprise()->getNom()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getEtatstage()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getNoteobtenue()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getPromotion()->getNompromotion()
+                    . "</td>
+                            <td class=\"tableau\"><a href=\"" . RACINE . "?action=detailStage&idstage=" . $stage->getIdstage() . "\">D&eacute;tails</a>
+                            </td>
+                     </tr>";
+        }
+        $corps .= "</table>";
+    }
+
+    $corps .= "</td>
+                </tr>
+            </table>";
+    return $corps;
+}
 
 function genererGererCompteAdmin($tabAdmin, $tabPromotion){
     
