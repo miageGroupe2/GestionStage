@@ -777,8 +777,6 @@ class BD {
     }
 
     
-    
-    
     public static function modifierDonneesStage() {
         BD::getConnection();
         $idStage = mysql_real_escape_string(htmlspecialchars($_GET['idstage']));
@@ -832,7 +830,7 @@ class BD {
         noteobtenue = \"$noteobtenue\", appreciationobtenue = \"$appreciationobtenue\", 
         remuneration = $remuneration, embauche = $embauche, dateembauche = $dateembauche
         WHERE idstage = $idStage";
-        echo $requete;
+        
         if(mysql_query($requete)){
             return true;
         }else{
