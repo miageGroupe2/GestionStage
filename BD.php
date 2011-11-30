@@ -490,6 +490,35 @@ class BD {
     // PARTIE DES ACCES BASES ADMIN
     //-----------------------------------------------------------------------------------------    
 
+    public static function ajouterPromotion($promo){
+        
+        BD::getConnection();
+        $promo = mysql_real_escape_string(htmlspecialchars($promo));
+
+        if ($promo != FALSE ) {
+
+            $requete = "INSERT INTO promotion (nompromotion, accesentreprises) 
+                VALUES ('$promo', '1')";
+
+            mysql_query($requete);   
+        }
+    }
+    
+    public static function supprimerPromotion($idPromo){
+        
+        BD::getConnection();
+        $idPromo = mysql_real_escape_string(htmlspecialchars($idPromo));
+
+        if ($idPromo != FALSE ) {
+
+            $requete = "DELETE FROM promotion WHERE idpromotion='$idPromo'";
+
+            mysql_query($requete);   
+        }
+    }
+    
+    
+    
     
     public static function getAdminById($idUtilisateur) {
 

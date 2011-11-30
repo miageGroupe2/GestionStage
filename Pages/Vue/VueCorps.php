@@ -810,7 +810,21 @@ function genererGererPromotion($tabPromotion){
     $corps .= "<form name=\"formulaireAjout\" onsubmit=\"return verifierAjoutPromotion()\" method=\"post\" action=\"" . RACINE . "?action=gererPromotion\">
                 <input type=hidden id=\"actionPromotion\" name=\"actionPromotion\" value=\"ajouter\">";
     $corps .= "<td id = \"corps\">
-                <h1>Ajouter une promotion</h1>
+                <h1>Gerer les promotions</h1>
+                
+                <h2>Liste des promotions</h2>
+                
+                <ul>
+                ";
+    
+                foreach ($tabPromotion as $promoCourante) {
+                    
+                    $corps .= "<li>".$promoCourante->getNompromotion()."</li>";
+                }
+
+                $corps .= "</ul>
+                    
+                <h2>Ajouter une promotion</h2>
                  
                  S&eacute;lectionner la promotion :</br>";
     
@@ -826,7 +840,7 @@ function genererGererPromotion($tabPromotion){
                     
                     $aff .= $tab[$i] . " ";
                 }
-                $corps .= "<input type=\"radio\" name=\"idPromo\" value=\"" . $promoCourante->getIdpromotion() . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
+                $corps .= "<input type=\"radio\" name=\"idPromo\" value=\"" . $aff . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
                             <label for=". $promoCourante->getIdpromotion() .">". $aff ."</label><br />";
             }
             
@@ -837,6 +851,23 @@ function genererGererPromotion($tabPromotion){
                 <input type=\"submit\"  value=\"Ajouter\">
                 </form>
                 ";
+    
+    $corps .= "<h2>Supprimer une promotion</h2>
+                
+                <form name=\"formulaireSupprimer\" onsubmit=\"return confirmerAvantSuppression()\" method=\"post\" action=\"" . RACINE . "?action=gererPromotion\"> 
+                <input type=hidden id=\"actionPromotion\" name=\"actionPromotion\" value=\"supprimer\">
+                ";
+    
+                foreach ($tabPromotion as $promoCourante) {
+                    
+                    $corps .= "<input type=\"radio\" name=\"idPromoSupprimer\" value=\"" . $promoCourante->getIdpromotion() . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
+                            <label for=". $promoCourante->getIdpromotion() .">". $promoCourante->getNompromotion() ."</label><br />";
+                }
+                $corps .= "<input type=\"submit\" value=\"Supprimer\" >
+                        </form>
+                        ";
+
+                
                 
 
     $corps .= "</td>

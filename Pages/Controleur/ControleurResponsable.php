@@ -146,7 +146,6 @@ require_once 'BD.php';
     
     function afficherOption(){
         
-        
         $corps = genererAfficherOption();
         AffichePage(TRUE, $corps);
     }
@@ -155,16 +154,18 @@ require_once 'BD.php';
         
         if(isset($_POST['actionPromotion']) && $_POST['actionPromotion']== 'ajouter'){
             
-            if(isset($_POST['anneeUniv']) && $_POST['anneeUniv']!= ''){
+            if(isset($_POST['anneeUniv']) && $_POST['anneeUniv']!= ''
+                    && isset($_POST['idPromo'])){
                 
                
-                echo "ici";
-            }else{
+                $promo = $_POST['idPromo']. " " . $_POST['anneeUniv'] ;
+                BD::ajouterPromotion($promo);
                 
-                echo "ici2";
             }
+        }else if(isset($_POST['actionPromotion']) && $_POST['actionPromotion']== 'supprimer'){
             
             
+            BD::supprimerPromotion($_POST['idPromoSupprimer']);
         }
         $tabPromotion = BD::recherchePromotion();
         $corps = genererGererPromotion($tabPromotion);
