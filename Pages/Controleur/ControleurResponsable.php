@@ -41,6 +41,11 @@ require_once 'BD.php';
         AffichePage(TRUE, $corps);     
     }
 
+    function afficherListeStageAnneeCourante(){
+        $tabStage = BD::rechercherStage();
+        $corps = genererListeStageAnneeCourante($tabStage);
+        AffichePage(TRUE, $corps);     
+    }
 
     function afficherDetailStage(){
         $stage = BD::rechercherStageByID($_GET['idstage']);

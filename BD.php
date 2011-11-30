@@ -730,6 +730,33 @@ class BD {
         
         return $tabStage;
     }
+    
+    public static function rechercherStageAnneeCourante(){
+        BD::getConnection();
+        $tabStage = null;
+        $i=0;
+        $requete = "SELECT s.idstage, s.etatstage, s.datevalidation, u.nomutilisateur, u.prenomutilisateur, e.nomentreprise, s.noteobtenue, pr.nompromotion
+                    FROM stage s, entreprise e, utilisateur u, promotion pr
+                    WHERE u.idutilisateur = s.idutilisateur
+                    AND u.idpromotion = pr.idpromotion
+                    AND s.identreprise = e.identreprise
+                    
+        ";
+        $retour = mysql_query($requete) or die(mysql_error());
+
+        while ($tableau = mysql_fetch_array($retour)) {
+            
+            $promotion = new ModelePromotion(null, $tableau['nompromotion'], null);
+            $etudiant = new ModeleUtilisateur(null, null, null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null, NULL);
+            $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, null, null, null, null, null, null, null);
+            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, null, $tableau['datevalidation'], null, null, null, null, $tableau['etatstage'], $tableau['noteobtenue'], null, null, null, null, $etudiant, $entreprise, null, $promotion,null);
+            $i++;
+            
+        }
+        
+        return $tabStage;
+    }
+    
      
     public static function rechercherStageByID($idstage){
         BD::getConnection();
@@ -776,8 +803,6 @@ class BD {
         }
     }
 
-    
-    
     
     public static function modifierDonneesStage() {
         BD::getConnection();
@@ -832,7 +857,7 @@ class BD {
         noteobtenue = \"$noteobtenue\", appreciationobtenue = \"$appreciationobtenue\", 
         remuneration = $remuneration, embauche = $embauche, dateembauche = $dateembauche
         WHERE idstage = $idStage";
-        echo $requete;
+        
         if(mysql_query($requete)){
             return true;
         }else{

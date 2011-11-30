@@ -116,7 +116,7 @@ function genererAjoutPropositionStageOk() {
  * Permet d'afficher la page permettant d'éditer une proposition de stage (côté étudiant)
  */
 function genererEditerPropositionEtudiant($proposition) {
-    if ($proposition == NULL) {
+    if ($proposition != NULL) {
         $corps = "<td id = \"corps\">
                 <h2>Edition d'une proposition de stage</h2>
                 <script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormEditerProposition.js\" type=\"text/javascript\"></script>
@@ -470,6 +470,7 @@ function genererValiderProposition($ok) {
 
 function genererListeStage($tabStage) {
     $corps = "<td id = \"corps\">
+            <h2>Liste des stages</h2>
                 <table class=\"tableau\">
                     <tr>
                         <td class=\"tableau\">
@@ -526,6 +527,64 @@ function genererListeStage($tabStage) {
     return $corps;
 }
 
+function genererListeStageAnneeCourante($tabStage) {
+    $corps = "<td id = \"corps\">
+            <h2>Liste des stages</h2>
+                <table class=\"tableau\">
+                    <tr>
+                        <td class=\"tableau\">
+                            Date validation
+                        </td>
+                        <td class=\"tableau\">
+                            Nom &eacute;tudiant
+                        </td>
+                        <td class=\"tableau\">
+                            Pr&eacute;nom &eacute;tudiant
+                        </td>
+                        <td class=\"tableau\">
+                            Nom de l'entreprise
+                        </td>
+                        <td class=\"tableau\">
+                            Etat stage
+                        </td>
+                        <td class=\"tableau\">
+                            Note obtenue
+                        </td>
+                        <td class=\"tableau\">
+                            Nom promotion
+                        </td>
+                    </tr>
+            ";
+    if ($tabStage != null) {
+        foreach ($tabStage as $stage) {
+            $corps = $corps . "
+                        <tr>
+                            <td class=\"tableau\">" . $stage->getDatevalidation()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getUtilisateur()->getNom()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getUtilisateur()->getPrenom()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getEntreprise()->getNom()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getEtatstage()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getNoteobtenue()
+                    . "</td>
+                            <td class=\"tableau\">" . $stage->getPromotion()->getNompromotion()
+                    . "</td>
+                            <td class=\"tableau\"><a href=\"" . RACINE . "?action=detailStage&idstage=" . $stage->getIdstage() . "\">D&eacute;tails</a>
+                            </td>
+                     </tr>";
+        }
+        $corps .= "</table>";
+    }
+
+    $corps .= "</td>
+                </tr>
+            </table>";
+    return $corps;
+}
 
 function genererGererCompteAdmin($tabAdmin, $tabPromotion){
     
@@ -869,7 +928,8 @@ function genererDetailStage($stage) {
 
 function genererEditerStage($stage) {
 
-    $corps = "<td id = \"corps\">";
+    $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "DateChooser.js\" type=\"text/javascript\"></script>
+        <td id = \"corps\">";
 
     if ($stage != NULL) {
         $corps .= "<form name=\"editionStage\" method=\"post\" action=\"" . RACINE . "?action=validerModifStage&idstage=" . $_GET['idstage'] . "\">
@@ -931,7 +991,7 @@ function genererEditerStage($stage) {
                             Date de d&eacute;but :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"datedeb\" value=\"" . $stage[0]->getDatedebut() . "\" >
+                            <input type=\"text\" name=\"datedeb\" class=\"calendrier\" value=\"" . $stage[0]->getDatedebut() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -939,7 +999,7 @@ function genererEditerStage($stage) {
                             Date de fin :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"datefin\" value=\"" . $stage[0]->getDatefin() . "\" >
+                            <input type=\"text\" name=\"datefin\" class=\"calendrier\" value=\"" . $stage[0]->getDatefin() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -947,7 +1007,7 @@ function genererEditerStage($stage) {
                             Date de soutenance :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"datesoutenance\" value=\"" . $stage[0]->getDatesoutenance() . "\" >
+                            <input type=\"text\" name=\"datesoutenance\" class=\"calendrier\" value=\"" . $stage[0]->getDatesoutenance() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -995,7 +1055,7 @@ function genererEditerStage($stage) {
                             Date embauche :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"dateembauche\" value=\"" . $stage[0]->getDateembauche() . "\" >
+                            <input type=\"text\" name=\"dateembauche\" class=\"calendrier\" value=\"" . $stage[0]->getDateembauche() . "\" >
                         </td>
                     </tr>
                     </table><br/><br/>
