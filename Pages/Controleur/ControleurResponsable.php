@@ -141,8 +141,28 @@ require_once 'BD.php';
     
     function afficherOption(){
         
+        
+        $corps = genererAfficherOption();
+        AffichePage(TRUE, $corps);
+    }
+    
+    function afficherGererPromotion(){
+        
+        if(isset($_POST['actionPromotion']) && $_POST['actionPromotion']== 'ajouter'){
+            
+            if(isset($_POST['anneeUniv']) && $_POST['anneeUniv']!= ''){
+                
+               
+                echo "ici";
+            }else{
+                
+                echo "ici2";
+            }
+            
+            
+        }
         $tabPromotion = BD::recherchePromotion();
-        $corps = genererAfficherOption($tabPromotion);
+        $corps = genererGererPromotion($tabPromotion);
         AffichePage(TRUE, $corps);
     }
 

@@ -731,16 +731,29 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
 
 }
 
-function genererAfficherOption($tabPromotion) {
+function genererAfficherOption() {
     
-    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
-    $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdminEtape2\">";
+    $corps = "<td id = \"corps\">
+                <h1>Option</h1>
+                 
+                <a href=\"" . RACINE . "?action=gererPromotion\">G&eacute;rer les promotions</a>
+                
 
+            </td>
+            </tr>
+        </table>";
+    return $corps ;
+}
 
-    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=ajouterAdmin\">";
-            
+function genererGererPromotion($tabPromotion){
+
+    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormGererPromotion.js\" type=\"text/javascript\"></script>";
+    $corps .= "<form name=\"formulaireAjout\" onsubmit=\"return verifierAjoutPromotion()\" method=\"post\" action=\"" . RACINE . "?action=gererPromotion\">
+                <input type=hidden id=\"actionPromotion\" name=\"actionPromotion\" value=\"ajouter\">";
     $corps .= "<td id = \"corps\">
-                <h1>Ajouter une promotion</h1>";
+                <h1>Ajouter une promotion</h1>
+                 
+                 S&eacute;lectionner la promotion :</br>";
     
 
             foreach ($tabPromotion as $promoCourante) {
@@ -757,7 +770,15 @@ function genererAfficherOption($tabPromotion) {
                 $corps .= "<input type=\"radio\" name=\"idPromo\" value=\"" . $promoCourante->getIdpromotion() . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
                             <label for=". $promoCourante->getIdpromotion() .">". $aff ."</label><br />";
             }
-    
+            
+    $corps .= "</br>Année universitaire :
+                </br>(sous la forme \"2010-2011\")</br>
+                <input type=text name=\"anneeUniv\" id=\"anneeUniv\" value=\"\">
+                </br></br>
+                <input type=\"submit\"  value=\"Ajouter\">
+                </form>
+                ";
+                
 
     $corps .= "</td>
             </tr>

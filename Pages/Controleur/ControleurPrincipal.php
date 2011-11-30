@@ -9,6 +9,7 @@ session_start();
 call_action();
 
 function verifierAutorisationAction($action) {
+    
     // Si on est connecte Evite le warning a l'etape du deddous
     if (isset($_SESSION['connecte'])) {
         // IDEM si on est conecte
@@ -19,6 +20,7 @@ function verifierAutorisationAction($action) {
             
             // Si admin, SINON etudiant
             if ($utilisateur->getAdmin()) {
+                
                 // specifique ADMIN
                 if ($action == "listePropositionStageResponsable") {
                     return $action;
@@ -56,7 +58,10 @@ function verifierAutorisationAction($action) {
                    return $action;
                 }else if ($action == "option") {
                    return $action;
+                }else if ($action == "gererPromotion") {
+                   return $action;
                 }
+                
                 
                 else {
                     return "pagePrincipale";
@@ -199,6 +204,10 @@ function call_action() {
             
             case 'option' :
                 $action = 'afficherOption';
+                break;
+            
+            case 'gererPromotion' :
+                $action = 'afficherGererPromotion';
                 break;
             
             case 'supprimerAdmin' :
