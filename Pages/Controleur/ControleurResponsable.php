@@ -42,7 +42,9 @@ require_once 'BD.php';
     }
 
     function afficherListeStageAnneeCourante(){
-        $tabStage = BD::rechercherStage();
+        $utilisateur = $_SESSION['modeleUtilisateur'];        
+        $promotion = $utilisateur->getIdPromotion();
+        $tabStage = BD::rechercherStageAnneeCourante($promotion);
         $corps = genererListeStageAnneeCourante($tabStage);
         AffichePage(TRUE, $corps);     
     }
