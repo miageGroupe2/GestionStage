@@ -183,7 +183,6 @@ require_once 'BD.php';
 
     function afficherStageEtudiant() {
         
-        
         $utilisateur = $_SESSION['modeleUtilisateur'];
         $stage = BD::rechercherStageEtudiant($utilisateur->getId());
         

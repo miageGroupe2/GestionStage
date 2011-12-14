@@ -473,11 +473,11 @@ class BD {
                     stage.sujetstage, stage.datedebut, stage.datefin, stage.datesoutenance,
                     stage.remuneration, stage.lieusoutenance, stage.etatstage, stage.respcivil, entreprise.nomentreprise,
                     contact.prenomcontact, contact.nomcontact
-                    FROM stage, entreprise, contact, utilisateur
+                    FROM contact RIGHT JOIN stage ON contact.idcontact = stage.idcontact, 
+                    entreprise, utilisateur
                     WHERE stage.identreprise = entreprise.identreprise
-                    
                     AND stage.idutilisateur = utilisateur.idutilisateur
-                    AND stage.idcontact = contact.idcontact
+                    AND stage.etatstage = 'en cours'
                     AND utilisateur.idutilisateur = '$idUtilisateur'
                     
         ";
@@ -730,7 +730,7 @@ class BD {
                 $requete = "INSERT INTO stage (idstage, identreprise, idcontact, idproposition, idutilisateur,
                     sujetstage, titrestage, technostage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
                     appreciationobtenue, remuneration, embauche, dateembauche, respcivil) 
-                    VALUES ('', null, null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', '" .mysql_real_escape_string($prop->getTitreStage()). ", '" .mysql_real_escape_string($prop->getTechnoStage()). "', NOW(), null, null, null, null, 'a valider', null, null, null, null, null, 0)";
+                    VALUES ('', null, null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', '" .mysql_real_escape_string($prop->getTitreStage()). ", '" .mysql_real_escape_string($prop->getTechnoStage()). "', NOW(), null, null, null, null, 'en cours', null, null, null, null, null, 0)";
             
                 
                 
@@ -739,7 +739,7 @@ class BD {
                 $requete = "INSERT INTO stage (idstage, identreprise, idcontact, idproposition, idutilisateur,
                     sujetstage, titrestage, technostage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
                     appreciationobtenue, remuneration, embauche, dateembauche, respcivil, idpromotion) 
-                    VALUES ('', " . $prop->getIdEntreprise() . ", null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', '" .mysql_real_escape_string($prop->getTitreStage()). "', '" .mysql_real_escape_string($prop->getTechnoStage()). "', NOW(), null, null, null, null, 'a valider', null, null, null, null, null, 0, ".$prop->getPromotionEtudiant().")";
+                    VALUES ('', " . $prop->getIdEntreprise() . ", null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', '" .mysql_real_escape_string($prop->getTitreStage()). "', '" .mysql_real_escape_string($prop->getTechnoStage()). "', NOW(), null, null, null, null, 'en cours', null, null, null, null, null, 0, ".$prop->getPromotionEtudiant().")";
                 
             }
 
