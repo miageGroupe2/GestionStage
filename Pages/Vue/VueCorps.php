@@ -424,23 +424,31 @@ function genererDetailProposition($proposition) {
                 </td>
             </tr>
             </table>
-            <table>
-                <tr>
-                    <td>
-                        <h2>Sujet :</h2>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        " . $proposition->getSujet() . "
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input id=\"submit_valid_prop\" type=\"submit\" value=\"Valider cette proposition\"/>
-                    </td>
-                </tr>
-            </table>
+
+            <h3>Sujet de stage</h3>
+            </br>
+
+            Titre du stage (résumé du sujet en quelques mots) :
+            <br />
+            <input type=text id=\"titreStage\" readonly=\"true\" name=\"titreStage\" size=\"75\" maxlength=\"200\" value=\"".$proposition->getTitreStage()."\">
+
+            <br />
+            Sujet complet de stage : <br />
+            <textarea rows=\"10\" cols=\"60\" readonly=\"true\" id=\"sujetStage\" name=\"sujetStage\" >".$proposition->getSujet()."</textarea>
+            <br />
+
+
+            Technologies utilisées :
+            </br>
+                <input type=text id=\"technoStage\" readonly=\"true\" name=\"technoStage\" size=\"75\" maxlength=\"200\" value=\"".$proposition->getTechnoStage()."\">
+                
+            </br>
+            </br>
+            
+            <input id=\"submit_valid_prop\" type=\"submit\" value=\"Valider cette proposition\"/>
+
+            </br>
+
             </td>
                 </tr>
             </table>

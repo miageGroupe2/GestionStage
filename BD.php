@@ -338,7 +338,7 @@ class BD {
             if ($nombreDeLignes == 0) {
 
                 $requete = "INSERT into proposition (idproposition, identreprise, idutilisateur, 
-                    sujetstagep, titreStagep, technoStagep, etat, dateproposition, idstage) 
+                    sujetstagep, titrestagep, technostagep, etat, dateproposition, idstage) 
                     VALUES ('', '$idEntreprise', '$idUtilisateur', '$sujetStage','$titreStage','$technoStage', 'en attente', NOW(), NULL)";
 
                 mysql_query($requete);
@@ -397,7 +397,7 @@ class BD {
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {
-            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprise'], $tableau['dateproposition'], $tableau['adresseentreprise'], $tableau['codepostalentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['urlsiteinternet'], $tableau['sujetstagep'], $tableau['etat'], null, null, null);
+            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprise'], $tableau['dateproposition'], $tableau['adresseentreprise'], $tableau['codepostalentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['urlsiteinternet'], $tableau['sujetstagep'], $tableau['etat'], null, null, null, null);
             $i++;
         }
         return $tabProp;
@@ -616,7 +616,7 @@ class BD {
 
         while ($tableau = mysql_fetch_array($retour)) {
             $etudiant = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null, NULL);
-            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], null, null, $tableau['nomentreprise'], null, null, null, $tableau['villeentreprise'], $tableau['paysentreprise'], null, null, null, null, $etudiant, null, $tableau['titrestagep']);
+            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], null, null, $tableau['nomentreprise'], null, null, null, $tableau['villeentreprise'], $tableau['paysentreprise'], null, null, null, null, $etudiant, null, $tableau['titrestagep'], null);
             $i++;
         }
         return $tabProp;
@@ -646,7 +646,8 @@ class BD {
                 if ($tableau['identreprise'] != NULL){
                     
                     $entreprise = BD::rechercherEntrepriseById($tableau['identreprise']);
-                    $requete = "SELECT p.idproposition, p.dateproposition, p.sujetstagep, p.etat, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, pr.nompromotion
+                    $requete = "SELECT p.idproposition, p.dateproposition, p.sujetstagep, p.titrestagep,
+                        p.titrestagep, p.technostagep, p.etat, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, pr.nompromotion
                         FROM proposition p, utilisateur u, promotion pr
                         WHERE p.idproposition =".$idProposition." 
                         AND p.idutilisateur = u.idutilisateur
@@ -656,7 +657,12 @@ class BD {
 
                     while ($tableau = mysql_fetch_array($retour)) {
                         $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur'], null, NULL);
-                        $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $entreprise->getNom(), $tableau['dateproposition'],  $entreprise->getAdresse(), $entreprise->getCodePostal(), $entreprise->getVille(), $entreprise->getPays(), $entreprise->getNumeroTelephone(), $entreprise->getUrlSiteInternet(), $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion'], null);
+                        $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, 
+                                $entreprise->getNom(), $tableau['dateproposition'],
+                                $entreprise->getAdresse(), $entreprise->getCodePostal(),
+                                $entreprise->getVille(), $entreprise->getPays(), $entreprise->getNumeroTelephone(),
+                                $entreprise->getUrlSiteInternet(), $tableau['sujetstagep'], $tableau['etat'],
+                                $etudiant, $tableau['nompromotion'], $tableau['titrestagep'], $tableau['technostagep']);
                         $i++;
                     }
                 }else{
@@ -672,7 +678,7 @@ class BD {
 
                     while ($tableau = mysql_fetch_array($retour)) {
                         $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur'], null, NULL);
-                        $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion'], null);
+                        $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion'], null, null);
                         $i++;
                     }
                 }
@@ -696,13 +702,13 @@ class BD {
 
         if ($idProp != FALSE) {
             
-            // 1) On recupere la proposition dans la base pourextraire les infos necessaires a la creation d'un stage
+            // 1) On recupere la proposition dans la base pour extraire les infos necessaires a la creation d'un stage
 
             $requete = "SELECT * FROM proposition, utilisateur WHERE idproposition = " . $idProp . " AND proposition.idutilisateur = utilisateur.idutilisateur";
 
             $retour = mysql_query($requete);
             while ($tableau = mysql_fetch_array($retour)) {
-                $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], $tableau['idutilisateur'], null, $tableau['nomentreprisep'], $tableau['dateproposition'], $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], null, $tableau['idpromotion'], null);
+                $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], $tableau['idutilisateur'], null, $tableau['nomentreprisep'], $tableau['dateproposition'], $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], null, $tableau['idpromotion'], $tableau['titrestagep'], $tableau['technostagep']);
                 $i++;
             }
             $prop = $tabProp[0];
@@ -722,17 +728,18 @@ class BD {
 
             if ($prop->getIdEntreprise() == '') {
                 $requete = "INSERT INTO stage (idstage, identreprise, idcontact, idproposition, idutilisateur,
-                    sujetstage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
+                    sujetstage, titrestage, technostage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
                     appreciationobtenue, remuneration, embauche, dateembauche, respcivil) 
-                    VALUES ('', null, null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', NOW(), null, null, null, null, 'a valider', null, null, null, null, null, 0)";
+                    VALUES ('', null, null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', '" .mysql_real_escape_string($prop->getTitreStage()). ", '" .mysql_real_escape_string($prop->getTechnoStage()). "', NOW(), null, null, null, null, 'a valider', null, null, null, null, null, 0)";
             
                 
                 
             } else {
+                
                 $requete = "INSERT INTO stage (idstage, identreprise, idcontact, idproposition, idutilisateur,
-                    sujetstage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
+                    sujetstage, titrestage, technostage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
                     appreciationobtenue, remuneration, embauche, dateembauche, respcivil, idpromotion) 
-                    VALUES ('', " . $prop->getIdEntreprise() . ", null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', NOW(), null, null, null, null, 'a valider', null, null, null, null, null, 0, ".$prop->getPromotionEtudiant().")";
+                    VALUES ('', " . $prop->getIdEntreprise() . ", null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', '" .mysql_real_escape_string($prop->getTitreStage()). "', '" .mysql_real_escape_string($prop->getTechnoStage()). "', NOW(), null, null, null, null, 'a valider', null, null, null, null, null, 0, ".$prop->getPromotionEtudiant().")";
                 
             }
 

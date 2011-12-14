@@ -28,8 +28,9 @@ class ModeleProposition {
     private $etat;
     private $etudiant;
     private $promotionEtudiant;
+    private $technoStage;
 
-    function __construct($idProposition, $idEntreprise, $idUtilisateur, $idStage, $nomEntreprise, $dateProposition, $adresseEntreprise, $codePostal, $ville, $pays, $numTelephone, $urlSite, $sujet, $etat, $etudiant, $promotionEtudiant, $titreStage) {
+    function __construct($idProposition, $idEntreprise, $idUtilisateur, $idStage, $nomEntreprise, $dateProposition, $adresseEntreprise, $codePostal, $ville, $pays, $numTelephone, $urlSite, $sujet, $etat, $etudiant, $promotionEtudiant, $titreStage, $technoStage) {
         $this->idProposition = $idProposition;
         $this->idEntreprise = $idEntreprise;
         $this->idUtilisateur = $idUtilisateur;
@@ -47,10 +48,16 @@ class ModeleProposition {
         $this->etat = $etat;
         $this->etudiant = $etudiant;
         $this->promotionEtudiant = $promotionEtudiant;
+        $this->technoStage = $technoStage;
+        
     }
+    
     
     public function getPromotionEtudiant() {
         return $this->promotionEtudiant;
+    }
+    public function getTechnoStage() {
+        return $this->technoStage;
     }
 
     public function setPromotionEtudiant($promotionEtudiant) {
