@@ -135,6 +135,7 @@ class BD {
 
     public static function ajouterEntreprise($nom, $numRue, $ville, $codePostal, $pays, $numeroTel, $urlSiteInternet) {
 
+        echo "avant".$numRue ;
         BD::getConnection();
         $nom = mysql_real_escape_string(htmlspecialchars($nom));
         $numRue = mysql_real_escape_string(htmlspecialchars($numRue));
@@ -143,6 +144,7 @@ class BD {
         $pays = mysql_real_escape_string(htmlspecialchars($pays));
         $numeroTel = mysql_real_escape_string(htmlspecialchars($numeroTel));
         $urlSiteInternet = mysql_real_escape_string(htmlspecialchars($urlSiteInternet));
+        echo "apres".$numRue ;
 
         $idEntreprise = NULL;
 
@@ -311,14 +313,17 @@ class BD {
         }
     }
 
-    public static function ajouterPropositionStage($idEntreprise, $sujetStage) {
+    public static function ajouterPropositionStage($idEntreprise, $sujetStage, $titreStage, $technoStage) {
 
         BD::getConnection();
 
         $idEntreprise = mysql_real_escape_string(htmlspecialchars($idEntreprise));
         $sujetStage = mysql_real_escape_string(htmlspecialchars($sujetStage));
+        $titreStage = mysql_real_escape_string(htmlspecialchars($titreStage));
+        $technoStage = mysql_real_escape_string(htmlspecialchars($technoStage));
 
-        if ($idEntreprise != FALSE && $sujetStage != FALSE) {
+        if ($idEntreprise != FALSE && $sujetStage != FALSE 
+                && $titreStage != FALSE && $technoStage != FALSE ) {
 
             $modeleUtilisateur = $_SESSION['modeleUtilisateur'];
             $idUtilisateur = $modeleUtilisateur->getId();
@@ -333,8 +338,8 @@ class BD {
             if ($nombreDeLignes == 0) {
 
                 $requete = "INSERT into proposition (idproposition, identreprise, idutilisateur, 
-                    sujetstagep, etat, dateproposition, idstage) 
-                    VALUES ('', '$idEntreprise', '$idUtilisateur', '$sujetStage', 'en attente', NOW(), NULL)";
+                    sujetstagep, titreStagep, technoStagep, etat, dateproposition, idstage) 
+                    VALUES ('', '$idEntreprise', '$idUtilisateur', '$sujetStage','$titreStage','$technoStage', 'en attente', NOW(), NULL)";
 
                 mysql_query($requete);
             } else {
@@ -392,7 +397,7 @@ class BD {
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {
-            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprise'], $tableau['dateproposition'], $tableau['adresseentreprise'], $tableau['codepostalentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['urlsiteinternet'], $tableau['sujetstagep'], $tableau['etat'], null, null);
+            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprise'], $tableau['dateproposition'], $tableau['adresseentreprise'], $tableau['codepostalentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['urlsiteinternet'], $tableau['sujetstagep'], $tableau['etat'], null, null, null);
             $i++;
         }
         return $tabProp;
@@ -599,7 +604,9 @@ class BD {
         $i = 0;
         $tabProp = null;
         
-        $requete = "SELECT p.idproposition, e.nomentreprise, p.identreprise, u.idutilisateur, u.nomutilisateur, u.prenomutilisateur, pr.nompromotion 
+        $requete = "SELECT p.idproposition, e.nomentreprise, e.villeentreprise, e.paysentreprise, 
+            p.identreprise, p.titrestagep, u.idutilisateur, 
+            u.nomutilisateur, u.prenomutilisateur, pr.nompromotion 
             FROM proposition p, utilisateur u, promotion pr, entreprise e
             WHERE p.idutilisateur = u.idutilisateur
             AND pr.idpromotion = u.idpromotion
@@ -609,7 +616,7 @@ class BD {
 
         while ($tableau = mysql_fetch_array($retour)) {
             $etudiant = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null, NULL);
-            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], null, null, $tableau['nomentreprise'], null, null, null, null, null, null, null, null, null, $etudiant, null);
+            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], null, null, $tableau['nomentreprise'], null, null, null, $tableau['villeentreprise'], $tableau['paysentreprise'], null, null, null, null, $etudiant, null, $tableau['titrestagep']);
             $i++;
         }
         return $tabProp;
@@ -649,7 +656,7 @@ class BD {
 
                     while ($tableau = mysql_fetch_array($retour)) {
                         $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur'], null, NULL);
-                        $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $entreprise->getNom(), $tableau['dateproposition'],  $entreprise->getAdresse(), $entreprise->getCodePostal(), $entreprise->getVille(), $entreprise->getPays(), $entreprise->getNumeroTelephone(), $entreprise->getUrlSiteInternet(), $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion']);
+                        $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $entreprise->getNom(), $tableau['dateproposition'],  $entreprise->getAdresse(), $entreprise->getCodePostal(), $entreprise->getVille(), $entreprise->getPays(), $entreprise->getNumeroTelephone(), $entreprise->getUrlSiteInternet(), $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion'], null);
                         $i++;
                     }
                 }else{
@@ -665,7 +672,7 @@ class BD {
 
                     while ($tableau = mysql_fetch_array($retour)) {
                         $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur'], null, NULL);
-                        $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion']);
+                        $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion'], null);
                         $i++;
                     }
                 }
@@ -695,7 +702,7 @@ class BD {
 
             $retour = mysql_query($requete);
             while ($tableau = mysql_fetch_array($retour)) {
-                $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], $tableau['idutilisateur'], null, $tableau['nomentreprisep'], $tableau['dateproposition'], $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], null, $tableau['idpromotion']);
+                $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], $tableau['idutilisateur'], null, $tableau['nomentreprisep'], $tableau['dateproposition'], $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], null, $tableau['idpromotion'], null);
                 $i++;
             }
             $prop = $tabProp[0];

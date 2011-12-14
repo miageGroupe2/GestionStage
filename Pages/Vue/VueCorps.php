@@ -127,7 +127,7 @@ function genererEditerPropositionEtudiant($proposition) {
                             Date de proposition :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($proposition->getDateProposition()) . "
+                            " . $proposition->getDateProposition() . "
                         </td>
                     </tr>
                     <tr>
@@ -135,7 +135,7 @@ function genererEditerPropositionEtudiant($proposition) {
                             Nom de l'entreprise :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($proposition->getNomEntreprise()) . "
+                            " . $proposition->getNomEntreprise() . "
                         </td>
                     </tr>
                     <tr>
@@ -143,10 +143,10 @@ function genererEditerPropositionEtudiant($proposition) {
                             Adresse :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($proposition->getAdresseEntreprise()) . "<br/>" .
-                htmlentities($proposition->getCodePostal()) . "<br/>" .
-                htmlentities($proposition->getVille()) . "<br/>" .
-                htmlentities($proposition->getPays()) . "
+                            " . $proposition->getAdresseEntreprise() . "<br/>" .
+                                $proposition->getCodePostal() . "<br/>" .
+                                $proposition->getVille() . "<br/>" .
+                                $proposition->getPays() . "
                         </td>
                     </tr>
                     <tr>
@@ -154,7 +154,7 @@ function genererEditerPropositionEtudiant($proposition) {
                             Num&eacute;ro de t&eacute;l&eacute;phone :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($proposition->getNumTelephone()) . "
+                            " . $proposition->getNumTelephone() . "
                         </td>
                     </tr>
                     <tr>
@@ -162,7 +162,7 @@ function genererEditerPropositionEtudiant($proposition) {
                             Site Web :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($proposition->getUrlSite()) . "
+                            " . $proposition->getUrlSite() . "
                         </td>
                     </tr>
                     <tr>
@@ -170,7 +170,7 @@ function genererEditerPropositionEtudiant($proposition) {
                             Sujet :
                         </td>
                         <td class = \"tableau\">
-                            <textarea rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" >" . htmlentities($proposition->getSujet()) . "</textarea>
+                            <textarea rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" >" . $proposition->getSujet() . "</textarea>
                         </td>
                     </tr>
                     <tr>
@@ -178,7 +178,7 @@ function genererEditerPropositionEtudiant($proposition) {
                             Etat de la proposition :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($proposition->getEtat()) . "
+                            " . $proposition->getEtat() . "
                         </td>
                     </tr>
                 </table>
@@ -300,6 +300,9 @@ function genererListePropositionStageResponsable($tabProp) {
                             Nom de l'entreprise
                         </td>
                         <td class=\"tableau\">
+                            Sujet de stage
+                        </td>
+                        <td class=\"tableau\">
                             Informations suppl&eacute;mentaires
                         </td>
                     </tr>
@@ -312,7 +315,9 @@ function genererListePropositionStageResponsable($tabProp) {
                     . "</td>
                             <td class=\"tableau\">" . $prop->getEtudiant()->getPrenom()
                     . "</td>
-                            <td class=\"tableau\">" . $prop->getNomEntreprise()
+                            <td class=\"tableau\">" . $prop->getNomEntreprise() . ", " . $prop->getVille() . " (" . $prop->getPays(). ")"
+                    . "</td>
+                        <td class=\"tableau\">" . $prop->getTitreStage()
                     . "</td>
                             <td class=\"tableau\"><a href=\"" . RACINE . "?action=detailProp&idprop=" . $prop->getIdProposition() . "\">D&eacute;tails</a>
                             </td>
@@ -328,14 +333,14 @@ function genererDetailProposition($proposition) {
     if ($proposition != NULL) {
         $corps = "<td id = \"corps\">
             <h2>Proposition de stage</h2><br/>
-            <form method=\"post\" action=\"" . RACINE . "?action=validerProp&idprop=" . htmlentities($proposition->getIdProposition()) . "\">
+            <form method=\"post\" action=\"" . RACINE . "?action=validerProp&idprop=" . $proposition->getIdProposition() . "\">
             <table>
             <tr>
                 <td>
                     Date de proposition :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"dateproposition\" value=\"" . htmlentities($proposition->getDateProposition()) . "\">
+                    <input type=text readonly=\"true\" name=\"dateproposition\" value=\"" . $proposition->getDateProposition() . "\">
                 </td>
             </tr>
             <tr>
@@ -343,7 +348,7 @@ function genererDetailProposition($proposition) {
                     Nom :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"nom\" value=\"" . htmlentities($proposition->getEtudiant()->getNom()) . "\">
+                    <input type=text readonly=\"true\" name=\"nom\" value=\"" . $proposition->getEtudiant()->getNom() . "\">
                 </td>
             </tr>
             <tr>
@@ -351,7 +356,7 @@ function genererDetailProposition($proposition) {
                     Pr&eacute;om :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"prenom\" value=\"" . htmlentities($proposition->getEtudiant()->getPrenom()) . "\">
+                    <input type=text readonly=\"true\" name=\"prenom\" value=\"" . $proposition->getEtudiant()->getPrenom() . "\">
                 </td>
             </tr>
             <tr>
@@ -359,7 +364,7 @@ function genererDetailProposition($proposition) {
                     Promotion :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"promotionetudiant\" value=\"" . htmlentities($proposition->getPromotionEtudiant()) . "\">
+                    <input type=text readonly=\"true\" name=\"promotionetudiant\" value=\"" . $proposition->getPromotionEtudiant() . "\">
                 </td>
             </tr>
             <tr>
@@ -367,7 +372,7 @@ function genererDetailProposition($proposition) {
                     Nom Entreprise :
                 </td>
                 <td>
-                    <input type=text readonly=\"true\" name=\"nomentreprise\" value=\"" . htmlentities($proposition->getNomEntreprise()) . "\">
+                    <input type=text readonly=\"true\" name=\"nomentreprise\" value=\"" . $proposition->getNomEntreprise() . "\">
                 </td>
             </tr>
             <tr>
@@ -375,7 +380,7 @@ function genererDetailProposition($proposition) {
                     Adresse :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" size=\"35\" name=\"adresseentreprise\" value=\"" . htmlentities($proposition->getAdresseEntreprise()) . "\">
+                    <input type=\"text\" readonly=\"true\" size=\"35\" name=\"adresseentreprise\" value=\"" . $proposition->getAdresseEntreprise() . "\">
                 </td>
             </tr>
             <tr>
@@ -383,7 +388,7 @@ function genererDetailProposition($proposition) {
                     Code postal :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"codepostalentreprise\" value=\"" . htmlentities($proposition->getCodePostal()) . "\">
+                    <input type=\"text\" readonly=\"true\" name=\"codepostalentreprise\" value=\"" . $proposition->getCodePostal() . "\">
                 </td>
             </tr>
             <tr>
@@ -391,7 +396,7 @@ function genererDetailProposition($proposition) {
                     Ville :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"villeentreprise\" value=\"" . htmlentities($proposition->getVille()) . "\">
+                    <input type=\"text\" readonly=\"true\" name=\"villeentreprise\" value=\"" . $proposition->getVille() . "\">
                 </td>
             </tr>
             <tr>
@@ -399,7 +404,7 @@ function genererDetailProposition($proposition) {
                     Pays :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"paysentreprise\" value=\"" . htmlentities($proposition->getPays()) . "\">
+                    <input type=\"text\" readonly=\"true\" name=\"paysentreprise\" value=\"" . $proposition->getPays() . "\">
                 </td>
             </tr>
             <tr>
@@ -407,7 +412,7 @@ function genererDetailProposition($proposition) {
                     N&deg; Tel :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"telentreprise\" value=\"" . htmlentities($proposition->getNumTelephone()) . "\">
+                    <input type=\"text\" readonly=\"true\" name=\"telentreprise\" value=\"" . $proposition->getNumTelephone() . "\">
                 </td>
             </tr>
             <tr>
@@ -415,7 +420,7 @@ function genererDetailProposition($proposition) {
                     URL Site :
                 </td>
                 <td>
-                    <input type=\"text\" readonly=\"true\" name=\"urlsite\" value=\"" . htmlentities($proposition->getUrlSite()) . "\">
+                    <input type=\"text\" readonly=\"true\" name=\"urlsite\" value=\"" . $proposition->getUrlSite() . "\">
                 </td>
             </tr>
             </table>
@@ -427,7 +432,7 @@ function genererDetailProposition($proposition) {
                 </tr>
                 <tr>
                     <td>
-                        " . htmlentities($proposition->getSujet()) . "
+                        " . $proposition->getSujet() . "
                     </td>
                 </tr>
                 <tr>
@@ -617,13 +622,13 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
             }
             $i++ ;
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= htmlentities($adminCourant->getPrenom());
+            $corps .= $adminCourant->getPrenom();
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= htmlentities($adminCourant->getNom());
+            $corps .= $adminCourant->getNom();
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= htmlentities($adminCourant->getPromotion());
+            $corps .= $adminCourant->getPromotion();
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= htmlentities($adminCourant->getMail());
+            $corps .= $adminCourant->getMail();
 
 
             $corps .= "</td></tr>";
@@ -919,7 +924,7 @@ function genererDetailStage($stage) {
                      <td class = \"tableau\">
                         Contact Entreprise : <br/><br/>" .
                 $stage[0]->getContact()->getPrenom() . " " . $stage[0]->getContact()->getNom() . "<br/>
-                        Fonction : " . htmlentities($stage[0]->getContact()->getFonction()) . "<br/>
+                        Fonction : " . $stage[0]->getContact()->getFonction() . "<br/>
                         Tel fixe : " . $stage[0]->getContact()->getTelephoneFixe() . "<br/>    
                         Tel mobile : " . $stage[0]->getContact()->getTelephoneMobile() . "<br/>    
                         Mail : " . $stage[0]->getContact()->getMail() . "<br/>    
@@ -1164,7 +1169,7 @@ function genererListePropositionStageEtudiant($tabProp) {
                             Date de proposition :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($prop->getDateProposition()) . "
+                            " . $prop->getDateProposition() . "
                         </td>
                     </tr>
                     <tr>
@@ -1172,7 +1177,7 @@ function genererListePropositionStageEtudiant($tabProp) {
                             Nom de l'entreprise :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($prop->getNomEntreprise()) . "
+                            " . $prop->getNomEntreprise() . "
                         </td>
                     </tr>
                     <tr>
@@ -1180,10 +1185,10 @@ function genererListePropositionStageEtudiant($tabProp) {
                             Adresse :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($prop->getAdresseEntreprise()) . "<br/>" .
-                    htmlentities($prop->getCodePostal()) . "<br/>" .
-                    htmlentities($prop->getVille()) . "<br/>" .
-                    htmlentities($prop->getPays()) . "
+                            " . $prop->getAdresseEntreprise() . "<br/>" .
+                    $prop->getCodePostal() . "<br/>" .
+                    $prop->getVille() . "<br/>" .
+                    $prop->getPays() . "
                         </td>
                     </tr>
                     <tr>
@@ -1191,7 +1196,7 @@ function genererListePropositionStageEtudiant($tabProp) {
                             Num&eacute;ro de t&eacute;l&eacute;phone :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($prop->getNumTelephone()) . "
+                            " . $prop->getNumTelephone() . "
                         </td>
                     </tr>
                     <tr>
@@ -1199,7 +1204,7 @@ function genererListePropositionStageEtudiant($tabProp) {
                             Site Web :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($prop->getUrlSite()) . "
+                            " . $prop->getUrlSite() . "
                         </td>
                     </tr>
                     <tr>
@@ -1207,7 +1212,7 @@ function genererListePropositionStageEtudiant($tabProp) {
                             Sujet :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($prop->getSujet()) . "
+                            " . $prop->getSujet() . "
                         </td>
                     </tr>
                     <tr>
@@ -1215,7 +1220,7 @@ function genererListePropositionStageEtudiant($tabProp) {
                             Etat de la proposition :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($prop->getEtat()) . "
+                            " . $prop->getEtat() . "
                         </td>
                     </tr>
                 </table><br/>
@@ -1459,16 +1464,30 @@ function genererProposerStageEtape2($entreprise) {
                              <input type=text readonly=\"true\" value=\"" . $entreprise->getUrlSiteInternet() . "\" >
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <h3>Sujet de stage</h3>
-                        </td>
-                    </tr>
                 </table>
+                
+                </br>
+                <h3>Sujet de stage</h3>
+                </br>
+                
+                Titre du stage (résumé du sujet en quelques mots) <etoile>*</etoile>:
+                <br />
+                <input type=text id=\"titreStage\" name=\"titreStage\" size=\"75\" maxlength=\"200\">
+                
+                <br />
+                Sujet complet de stage : <etoile>*</etoile><br />
                 <textarea rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" ></textarea>
                 <br />
+                
+                
+                Technologies utilisées <etoile>*</etoile>:
+                </br>
+                <input type=text id=\"technoStage\" name=\"technoStage\" size=\"75\" maxlength=\"200\" >
+                
+                </br>
                 <input type=\"submit\" value=\"Valider la proposition\"></form><br /><br />
-                </form>";
+                </br>
+            </form>";
 
 
     $corps .= "
@@ -1507,17 +1526,17 @@ function genererModifierContact($tabContact, $idEntreprise, $idStage) {
 
             $corps .= "<input type=\"radio\" name=\"idContact\" value=\"" . $contactCourant->getId() . "\" id=\"" . $contactCourant->getId() . "\" />";
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= htmlentities($contactCourant->getPrenom());
+            $corps .= $contactCourant->getPrenom();
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= htmlentities($contactCourant->getNom());
+            $corps .= $contactCourant->getNom();
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= htmlentities($contactCourant->getFonction());
+            $corps .= $contactCourant->getFonction();
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= htmlentities($contactCourant->getTelephoneFixe());
+            $corps .= $contactCourant->getTelephoneFixe();
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= htmlentities($contactCourant->getTelephoneMobile());
+            $corps .= $contactCourant->getTelephoneMobile();
             $corps .= "</td><td class=\"tableau\">";
-            $corps .= htmlentities($contactCourant->getMail());
+            $corps .= $contactCourant->getMail();
 
 
             $corps .= "</td></tr>";
@@ -1616,7 +1635,7 @@ function genererProposerStage($tabEntreprise) {
 
 
     $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaireEtape1()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape2\">";
-
+    
     // on liste les entreprises ayant un nom similaire
     if ($tabEntreprise != NULL) {
 
@@ -1782,7 +1801,7 @@ function genererVoirStageEtudiant($stage) {
                             Etat stage :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($stage->getEtatstage()) . "
+                            " . $stage->getEtatstage() . "
                         </td>
                     </tr>
                     <tr>
@@ -1790,7 +1809,7 @@ function genererVoirStageEtudiant($stage) {
                             Nom de l'entreprise :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($stage->getEntreprise()->getNom()) . "
+                            " . $stage->getEntreprise()->getNom() . "
                         </td>
                     </tr>
                     <tr>
@@ -1798,7 +1817,7 @@ function genererVoirStageEtudiant($stage) {
                             Sujet :
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($stage->getSujetstage()) . "
+                            " . $stage->getSujetstage() . "
                         </td>
                     </tr>
                     <tr>
@@ -1806,7 +1825,7 @@ function genererVoirStageEtudiant($stage) {
                             Date de d&eacute;but : 
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($stage->getDatedebut()) . "
+                            " . $stage->getDatedebut() . "
                         </td>
                     </tr>
                     <tr>
@@ -1814,7 +1833,7 @@ function genererVoirStageEtudiant($stage) {
                             Date de fin : 
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($stage->getDatefin()) . "
+                            " . $stage->getDatefin() . "
                         </td>
                     </tr>
                     <tr>
@@ -1822,7 +1841,7 @@ function genererVoirStageEtudiant($stage) {
                             Responsabilit&eacute;e civile : 
                         </td>
                         <td class = \"tableau\">
-                            " . htmlentities($stage->getDatefin()) . "
+                            " . $stage->getDatefin() . "
                         </td>
                     </tr>
                     
@@ -1842,7 +1861,7 @@ function genererVoirStageEtudiant($stage) {
                                 Nom :
                             </td>
                             <td class = \"tableau\">
-                                " . htmlentities($stage->getContact()->getNom()) . "
+                                " . $stage->getContact()->getNom() . "
                             </td>
                         </tr>
                         <tr>
@@ -1850,7 +1869,7 @@ function genererVoirStageEtudiant($stage) {
                                 Pr&eacute;nom :
                             </td>
                             <td class = \"tableau\">
-                                " . htmlentities($stage->getContact()->getPrenom()) . "
+                                " . $stage->getContact()->getPrenom() . "
                             </td>
                         </tr>
                     </table>

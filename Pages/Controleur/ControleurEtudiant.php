@@ -8,7 +8,9 @@ require_once 'BD.php';
     function proposerStageEtape3() {
         
         // on vérifie que l'utilisateur a renseigné un sujet
-        if (isset($_POST['sujetStage']) && $_POST['sujetStage'] != ""){
+        if (isset($_POST['sujetStage']) && $_POST['sujetStage'] != ""
+                && isset($_POST['titreStage']) && $_POST['titreStage'] != ""
+                &&isset($_POST['technoStage']) && $_POST['technoStage'] != "" ){
             
             $entreprise = $_SESSION['modeleEntreprise'];
             $idEntreprise = $entreprise->getId() ;
@@ -25,7 +27,7 @@ require_once 'BD.php';
                 
             }
             
-            BD::ajouterPropositionStage($idEntreprise, $_POST['sujetStage']);
+            BD::ajouterPropositionStage($idEntreprise, $_POST['sujetStage'], $_POST['titreStage'], $_POST['technoStage']);
             
             $corps = genererProposerStageEtape3($entreprise);
             AffichePage(TRUE, $corps);

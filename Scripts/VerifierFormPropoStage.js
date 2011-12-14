@@ -43,9 +43,12 @@ function verifierFormulaireEtape1(){
 }
 function verifierFormulaireEtape2(){
     
-    if (document.getElementById("sujetStage").value == ""){
+    if (document.getElementById("sujetStage").value == ""
+        || document.getElementById("titreStage").value == ""
+        || document.getElementById("technoStage").value == ""
+        ){
         
-        alert("Veuillez indiquer un sujet de stage.");
+        alert("Veuillez remplir tous les champs marqués d'une étoile.");
         return false ;
     }else{
         
