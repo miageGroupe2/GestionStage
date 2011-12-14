@@ -769,7 +769,9 @@ class BD {
         BD::getConnection();
         $tabStage = null;
         $i=0;
-        $requete = "SELECT s.idstage, s.etatstage, s.datevalidation, u.nomutilisateur, u.prenomutilisateur, e.nomentreprise, s.noteobtenue, pr.nompromotion
+        $requete = "SELECT s.idstage, s.etatstage, s.datevalidation, s.titrestage, u.nomutilisateur,
+                    u.prenomutilisateur, e.nomentreprise, e.paysentreprise,
+                    e.villeentreprise, s.noteobtenue, pr.nompromotion
                     FROM stage s, entreprise e, utilisateur u, promotion pr
                     WHERE u.idutilisateur = s.idutilisateur
                     AND u.idpromotion = pr.idpromotion
@@ -782,8 +784,8 @@ class BD {
             
             $promotion = new ModelePromotion(null, $tableau['nompromotion'], null);
             $etudiant = new ModeleUtilisateur(null, null, null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null, NULL);
-            $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, null, null, null, null, null, null, null);
-            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, null, $tableau['datevalidation'], null, null, null, null, $tableau['etatstage'], $tableau['noteobtenue'], null, null, null, null, $etudiant, $entreprise, null, $promotion,null, null, null);
+            $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, $tableau['villeentreprise'], null,  $tableau['paysentreprise'], null, null, null, null);
+            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, null, $tableau['datevalidation'], null, null, null, null, $tableau['etatstage'], $tableau['noteobtenue'], null, null, null, null, $etudiant, $entreprise, null, $promotion,null, $tableau['titrestage'], null);
             $i++;
             
         }
@@ -796,7 +798,9 @@ class BD {
         $tabStage = null;
         $i=0;
         
-        $requete = "SELECT s.idstage, s.etatstage, s.datevalidation, u.nomutilisateur, u.prenomutilisateur, e.nomentreprise, s.noteobtenue, pr.nompromotion
+        $requete = "SELECT s.idstage, s.etatstage, s.datevalidation, u.nomutilisateur,
+                    u.prenomutilisateur, e.nomentreprise, e.villeentreprise, e.paysentreprise,
+                    s.titrestage, pr.nompromotion
                     FROM stage s, entreprise e, utilisateur u, promotion pr
                     WHERE u.idutilisateur = s.idutilisateur
                     AND u.idpromotion = pr.idpromotion
@@ -809,8 +813,8 @@ class BD {
             
             $promotion = new ModelePromotion(null, $tableau['nompromotion'], null);
             $etudiant = new ModeleUtilisateur(null, null, null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null, NULL);
-            $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, null, null, null, null, null, null, null);
-            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, null, $tableau['datevalidation'], null, null, null, null, $tableau['etatstage'], $tableau['noteobtenue'], null, null, null, null, $etudiant, $entreprise, null, $promotion,null, null, null);
+            $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, $tableau['villeentreprise'], null, $tableau['paysentreprise'], null, null, null, null);
+            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, null, $tableau['datevalidation'], null, null, null, null, $tableau['etatstage'], null, null, null, null, null, $etudiant, $entreprise, null, $promotion,null, $tableau['titrestage'], null);
             $i++;
             
         }
@@ -823,7 +827,7 @@ class BD {
         BD::getConnection();
         $tabStage = null;
         $i=0;
-        $requete = "SELECT s.idstage, s.datevalidation, s.sujetstage, u.numetudiant, u.nomutilisateur, 
+        $requete = "SELECT s.idstage, s.datevalidation, s.sujetstage, s.titrestage, s.technostage, u.numetudiant, u.nomutilisateur, 
             u.prenomutilisateur, u.mailutilisateur, e.nomentreprise, e.adresseentreprise, 
             e.villeentreprise, e.codepostalentreprise, e.paysentreprise, e.numerotelephone, 
             e.numerosiret, e.urlsiteinternet, e.statutjuridique, s.datedebut, s.datefin, 
@@ -844,7 +848,7 @@ class BD {
             $etudiant = new ModeleUtilisateur(null, null, $tableau['numetudiant'], $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], null, NULL);
             $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet'], $tableau['statutjuridique']);
             $contact = new ModeleContact(null, $tableau['prenomcontact'], $tableau['nomcontact'], $tableau['fonctioncontact'], $tableau['telfixecontact'], $tableau['telmobilecontact'], $tableau['mailcontact']);
-            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, $tableau['sujetstage'], BD::dateENtoFR($tableau['datevalidation']), BD::dateENtoFR($tableau['datedebut']), BD::dateENtoFR($tableau['datefin']), BD::dateENtoFR($tableau['datesoutenance']), $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], BD::dateENtoFR($tableau['dateembauche']), $etudiant, $entreprise, $contact, $promotion, $tableau['respcivil'],null, null);
+            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, $tableau['sujetstage'], BD::dateENtoFR($tableau['datevalidation']), BD::dateENtoFR($tableau['datedebut']), BD::dateENtoFR($tableau['datefin']), BD::dateENtoFR($tableau['datesoutenance']), $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], BD::dateENtoFR($tableau['dateembauche']), $etudiant, $entreprise, $contact, $promotion, $tableau['respcivil'],$tableau['titrestage'],$tableau['technostage']);
             $i++;
             
         }

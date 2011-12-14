@@ -518,7 +518,7 @@ function genererListeStage($tabStage) {
                             Etat stage
                         </td>
                         <td class=\"tableau\">
-                            Note obtenue
+                            Titre du stage
                         </td>
                         <td class=\"tableau\">
                             Nom promotion
@@ -535,11 +535,11 @@ function genererListeStage($tabStage) {
                     . "</td>
                             <td class=\"tableau\">" . $stage->getUtilisateur()->getPrenom()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getEntreprise()->getNom()
+                            <td class=\"tableau\">" . $stage->getEntreprise()->getNom() . ", " . $stage->getEntreprise()->getVille() . " (" . $stage->getEntreprise()->getPays(). ")"
                     . "</td>
                             <td class=\"tableau\">" . $stage->getEtatstage()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getNoteobtenue()
+                            <td class=\"tableau\">" . $stage->getTitreStage()
                     . "</td>
                             <td class=\"tableau\">" . $stage->getPromotion()->getNompromotion()
                     . "</td>
@@ -577,7 +577,7 @@ function genererListeStageAnneeCourante($tabStage) {
                             Etat stage
                         </td>
                         <td class=\"tableau\">
-                            Note obtenue
+                            Titre du stage
                         </td>
                         <td class=\"tableau\">
                             Nom promotion
@@ -594,11 +594,11 @@ function genererListeStageAnneeCourante($tabStage) {
                     . "</td>
                             <td class=\"tableau\">" . $stage->getUtilisateur()->getPrenom()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getEntreprise()->getNom()
+                            <td class=\"tableau\">" . $stage->getEntreprise()->getNom() . ", " . $stage->getEntreprise()->getVille() . " (" . $stage->getEntreprise()->getPays(). ")"
                     . "</td>
                             <td class=\"tableau\">" . $stage->getEtatstage()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getNoteobtenue()
+                            <td class=\"tableau\">" . $stage->getTitreStage()
                     . "</td>
                             <td class=\"tableau\">" . $stage->getPromotion()->getNompromotion()
                     . "</td>
@@ -978,9 +978,10 @@ function genererDetailStage($stage) {
                         Appr&eacute;ciation obtenue : " . $stage[0]->getAppreciationobtenue() . "<br/>
                         R&eacute;mun&eacute;ration : " . $stage[0]->getRemuneration() . "<br/>
                         Embauche : " . $embauche . "<br/>
-                        Date embauche : " . $stage[0]->getDateembauche() . "<br/><br/>
-                        Sujet :<br/><br/>" .
-                $stage[0]->getSujetstage() . "
+                        Date embauche : " . $stage[0]->getDateembauche() . "<br/>
+                        Titre de stage :" .$stage[0]->getTitreStage() . "<br/>
+                        Sujet :" .$stage[0]->getSujetstage() . "<br/>
+                        Technologies utilisées :" .$stage[0]->getTechnoStage() . "<br/>
                         <br/><br/><a href=\"" . RACINE . "?action=editerStage&idstage=" . $stage[0]->getIdstage() . "\">Modifier les donn&eacute;es du stage</a>
                     </td>
                 </tr>
@@ -1120,7 +1121,7 @@ function genererEditerStage($stage) {
                     </tr>
                      <tr>
                         <td>
-                            Enbauche :
+                            Embauche :
                         </td>
                         <td>
                             <input type=\"text\" name=\"embauche\" value=\"" . $stage[0]->getEmbauche() . "\" >
