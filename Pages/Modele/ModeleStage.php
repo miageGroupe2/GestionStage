@@ -27,6 +27,8 @@ class ModeleStage {
     private $embauche;
     private $dateembauche;
     private $respcivil;
+    private $technoStage;
+    private $titreStage;
     
     // Utile pour certaines requetes d'affichage, cet attribut ne fait pas parti de la table stage de la BDD
     private $utilisateur;
@@ -34,7 +36,7 @@ class ModeleStage {
     private $contact;
     private $promotion;
     
-    function __construct($idstage, $identreprise, $idcontact, $sujetstage, $datevalidation, $datedebut, $datefin, $datesoutenance, $lieusoutenance, $etatstage, $noteobtenue, $appreciationobtenue, $remuneration, $embauche, $dateembauche, $utilisateur, $entreprise, $contact, $promotion, $respcivil) {
+    function __construct($idstage, $identreprise, $idcontact, $sujetstage, $datevalidation, $datedebut, $datefin, $datesoutenance, $lieusoutenance, $etatstage, $noteobtenue, $appreciationobtenue, $remuneration, $embauche, $dateembauche, $utilisateur, $entreprise, $contact, $promotion, $respcivil, $titreStage, $technoStage) {
         $this->idstage = $idstage;
         $this->identreprise = $identreprise;
         $this->idcontact = $idcontact;
@@ -55,7 +57,17 @@ class ModeleStage {
         $this->contact = $contact;
         $this->promotion = $promotion;
         $this->respcivil = $respcivil;
+        $this->titreStage = $titreStage;
+        $this->technoStage = $technoStage;
     }
+    public function getTechnoStage() {
+        return $this->technoStage;
+    }
+    
+    public function getTitreStage() {
+        return $this->titreStage;
+    }
+    
 
     public function getIdstage() {
         return $this->idstage;

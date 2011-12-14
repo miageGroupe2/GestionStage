@@ -137,7 +137,7 @@ require_once 'BD.php';
 
             if($operationPermise){
     
-                $proposition = BD::editerPropositionStage($_GET['idProposition'], $_POST['sujetStage']);
+                $proposition = BD::editerPropositionStage($_GET['idProposition'], $_POST['sujetStage'], $_POST['titreStage'], $_POST['technoStage']);
             }
 
             $_REQUEST['action'] = "pagePrincipale";
@@ -160,7 +160,6 @@ require_once 'BD.php';
                 $_REQUEST['action'] = "pagePrincipale";
                 call_action();
             }
-
         }
     }
     

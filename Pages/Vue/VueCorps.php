@@ -167,10 +167,26 @@ function genererEditerPropositionEtudiant($proposition) {
                     </tr>
                     <tr>
                         <td class = \"tableau\">
-                            Sujet :
+                            Titre du stage <etoile>*</etoile>:
+                        </td>
+                        <td class = \"tableau\">
+                            <textarea rows=\"3\" cols=\"60\" id=\"titreStage\" name=\"titreStage\" >" . $proposition->getTitreStage() . "</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Sujet <etoile>*</etoile>:
                         </td>
                         <td class = \"tableau\">
                             <textarea rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" >" . $proposition->getSujet() . "</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Technologies utilisées <etoile>*</etoile>:
+                        </td>
+                        <td class = \"tableau\">
+                            <textarea rows=\"3\" cols=\"60\" id=\"technoStage\" name=\"technoStage\" >" . $proposition->getTechnoStage() . "</textarea>
                         </td>
                     </tr>
                     <tr>
@@ -1194,9 +1210,9 @@ function genererListePropositionStageEtudiant($tabProp) {
                         </td>
                         <td class = \"tableau\">
                             " . $prop->getAdresseEntreprise() . "<br/>" .
-                    $prop->getCodePostal() . "<br/>" .
-                    $prop->getVille() . "<br/>" .
-                    $prop->getPays() . "
+                                $prop->getCodePostal() . "<br/>" .
+                                $prop->getVille() . "<br/>" .
+                                $prop->getPays() . "
                         </td>
                     </tr>
                     <tr>
@@ -1220,9 +1236,10 @@ function genererListePropositionStageEtudiant($tabProp) {
                             Sujet :
                         </td>
                         <td class = \"tableau\">
-                            " . $prop->getSujet() . "
+                            " . $prop->getTitreStage() . "
                         </td>
                     </tr>
+                    
                     <tr>
                         <td class = \"tableau\">
                             Etat de la proposition :
@@ -1822,10 +1839,26 @@ function genererVoirStageEtudiant($stage) {
                     </tr>
                     <tr>
                         <td class = \"tableau\">
+                            Titre du stage :
+                        </td>
+                        <td class = \"tableau\">
+                            " . $stage->getTitreStage() . "
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
                             Sujet :
                         </td>
                         <td class = \"tableau\">
                             " . $stage->getSujetstage() . "
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Technologies utilisées :
+                        </td>
+                        <td class = \"tableau\">
+                            " . $stage->getTechnoStage() . "
                         </td>
                     </tr>
                     <tr>
