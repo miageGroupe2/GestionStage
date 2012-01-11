@@ -1227,23 +1227,40 @@ function genererListePropositionStageEtudiant($tabProp) {
                 <h3>Proposition " . $i . " :</h3>
                 <table>
                     <tr>
-                        <td class = \"tableau\">
+                        <td>
                             Date de proposition :
                         </td>
-                        <td class = \"tableau\">
+                        <td>
                             " . $prop->getDateProposition() . "
                         </td>
-                    </tr>
+                    </tr>";
+            
+            if($prop->getEtat() == "refusée"){
+                $corps .= "
                     <tr>
                         <td class = \"tableau\">
                             Etat de la propositionn :
                         </td>
                         <td class = \"tableau\">
-                            " . $prop->getEtat() . "
+                            <rouge>" . $prop->getEtat() . "<rouge>
                         </td>
                     </tr>
                 </table>
-            ";
+                ";
+            }else{
+                $corps .= "
+                    <tr>
+                        <td class = \"tableau\">
+                            Etat de la propositionn :
+                        </td>
+                        <td class = \"tableau\">
+                            <vert>" . $prop->getEtat() . "</vert>
+                        </td>
+                    </tr>
+                </table>
+                ";
+            }
+                    
             
             $corps .="
                 <h3>Proposition " . $i . " :</h3>
