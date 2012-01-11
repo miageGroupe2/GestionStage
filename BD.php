@@ -110,7 +110,8 @@ class BD {
 
         if ($nomOriginal != FALSE && $nomUnique != FALSE) {
 
-//            $requete = "INSERT INTO ficherenseignement (nomorigine, nomunique) VALUES ('".$nomOriginal."','".$nomUnique."')"
+            $requete = "INSERT INTO ficherenseignement (nomoriginal, nomunique) VALUES ('".$nomOriginal."','".$nomUnique."')";
+            mysql_query($requete);
         }
     }
 
