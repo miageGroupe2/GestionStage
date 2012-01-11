@@ -48,39 +48,43 @@ function genererPageAccueil() {
 }
 
 function genererPageAccueilErreue() {
-    $corps = "<table>
+    $corps = "<table class=\"login\">
                 <tr>
                     <td class=\"erreur\">
-                        Erreur ! Mot de passe incorrect
+                        Erreur ! Identifiants incorrects
                     </td>
                 </tr>
             </table>
-            <table>
-
+            <table class=\"login\">
                     <tr>
-                        <td id=\"corps_log\">
-                            Connexion :
+                        <td id=\"log_champ_connexion\">
+                            Connexion
+                        </td>
+                    </tr>
+                        <td class=\"corps_log\">
                             <form action=\"" . RACINE . "?action=connexion\" method=\"post\">
-                                <table>
+                                <table class=\"login\">
                                     <tr>
-                                        <td>Login :</td>
+                                        <td colspan=\"2\">
+                                            Service d'authentification de Nancy 2<br/><br/>
+                                        </td>
                                     </tr>
                                     <tr>
+                                        <td class=\"champ_log_mdp\">Login :</td>
                                         <td>
                                             <input type=\"text\" class=\"forml\" style=\"width:160px;\" name=\"login\" id=\"recherche\" title=\"saisie_login\"/>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Mot de passe :</td>
-                                    </tr>
-                                    <tr>
+                                        <td class=\"champ_log_mdp\">Mot de passe :</td>
                                         <td>
                                             <input type=\"password\" class=\"forml\" style=\"width:160px;\" name=\"password\" id=\"recherche\" title=\"saisie_mdp\"/>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
+                                        <td colspan=\"2\" class=\"bouton_form\">
                                             <input id=\"log-submit\" type=\"submit\" value=\"Connexion\" />
+                                            <input id=\"reset\" type=\"reset\" value=\"Reset\" />
                                         </td>
                                     </tr>
                                 </table>
@@ -1209,6 +1213,29 @@ function genererListePropositionStageEtudiant($tabProp) {
     if ($tabProp != NULL) {
 
         foreach ($tabProp as $prop) {
+            
+            $corps .= "
+                <h3>Proposition " . $i . " :</h3>
+                <table>
+                    <tr>
+                        <td class = \"tableau\">
+                            Date de proposition :
+                        </td>
+                        <td class = \"tableau\">
+                            " . $prop->getDateProposition() . "
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Etat de la propositionn :
+                        </td>
+                        <td class = \"tableau\">
+                            " . $prop->getEtat() . "
+                        </td>
+                    </tr>
+                </table>
+            ";
+            
             $corps .="
                 <h3>Proposition " . $i . " :</h3>
                 <table class = \"tableau\">
