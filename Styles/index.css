@@ -37,13 +37,23 @@ h2{
     background-image: url('../Images/Index/banniere.jpg');
 }
 
-#menu_gauche{
+#titre_menu_gauche{
+    background-color: black;
+    color: #FFFFFF;
     padding-left: 10px;
     padding-right: 10px;
     border: 1px solid black;
     vertical-align: top;
     width: 230px;
+}
+
+#menu_gauche{
+    background-color: #cdcdcc;
+    border: 1px solid black;
+    vertical-align: top;
+    width: 230px;
     height: 100%;
+    text-align: center;
 }
 
 #corps{
@@ -54,13 +64,7 @@ h2{
     vertical-align: top;
 }
 
-#corps_log{
-    padding-left: 400px;
-    padding-right: 10px;
-    border: 1px solid black;
-    width: 1000px;
-    vertical-align: top;
-}
+
 
 #bas_page{
     border: 1px solid black;
@@ -70,4 +74,52 @@ h2{
 
 etoile{
     color: red;
+}
+
+a{
+	text-decoration: none;
+	border: none;
+	color:#5a5a5a;
+}
+a:hover{
+	text-decoration: none;
+	color:#000000;
+}
+
+a img{
+	text-decoration: none;
+	border:0;
+}
+a img:hover img{
+	text-decoration: none;
+	border:0;
+}
+a img:visited img{
+	text-decoration: none;
+	border:0;
+}
+
+
+
+/* LOGIN */
+.login{
+    margin: 0 auto 0 auto;
+}
+.corps_log{
+    margin-left: 400px;
+    border: 1px solid black;
+    width: 400px;
+    vertical-align: top;
+    text-align: center;
+}
+#log_champ_connexion{
+    background-color: black;
+    color: #FFFFFF;
+    border: 1px solid black;
+    text-align: center;
+    font-weight: bold;
+}
+
+.champ_log_mdp{
+    text-align: right;
 }
