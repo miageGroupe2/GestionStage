@@ -20,7 +20,7 @@ require_once 'BD.php';
                 $resultat = move_uploaded_file($_FILES['ficherenseignement']['tmp_name'],"./ficheRenseignement/".$nom);
                 if($resultat){
 
-                    BD::ajouterFicheRenseignement($_FILES['ficherenseignement']['tmp_name'], $nom);
+                    BD::ajouterFicheRenseignement($_FILES['ficherenseignement']['name'], $nom);
                 }else{
 
                 }
