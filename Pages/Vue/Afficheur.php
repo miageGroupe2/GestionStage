@@ -46,19 +46,13 @@ function AffichePage($afficherMenuGauche, $corps) {
                     <table>
                         <tr>    
                             <td id=\"banniere\">
-                                <img src=\"".RACINE_IMAGE."banniere.png\"</img>
+                                <img src=\"".RACINE_IMAGE."banniere.png\"></img>
                             </td>
                         </tr>    
                     </table>
                     $menuGauche
                     $corps
-                     <table>
-                        <tr>
-                            <td id=\"bas_page\">
-                                (c) Université Nancy 2
-                            </td>
-                        </tr>
-                    </table>
+                     
                 </td>
             </tr>
         </table>
