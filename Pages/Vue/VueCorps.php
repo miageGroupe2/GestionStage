@@ -1271,9 +1271,17 @@ function genererListePropositionStageEtudiant($tabProp) {
                             </tr>";
                     }
 
-                $corps .="</table><br/>
-                <a href=\"" . RACINE . "?action=editerPropositionStage&idProposition=" . $prop->getIdProposition() . "\">Editer cette proposition</a>
-            ";
+                $corps .="</table><br/>";
+                if ($prop->getEtat()=="refusée"){
+
+                    $corps .="<a href=\"" . RACINE . "?action=supprimerProposition&idProposition=" . $prop->getIdProposition() . "\">Supprimer cette proposition</a>";
+
+                }else{
+                    $corps .="<a href=\"" . RACINE . "?action=editerPropositionStage&idProposition=" . $prop->getIdProposition() . "\">Editer cette proposition</a>";
+                }
+
+                
+
             $i++;
         }
         $corps .="</td></tr></table>";

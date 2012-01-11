@@ -706,11 +706,11 @@ class BD {
         $idProp = mysql_real_escape_string(htmlspecialchars($idProp));
         $raisonrefus = mysql_real_escape_string(htmlspecialchars($raisonrefus));
 
-        if ($idProp != FALSE && $raisonrefus != FALSE) {
+        if ($idProp != FALSE ) {
 
             $requete = "UPDATE proposition SET raisonrefus='".$raisonrefus."', etat='refusée'
                 WHERE idproposition=".$idProp;
-
+                echo $requete ;
             mysql_query($requete);
         }
 

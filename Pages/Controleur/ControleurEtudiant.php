@@ -136,7 +136,7 @@ require_once 'BD.php';
             $operationPermise = BD::autorisationEditerProposition($_GET['idProposition'], $utilisateur->getId());
 
             if($operationPermise){
-    
+
                 $proposition = BD::editerPropositionStage($_GET['idProposition'], $_POST['sujetStage'], $_POST['titreStage'], $_POST['technoStage']);
             }
 

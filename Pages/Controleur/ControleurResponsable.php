@@ -37,6 +37,7 @@ require_once 'BD.php';
 
             $valider = false ;
             $raisonrefus = "" ;
+            
             if(isset($_POST['raisonrefus'])){
 
                 $raisonrefus = $_POST['raisonrefus'] ;
