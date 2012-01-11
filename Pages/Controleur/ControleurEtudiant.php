@@ -11,7 +11,22 @@ require_once 'BD.php';
         if (isset($_POST['sujetStage']) && $_POST['sujetStage'] != ""
                 && isset($_POST['titreStage']) && $_POST['titreStage'] != ""
                 &&isset($_POST['technoStage']) && $_POST['technoStage'] != "" ){
-            
+
+             // limite à 3 Mo
+            if ($_FILES['ficherenseignement']['error'] == 0
+                && $_FILES['ficherenseignement']['size'] <= 3145728){
+
+                $nom = md5(uniqid(rand(), true)) ;
+                $resultat = move_uploaded_file($_FILES['ficherenseignement']['tmp_name'],"./ficheRenseignement/".$nom);
+                if($resultat){
+
+                    BD::ajouterFicheRenseignement($_FILES['ficherenseignement']['tmp_name'], $nom);
+                }else{
+
+                }
+            }
+
+
             $entreprise = $_SESSION['modeleEntreprise'];
             $idEntreprise = $entreprise->getId() ;
             
@@ -136,7 +151,7 @@ require_once 'BD.php';
             $operationPermise = BD::autorisationEditerProposition($_GET['idProposition'], $utilisateur->getId());
 
             if($operationPermise){
-    
+
                 $proposition = BD::editerPropositionStage($_GET['idProposition'], $_POST['sujetStage'], $_POST['titreStage'], $_POST['technoStage']);
             }
 
