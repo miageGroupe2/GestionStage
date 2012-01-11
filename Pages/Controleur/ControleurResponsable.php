@@ -30,8 +30,25 @@ require_once 'BD.php';
     }
 
     function validerProposition(){
-        $ok = BD::validerProposition($_GET['idprop']);
-        $corps = genererValiderProposition($ok);
+
+        $valider = true ;
+
+        if(isset($_POST['refuser'])){
+
+            $valider = false ;
+            $raisonrefus = "" ;
+            if(isset($_POST['raisonrefus'])){
+
+                $raisonrefus = $_POST['raisonrefus'] ;
+            }
+            BD::refuserProposition($_GET['idprop'], $raisonrefus);
+        }else{
+
+            BD::validerProposition($_GET['idprop']);
+        }
+
+        
+        $corps = genererValiderProposition($valider);
         AffichePage(TRUE, $corps);     
     }
 

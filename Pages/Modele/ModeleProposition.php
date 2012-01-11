@@ -29,8 +29,9 @@ class ModeleProposition {
     private $etudiant;
     private $promotionEtudiant;
     private $technoStage;
+    private $raisonrefus ;
 
-    function __construct($idProposition, $idEntreprise, $idUtilisateur, $idStage, $nomEntreprise, $dateProposition, $adresseEntreprise, $codePostal, $ville, $pays, $numTelephone, $urlSite, $sujet, $etat, $etudiant, $promotionEtudiant, $titreStage, $technoStage) {
+    function __construct($idProposition, $idEntreprise, $idUtilisateur, $idStage, $nomEntreprise, $dateProposition, $adresseEntreprise, $codePostal, $ville, $pays, $numTelephone, $urlSite, $sujet, $etat, $etudiant, $promotionEtudiant, $titreStage, $technoStage, $raisonrefus) {
         $this->idProposition = $idProposition;
         $this->idEntreprise = $idEntreprise;
         $this->idUtilisateur = $idUtilisateur;
@@ -49,10 +50,14 @@ class ModeleProposition {
         $this->etudiant = $etudiant;
         $this->promotionEtudiant = $promotionEtudiant;
         $this->technoStage = $technoStage;
+        $this->raisonrefus = $raisonrefus ;
         
     }
-    
-    
+
+    public function getRaisonrefus() {
+        return $this->raisonrefus;
+    }
+
     public function getPromotionEtudiant() {
         return $this->promotionEtudiant;
     }

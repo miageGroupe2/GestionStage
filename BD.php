@@ -391,7 +391,7 @@ class BD {
         $i = 0;
         $tabProp = null;
         $idUser = $_SESSION['modeleUtilisateur']->getId();
-        $requete = "SELECT p.idproposition, e.nomentreprise, p.dateproposition, e.adresseentreprise, e.villeentreprise, e.codepostalentreprise, e.paysentreprise, e.numerotelephone, e.urlsiteinternet, p.titrestagep, p.etat
+        $requete = "SELECT p.idproposition, p.raisonrefus, e.nomentreprise, p.dateproposition, e.adresseentreprise, e.villeentreprise, e.codepostalentreprise, e.paysentreprise, e.numerotelephone, e.urlsiteinternet, p.titrestagep, p.etat
                         FROM proposition p, entreprise e
                         WHERE p.idutilisateur = '$idUser'
                         AND p.identreprise = e.identreprise
@@ -400,7 +400,7 @@ class BD {
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {
-            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprise'], $tableau['dateproposition'], $tableau['adresseentreprise'], $tableau['codepostalentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['urlsiteinternet'], null, $tableau['etat'], null, null, $tableau['titrestagep'], null);
+            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprise'], $tableau['dateproposition'], $tableau['adresseentreprise'], $tableau['codepostalentreprise'], $tableau['villeentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['urlsiteinternet'], null, $tableau['etat'], null, null, $tableau['titrestagep'], null, $tableau['raisonrefus']);
             $i++;
         }
         return $tabProp;
@@ -623,7 +623,7 @@ class BD {
 
         while ($tableau = mysql_fetch_array($retour)) {
             $etudiant = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null, NULL);
-            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], null, null, $tableau['nomentreprise'], null, null, null, $tableau['villeentreprise'], $tableau['paysentreprise'], null, null, null, null, $etudiant, null, $tableau['titrestagep'], null);
+            $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], null, null, $tableau['nomentreprise'], null, null, null, $tableau['villeentreprise'], $tableau['paysentreprise'], null, null, null, null, $etudiant, null, $tableau['titrestagep'], null, null);
             $i++;
         }
         return $tabProp;
@@ -653,7 +653,7 @@ class BD {
                 if ($tableau['identreprise'] != NULL){
                     
                     $entreprise = BD::rechercherEntrepriseById($tableau['identreprise']);
-                    $requete = "SELECT p.idproposition, p.dateproposition, p.sujetstagep, p.titrestagep,
+                    $requete = "SELECT p.idproposition, p.raisonrefus, p.dateproposition, p.sujetstagep, p.titrestagep,
                         p.titrestagep, p.technostagep, p.etat, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, pr.nompromotion
                         FROM proposition p, utilisateur u, promotion pr
                         WHERE p.idproposition =".$idProposition." 
@@ -669,13 +669,13 @@ class BD {
                                 $entreprise->getAdresse(), $entreprise->getCodePostal(),
                                 $entreprise->getVille(), $entreprise->getPays(), $entreprise->getNumeroTelephone(),
                                 $entreprise->getUrlSiteInternet(), $tableau['sujetstagep'], $tableau['etat'],
-                                $etudiant, $tableau['nompromotion'], $tableau['titrestagep'], $tableau['technostagep']);
+                                $etudiant, $tableau['nompromotion'], $tableau['titrestagep'], $tableau['technostagep'], $tableau['raisonrefus']);
                         $i++;
                     }
                 }else{
                     
                     //sinon les informations de l'entreprise sont à prendre dans la table proposition
-                    $requete = "SELECT p.idproposition, p.nomentreprisep, p.dateproposition, p.adresseentreprisep, p.villeentreprisep, p.codepostalentreprisep, p.paysentreprisep, p.numerotelephonep, p.urlsiteinternetp, p.sujetstagep, p.etat, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, pr.nompromotion
+                    $requete = "SELECT p.idproposition, p.raisonrefus, p.nomentreprisep, p.dateproposition, p.adresseentreprisep, p.villeentreprisep, p.codepostalentreprisep, p.paysentreprisep, p.numerotelephonep, p.urlsiteinternetp, p.sujetstagep, p.etat, u.nomutilisateur, u.prenomutilisateur, u.mailutilisateur, pr.nompromotion
                         FROM proposition p, utilisateur u, promotion pr
                         WHERE p.idproposition =".$idProposition." 
                         AND p.idutilisateur = u.idutilisateur
@@ -685,7 +685,7 @@ class BD {
 
                     while ($tableau = mysql_fetch_array($retour)) {
                         $etudiant = new ModeleUtilisateur(null, null, null, $tableau['nomutilisateur'], $tableau['prenomutilisateur'], $tableau['mailutilisateur'], null, NULL);
-                        $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion'], null, null);
+                        $tabProp[$i] = new ModeleProposition($tableau['idproposition'], null, null, null, $tableau['nomentreprisep'], $tableau['dateproposition'],  $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], $etudiant, $tableau['nompromotion'], null, null, $tableau['raisonrefus']);
                         $i++;
                     }
                 }
@@ -700,8 +700,22 @@ class BD {
         return NULL;
     }
 
+    public static function refuserProposition($idProp, $raisonrefus) {
+
+        BD::getConnection();
+        $idProp = mysql_real_escape_string(htmlspecialchars($idProp));
+        $raisonrefus = mysql_real_escape_string(htmlspecialchars($raisonrefus));
+
+        if ($idProp != FALSE && $raisonrefus != FALSE) {
+
+            $requete = "UPDATE proposition SET raisonrefus='".$raisonrefus."', etat='refusée'
+                WHERE idproposition=".$idProp;
+
+            mysql_query($requete);
+        }
+
+    }
     public static function validerProposition($idProp) {
-        $ok = false;
         $i = 0;
         $tabProp = null;
         BD::getConnection();
@@ -715,7 +729,7 @@ class BD {
 
             $retour = mysql_query($requete);
             while ($tableau = mysql_fetch_array($retour)) {
-                $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], $tableau['idutilisateur'], null, $tableau['nomentreprisep'], $tableau['dateproposition'], $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], null, $tableau['idpromotion'], $tableau['titrestagep'], $tableau['technostagep']);
+                $tabProp[$i] = new ModeleProposition($tableau['idproposition'], $tableau['identreprise'], $tableau['idutilisateur'], null, $tableau['nomentreprisep'], $tableau['dateproposition'], $tableau['adresseentreprisep'], $tableau['codepostalentreprisep'], $tableau['villeentreprisep'], $tableau['paysentreprisep'], $tableau['numerotelephonep'], $tableau['urlsiteinternetp'], $tableau['sujetstagep'], $tableau['etat'], null, $tableau['idpromotion'], $tableau['titrestagep'], $tableau['technostagep'], null);
                 $i++;
             }
             $prop = $tabProp[0];
@@ -753,14 +767,10 @@ class BD {
             if (mysql_query($requete)) {
                 // 3) Modification de l'etat etat dans l'entité proposition à TRUE
                 $requete = "UPDATE proposition SET etat = \"validee\" WHERE idproposition = " . $idProp . ";";
-                if (mysql_query($requete)) {
-                    $ok = true;
-                }
-            } else {
-                echo "ERREUR : " . mysql_error();
+                mysql_query($requete);
+
             }
         }
-        return $ok;
     }
 
     

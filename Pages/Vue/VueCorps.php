@@ -457,17 +457,26 @@ function genererDetailProposition($proposition) {
             Technologies utilisées :
             </br>
                 <input type=text id=\"technoStage\" readonly=\"true\" name=\"technoStage\" size=\"75\" maxlength=\"200\" value=\"".$proposition->getTechnoStage()."\">
-                
+
+            </br>
+
+            Raison du refus (le cas échéant) :
+            </br>
+
+                <textarea rows=\"5\" cols=\"60\" id=\"raisonrefus\" name=\"raisonrefus\"></textarea>
+
             </br>
             </br>
-            
-            <input id=\"submit_valid_prop\" type=\"submit\" value=\"Valider cette proposition\"/>
+
+            <input id=\"submit_refus_prop\" type=\"submit\" name=\"refuser\" value=\"Refuser cette proposition\"/>
+            <input id=\"submit_valid_prop\" type=\"submit\" name=\"valider\" value=\"Valider cette proposition\"/>
 
             </br>
 
             </td>
                 </tr>
             </table>
+            </form>
         ";
     } else {
         $corps = "
@@ -489,7 +498,7 @@ function genererValiderProposition($ok) {
     if ($ok) {
         $corps .="La proposition de stage a bien &eacute;t&eacute; valid&eacute;e";
     } else {
-        $corps .="ERREUR - Probl&egrave;me lors de la validation, transaction annul&eacute;e";
+        $corps .="La proposition de stage a &eacute;t&eacute; refus&eacute;e";
     }
     $corps .= "</td>
                 </tr>
@@ -1248,8 +1257,21 @@ function genererListePropositionStageEtudiant($tabProp) {
                         <td class = \"tableau\">
                             " . $prop->getEtat() . "
                         </td>
-                    </tr>
-                </table><br/>
+                    </tr>";
+
+                    if ($prop->getEtat()=="refusée" && $prop->getRaisonrefus() != ""){
+
+                         $corps .="<tr>
+                                <td class = \"tableau\">
+                                    Raison du refus :
+                                </td>
+                                <td class = \"tableau\">
+                                    " . $prop->getRaisonrefus(). "
+                                </td>
+                            </tr>";
+                    }
+
+                $corps .="</table><br/>
                 <a href=\"" . RACINE . "?action=editerPropositionStage&idProposition=" . $prop->getIdProposition() . "\">Editer cette proposition</a>
             ";
             $i++;
@@ -1657,7 +1679,8 @@ function genererProposerStage($tabEntreprise) {
                 <form method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape1\">
                             Nom : <input type=text name=\"nom\" value=\"" . $nom . "\">
                     
-               <input type=\"submit\" value=\"Rechercher\"></form><br /><br />";
+               <input type=\"submit\" value=\"Rechercher\">
+                </form><br /><br />";
 
 
     $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaireEtape1()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape2\">";
@@ -1800,8 +1823,9 @@ function genererProposerStage($tabEntreprise) {
                     <br /><input type=\"submit\" value=\"Etape suivante\"></form><br /><br />";
 
 
-        $corps .="</form>";
+        
     }
+    $corps .="</form>";
     $corps .="</td> </tr> </table>";
     return $corps;
 }
