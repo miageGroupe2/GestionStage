@@ -128,7 +128,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
         $corps = "<td id = \"corps\">
                 <h2>Edition d'une proposition de stage</h2>
                 <script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormEditerProposition.js\" type=\"text/javascript\"></script>
-                <form onsubmit=\"return verifierEditerProposition()\" action=\"" . RACINE . "?action=editerPropositionStage&idProposition=" . $proposition->getIdProposition() . "&sujetModifie=true\" method=\"post\">
+                <form onsubmit=\"return verifierEditerProposition()\" action=\"" . RACINE . "?action=editerPropositionStage&idProposition=" . $proposition->getIdProposition() . "&sujetModifie=true\" method=\"post\"  enctype=\"multipart/form-data\">
                 <table class = \"tableau\">
                     <tr>
                         <td class = \"tableau\">
@@ -206,6 +206,15 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                                 $corps .= "<a href=\"".RACINE_FICHE_RENSEIGNEMENT.$modeleFicheRenseignement->getNomUnique()."\">".$modeleFicheRenseignement->getNomOriginal()."</a>";
                             }
                         $corps .="</td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Changer la fiche de renseignement :
+                        </td>
+                        <td class = \"tableau\">
+                            <input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"3145728\" />
+                            <input type=\"file\" name=\"ficherenseignement\" id=\"ficherenseignement\" />
+                        </td>
                     </tr>
                     <tr>
                         <td class = \"tableau\">
