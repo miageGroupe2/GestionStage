@@ -46,6 +46,8 @@ function verifierFormulaireEtape2(){
     if (document.getElementById("sujetStage").value == ""
         || document.getElementById("titreStage").value == ""
         || document.getElementById("technoStage").value == ""
+        || document.getElementById("ficherenseignement").value == ""
+
         ){
         
         alert("Veuillez remplir tous les champs marqués d'une étoile.");

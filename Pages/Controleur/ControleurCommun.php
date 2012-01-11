@@ -42,6 +42,22 @@ function connecterUtilisateur() {
     
 }
 
+function telechargement(){
+
+
+    //header('Content-Length: '.$bdd_infos['up_filesize']); //Taille du fichier
+    if(isset($_GET['idproposition']) ){
+
+        $idProposition = $_GET['idproposition'];
+        $modeleFicheRenseignement = BD::rechercherFicheRenseignement($idProposition);
+        header('Content-type: '.$modeleFicheRenseignement->getType());
+        header('Content-Transfer-Encoding: binary'); //Transfert en binaire (fichier)
+        header('Content-Disposition: attachment; filename='.$modeleFicheRenseignement->getNomOriginal()); //Nom du fichier
+        readfile("FicheRenseignement/".$modeleFicheRenseignement->getNomUnique());
+    }
+    
+}
+
 function afficherAccueil() {
     $corps = genererPageAccueil();
     AffichePage(FALSE, $corps);

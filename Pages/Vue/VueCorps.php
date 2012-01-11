@@ -202,10 +202,11 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                             Fiche de renseignement :
                         </td>
                         <td class = \"tableau\">";
-        if ($modeleFicheRenseignement != null) {
-            $corps .= "<a href=\"" . RACINE_FICHE_RENSEIGNEMENT . $modeleFicheRenseignement->getNomUnique() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
-        }
-        $corps .="</td>
+
+                            if ($modeleFicheRenseignement != null){
+                                $corps .= "<a href=\"".RACINE."?action=telechargement&idproposition=".$proposition->getIdProposition()."\">".$modeleFicheRenseignement->getNomOriginal()."</a>";
+                            }
+                        $corps .="</td>
                     </tr>
                     <tr>
                         <td class = \"tableau\">
@@ -371,7 +372,7 @@ function genererListePropositionStageResponsable($tabProp) {
     return $corps;
 }
 
-function genererDetailProposition($proposition) {
+function genererDetailProposition($proposition, $modeleFicheRenseignement) {
     $corps = "";
     if ($proposition != NULL) {
         $corps = "<td id = \"corps\">
@@ -486,7 +487,15 @@ function genererDetailProposition($proposition) {
                 <input type=text id=\"technoStage\" readonly=\"true\" name=\"technoStage\" size=\"75\" maxlength=\"200\" value=\"" . $proposition->getTechnoStage() . "\">
 
             </br>
+            </br>
+            Fiche de renseignement : ";
+            if ($modeleFicheRenseignement != null){
+                $corps .= "<a href=\"".RACINE."?action=telechargement&idproposition=".$proposition->getIdProposition()."\">".$modeleFicheRenseignement->getNomOriginal()."</a>";
+            }
 
+            $corps .= "
+            </br>
+            </br>
             Raison du refus (le cas échéant) :
             </br>
 
@@ -1600,7 +1609,7 @@ function genererProposerStageEtape2($entreprise) {
                 <input type=text id=\"technoStage\" name=\"technoStage\" size=\"75\" maxlength=\"200\" >
 
                 
-
+                </br>
                 Fiche de renseignements (<= 3 Mo) <etoile>*</etoile>:
                 </br>
                 <input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"3145728\" />

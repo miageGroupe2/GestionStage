@@ -60,6 +60,8 @@ function verifierAutorisationAction($action) {
                    return $action;
                 }else if ($action == "gererPromotion") {
                    return $action;
+                }else if ($action == "telechargement") {
+                   return $action;
                 }
                 
                 
@@ -94,6 +96,8 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if ($action == "deconnexion") {
                     return $action;
+                }else if ($action == "telechargement") {
+                   return $action;
                 } else {
                     return "pagePrincipale";
                 }
@@ -136,6 +140,9 @@ function call_action() {
 
             case 'deconnexion' :
                 $action = 'deconnecterUtilisateur';
+                break;
+            case 'telechargement' :
+                $action = 'telechargement';
                 break;
             /*
               case 'rechercherEntreprise':

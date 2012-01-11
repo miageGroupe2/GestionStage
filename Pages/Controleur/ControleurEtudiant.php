@@ -22,7 +22,7 @@ require_once 'BD.php';
                 $resultat = move_uploaded_file($_FILES['ficherenseignement']['tmp_name'],"./FicheRenseignement/".$nom);
                 if($resultat){
 
-                    $idFiche = BD::ajouterFicheRenseignement($_FILES['ficherenseignement']['name'], $nom);
+                    $idFiche = BD::ajouterFicheRenseignement($_FILES['ficherenseignement']['name'],$_FILES['ficherenseignement']['type'], $nom);
                 }else{
 
                     $corps = genererProblemeUploadFichier();
@@ -158,6 +158,23 @@ require_once 'BD.php';
             if($operationPermise){
 
                 $proposition = BD::editerPropositionStage($_GET['idProposition'], $_POST['sujetStage'], $_POST['titreStage'], $_POST['technoStage']);
+                // limite à 3 Mo
+                if ($_FILES['ficherenseignement']['error'] == 0
+                        && $_FILES['ficherenseignement']['size'] <= 3145728){
+
+                    $nom = md5(uniqid(rand(), true)) ;
+                    $resultat = move_uploaded_file($_FILES['ficherenseignement']['tmp_name'],"./FicheRenseignement/".$nom);
+                    if($resultat){
+
+                        $idFiche = BD::modifierFicheRenseignement($_FILES['ficherenseignement']['name'], $_FILES['ficherenseignement']['type'], $nom, $_GET['idProposition']);
+
+                    }else{
+
+                        $corps = genererProblemeUploadFichier();
+                        AffichePage(TRUE, $corps);
+                        return ;
+                    }
+                }
             }
 
             $_REQUEST['action'] = "pagePrincipale";
