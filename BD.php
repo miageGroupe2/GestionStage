@@ -103,7 +103,7 @@ class BD {
         return $tabEntreprise;
     }
 
-    public static function ajouterFicheRenseignement($nomOriginal,  $nomUnique) {
+    public static function ajouterFicheRenseignement($nomOriginal, $type, $nomUnique) {
 
         BD::getConnection();
         $nomOriginal = mysql_real_escape_string(htmlspecialchars($nomOriginal));
@@ -112,9 +112,9 @@ class BD {
 
         if ($nomOriginal != FALSE && $nomUnique != FALSE) {
 
-            $requete = "INSERT INTO ficherenseignement (nomoriginal, nomunique) VALUES ('".$nomOriginal."','".$nomUnique."')";
+            $requete = "INSERT INTO ficherenseignement (nomoriginal, nomunique, type) VALUES ('".$nomOriginal."','".$nomUnique."','".$type."')";
             mysql_query($requete);
-            $requete = "SELECT * FROM ficherenseignement WHERE nomunique ='".$nomUnique."'";
+            $requete = "SELECT id FROM ficherenseignement WHERE nomunique ='".$nomUnique."'";
             $retour = mysql_query($requete);
 
             while ($tableau = mysql_fetch_array($retour)) {
@@ -123,6 +123,21 @@ class BD {
         }
 
         return $idFiche;
+    }
+    public static function modifierFicheRenseignement($nomOriginal, $type, $nomUnique, $idProposition) {
+
+        BD::getConnection();
+        $nomOriginal = mysql_real_escape_string(htmlspecialchars($nomOriginal));
+        $nomUnique = mysql_real_escape_string(htmlspecialchars($nomUnique));
+        $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+
+        if ($nomOriginal != FALSE && $nomUnique != FALSE && $idProposition != FALSE) {
+
+            $requete = "UPDATE ficherenseignement SET nomoriginal = '".$nomOriginal."', nomunique = '".$nomUnique."', type = '".$type."' WHERE idproposition=".$idProposition;
+            mysql_query($requete);
+            
+
+        }
     }
 
     /**
@@ -493,7 +508,7 @@ class BD {
         }
     }
     
-    /**
+    /**ajout
      *Permet de recherche le stage d'un étudiant identifié par son id
      * @param type $idUtilisateur 
      */
@@ -676,14 +691,14 @@ class BD {
         if ($idProposition != FALSE) {
 
 
-            $requete = "SELECT id, nomoriginal, nomunique
+            $requete = "SELECT id, nomoriginal, nomunique, type
                         FROM ficherenseignement
                         WHERE idproposition = ".$idProposition;
             $retour = mysql_query($requete) ;
 
             while ($tableau = mysql_fetch_array($retour)) {
 
-                $modeleFicheRenseignement = new ModeleFicheRenseignement($tableau['id'], $tableau['nomoriginal'], $tableau['nomunique']);
+                $modeleFicheRenseignement = new ModeleFicheRenseignement($tableau['id'], $tableau['nomoriginal'], $tableau['nomunique'], $tableau['type']);
             }
 
         }
