@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Mer 11 Janvier 2012 à 14:23
+-- Généré le : Mer 11 Janvier 2012 à 17:04
 -- Version du serveur: 5.1.49
 -- Version de PHP: 5.3.3-1ubuntu9.5
 
@@ -103,13 +103,26 @@ CREATE TABLE IF NOT EXISTS `ficherenseignement` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nomoriginal` varchar(300) NOT NULL,
   `nomunique` varchar(100) NOT NULL,
+  `idproposition` int(11) NOT NULL,
+  `idstage` int(11) NOT NULL,
+  `type` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Contenu de la table `ficherenseignement`
 --
 
+INSERT INTO `ficherenseignement` (`id`, `nomoriginal`, `nomunique`, `idproposition`, `idstage`, `type`) VALUES
+(1, '/tmp/php47X1KK', '2847da20f8e2eea03f10e97af8aa6195', 0, 0, ''),
+(2, 'wallpaper749120.png', 'ac72b3fcfe8e08bea865853217733cdd', 0, 0, ''),
+(3, 'sid-tp2.war', '31f09fe86af52c386153fd42b17ad593', 0, 0, ''),
+(4, 'favoris_19_12_11.html', 'c5a540144494e78f8cb7c0b4cb72562a', 34, 0, ''),
+(5, 'toto', '97976e2fff84127d84d84fff6ff38ee6', 35, 0, ''),
+(6, 'sfeir.pdf', '14e3a5074e322b29c0f673c818a592c7', 36, 0, ''),
+(7, 'SujetComplet.pdf', '1eaec75b957e9edc713773f8f9b48d1e', 37, 0, 'application/pdf'),
+(8, 'sfeir.pdf', '533de697497ea5e147031ac38a288921', 38, 0, 'application/pdf'),
+(9, 'sfeir.pdf', 'a37bfa0d2591780565b00ab68761cdce', 39, 0, 'application/pdf');
 
 -- --------------------------------------------------------
 
@@ -161,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `proposition` (
   KEY `fk_propoentreprise` (`identreprise`),
   KEY `fk_propositionstage2` (`idstage`),
   KEY `fk_utilisateur_proposition` (`idutilisateur`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
 
 --
 -- Contenu de la table `proposition`
@@ -172,14 +185,8 @@ INSERT INTO `proposition` (`idproposition`, `identreprise`, `idutilisateur`, `id
 (17, 1, 3, NULL, NULL, '2011-12-14', NULL, NULL, NULL, NULL, NULL, NULL, 'essai laurent', 'a', 'ga', '', 'validee'),
 (18, 9, 3, NULL, NULL, '2011-12-14', NULL, NULL, NULL, NULL, NULL, NULL, 'vrai sujet', '11111', '22222', '', 'validee'),
 (19, 14, 1, NULL, NULL, '2011-12-14', NULL, NULL, NULL, NULL, NULL, NULL, 'etjte', 'jetj', 'j', '', 'validee'),
-(25, 5, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'qvdq', 'qdbqdb', 'qdbqdb', 'ff', 'refusÃ©e'),
-(26, 6, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'zrbz', 'zrhrzh', 'zrh', '', 'refusÃ©e'),
-(27, 5, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'java', 'java', 'java', '', 'en attente'),
 (28, 5, 3, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'php', 'php', 'php', '', 'en attente'),
-(29, 1, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'aefae', 'aefea', 'aefa', '', 'en attente'),
-(30, 1, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'f', 'f', 'f', '', 'en attente'),
-(31, 1, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'aega', 'faeg', 'aeg', '', 'en attente'),
-(32, 1, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'a', 'aega', 'aeg', '', 'en attente');
+(39, 9, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'spring !', 'vrai stage spring', 'bah spring', '', 'en attente');
 
 -- --------------------------------------------------------
 
