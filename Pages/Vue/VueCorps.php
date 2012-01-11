@@ -119,7 +119,7 @@ function genererAjoutPropositionStageOk() {
 /**
  * Permet d'afficher la page permettant d'éditer une proposition de stage (côté étudiant)
  */
-function genererEditerPropositionEtudiant($proposition) {
+function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignement) {
     if ($proposition != NULL) {
         $corps = "<td id = \"corps\">
                 <h2>Edition d'une proposition de stage</h2>
@@ -192,6 +192,16 @@ function genererEditerPropositionEtudiant($proposition) {
                         <td class = \"tableau\">
                             <textarea rows=\"3\" cols=\"60\" id=\"technoStage\" name=\"technoStage\" >" . $proposition->getTechnoStage() . "</textarea>
                         </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Fiche de renseignement :
+                        </td>
+                        <td class = \"tableau\">";
+                            if ($modeleFicheRenseignement != null){
+                                $corps .= "<a href=\"".RACINE_FICHE_RENSEIGNEMENT.$modeleFicheRenseignement->getNomUnique()."\">".$modeleFicheRenseignement->getNomOriginal()."</a>";
+                            }
+                        $corps .="</td>
                     </tr>
                     <tr>
                         <td class = \"tableau\">
@@ -1849,6 +1859,19 @@ function genererProposerStage($tabEntreprise) {
     return $corps;
 }
 
+function genererProblemeUploadFichier(){
+
+    $corps = "<td id = \"corps\">";
+
+    $corps .= "Il y a un problème lors de l'envoie du(des) fichier(s). <BR />
+                (Attention à la limite des 3 Mo)";
+    $corps .= "</td>
+            </tr>
+        </table>";
+
+    return $corps;
+}
+
 function genererVoirStageEtudiant($stage) {
     $corps = "<td id = \"corps\">
                 ";
@@ -1972,252 +1995,6 @@ function genererVoirStageEtudiant($stage) {
     return $corps;
 }
 
-/* ancienne fonction genererProposerStage :
- * $messageErreurRemplissage = '';
-
-  if ($erreurRemplissage) {
-
-  $messageErreurRemplissage = "Veuillez renseigner tous les champs obligatoires <etoile>*</etoile>.";
-  }
-
-  $nom = NULL ;
-  if (isset ($_POST['nom'])){
-  $nom= $_POST['nom'];
-  }
-  $prenom = NULL ;
-  if (isset ($_POST['prenom'])){
-  $nom= $_POST['prenom'];
-  }
-  $promoL3 = FALSE ;
-  $promoM2_SID = FALSE ;
-  $promoM2_ACSI = FALSE ;
-
-  if (isset ($_POST['promotion'])){
-
-  if($_POST['promotion']== "l3"){
-
-  $promoL3 = TRUE ;
-
-  }else if($_POST['promotion']== "m2_sid"){
-
-  $promoM2_SID = TRUE ;
-
-
-  }else if($_POST['promotion']== "m2_acsi"){
-
-  $promoM2_ACSI = TRUE ;
-  }
-  }
-
-  $corps = "
-  <td id = \"corps\">
-  <h2>Proposer un stage</h2>
-  $messageErreurRemplissage
-  <form action=\"" . RACINE . "?action=validerProposerStage\" method=\"post\">
-  <table>
-  <tr>
-  <td colspam=\"2\">
-  <h3>Coordonn&eacute;es &eacute;tudiant :</h3>
-  </td>
-  </tr>
-  <tr>
-  <td>
-  Nom <etoile>*</etoile> :
-  </td>
-  <td>
-  <input type=text name=\"nom\" value=\"".$nom."\">
-  </td>
-  </tr>
-  <tr>
-  <td>
-  Pr&eacute;nom <etoile>*</etoile> :
-  </td>
-  <td>
-  <input type=text name=\"prenom\ value=\"".$prenom."\">
-  </td>
-  </tr>
-  <tr>
-  <td>
-  Formation <etoile>*</etoile> :
-  </td>
-  <td>
-  <select name=\"promotion\">
-  <option VALUE=\"choisir\">Choisir</option>";
-
-  if ($promoL3 == TRUE){
-  $corps .= "<option VALUE=\"l3\" selected=\"selected\">L3 MIAGE</option>" ;
-  }else{
-  $corps .= "<option VALUE=\"l3\">L3 MIAGE</option>" ;
-  }
-  if ($promoM2_ACSI == TRUE){
-  $corps .= "<option VALUE=\"m2_acsi\" selected=\"selected\">M2 MIAGE ACSI</option>" ;
-  }else{
-  $corps .= "<option VALUE=\"m2_acsi\">M2 MIAGE ACSI</option>";
-  }
-  if ($promoM2_SID == TRUE){
-  $corps .= "<option VALUE=\"m2_sid\" selected=\"selected\">M2 MIAGE SID</option>" ;
-  }else{
-  $corps .= "<option VALUE=\"m2_sid\">M2 MIAGE SID</option>";
-  }
-
-  $corps .="</select>
-  </td>
-  </tr>
-  <tr>
-  <td colspam=\"2\">
-  <h3>Coordonn&eacute;es  entreprise : </h3>
-  </td>
-  </tr>
-  <tr>
-  <td>
-  Nom de l'entreprise <etoile>*</etoile> :
-  </td>
-  <td>
-  <input type=text name=\"nom_entreprise\">
-  </td>
-  </tr>
-  <tr>
-  <td colspam=\"2\">
-  <br/><h3>Adresse de l'entreprise :</h3><br/>
-  </td>
-  </tr>
-  <tr>
-  <td>
-  N°, Rue <etoile>*</etoile> :
-  </td>
-  <td>
-  <input type=text name=\"num_rue\">
-  </td>
-  </tr>
-  <tr>
-  <td>
-  Code postal <etoile>*</etoile> :
-  </td>
-  <td>
-  <input type=text name=\"code_postal\">
-  </td>
-  </tr>
-  <tr>
-  <td>
-  Ville <etoile>*</etoile> :
-  </td>
-  <td>
-  <input type=text name=\"ville\">
-  </td>
-  </tr>
-  <tr>
-  <td>
-  Pays <etoile>*</etoile> :
-  </td>
-  <td>
-  <input type=text name=\"pays\">
-  </td>
-  </tr>
-  <tr>
-  <td>
-  T&eacute;l&eacute;phone accueil <etoile>*</etoile> :
-  </td>
-  <td>
-  <input type=text name=\"tel_accueil\">
-  </td>
-  </tr>
-  <tr>
-  <td colspam=\"2\">
-  <h3>Coordonn&eacute;es du tuteur :</h3>
-  </td>
-  </tr>
-  <tr>
-  <td>
-  Nom :
-  </td>
-  <td>
-  <input type=text name=\"nom_tuteur\">
-  </td>
-  </tr>
-  <tr>
-  <td>
-  Pr&eacute;nom :
-  </td>
-  <td>
-  <input type=text name=\"prenom_tuteur\">
-  </td>
-  </tr>
-  <tr>
-  <tr>
-  <td>
-  Fonction :
-  </td>
-  <td>
-  <input type=text name=\"fonction_tuteur\">
-  </td>
-  </tr>
-  <tr>
-  <td>
-  T&eacute;l&eacute;phone fixe :
-  </td>
-  <td>
-  <input type=text name=\"tel_fixe\">
-  </td>
-  </tr>
-  <tr>
-  <td>
-  T&eacute;l&eacute;phone portable :
-  </td>
-  <td>
-  <input type=text name=\"tel_port\">
-  </td>
-  </tr>
-  <tr>
-  <td>
-  Mail :
-  </td>
-  <td>
-  <input type=text name=\"mail\">
-  </td>
-  </tr>
-  <tr>
-  <td colspam=\"2\">
-  <h3>Informations stage :</h3>                                 </td>
-  </tr>
-  <tr>
-  <td>
-  Date d&eacute;but (JJ/MM/AAAA) :
-  </td>
-  <td>
-  <input type=text name=\"date_deb\">
-  </td>
-  </tr>
-  <tr>
-  <td>
-  Date fin (JJ/MM/AAAA) :
-  </td>
-  <td>
-  <input type=text name=\"date_fin\">
-  </td>
-  </tr>
-  <tr>
-  <td>
-  Sujet <etoile>*</etoile> :
-  </td>
-  <td>
-  <textarea cols=\"60\" rows=\"9\" name=\"sujet\"> Tapez ici une synthèse de votre sujet (mettre javascript ou rien et ajouter \"synthese\" dans le libelle)</textarea>
-  </td>
-  </tr>
-  </tabke>
-  <table>
-  <tr>
-  <td class=\"submit\">
-  <input type=\"reset\" value=\"Annuler\">
-  <input type=\"submit\" value=\"Envoyer\">
-  </td>
-  </tr>
-  </table><br/>
-  </td>
-  </tr>
-  </table>";
-
-  return $corps;
- */
 ?>
 
 

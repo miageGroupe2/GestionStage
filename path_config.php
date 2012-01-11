@@ -5,4 +5,5 @@
     define('RACINE_MODELE', 'Pages/Modele/');
     define('RACINE_SCRIPT', 'Scripts/');
     define('RACINE_IMAGE', 'Images/');
+    define('RACINE_FICHE_RENSEIGNEMENT', 'FicheRenseignement/');
 ?>
