@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.2deb1
+-- version 3.3.7deb5build0.10.10.1
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Mer 16 Novembre 2011 à 11:56
--- Version du serveur: 5.1.41
--- Version de PHP: 5.3.2-1ubuntu4.10
+-- Généré le : Mer 11 Janvier 2012 à 14:23
+-- Version du serveur: 5.1.49
+-- Version de PHP: 5.3.3-1ubuntu9.5
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `contact` (
   `mailcontact` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idcontact`),
   KEY `fk_entreprise_contact` (`identreprise`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Contenu de la table `contact`
@@ -46,7 +46,10 @@ CREATE TABLE IF NOT EXISTS `contact` (
 
 INSERT INTO `contact` (`idcontact`, `identreprise`, `prenomcontact`, `nomcontact`, `fonctioncontact`, `dateajout`, `datederniereactivite`, `telfixecontact`, `telmobilecontact`, `mailcontact`) VALUES
 (1, 2, 'Luc', 'Dubois', 'Ingénieur', '2011-10-19', '2011-10-19', '07 89 76 87 98', '03 45 21 24 56', 'dubois@gmail.fr'),
-(2, 1, 'Robert', 'Graviaud', 'Chef de projet', '2011-11-24', '2011-11-30', '0383828181', '0676554433', 'robert.g@toto.fr');
+(2, 1, 'Robert', 'Graviaud', 'Chef de projet', '2011-11-24', '2011-12-14', '0383828181', '0676554433', 'robert.g@toto.fr'),
+(3, 1, 'Bertrand', 'Fort', '', '2011-11-16', '2011-11-16', '', '', 'f.b@toto'),
+(5, 2, 'essai', NULL, NULL, '2011-11-24', NULL, NULL, NULL, NULL),
+(6, 2, 'essai2', NULL, NULL, '2011-11-24', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -66,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `entreprise` (
   `urlsiteinternet` varchar(50) DEFAULT NULL,
   `statutjuridique` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`identreprise`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
 -- Contenu de la table `entreprise`
@@ -78,7 +81,35 @@ INSERT INTO `entreprise` (`identreprise`, `nomentreprise`, `adresseentreprise`, 
 (3, 'sopra', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (4, 'sassopra', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (5, 'netlor', '10 rue du jardin', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(6, 'netggglor', '10 rue du jardin', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(6, 'netggglor', '10 rue du jardin', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, 'carrefour', '10 avenue de libe', 'Lyon', '287637', 'france', '86866', NULL, '', NULL),
+(8, 'carrefour2', '10 avenue de libe', 'Lyon', '287637', 'france', '86866', NULL, '', NULL),
+(9, 'sfeir', 'parc d''activitÃ©', 'Capellen', '123', 'Luxembourg', '86866', NULL, 'sfeir.com', NULL),
+(10, 'carrefourafaef', 'libÃƒÂ©ration', 'Lyon', '287637', 'france', '86866', NULL, '', NULL),
+(11, 'carrefourÃ©2222', 'lib&Atilde;&copy;ration', 'Lyon', '287637', 'france', '86866', NULL, '', NULL),
+(12, 'carrefour33333', 'lib&Atilde;&copy;ration', 'Lyon', '287637', 'france', '86866', NULL, '', NULL),
+(13, 'carrefour44', 'libÃ©ration', 'Lyon', '287637', 'france', '86866', NULL, '', NULL),
+(14, 'carrefouretjetj', '10 avenue de libe', 'Lyon', '287637', 'france', '86866', NULL, '', NULL),
+(15, 'carrefourhhhhhhhhhhhhh', '10 avenue de libÃ©ration', 'Lyon', '287637', 'france', '86866', NULL, '', NULL),
+(16, 'carrefourgggggggggggggggggg', '10 avenue de libe', 'Lyon', '287637', 'france', '86866', NULL, '', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `ficherenseignement`
+--
+
+CREATE TABLE IF NOT EXISTS `ficherenseignement` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nomoriginal` varchar(300) NOT NULL,
+  `nomunique` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Contenu de la table `ficherenseignement`
+--
+
 
 -- --------------------------------------------------------
 
@@ -87,11 +118,11 @@ INSERT INTO `entreprise` (`identreprise`, `nomentreprise`, `adresseentreprise`, 
 --
 
 CREATE TABLE IF NOT EXISTS `promotion` (
-  `idpromotion` int(11) NOT NULL,
+  `idpromotion` int(11) NOT NULL AUTO_INCREMENT,
   `nompromotion` varchar(50) DEFAULT NULL,
   `accesentreprises` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idpromotion`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Contenu de la table `promotion`
@@ -122,19 +153,33 @@ CREATE TABLE IF NOT EXISTS `proposition` (
   `numerotelephonep` varchar(50) DEFAULT NULL,
   `urlsiteinternetp` varchar(50) DEFAULT NULL,
   `sujetstagep` text,
+  `titrestagep` varchar(200) NOT NULL,
+  `technostagep` varchar(200) NOT NULL,
+  `raisonrefus` text NOT NULL,
   `etat` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idproposition`),
   KEY `fk_propoentreprise` (`identreprise`),
   KEY `fk_propositionstage2` (`idstage`),
   KEY `fk_utilisateur_proposition` (`idutilisateur`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 --
 -- Contenu de la table `proposition`
 --
 
-INSERT INTO `proposition` (`idproposition`, `identreprise`, `idutilisateur`, `idstage`, `nomentreprisep`, `dateproposition`, `adresseentreprisep`, `villeentreprisep`, `codepostalentreprisep`, `paysentreprisep`, `numerotelephonep`, `urlsiteinternetp`, `sujetstagep`, `etat`) VALUES
-(1, 1, 1, NULL, NULL, '2011-11-02', NULL, NULL, NULL, NULL, NULL, NULL, 'Les canards sont ils suffisemet nourri au Srilanka ?', 'validee');
+INSERT INTO `proposition` (`idproposition`, `identreprise`, `idutilisateur`, `idstage`, `nomentreprisep`, `dateproposition`, `adresseentreprisep`, `villeentreprisep`, `codepostalentreprisep`, `paysentreprisep`, `numerotelephonep`, `urlsiteinternetp`, `sujetstagep`, `titrestagep`, `technostagep`, `raisonrefus`, `etat`) VALUES
+(16, 9, 1, NULL, NULL, '2011-12-14', NULL, NULL, NULL, NULL, NULL, NULL, 'essai valide 2', 'a', 'a', '', 'validee'),
+(17, 1, 3, NULL, NULL, '2011-12-14', NULL, NULL, NULL, NULL, NULL, NULL, 'essai laurent', 'a', 'ga', '', 'validee'),
+(18, 9, 3, NULL, NULL, '2011-12-14', NULL, NULL, NULL, NULL, NULL, NULL, 'vrai sujet', '11111', '22222', '', 'validee'),
+(19, 14, 1, NULL, NULL, '2011-12-14', NULL, NULL, NULL, NULL, NULL, NULL, 'etjte', 'jetj', 'j', '', 'validee'),
+(25, 5, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'qvdq', 'qdbqdb', 'qdbqdb', 'ff', 'refusÃ©e'),
+(26, 6, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'zrbz', 'zrhrzh', 'zrh', '', 'refusÃ©e'),
+(27, 5, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'java', 'java', 'java', '', 'en attente'),
+(28, 5, 3, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'php', 'php', 'php', '', 'en attente'),
+(29, 1, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'aefae', 'aefea', 'aefa', '', 'en attente'),
+(30, 1, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'f', 'f', 'f', '', 'en attente'),
+(31, 1, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'aega', 'faeg', 'aeg', '', 'en attente'),
+(32, 1, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'a', 'aega', 'aeg', '', 'en attente');
 
 -- --------------------------------------------------------
 
@@ -150,6 +195,8 @@ CREATE TABLE IF NOT EXISTS `stage` (
   `idproposition` int(11) NOT NULL,
   `idutilisateur` int(11) NOT NULL,
   `sujetstage` text,
+  `titrestage` varchar(200) NOT NULL,
+  `technostage` varchar(200) NOT NULL,
   `datevalidation` date DEFAULT NULL,
   `datedebut` date DEFAULT NULL,
   `datefin` date DEFAULT NULL,
@@ -168,15 +215,18 @@ CREATE TABLE IF NOT EXISTS `stage` (
   KEY `fk_stage_contact` (`idcontact`),
   KEY `fk_stage_entreprise` (`identreprise`),
   KEY `fk_utilistateur_stage` (`idutilisateur`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Contenu de la table `stage`
 --
 
-INSERT INTO `stage` (`idstage`, `identreprise`, `idcontact`, `idpromotion`, `idproposition`, `idutilisateur`, `sujetstage`, `datevalidation`, `datedebut`, `datefin`, `datesoutenance`, `lieusoutenance`, `etatstage`, `noteobtenue`, `appreciationobtenue`, `remuneration`, `embauche`, `dateembauche`, `respcivil`) VALUES
-(1, 1, 2, 3, 1, 1, 'Les canards sont ils suffisemet nourri au Srilanka ?', '2011-11-02', NULL, NULL, NULL, NULL, 'a valider', NULL, NULL, NULL, NULL, NULL, 0),
-(2, 1, 1, 3, 1, 4, 'Les canards sont ils suffisemet nourri au Srilanka ?', '2011-11-09', NULL, NULL, NULL, NULL, 'a valider', NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `stage` (`idstage`, `identreprise`, `idcontact`, `idpromotion`, `idproposition`, `idutilisateur`, `sujetstage`, `titrestage`, `technostage`, `datevalidation`, `datedebut`, `datefin`, `datesoutenance`, `lieusoutenance`, `etatstage`, `noteobtenue`, `appreciationobtenue`, `remuneration`, `embauche`, `dateembauche`, `respcivil`) VALUES
+(17, 9, NULL, 2, 16, 1, 'essai valide 2', 'a', 'a', '2011-12-14', NULL, NULL, NULL, NULL, 'a valider', NULL, NULL, NULL, NULL, NULL, 0),
+(18, 1, 2, 1, 17, 3, 'essai laurent', 'a', 'ga', '2011-12-14', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
+(19, 14, NULL, 2, 19, 1, 'etjte', 'jetj', 'j', '2012-01-11', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
+(20, 14, NULL, 2, 19, 1, 'etjte', 'jetj', 'j', '2012-01-11', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
+(21, 9, NULL, 1, 18, 3, 'vrai sujet', '11111', '22222', '2012-01-11', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -195,7 +245,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `admin` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idutilisateur`),
   KEY `fk_utilisateurpromotion` (`idpromotion`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Contenu de la table `utilisateur`
@@ -205,7 +255,8 @@ INSERT INTO `utilisateur` (`idutilisateur`, `idpromotion`, `mailutilisateur`, `p
 (1, 2, 'ludo@gmail.com', 'ae5a3c4fa3c5d1c2cc98e43b1899f88bce0e3569', 'fort', 'ludovic', '1234567', 0),
 (3, 1, 'laurent@gmail.com', 'f1b010126f61b5c59e7d5eb42c5c68f6105c5914', 'Dubois', 'Laurent', '283983', 0),
 (4, 3, 'anthony.avola@gmail.com', '7a79f9450d349278985d7ff04b2bd7d48ddcf42a', 'AVOLA', 'Anthony', '27004612', 0),
-(10, 2, 'khalid.benali@loria.fr', '94ca247fff5ad413788a1c8d8c80394a246dba1c', 'benali', 'khalid', NULL, 1);
+(10, 2, 'khalid.benali@loria.fr', '94ca247fff5ad413788a1c8d8c80394a246dba1c', 'benali', 'khalid', NULL, 1),
+(11, 1, 'jean.malhomme@loria.fr', '51f8b1fa9b424745378826727452997ee2a7c3d7', 'Malhomme', 'Jean', NULL, 1);
 
 --
 -- Contraintes pour les tables exportées

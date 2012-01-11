@@ -9,6 +9,7 @@ require_once RACINE_MODELE . 'ModelePromotion.php';
 
 class BD {
 
+
     //-----------------------------------------------------------------------------------------
     // PARTIE DES ACCES BASES COMMUNS A TOUS LESUTILISATEURS
     //-----------------------------------------------------------------------------------------
@@ -99,6 +100,18 @@ class BD {
             }
         }
         return $tabEntreprise;
+    }
+
+    public static function ajouterFicheRenseignement($nomOriginal,  $nomUnique) {
+
+        BD::getConnection();
+        $nomOriginal = mysql_real_escape_string(htmlspecialchars($nomOriginal));
+        $nomUnique = mysql_real_escape_string(htmlspecialchars($nomUnique));
+
+        if ($nomOriginal != FALSE && $nomUnique != FALSE) {
+
+//            $requete = "INSERT INTO ficherenseignement (nomorigine, nomunique) VALUES ('".$nomOriginal."','".$nomUnique."')"
+        }
     }
 
     /**
