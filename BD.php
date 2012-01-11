@@ -610,6 +610,10 @@ class BD {
         BD::getConnection();
         $i = 0;
         $tabProp = null;
+
+        $modeleUtilisateur = $_SESSION['modeleUtilisateur'];
+        $idUtilisateur = $modeleUtilisateur->getId();
+
         
         $requete = "SELECT p.idproposition, e.nomentreprise, e.villeentreprise, e.paysentreprise, 
             p.identreprise, p.titrestagep, u.idutilisateur, 
@@ -618,7 +622,13 @@ class BD {
             WHERE p.idutilisateur = u.idutilisateur
             AND pr.idpromotion = u.idpromotion
             AND p.etat = 'en attente'
-            AND p.identreprise = e.identreprise";
+            AND p.identreprise = e.identreprise
+            AND pr.idpromotion = ( 
+                        SELECT idpromotion
+                        FROM utilisateur
+                        WHERE idutilisateur = ".$idUtilisateur." 
+            ) ";
+
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {
