@@ -152,9 +152,9 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         </td>
                         <td class = \"tableau\">
                             " . $proposition->getAdresseEntreprise() . "<br/>" .
-                                $proposition->getCodePostal() . "<br/>" .
-                                $proposition->getVille() . "<br/>" .
-                                $proposition->getPays() . "
+                $proposition->getCodePostal() . "<br/>" .
+                $proposition->getVille() . "<br/>" .
+                $proposition->getPays() . "
                         </td>
                     </tr>
                     <tr>
@@ -202,10 +202,10 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                             Fiche de renseignement :
                         </td>
                         <td class = \"tableau\">";
-                            if ($modeleFicheRenseignement != null){
-                                $corps .= "<a href=\"".RACINE_FICHE_RENSEIGNEMENT.$modeleFicheRenseignement->getNomUnique()."\">".$modeleFicheRenseignement->getNomOriginal()."</a>";
-                            }
-                        $corps .="</td>
+        if ($modeleFicheRenseignement != null) {
+            $corps .= "<a href=\"" . RACINE_FICHE_RENSEIGNEMENT . $modeleFicheRenseignement->getNomUnique() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
+        }
+        $corps .="</td>
                     </tr>
                     <tr>
                         <td class = \"tableau\">
@@ -358,7 +358,7 @@ function genererListePropositionStageResponsable($tabProp) {
                     . "</td>
                             <td class=\"tableau\">" . $prop->getEtudiant()->getPrenom()
                     . "</td>
-                            <td class=\"tableau\">" . $prop->getNomEntreprise() . ", " . $prop->getVille() . " (" . $prop->getPays(). ")"
+                            <td class=\"tableau\">" . $prop->getNomEntreprise() . ", " . $prop->getVille() . " (" . $prop->getPays() . ")"
                     . "</td>
                         <td class=\"tableau\">" . $prop->getTitreStage()
                     . "</td>
@@ -473,17 +473,17 @@ function genererDetailProposition($proposition) {
 
             Titre du stage (résumé du sujet en quelques mots) :
             <br />
-            <input type=text id=\"titreStage\" readonly=\"true\" name=\"titreStage\" size=\"75\" maxlength=\"200\" value=\"".$proposition->getTitreStage()."\">
+            <input type=text id=\"titreStage\" readonly=\"true\" name=\"titreStage\" size=\"75\" maxlength=\"200\" value=\"" . $proposition->getTitreStage() . "\">
 
             <br />
             Sujet complet de stage : <br />
-            <textarea rows=\"10\" cols=\"60\" readonly=\"true\" id=\"sujetStage\" name=\"sujetStage\" >".$proposition->getSujet()."</textarea>
+            <textarea rows=\"10\" cols=\"60\" readonly=\"true\" id=\"sujetStage\" name=\"sujetStage\" >" . $proposition->getSujet() . "</textarea>
             <br />
 
 
             Technologies utilisées :
             </br>
-                <input type=text id=\"technoStage\" readonly=\"true\" name=\"technoStage\" size=\"75\" maxlength=\"200\" value=\"".$proposition->getTechnoStage()."\">
+                <input type=text id=\"technoStage\" readonly=\"true\" name=\"technoStage\" size=\"75\" maxlength=\"200\" value=\"" . $proposition->getTechnoStage() . "\">
 
             </br>
 
@@ -571,7 +571,7 @@ function genererListeStage($tabStage) {
                     . "</td>
                             <td class=\"tableau\">" . $stage->getUtilisateur()->getPrenom()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getEntreprise()->getNom() . ", " . $stage->getEntreprise()->getVille() . " (" . $stage->getEntreprise()->getPays(). ")"
+                            <td class=\"tableau\">" . $stage->getEntreprise()->getNom() . ", " . $stage->getEntreprise()->getVille() . " (" . $stage->getEntreprise()->getPays() . ")"
                     . "</td>
                             <td class=\"tableau\">" . $stage->getEtatstage()
                     . "</td>
@@ -630,7 +630,7 @@ function genererListeStageAnneeCourante($tabStage) {
                     . "</td>
                             <td class=\"tableau\">" . $stage->getUtilisateur()->getPrenom()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getEntreprise()->getNom() . ", " . $stage->getEntreprise()->getVille() . " (" . $stage->getEntreprise()->getPays(). ")"
+                            <td class=\"tableau\">" . $stage->getEntreprise()->getNom() . ", " . $stage->getEntreprise()->getVille() . " (" . $stage->getEntreprise()->getPays() . ")"
                     . "</td>
                             <td class=\"tableau\">" . $stage->getEtatstage()
                     . "</td>
@@ -651,9 +651,9 @@ function genererListeStageAnneeCourante($tabStage) {
     return $corps;
 }
 
-function genererGererCompteAdmin($tabAdmin, $tabPromotion){
+function genererGererCompteAdmin($tabAdmin, $tabPromotion) {
 
-    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
+    $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
     $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierSelectionnerAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdmin\">";
 
     $corps .= "<td id = \"corps\">
@@ -669,18 +669,18 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
                   <td class=\"tableau\"> Mail </td>
                   </tr>";
 
-        $i = 0 ;
+        $i = 0;
         foreach ($tabAdmin as $adminCourant) {
 
             $corps .= "<tr><td class=\"tableau\"> ";
-            if ($i == 0 ){
+            if ($i == 0) {
 
                 $corps .= "<input type=\"radio\" name=\"idUtilisateur\" value=\"" . $adminCourant->getId() . "\" id=\"" . $adminCourant->getId() . "\" checked=\"checked\"/>";
-            }else{
+            } else {
 
                 $corps .= "<input type=\"radio\" name=\"idUtilisateur\" value=\"" . $adminCourant->getId() . "\" id=\"" . $adminCourant->getId() . "\" />";
             }
-            $i++ ;
+            $i++;
             $corps .= "</td><td class=\"tableau\">";
             $corps .= $adminCourant->getPrenom();
             $corps .= "</td><td class=\"tableau\">";
@@ -767,13 +767,13 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion){
         $corps .= "</td>
             </tr>
         </table>";
-        return $corps ;
+        return $corps;
     }
 }
 
-function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
+function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion) {
 
-    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
+    $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
     $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdminEtape2\">";
 
 
@@ -782,7 +782,7 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
 
             <form name=\"formulaire\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=ajouterAdmin\">
 
-            <input type=hidden id=\"idUtilisateur\" name=\"idUtilisateur\" value=\"".$modeleUtilisateur->getId()."\">
+            <input type=hidden id=\"idUtilisateur\" name=\"idUtilisateur\" value=\"" . $modeleUtilisateur->getId() . "\">
             <table>
             <tr>
                 <td>
@@ -808,9 +808,9 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
                     <select name=\"promotion\" id=\"promotion\">";
 
     foreach ($tabPromotion as $promoCourante) {
-        if ($modeleUtilisateur->getIdPromotion() == $promoCourante->getIdpromotion()){
+        if ($modeleUtilisateur->getIdPromotion() == $promoCourante->getIdpromotion()) {
             $corps .= "<option value=\"" . $promoCourante->getIdpromotion() . "\"selected>" . $promoCourante->getNompromotion() . "</option>";
-        }else{
+        } else {
             $corps .= "<option value=\"" . $promoCourante->getIdpromotion() . "\">" . $promoCourante->getNompromotion() . "</option>";
         }
     }
@@ -851,8 +851,7 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion){
     $corps .= "</td>
             </tr>
         </table>";
-    return $corps ;
-
+    return $corps;
 }
 
 function genererAfficherOption() {
@@ -866,12 +865,12 @@ function genererAfficherOption() {
             </td>
             </tr>
         </table>";
-    return $corps ;
+    return $corps;
 }
 
-function genererGererPromotion($tabPromotion){
+function genererGererPromotion($tabPromotion) {
 
-    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormGererPromotion.js\" type=\"text/javascript\"></script>";
+    $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormGererPromotion.js\" type=\"text/javascript\"></script>";
     $corps .= "<form name=\"formulaireAjout\" onsubmit=\"return verifierAjoutPromotion()\" method=\"post\" action=\"" . RACINE . "?action=gererPromotion\">
                 <input type=hidden id=\"actionPromotion\" name=\"actionPromotion\" value=\"ajouter\">";
     $corps .= "<td id = \"corps\">
@@ -882,50 +881,49 @@ function genererGererPromotion($tabPromotion){
                 <ul>
                 ";
 
-                foreach ($tabPromotion as $promoCourante) {
+    foreach ($tabPromotion as $promoCourante) {
 
-                    $corps .= "<li>".$promoCourante->getNompromotion()."</li>";
-                }
+        $corps .= "<li>" . $promoCourante->getNompromotion() . "</li>";
+    }
 
-                $corps .= "</ul>
+    $corps .= "</ul>
 
                 <h2>Ajouter une promotion</h2>
 
                  S&eacute;lectionner la promotion :</br>";
 
-                $tabPromoDejaAffiche[0] = "nagagull" ;
-                $k=0;
+    $tabPromoDejaAffiche[0] = "nagagull";
+    $k = 0;
 
-                foreach ($tabPromotion as $promoCourante) {
+    foreach ($tabPromotion as $promoCourante) {
 
-                    $tab = preg_split('/ /', $promoCourante->getNompromotion());
-                    $taille = sizeof($tab) ;
+        $tab = preg_split('/ /', $promoCourante->getNompromotion());
+        $taille = sizeof($tab);
 
 
-                    $aff = "" ;
-                    for ( $i = 0 ; $i < $taille-1 ; $i ++){
+        $aff = "";
+        for ($i = 0; $i < $taille - 1; $i++) {
 
-                        $aff .= $tab[$i] . " ";
-                    }
-                    $aff = substr($aff, 0, strlen($aff)-1) ;
-                    $afficherPromo = TRUE ;
+            $aff .= $tab[$i] . " ";
+        }
+        $aff = substr($aff, 0, strlen($aff) - 1);
+        $afficherPromo = TRUE;
 
-                    if (in_array($aff, $tabPromoDejaAffiche)){
+        if (in_array($aff, $tabPromoDejaAffiche)) {
 
-                        $afficherPromo = FALSE ;
-                    }else{
+            $afficherPromo = FALSE;
+        } else {
 
-                        $tabPromoDejaAffiche[$k] = $aff ;
-                        $k++;
-                    }
+            $tabPromoDejaAffiche[$k] = $aff;
+            $k++;
+        }
 
-                    if($afficherPromo){
+        if ($afficherPromo) {
 
-                        $corps .= "<input type=\"radio\" name=\"idPromo\" value=\"" . $aff . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
-                                    <label for=". $promoCourante->getIdpromotion() .">". $aff ."</label><br />";
-                    }
-
-                }
+            $corps .= "<input type=\"radio\" name=\"idPromo\" value=\"" . $aff . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
+                                    <label for=" . $promoCourante->getIdpromotion() . ">" . $aff . "</label><br />";
+        }
+    }
 
 
     $corps .= "</br>Année universitaire :
@@ -942,19 +940,19 @@ function genererGererPromotion($tabPromotion){
                 <input type=hidden id=\"actionPromotion\" name=\"actionPromotion\" value=\"supprimer\">
                 ";
 
-                foreach ($tabPromotion as $promoCourante) {
+    foreach ($tabPromotion as $promoCourante) {
 
-                    $corps .= "<input type=\"radio\" name=\"idPromoSupprimer\" value=\"" . $promoCourante->getIdpromotion() . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
-                            <label for=". $promoCourante->getIdpromotion() .">". $promoCourante->getNompromotion() ."</label><br />";
-                }
-                $corps .= "<input type=\"submit\" value=\"Supprimer\" >
+        $corps .= "<input type=\"radio\" name=\"idPromoSupprimer\" value=\"" . $promoCourante->getIdpromotion() . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
+                            <label for=" . $promoCourante->getIdpromotion() . ">" . $promoCourante->getNompromotion() . "</label><br />";
+    }
+    $corps .= "<input type=\"submit\" value=\"Supprimer\" >
                         </form>
                         ";
 
     $corps .= "</td>
             </tr>
         </table>";
-    return $corps ;
+    return $corps;
 }
 
 function genererDetailStage($stage) {
@@ -1015,9 +1013,9 @@ function genererDetailStage($stage) {
                         R&eacute;mun&eacute;ration : " . $stage[0]->getRemuneration() . "<br/>
                         Embauche : " . $embauche . "<br/>
                         Date embauche : " . $stage[0]->getDateembauche() . "<br/>
-                        Titre de stage :" .$stage[0]->getTitreStage() . "<br/>
-                        Sujet :" .$stage[0]->getSujetstage() . "<br/>
-                        Technologies utilisées :" .$stage[0]->getTechnoStage() . "<br/>
+                        Titre de stage :" . $stage[0]->getTitreStage() . "<br/>
+                        Sujet :" . $stage[0]->getSujetstage() . "<br/>
+                        Technologies utilisées :" . $stage[0]->getTechnoStage() . "<br/>
                         <br/><br/><a href=\"" . RACINE . "?action=editerStage&idstage=" . $stage[0]->getIdstage() . "\">Modifier les donn&eacute;es du stage</a>
                     </td>
                 </tr>
@@ -1054,31 +1052,31 @@ function genererEditerStage($stage) {
                         </td>
                         <td>
                             <select name=\"etatstage\" id=\"etatstage\">
-                                <option value=\"" . $stage[0]->getEtatstage() . "\">".$stage[0]->getEtatstage()."</option>
+                                <option value=\"" . $stage[0]->getEtatstage() . "\">" . $stage[0]->getEtatstage() . "</option>
 
         ";
-        if($stage[0]->getEtatstage() == "valide"){
+        if ($stage[0]->getEtatstage() == "valide") {
             $corps .="
               <option value=\"attente signature entreprise\">attente signature entreprise</option>
               <option value=\"attente signature universite\">attente signature universite</option>
             ";
-        }else if($stage[0]->getEtatstage() == "attente signature entreprise"){
+        } else if ($stage[0]->getEtatstage() == "attente signature entreprise") {
             $corps .="
               <option value=\"valide\">valide</option>
               <option value=\"attente signature universite\">attente signature universite</option>
             ";
-        }else if($stage[0]->getEtatstage() == "attente signature universite"){
+        } else if ($stage[0]->getEtatstage() == "attente signature universite") {
             $corps .="
               <option value=\"valide\">
               <option value=\"attente signature entreprise\">
             ";
-        }else if($stage[0]->getEtatstage() == ""){
+        } else if ($stage[0]->getEtatstage() == "") {
             $corps .="
               <option value=\"valide\">valide</option>
               <option value=\"attente signature entreprise\">attente signature entreprise</option>
               <option value=\"attente signature universite\">attente signature universite</option>
             ";
-        }else if($stage[0]->getEtatstage() == NULL){
+        } else if ($stage[0]->getEtatstage() == NULL) {
             $corps .="
               <option value=\"valide\">valide</option>
               <option value=\"attente signature entreprise\">attente signature entreprise</option>
@@ -1222,130 +1220,124 @@ function genererListePropositionStageEtudiant($tabProp) {
     if ($tabProp != NULL) {
 
         foreach ($tabProp as $prop) {
-            
+
             $corps .= "
                 <h3>Proposition " . $i . " :</h3>
-                <table>
+                 <table class=\"proposition\">
                     <tr>
+                      <td class=\"bloc_prop_entreprise\">
+                
+                 <table class=\"prop_entreprise\">
+                    <tr>
+                        <td class=\"prop_align_text\">
+                            Nom de l'entreprise :
+                        </td>
                         <td>
+                            " . $prop->getNomEntreprise() . "
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class=\"proposition_adresse\">
+                            Adresse :
+                        </td>
+                        <td>
+                            " . $prop->getAdresseEntreprise() . "<br/>" .
+                    $prop->getCodePostal() . "<br/>" .
+                    $prop->getVille() . "<br/>" .
+                    $prop->getPays() . "
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class=\"prop_align_text\">
+                            Num&eacute;ro de t&eacute;l&eacute;phone :
+                        </td>
+                        <td>
+                            " . $prop->getNumTelephone() . "
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class=\"prop_align_text\">
+                            Site Web :
+                        </td>
+                        <td>
+                            " . $prop->getUrlSite() . "
+                        </td>
+                    </tr>
+                </table>
+                </td>
+                <td class=\"bloc_prop_entreprise\">
+                        
+                <table class=\"etat_prop\">
+                    <tr>
+                        <td class=\"prop_align_text\">
                             Date de proposition :
                         </td>
                         <td>
                             " . $prop->getDateProposition() . "
                         </td>
                     </tr>";
-            
-            if($prop->getEtat() == "refusée"){
+
+            if ($prop->getEtat() == "refusée") {
                 $corps .= "
                     <tr>
-                        <td class = \"tableau\">
+                        <td class=\"prop_align_text\">
                             Etat de la propositionn :
                         </td>
-                        <td class = \"tableau\">
+                        <td>
                             <rouge>" . $prop->getEtat() . "<rouge>
                         </td>
+                    </tr>";
+
+                if ($prop->getRaisonrefus() != "") {
+                    $corps .= "
+                    <tr>
+                        <td class=\"prop_align_text\">
+                            Motif du refus :
+                        </td>
+                        <td>
+                          " . $prop->getRaisonrefus() . "
+                        </td>
                     </tr>
-                </table>
                 ";
-            }else{
+                }
+                $corps .= "</table>";
+            } else {
                 $corps .= "
                     <tr>
-                        <td class = \"tableau\">
+                        <td class=\"prop_align_text\">
                             Etat de la propositionn :
                         </td>
-                        <td class = \"tableau\">
+                        <td>
                             <vert>" . $prop->getEtat() . "</vert>
                         </td>
                     </tr>
                 </table>
                 ";
             }
-                    
-            
-            $corps .="
-                <h3>Proposition " . $i . " :</h3>
-                <table class = \"tableau\">
+             $corps .="
+                 </td>
+                </tr></table>
+                <table class=\"sujet\">
                     <tr>
-                        <td class = \"tableau\">
-                            Date de proposition :
+                        <td class=\"sujet_titre\">
+                            <h4>Sujet</h4>
                         </td>
-                        <td class = \"tableau\">
-                            " . $prop->getDateProposition() . "
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class = \"tableau\">
-                            Nom de l'entreprise :
-                        </td>
-                        <td class = \"tableau\">
-                            " . $prop->getNomEntreprise() . "
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class = \"tableau\">
-                            Adresse :
-                        </td>
-                        <td class = \"tableau\">
-                            " . $prop->getAdresseEntreprise() . "<br/>" .
-                                $prop->getCodePostal() . "<br/>" .
-                                $prop->getVille() . "<br/>" .
-                                $prop->getPays() . "
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class = \"tableau\">
-                            Num&eacute;ro de t&eacute;l&eacute;phone :
-                        </td>
-                        <td class = \"tableau\">
-                            " . $prop->getNumTelephone() . "
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class = \"tableau\">
-                            Site Web :
-                        </td>
-                        <td class = \"tableau\">
-                            " . $prop->getUrlSite() . "
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class = \"tableau\">
-                            Sujet :
-                        </td>
-                        <td class = \"tableau\">
+                     </tr>
+                     <tr>
+                        <td>
                             " . $prop->getTitreStage() . "
                         </td>
                     </tr>
+                 <table>
+                 ";
+                    
+            $corps .="</table><br/>";
+            if ($prop->getEtat() == "refusée") {
 
-                    <tr>
-                        <td class = \"tableau\">
-                            Etat de la proposition :
-                        </td>
-                        <td class = \"tableau\">
-                            " . $prop->getEtat() . "
-                        </td>
-                    </tr>";
-
-                    if ($prop->getEtat()=="refusée" && $prop->getRaisonrefus() != ""){
-
-                         $corps .="<tr>
-                                <td class = \"tableau\">
-                                    Raison du refus :
-                                </td>
-                                <td class = \"tableau\">
-                                    " . $prop->getRaisonrefus(). "
-                                </td>
-                            </tr>";
-                    }
-
-                $corps .="</table><br/>";
-                if ($prop->getEtat()=="refusée"){
-
-                    $corps .="<a href=\"" . RACINE . "?action=supprimerProposition&idProposition=" . $prop->getIdProposition() . "\">Supprimer cette proposition</a>";
-
-                }else{
-                    $corps .="<a href=\"" . RACINE . "?action=editerPropositionStage&idProposition=" . $prop->getIdProposition() . "\">Editer cette proposition</a>";
-                }
+                $corps .="<a href=\"" . RACINE . "?action=supprimerProposition&idProposition=" . $prop->getIdProposition() . "\">Supprimer cette proposition</a>";
+            } else {
+                $corps .="<a href=\"" . RACINE . "?action=editerPropositionStage&idProposition=" . $prop->getIdProposition() . "\">Editer cette proposition</a>";
+            }
 
 
 
@@ -1903,16 +1895,13 @@ function genererProposerStage($tabEntreprise) {
                         </table>
 
                     <br /><input type=\"submit\" value=\"Etape suivante\"></form><br /><br />";
-
-
-
     }
     $corps .="</form>";
     $corps .="</td> </tr> </table>";
     return $corps;
 }
 
-function genererProblemeUploadFichier(){
+function genererProblemeUploadFichier() {
 
     $corps = "<td id = \"corps\">";
 
@@ -2047,7 +2036,6 @@ function genererVoirStageEtudiant($stage) {
 
     return $corps;
 }
-
 ?>
 
 

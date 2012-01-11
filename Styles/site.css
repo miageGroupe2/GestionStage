@@ -61,13 +61,50 @@ root {
     text-align: right;
 }
 
-.rouge{
-    color: red;
-}
 
-.vert{
-    color: green;
-}
 
 /* Lister les propositions de stage coté etudiant */
 
+rouge{
+    color: red;
+    font-weight: bold;
+}
+
+vert{
+    color: green;
+    font-weight: bold;
+}
+
+.proposition{
+    width: 680px;
+}
+
+.bloc_prop_entreprise{
+    vertical-align: top;
+}
+
+.etat_prop{
+    vertical-align: top;
+}
+
+.prop_entreprise{
+    vertical-align: top;
+}
+
+.prop_align_text{
+    text-align: right;
+}
+
+.proposition_adresse{
+    vertical-align: top;
+    text-align: right;
+}
+
+.sujet{
+    width: 750px;
+    border-bottom: 1px solid black;
+}
+
+.sujet_titre{
+    text-align: center;
+}
