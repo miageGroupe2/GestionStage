@@ -20,11 +20,17 @@ body{
     margin: 0 auto 0 auto;
     width: 1000px;
     height: 100% ;
+    background-color: #eee6db;
 }
 
 h2{
     text-align: center;
-    color: blue;
+    color: black;
+}
+
+h3{
+    text-align: left;
+    color: black;
 }
 
 #page{
@@ -49,7 +55,7 @@ h2{
 
 #menu_gauche{
     background-color: #cdcdcc;
-    border: 1px solid black;
+    border: 1px solid #494949;
     vertical-align: top;
     width: 230px;
     height: 100%;
@@ -59,7 +65,7 @@ h2{
 #corps{
     padding-left: 10px;
     padding-right: 10px;
-    border: 1px solid black;
+    border: 1px solid #494949;
     width: 820px;
     vertical-align: top;
 }
@@ -101,25 +107,3 @@ a img:visited img{
 
 
 
-/* LOGIN */
-.login{
-    margin: 0 auto 0 auto;
-}
-.corps_log{
-    margin-left: 400px;
-    border: 1px solid black;
-    width: 400px;
-    vertical-align: top;
-    text-align: center;
-}
-#log_champ_connexion{
-    background-color: black;
-    color: #FFFFFF;
-    border: 1px solid black;
-    text-align: center;
-    font-weight: bold;
-}
-
-.champ_log_mdp{
-    text-align: right;
-}

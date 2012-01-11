@@ -16,11 +16,12 @@ root {
 }
 
 .erreur{
-    width: 1000px;
+    width: 400px;
+    margin-left: 250px;
     color: red;
     font-size: 16px;
     text-align: center;
-    border: 1px solid black;
+    border: 1px solid red;
 }
 
 .submit{
@@ -35,3 +36,38 @@ root {
     padding: 8px ;
     vertical-align: top;
 }
+
+/* LOGIN */
+.login{
+    margin: 0 auto 0 auto;
+}
+.corps_log{
+    margin-left: 400px;
+    border: 1px solid black;
+    width: 400px;
+    vertical-align: top;
+    text-align: center;
+    background-color: #cdcdcc;
+}
+#log_champ_connexion{
+    background-color: black;
+    color: #FFFFFF;
+    border: 1px solid black;
+    text-align: center;
+    font-weight: bold;
+}
+
+.champ_log_mdp{
+    text-align: right;
+}
+
+.rouge{
+    color: red;
+}
+
+.vert{
+    color: green;
+}
+
+/* Lister les propositions de stage coté etudiant */
+
