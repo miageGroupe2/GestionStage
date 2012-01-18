@@ -1,27 +1,5 @@
 function verifierFormulaireEtape1(){
-    
-    //si les radios boutons existent (cad l'utilisateur doit choisir entre sélectionner 
-    //une entreprise existante ou en ajouter une)
-    var radioBoutonExist = document.formulaire.idEntreprise ;
-    var besoinDeVerifierFormulaire = false ;
-    
-    if (radioBoutonExist){
-
-        var nbRadiosBouton = document.formulaire.idEntreprise.length ;
-        if(document.formulaire.idEntreprise[nbRadiosBouton - 1 ].checked){
-        
-            besoinDeVerifierFormulaire = true  ;
-    
-        }else{
-            return true ;
-        }   
-        
-    }else{
-        besoinDeVerifierFormulaire = true  ;
-    }   
-    
-    if (besoinDeVerifierFormulaire){
-        
+     
         if (document.getElementById("nom_entreprise").value == ""
             || document.getElementById("num_rue").value == ""
             || document.getElementById("code_postal").value == ""
@@ -36,10 +14,6 @@ function verifierFormulaireEtape1(){
             
             return true ;
         }
-    }else{
-        //inutile juste pour éviter un warning
-        return TRUE ;
-    }
 }
 function verifierFormulaireEtape2(){
     

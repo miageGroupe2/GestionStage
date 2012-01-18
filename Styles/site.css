@@ -101,6 +101,33 @@ root {
     padding-right: 5px;
 }
 
+.submit_prop{
+    margin: 0 auto 0 auto;
+    width: 820px;
+    text-align: center;
+}
+
+
+
+.form_ajout_new_company{
+    margin: 0 auto 0 auto;
+    width: 400px;
+}
+
+.titre_sous_categ_form{
+    font-size: 20px;
+    font-style: italic;
+}
+
+.form_ajout_new_company_nom_champ{
+    text-align: right;
+}
+
+.form_ajout_new_company_champ{
+    text-align: left;
+}
+
+
 /* Lister les propositions de stage coté etudiant */
 
 rouge{
