@@ -305,6 +305,41 @@ require_once 'BD.php';
         AffichePage(TRUE, $corps);
     }
 
+    function afficherOptionEtudiant(){
+
+        $messageChangementMdp = "" ;
+
+        if (isset($_POST['changerPromotion'])&& isset($_POST['idPromo'])){
+
+            BD::modifierPromotionEtudiant($_POST['idPromo']);
+
+        }else if (isset($_POST['changerMdp'])&& isset($_POST['password'])
+                && isset($_POST['password2'])&& isset($_POST['password_old'])){
+
+            if ($_POST['password'] != ''&& $_POST['password2']!= ''
+            && $_POST['password_old']!= '' ){
+
+                if ($_POST['password'] == $_POST['password2']){
+
+                    $messageChangementMdp = BD::changerMdpEtudiant($_POST['password_old'], $_POST['password']);
+                }
+
+            }
+
+        }else if (isset($_POST['changerNumEtudiant'])&& isset($_POST['numEtudiant'])){
+
+            if ($_POST['numEtudiant'] != ''){
+
+                $messageChangementMdp = BD::changerNumEtudiant($_POST['numEtudiant']);
+            }
+        }
+
+        $tabPromotion = BD::recherchePromotion();
+        $corps = genererAfficherOptionEtudiant($tabPromotion, $messageChangementMdp);
+        AffichePage(TRUE, $corps);
+    }
+
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.

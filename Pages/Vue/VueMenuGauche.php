@@ -60,6 +60,7 @@
                         <a href=\"".RACINE."?action=proposerStageEtape1\">Proposer un Stage</a><br/>
                         <a href=\"".RACINE."?action=listePropositionStageEtudiant\">Mes propositions de stage</a><br/>
                         <a href=\"".RACINE."?action=voirStageEtudiant\">Voir mon stage</a><br/>
+                        <a href=\"".RACINE."?action=optionEtudiant\">Option</a><br/>
                         </td>";
         }
 

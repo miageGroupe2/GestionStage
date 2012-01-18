@@ -614,6 +614,73 @@ class BD {
         return $stage;
     }
 
+    public static function modifierPromotionEtudiant($idPromo){
+
+        BD::getConnection();
+        $idPromo = mysql_real_escape_string(htmlspecialchars($idPromo));
+
+        if ($idPromo != FALSE ) {
+
+            $requete = "SELECT idpromotion FROM promotion WHERE idpromotion =".$idPromo;
+            $retour = mysql_query($requete);
+            while ($tableau = mysql_fetch_array($retour)) {
+
+                $requete = "UPDATE utilisateur SET idpromotion = ".$idPromo." WHERE idutilisateur= ".$_SESSION['modeleUtilisateur']->getId();
+                mysql_query($requete);
+                BD::rechargerSessionUtilisateur();
+            }
+        }
+    }
+
+    private static function rechargerSessionUtilisateur(){
+
+        $requete = "SELECT u.idutilisateur, u.idpromotion, p.nompromotion, u.mailutilisateur, u.passwordutilisateur, u.nomutilisateur, u.prenomutilisateur, u.numetudiant, u.admin
+            FROM utilisateur u, promotion p
+            WHERE u.idutilisateur = ".$_SESSION['modeleUtilisateur']->getId()."
+            AND  u.idpromotion = p.idpromotion";
+
+        $retour = mysql_query($requete);
+        while ($tableau = mysql_fetch_array($retour)) {
+
+            $modeleUtilisateur = new ModeleUtilisateur($tableau['idutilisateur'], $tableau['nompromotion'], $tableau['numetudiant'], $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], $tableau['admin'], $tableau['idpromotion']);
+            $_SESSION['modeleUtilisateur'] = $modeleUtilisateur;
+        }
+    }
+
+    public static function changerMdpEtudiant($ancien, $nouveau){
+
+        BD::getConnection();
+        $ancien = mysql_real_escape_string(htmlspecialchars($ancien));
+        $nouveau = mysql_real_escape_string(htmlspecialchars($nouveau));
+
+        if ($ancien != FALSE && $nouveau != FALSE ) {
+
+            $requete = "SELECT passwordutilisateur FROM utilisateur WHERE passwordutilisateur = '".sha1($ancien)."'";
+            $retour = mysql_query($requete);
+
+            while ($tableau = mysql_fetch_array($retour)) {
+
+                $requete = "UPDATE utilisateur SET passwordutilisateur = '".sha1($nouveau)."' WHERE idutilisateur = ".$_SESSION['modeleUtilisateur']->getId();
+                $retour = mysql_query($requete);
+                return "Changement de mot de passe effectu&eacute;";
+            }
+            return "Mauvais mot de passe";
+        }
+    }
+
+    public static function changerNumEtudiant($numEtudiant){
+
+        BD::getConnection();
+        $numEtudiant = mysql_real_escape_string(htmlspecialchars($numEtudiant));
+
+        if ($numEtudiant != FALSE ) {
+
+            $requete = "UPDATE utilisateur SET numetudiant = '".$numEtudiant."' WHERE idutilisateur = ".$_SESSION['modeleUtilisateur']->getId();
+            mysql_query($requete);   
+            BD::rechargerSessionUtilisateur();
+        }
+    }
+
     //-----------------------------------------------------------------------------------------
     // PARTIE DES ACCES BASES ADMIN
     //-----------------------------------------------------------------------------------------    
