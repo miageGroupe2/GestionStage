@@ -39,7 +39,7 @@ function genererPageAccueil() {
                                     </tr>
                                 </table>
                             </form><br/><br/>
-                            <a href=\"".RACINE."?action=inscription\">Cr&eacute;er un compte</a>
+                            <a href=\"" . RACINE . "?action=inscription\">Cr&eacute;er un compte</a>
                         </td>
                     </tr>
                 </table>
@@ -47,8 +47,6 @@ function genererPageAccueil() {
 
     return $corps;
 }
-
-
 
 function genererPageAccueilErreue() {
     $corps = "<table class=\"login\">
@@ -99,6 +97,7 @@ function genererPageAccueilErreue() {
 
     return $corps;
 }
+
 function genererPageInscriptionTerminee() {
 
     $corps = "<table class=\"login\">
@@ -119,6 +118,7 @@ function genererPageInscriptionTerminee() {
 
     return $corps;
 }
+
 function genererPageInscription($tabPromotion) {
 
     $corps = "<table class=\"login\">
@@ -164,13 +164,13 @@ function genererPageInscription($tabPromotion) {
                                         <td>
                                             <select name=\"promotion\" id=\"promotion\">";
 
-                                            foreach ($tabPromotion as $promoCourante) {
+    foreach ($tabPromotion as $promoCourante) {
 
 
-                                                $corps .= "<option value=\"" . $promoCourante->getIdpromotion() . "\">" . $promoCourante->getNompromotion() . "</option>";
-                                            }
+        $corps .= "<option value=\"" . $promoCourante->getIdpromotion() . "\">" . $promoCourante->getNompromotion() . "</option>";
+    }
 
-                                            $corps .= "</select>
+    $corps .= "</select>
                                         </td>
                                     </tr>
                                     <tr>
@@ -307,10 +307,10 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         </td>
                         <td class = \"tableau\">";
 
-                            if ($modeleFicheRenseignement != null){
-                                $corps .= "<a href=\"".RACINE."?action=telechargement&idproposition=".$proposition->getIdProposition()."\">".$modeleFicheRenseignement->getNomOriginal()."</a>";
-                            }
-                        $corps .="</td>
+        if ($modeleFicheRenseignement != null) {
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
+        }
+        $corps .="</td>
                     </tr>
                     <tr>
                         <td class = \"tableau\">
@@ -593,11 +593,11 @@ function genererDetailProposition($proposition, $modeleFicheRenseignement) {
             </br>
             </br>
             Fiche de renseignement : ";
-            if ($modeleFicheRenseignement != null){
-                $corps .= "<a href=\"".RACINE."?action=telechargement&idproposition=".$proposition->getIdProposition()."\">".$modeleFicheRenseignement->getNomOriginal()."</a>";
-            }
+        if ($modeleFicheRenseignement != null) {
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
+        }
 
-            $corps .= "
+        $corps .= "
             </br>
             </br>
             Raison du refus (le cas échéant) :
@@ -1532,7 +1532,7 @@ function genererListePropositionStageEtudiant($tabProp) {
                 </table>
                 ";
             }
-             $corps .="
+            $corps .="
                  </td>
                 </tr></table>
                 <table class=\"sujet\">
@@ -1546,7 +1546,7 @@ function genererListePropositionStageEtudiant($tabProp) {
                     </tr>
                 
                  ";
-                    
+
             $corps .="<tr><td colspan=\"2\" class=\"prop_action\">";
             if ($prop->getEtat() == "refusée") {
 
@@ -1977,14 +1977,14 @@ function genererProposerStage($tabEntreprise) {
                     </tr>
                 </table>
                 ";
-                
 
 
-    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaireEtape1()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape2\">";
+
+    $corps .= "<form name=\"formulaire\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape2\">";
 
     // on liste les entreprises ayant un nom similaire
     if ($tabEntreprise != NULL) {
-        
+
         $corps .= "<table class=\"info_etape1\">
                         <tr>
                             <td>
@@ -2006,24 +2006,38 @@ function genererProposerStage($tabEntreprise) {
                   
                   </tr>";
 
-
+        $i = 0;
         foreach ($tabEntreprise as $entrepriseCourante) {
-
-            $corps .= "<tr><td class=\"tableau\"> ";
-            $corps .= "<input type=\"radio\" name=\"idEntreprise\" value=\"" . $entrepriseCourante->getId() . "\" id=\"" . $entrepriseCourante->getId() . "\" />";
-            $corps .= "</td><td class=\"tableau\">";
-            $corps .= $entrepriseCourante->getNom();
-            $corps .= "</td><td class=\"tableau\">";
-            $corps .= $entrepriseCourante->getAdresse();
-            $corps .= "</td><td class=\"tableau\">";
-            $corps .= $entrepriseCourante->getVille();
-            $corps .= "</td><td class=\"tableau\">";
-            $corps .= $entrepriseCourante->getCodePostal();
-            $corps .= "</td><td class=\"tableau\">";
-            $corps .= $entrepriseCourante->getPays();
-            
-
-            $corps .= "</td></tr>";
+            if ($i == 0) {
+                $corps .= "<tr><td class=\"tableau\"> ";
+                $corps .= "<input type=\"radio\" name=\"idEntreprise\" checked=\"checked\" value=\"" . $entrepriseCourante->getId() . "\" id=\"" . $entrepriseCourante->getId() . "\" />";
+                $corps .= "</td><td class=\"tableau\">";
+                $corps .= $entrepriseCourante->getNom();
+                $corps .= "</td><td class=\"tableau\">";
+                $corps .= $entrepriseCourante->getAdresse();
+                $corps .= "</td><td class=\"tableau\">";
+                $corps .= $entrepriseCourante->getVille();
+                $corps .= "</td><td class=\"tableau\">";
+                $corps .= $entrepriseCourante->getCodePostal();
+                $corps .= "</td><td class=\"tableau\">";
+                $corps .= $entrepriseCourante->getPays();
+                $corps .= "</td></tr>";
+                $i++;
+            } else {
+                $corps .= "<tr><td class=\"tableau\"> ";
+                $corps .= "<input type=\"radio\" name=\"idEntreprise\" value=\"" . $entrepriseCourante->getId() . "\" id=\"" . $entrepriseCourante->getId() . "\" />";
+                $corps .= "</td><td class=\"tableau\">";
+                $corps .= $entrepriseCourante->getNom();
+                $corps .= "</td><td class=\"tableau\">";
+                $corps .= $entrepriseCourante->getAdresse();
+                $corps .= "</td><td class=\"tableau\">";
+                $corps .= $entrepriseCourante->getVille();
+                $corps .= "</td><td class=\"tableau\">";
+                $corps .= $entrepriseCourante->getCodePostal();
+                $corps .= "</td><td class=\"tableau\">";
+                $corps .= $entrepriseCourante->getPays();
+                $corps .= "</td></tr>";
+            }
         }
         $corps .="</table>";
     }
@@ -2039,94 +2053,102 @@ function genererProposerStage($tabEntreprise) {
 
             $corps .= "<br />Il n'existe aucune entreprise ayant un nom similaire dans la base. Vous devez l'ajouter :";
         } else {
-            
-            
-            $corps .= "<br /><input type=\"submit\" value=\"Etape suivante\"></form><br /><hr/>
+
+
+            $corps .= "<table><tr><td class=\"submit_prop\"><br /><input type=\"submit\" value=\"Etape suivante\"></form><br/></td></tr></table><hr/>
                 <form name=\"formulaire_ajout\" onsubmit=\"return verifierFormulaireEtape1()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape2\">
-                    
-                <input type=\"radio\" name=\"idEntreprise\" value=\"ajouter\" id=\"ajouter\" checked=\"checked\"/> <label for=\"autre\">Ajouter une entreprise :</label>";
+                 <h2>Ajouter une entreprise</h2>";
         }
 
-        $corps .= " <br /><br />
-
-                    <table>
+        $corps .= " 
+                    <table class=\"form_ajout_new_company\">
                         <tr>
-                            <td colspam=\"2\">
-                                <h3>Coordonn&eacute;es  entreprise : </h3>
+                            <td colspan=\"2\" class=\"titre_sous_categ_form\">
+                                <br/>Coordonn&eacute;es  entreprise<br/><br/>
                              </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class=\"form_ajout_new_company_nom_champ\">
                                 Nom de l'entreprise <etoile>*</etoile> :
                             </td>
-                            <td>
-                                <input type=text name=\"nom_entreprise\" id=\"nom_entreprise\" value=\"carrefour\">
+                            <td class=\"form_ajout_new_company_champ\">
+                                <input type=text name=\"nom_entreprise\" id=\"nom_entreprise\">
                             </td>
                         </tr>
                         <tr>
-                            <td colspam=\"2\">
-                                <br/><h3>Adresse de l'entreprise :</h3><br/>
+                            <td colspan=\"2\" class=\"titre_sous_categ_form\">
+                                <br/>Adresse de l'entreprise<br/><br/>
                              </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class=\"form_ajout_new_company_nom_champ\">
                                 N°, Rue <etoile>*</etoile> :
                             </td>
-                            <td>
-                                <input type=text name=\"num_rue\" id=\"num_rue\" value=\"10 avenue de libe\">
+                            <td class=\"form_ajout_new_company_champ\">
+                                <input type=text name=\"num_rue\" id=\"num_rue\">
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class=\"form_ajout_new_company_nom_champ\">
                                 Code postal <etoile>*</etoile> :
                             </td>
-                            <td>
-                                <input type=text name=\"code_postal\" id=\"code_postal\" value=\"287637\">
+                            <td class=\"form_ajout_new_company_champ\">
+                                <input type=text name=\"code_postal\" id=\"code_postal\">
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class=\"form_ajout_new_company_nom_champ\">
                                 Ville <etoile>*</etoile> :
                             </td>
-                            <td>
-                                 <input type=text name=\"ville\" id=\"ville\" value=\"Lyon\">
+                            <td class=\"form_ajout_new_company_champ\">
+                                 <input type=text name=\"ville\" id=\"ville\">
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class=\"form_ajout_new_company_nom_champ\">
                                 Pays <etoile>*</etoile> :
                             </td>
-                            <td>
-                                 <input type=text name=\"pays\" id=\"pays\" value=\"france\">
+                            <td class=\"form_ajout_new_company_champ\">
+                                 <input type=text name=\"pays\" id=\"pays\">
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class=\"form_ajout_new_company_nom_champ\">
                                 T&eacute;l&eacute;phone accueil <etoile>*</etoile> :
                             </td>
-                            <td>
-                                 <input type=text name=\"tel_accueil\" id=\"tel_accueil\" value=\"86866\">
+                            <td class=\"form_ajout_new_company_champ\">
+                                 <input type=text name=\"tel_accueil\" id=\"tel_accueil\">
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class=\"form_ajout_new_company_nom_champ\">
                                 Site internet :
                             </td>
-                            <td>
+                            <td class=\"form_ajout_new_company_champ\">
                                  <input type=text name=\"siteinternet\">
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class=\"form_ajout_new_company_nom_champ\">
                                 Num&eacute;ro de siret :
                             </td>
-                            <td>
+                            <td class=\"form_ajout_new_company_champ\">
                                  <input type=text name=\"numerosiret\">
                             </td>
                         </tr>
-                        </table>
+                        <tr>
+                            <td colspan=\"2\" class=\"submit_prop\">
+                                <br/><etoile>*</etoile> Champs obligatoires
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan=\"2\" class=\"submit_prop\">
+                                <input type=\"submit\" value=\"Etape suivante\"></form><br />
+                            </td>
+                        </tr>
+                        </table>";
 
-                    <br /><input type=\"submit\" value=\"Etape suivante\"></form><br /><br />";
+                    
     }
     $corps .="</form>";
     $corps .="</td> </tr> </table>";
