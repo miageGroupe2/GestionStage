@@ -1238,6 +1238,11 @@ function genererListePropositionStageEtudiant($tabProp) {
                 
                  <table class=\"prop_entreprise\">
                     <tr>
+                        <td colspan=\"2\" class=\"titre_prop\">
+                            <h4>Informations sur l'entreprise</h4>
+                        <td>
+                    </tr>
+                    <tr>
                         <td class=\"prop_align_text\">
                             Nom de l'entreprise :
                         </td>
@@ -1278,6 +1283,11 @@ function genererListePropositionStageEtudiant($tabProp) {
                         
                 <table class=\"etat_prop\">
                     <tr>
+                        <td colspan=\"2\" class=\"titre_prop\">
+                            <h4>Suivi de la proposition</h4>
+                        <td>
+                    </tr>
+                    <tr>
                         <td class=\"prop_align_text\">
                             Date de proposition :
                         </td>
@@ -1304,7 +1314,7 @@ function genererListePropositionStageEtudiant($tabProp) {
                             Motif du refus :
                         </td>
                         <td>
-                          " . $prop->getRaisonrefus() . "
+                          <rouge>" . $prop->getRaisonrefus() . "</rouge>
                         </td>
                     </tr>
                 ";
@@ -1329,25 +1339,23 @@ function genererListePropositionStageEtudiant($tabProp) {
                 <table class=\"sujet\">
                     <tr>
                         <td class=\"sujet_titre\">
-                            <h4>Sujet</h4>
+                            <h4>Titre du sujet : </h4>
                         </td>
-                     </tr>
-                     <tr>
                         <td>
                             " . $prop->getTitreStage() . "
                         </td>
                     </tr>
-                 <table>
+                
                  ";
                     
-            $corps .="</table><br/>";
+            $corps .="<tr><td colspan=\"2\" class=\"prop_action\">";
             if ($prop->getEtat() == "refusée") {
 
                 $corps .="<a href=\"" . RACINE . "?action=supprimerProposition&idProposition=" . $prop->getIdProposition() . "\">Supprimer cette proposition</a>";
             } else {
                 $corps .="<a href=\"" . RACINE . "?action=editerPropositionStage&idProposition=" . $prop->getIdProposition() . "\">Editer cette proposition</a>";
             }
-
+            $corps .="</td></tr></table>";
 
 
             $i++;
@@ -1738,7 +1746,7 @@ function genererModifierContact($tabContact, $idEntreprise, $idStage) {
             <br /><input type=\"submit\" value=\"Valider\"></form><br /><br />";
 
     $corps .= "
-
+        
                 </td>
             </tr>
         </table>";
@@ -1758,29 +1766,45 @@ function genererProposerStage($tabEntreprise) {
     $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
     $corps .= "<td id = \"corps\">
                 <h2>Choix de l'entreprise</h2>
-
-                <form method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape1\">
-                            Nom : <input type=text name=\"nom\" value=\"" . $nom . "\">
-
-               <input type=\"submit\" value=\"Rechercher\">
-                </form><br /><br />";
+                <table>
+                    <tr>
+                        <td class=\"form_proposer_stage_choix_entreprise\">
+                            
+                            <form method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape1\">
+                                Entrer le nom de l'entreprise : <input type=text name=\"nom\" value=\"" . $nom . "\">
+                                <input type=\"submit\" value=\"Rechercher\">
+                            </form><br /><br />
+                        </td>
+                    </tr>
+                </table>
+                ";
+                
 
 
     $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaireEtape1()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape2\">";
 
     // on liste les entreprises ayant un nom similaire
     if ($tabEntreprise != NULL) {
-
-        $corps .= "<table class=\"tableau\"><tr>
-                  <td class=\"tableau\"> Choix </td>
-                  <td class=\"tableau\"> Nom entreprise </td>
-                  <td class=\"tableau\"> Adresse </td>
-                  <td class=\"tableau\"> Ville </td>
-                  <td class=\"tableau\"> Code postal </td>
-                  <td class=\"tableau\"> Pays </td>
-                  <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
-                  <td class=\"tableau\"> Numéro de Siret </td>
-                  <td class=\"tableau\"> Site web </td>
+        
+        $corps .= "<table class=\"info_etape1\">
+                        <tr>
+                            <td>
+                                <h3>Information</h3>
+                                Des entreprises ayant un nom similaires ont &eacute;t&eacute; trouv&eacute;es dans la base.<br/>
+                                Si votre entreprise apparait dans le tableau ci-dessous, veuillez la sélectionner puis cliquer sur \"Etape suivante\".<br/>
+                                Dans le cas contraire, veuillez remplir le formulaire en bas de page.
+                            </td>
+                        </tr>
+                    </table><br/>
+            
+                  <table class=\"tab_prop_stage\"><tr>
+                  <td class=\"entete_tab_prop_stage\"></td>
+                  <td class=\"entete_tab_prop_stage\"> Nom entreprise </td>
+                  <td class=\"entete_tab_prop_stage\"> Adresse </td>
+                  <td class=\"entete_tab_prop_stage\"> Ville </td>
+                  <td class=\"entete_tab_prop_stage\"> Code postal </td>
+                  <td class=\"entete_tab_prop_stage\"> Pays </td>
+                  
                   </tr>";
 
 
@@ -1798,12 +1822,7 @@ function genererProposerStage($tabEntreprise) {
             $corps .= $entrepriseCourante->getCodePostal();
             $corps .= "</td><td class=\"tableau\">";
             $corps .= $entrepriseCourante->getPays();
-            $corps .= "</td><td class=\"tableau\">";
-            $corps .= $entrepriseCourante->getNumeroTelephone();
-            $corps .= "</td><td class=\"tableau\">";
-            $corps .= $entrepriseCourante->getNumeroSiret();
-            $corps .= "</td><td class=\"tableau\">";
-            $corps .= $entrepriseCourante->getUrlSiteInternet();
+            
 
             $corps .= "</td></tr>";
         }
@@ -1821,7 +1840,12 @@ function genererProposerStage($tabEntreprise) {
 
             $corps .= "<br />Il n'existe aucune entreprise ayant un nom similaire dans la base. Vous devez l'ajouter :";
         } else {
-            $corps .= "<br /><input type=\"radio\" name=\"idEntreprise\" value=\"ajouter\" id=\"ajouter\" checked=\"checked\"/> <label for=\"autre\">Ajouter une entreprise :</label>";
+            
+            
+            $corps .= "<br /><input type=\"submit\" value=\"Etape suivante\"></form><br /><hr/>
+                <form name=\"formulaire_ajout\" onsubmit=\"return verifierFormulaireEtape1()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape2\">
+                    
+                <input type=\"radio\" name=\"idEntreprise\" value=\"ajouter\" id=\"ajouter\" checked=\"checked\"/> <label for=\"autre\">Ajouter une entreprise :</label>";
         }
 
         $corps .= " <br /><br />
