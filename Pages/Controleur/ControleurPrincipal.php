@@ -98,6 +98,8 @@ function verifierAutorisationAction($action) {
                     return $action;
                 }else if ($action == "telechargement") {
                    return $action;
+                }else if ($action == "optionEtudiant") {
+                   return $action;
                 } else {
                     return "pagePrincipale";
                 }
@@ -211,6 +213,10 @@ function call_action() {
                 break;
             case 'modifierInformations' :
                 $action = 'afficherModifierInformations';
+                break;
+
+            case 'optionEtudiant' :
+                $action = 'afficherOptionEtudiant';
                 break;
 
             // Partie responsable

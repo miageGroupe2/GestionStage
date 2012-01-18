@@ -970,7 +970,7 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion) {
 function genererAfficherOption() {
 
     $corps = "<td id = \"corps\">
-                <h1>Option</h1>
+                <h3>Option</h3>
 
                 <a href=\"" . RACINE . "?action=gererPromotion\">G&eacute;rer les promotions</a>
 
@@ -1319,6 +1319,101 @@ function genererValiderModificationsStage($ok) {
         </table>
         ";
     }
+    return $corps;
+}
+
+function genererAfficherOptionEtudiant($tabPromotion, $messageChangementMdp) {
+
+    $utilisateur = $_SESSION['modeleUtilisateur'];
+    $promoEtudiante = $utilisateur->getIdPromotion();
+    $corps = "<td id = \"corps\">
+                <h3>Option</h3>
+
+            <script src=\"" . RACINE . RACINE_SCRIPT . "OptionEtudiant.js\" type=\"text/javascript\"></script>
+            <form onsubmit=\"return changementNumEtudiant()\" action=\"" . RACINE . "?action=optionEtudiant\" method=\"post\">
+                <input type=\"hidden\" name=\"changerNumEtudiant\"  />
+                <table >
+                    <tr>
+                        <td>Num&eacute;ro &eacute;tudiant actuel :</td>
+                        <td>
+                            ".$_SESSION['modeleUtilisateur']->getNumeroetudiant()."
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nouveau num&eacute;ro &eacute;tudiant :</td>
+                        <td>
+                            <input type=\"text\" class=\"forml\" style=\"width:250px;\" name=\"numEtudiant\" id=\"numEtudiant\" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class=\"bouton_form\">
+                            <input id=\"log-submit\" type=\"submit\" value=\"Changer\" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            </br></br>
+
+                <script src=\"" . RACINE . RACINE_SCRIPT . "OptionEtudiant.js\" type=\"text/javascript\"></script>
+                <form onsubmit=\"return changementMdp()\" action=\"" . RACINE . "?action=optionEtudiant\" method=\"post\">
+                <input type=\"hidden\" name=\"changerMdp\"  />
+                <table >
+                    <tr>
+                        <td>Ancien mot de passe :</td>
+                        <td>
+                            <input type=\"password\" class=\"forml\" style=\"width:250px;\" name=\"password_old\" id=\"password_old\" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nouveau mot de passe :</td>
+                        <td>
+                            <input type=\"password\" class=\"forml\" style=\"width:250px;\" name=\"password\" id=\"password\" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Confirmation :</td>
+                        <td>
+                            <input type=\"password\" class=\"forml\" style=\"width:250px;\" name=\"password2\" id=\"password2\" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class=\"bouton_form\">
+                            <input id=\"log-submit\" type=\"submit\" value=\"Changer\" />
+                        </td>
+                        <td>
+                            ".$messageChangementMdp."
+                        </td>
+
+                    </tr>
+                </table>
+            </form>
+
+
+
+                <form name=\"formulairePromotion\"  method=\"post\" action=\"" . RACINE . "?action=optionEtudiant\">
+                <input type=\"hidden\" name=\"changerPromotion\"  />
+                </br></br>Changer ma promotion :</br></br>
+                ";
+
+                foreach ($tabPromotion as $promoCourante) {
+
+                    if($promoCourante->getIdpromotion() == $promoEtudiante){
+
+                        $corps .= "<input type=\"radio\" name=\"idPromo\" value=\"" . $promoCourante->getIdpromotion() . "\" id=\"" . $promoCourante->getIdpromotion() . "\" checked/>";
+                    }else{
+
+                        $corps .= "<input type=\"radio\" name=\"idPromo\" value=\"" . $promoCourante->getIdpromotion() . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />";
+
+                    }
+                    $corps .="<label for=" . $promoCourante->getIdpromotion() . ">" . $promoCourante->getNompromotion() . "</label><br />";
+                    
+                }
+                $corps .= "<input type=\"submit\" value=\"Changer\" >
+                            </form>";
+
+     $corps .="</td>
+            </tr>
+        </table>";
     return $corps;
 }
 

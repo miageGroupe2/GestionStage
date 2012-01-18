@@ -111,7 +111,7 @@ function confirmationInscription(){
 
 function envoyerMail($mailEtudiant, $idConfirmationMail){
 
-    $mailEtudiant .= "@etudiant.univ-nancy2" ;
+    $mailEtudiant .= "@etudiant.univ-nancy2.fr" ;
 
     $mail = new PHPmailer();
     $mail->IsSMTP(); 
@@ -120,8 +120,8 @@ function envoyerMail($mailEtudiant, $idConfirmationMail){
     $mail->Username = "stagegestion@gmail.com";
     $mail->Password = "miagemiage";
 
-    $webmaster_email = "ludovic.fort@gmail.com";
-    $email="fort0192@etudiant.univ-nancy2.fr"; 
+    $webmaster_email = "stagegestion@gmail.com";
+    $email=$mailEtudiant;
     $name="";
     $mail->From = $webmaster_email;
     $mail->FromName = "Gestion stage";
