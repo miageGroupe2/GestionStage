@@ -56,7 +56,6 @@ function telechargement(){
         header('Content-Disposition: attachment; filename='.$modeleFicheRenseignement->getNomOriginal()); //Nom du fichier
         readfile("FicheRenseignement/".$modeleFicheRenseignement->getNomUnique());
     }
-    
 }
 
 function afficherAccueil() {
@@ -141,9 +140,6 @@ function envoyerMail($mailEtudiant, $idConfirmationMail){
     $mail->Send();
     
 }
-
-
-
 
 function afficherRechercherEntreprise() {
     $corps = genererRechercheEntreprise();
