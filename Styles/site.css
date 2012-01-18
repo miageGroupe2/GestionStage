@@ -72,7 +72,7 @@ root {
     background-color: #cdcdcc;
 }
 
-/* Proposer un stage */
+/* Proposer un stage Etape 1*/
 
 .form_proposer_stage_choix_entreprise{
     width: 500px;
@@ -107,8 +107,6 @@ root {
     text-align: center;
 }
 
-
-
 .form_ajout_new_company{
     margin: 0 auto 0 auto;
     width: 400px;
@@ -127,6 +125,44 @@ root {
     text-align: left;
 }
 
+/* Proposer un stage Etape 2*/
+
+.form_etape2{
+    width: 550px;
+    margin: 0 auto 0 auto;
+    
+    border-collapse: collapse;
+}
+
+.form_etape2_recap{
+    vertical-align: top;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.form_etape2_sous_categ{
+    font-size: 20px;
+    font-style: italic;
+    text-align: center;
+}
+
+.form_etape2_colg{
+    color: darkblue;
+    text-align: right;
+    
+}
+
+.form_etape2_cold{
+    text-align: left;
+}
+
+.form_etape2_sujet{
+    margin-left: 70px;
+}
+
+.form_etape2_titre{
+    padding-left: 250px;
+}
 
 /* Lister les propositions de stage coté etudiant */
 

@@ -1702,129 +1702,159 @@ function genererProposerStageEtape2($entreprise) {
     $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
     $corps .= "<form onsubmit=\"return verifierFormulaireEtape2()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape3\" enctype=\"multipart/form-data\">
                 <td id = \"corps\">
-                    <h2>Sujet de stage</h2>
+                    <h2>Ajouter une proposition de stage - Etape 2</h2>
 
-                <table>
+                <table class=\"form_etape2\">
                     <tr>
-                        <td>
-                            <h3>Etudiant</h3>
+                        <td class=\"form_etape2_sous_categ\">
+                            Entreprise<br/><br/>
+                        </td>
+                        <td class=\"form_etape2_sous_categ\">
+                            Etudiant<br/><br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class=\"form_etape2_recap\">
+                            <table>
+                                <tr>
+                                     <td class=\"form_etape2_colg\">
+                                        Nom de l'entreprise :
+                                    </td>
+                                    <td class=\"form_etape2_cold\">
+                                        " . $entreprise->getNom() . "
+                                    </td>
+                                  </tr>
+                                  <tr>          
+                                    <td class=\"form_etape2_colg\">
+                                        N°, Rue :
+                                    </td>
+                                    <td class=\"form_etape2_cold\">
+                                        " . $entreprise->getAdresse() . "
+                                    </td>
+                                  </tr>
+                                 <tr>          
+                                    <td class=\"form_etape2_colg\">
+                                        Code postal :
+                                    </td>
+                                    <td class=\"form_etape2_cold\">
+                                        " . $entreprise->getCodePostal() . "
+                                    </td>
+                                 </tr>
+                                 <tr>  
+                                    <td class=\"form_etape2_colg\">
+                                        Ville :
+                                    </td>
+                                    <td class=\"form_etape2_cold\">
+                                         " . $entreprise->getVille() . "
+                                    </td>
+                                 </tr>
+                                 <tr>  
+                                    <td class=\"form_etape2_colg\">
+                                        Pays :
+                                    </td>
+                                    <td class=\"form_etape2_cold\">
+                                         " . $entreprise->getPays() . "
+                                    </td>
+                                 </tr>
+                                 <tr>  
+                                    <td class=\"form_etape2_colg\">
+                                        T&eacute;l&eacute;phone accueil :
+                                    </td>
+                                    <td class=\"form_etape2_cold\">
+                                         " . $entreprise->getNumeroTelephone() . "
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class=\"form_etape2_colg\">
+                                        Site internet :
+                                    </td>
+                                    <td class=\"form_etape2_cold\">
+                                         " . $entreprise->getUrlSiteInternet() . "
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td class=\"form_etape2_recap\">
+                            <table>
+                                <tr>
+                                    <td class=\"form_etape2_colg\">
+                                        Nom :
+                                    </td>
+                                    <td class=\"form_etape2_cold\">
+                                    " . $utilisateur->getNom() . "
+                                    </td> 
+                                </tr>
+                                <tr>
+                                    <td class=\"form_etape2_colg\">
+                                        Pr&eacute;nom :
+                                    </td>
+                                    <td class=\"form_etape2_cold\">
+                                    " . $utilisateur->getPrenom() . "
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td class=\"form_etape2_colg\">
+                                        Promotion :
+                                    </td>
+                                    <td class=\"form_etape2_cold\">
+                                        " . $utilisateur->getPromotion() . "
+                                    </td>
+                                 </tr>
+                            </table>
+                        </td>
+                     </tr>
+                  </table><br/><br/>
+                  <table class=\"form_etape2_sujet\">
+                    <tr>
+                        <td class=\"form_etape2_titre\">
+                            <h3>Sujet de stage</h3>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Nom :
-                        </td>
-                        <td>
-                            <input type=text readonly=\"true\" value=\"" . $utilisateur->getNom() . "\" >
+                            Titre du stage (résumé du sujet en quelques mots) <etoile>*</etoile>:<br />
+                            <input type=text id=\"titreStage\" name=\"titreStage\" size=\"75\" maxlength=\"200\">
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Pr&eacute;nom :
-                        </td>
-                        <td>
-                            <input type=text readonly=\"true\" value=\"" . $utilisateur->getPrenom() . "\" >
+                        
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Promotion :
-                        </td>
-                        <td>
-                            <input type=text readonly=\"true\" value=\"" . $utilisateur->getPromotion() . "\" >
+                            Sujet complet de stage : <etoile>*</etoile><br />
+                            <textarea rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" ></textarea>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h3>Entreprise</h3>
+                            Technologies utilisées <etoile>*</etoile>:
+                            <input type=text id=\"technoStage\" name=\"technoStage\" size=\"75\" maxlength=\"200\" >
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Nom de l'entreprise :
-                        </td>
-                        <td>
-                            <input type=text readonly=\"true\" value=\"" . $entreprise->getNom() . "\" >
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            N°, Rue :
-                        </td>
-                        <td>
-                            <input type=text readonly=\"true\" value=\"" . $entreprise->getAdresse() . "\" >
+                             </br>
+                            Fiche de renseignements (<= 3 Mo) <etoile>*</etoile>:</br>
+                            <input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"3145728\" />
+                            <input type=\"file\" name=\"ficherenseignement\" id=\"ficherenseignement\" /><br />
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            Code postal :
-                        </td>
-                        <td>
-                            <input type=text readonly=\"true\" value=\"" . $entreprise->getCodePostal() . "\" >
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Ville :
-                        </td>
-                        <td>
-                             <input type=text readonly=\"true\" value=\"" . $entreprise->getVille() . "\" >
+                        <td class=\"submit_prop\">
+                            </br>
+                            <input type=\"submit\" value=\"Valider la proposition\"></form><br /><br />
+                            </br>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            Pays :
-                        </td>
-                        <td>
-                             <input type=text readonly=\"true\" value=\"" . $entreprise->getPays() . "\" >
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            T&eacute;l&eacute;phone accueil :
-                        </td>
-                        <td>
-                             <input type=text readonly=\"true\" value=\"" . $entreprise->getNumeroTelephone() . "\" >
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Site internet :
-                        </td>
-                        <td>
-                             <input type=text readonly=\"true\" value=\"" . $entreprise->getUrlSiteInternet() . "\" >
-                        </td>
-                    </tr>
-                </table>
+                  </table>
 
-                </br>
-                <h3>Sujet de stage</h3>
-                </br>
-
-                Titre du stage (résumé du sujet en quelques mots) <etoile>*</etoile>:
-                <br />
-                <input type=text id=\"titreStage\" name=\"titreStage\" size=\"75\" maxlength=\"200\">
-
-                <br />
-                Sujet complet de stage : <etoile>*</etoile><br />
-                <textarea rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" ></textarea>
-                <br />
 
 
-                Technologies utilisées <etoile>*</etoile>:
-                </br>
-                <input type=text id=\"technoStage\" name=\"technoStage\" size=\"75\" maxlength=\"200\" >
+               
 
                 
-                </br>
-                Fiche de renseignements (<= 3 Mo) <etoile>*</etoile>:
-                </br>
-                <input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"3145728\" />
-                <input type=\"file\" name=\"ficherenseignement\" id=\"ficherenseignement\" /><br />
-
-                </br>
-                <input type=\"submit\" value=\"Valider la proposition\"></form><br /><br />
-                </br>
             </form>";
 
 
@@ -1964,7 +1994,7 @@ function genererProposerStage($tabEntreprise) {
 
     $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
     $corps .= "<td id = \"corps\">
-                <h2>Choix de l'entreprise</h2>
+                <h2>Ajouter une proposition de stage - Etape 1</h2>
                 <table>
                     <tr>
                         <td class=\"form_proposer_stage_choix_entreprise\">
@@ -1991,7 +2021,7 @@ function genererProposerStage($tabEntreprise) {
                                 <h3>Information</h3>
                                 Des entreprises ayant un nom similaires ont &eacute;t&eacute; trouv&eacute;es dans la base.<br/>
                                 Si votre entreprise apparait dans le tableau ci-dessous, veuillez la sélectionner puis cliquer sur \"Etape suivante\".<br/>
-                                Dans le cas contraire, veuillez remplir le formulaire en bas de page.
+                                Dans le cas contraire, veuillez remplir le formulaire d'ajout d'une entreprise en bas de page.
                             </td>
                         </tr>
                     </table><br/>
