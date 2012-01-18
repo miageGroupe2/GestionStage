@@ -70,9 +70,26 @@ class BD {
         }
     }
 
+    public static function confirmationInscription($id){
+        
+        BD::getConnection();
+        $id = mysql_real_escape_string(htmlspecialchars($id));
+
+        if ($id != FALSE ){
+
+            $requete = "SELECT passwordutilisateurtmp FROM utilisateur WHERE idConfirmationMail='".$id."'";
+            $retour = mysql_query($requete);
+            while ($tableau = mysql_fetch_array($retour)) {
+
+                $passwordTmp = $tableau['passwordutilisateurtmp'];
+
+                $requete = "UPDATE utilisateur SET passwordutilisateur = '".$passwordTmp."' WHERE idConfirmationMail='".$id."'";
+                mysql_query($requete);
+            }
+        }
+    }
     public static function inscriptionEtudiant($mail, $numetudiant, $password, $nom, $prenom, $idPromotion){
 
-        
         BD::getConnection();
         $mail = mysql_real_escape_string(htmlspecialchars($mail));
         $password = mysql_real_escape_string(htmlspecialchars($password));
@@ -113,8 +130,14 @@ class BD {
                 $requete = "UPDATE utilisateur SET idConfirmationMail = '".$idUnique."', passwordutilisateurtmp = '".sha1($password)."' WHERE mailutilisateur='".$mail."'" ;
                 mysql_query($requete);
             }
-            
-            
+
+            $requete = "SELECT idConfirmationMail FROM utilisateur WHERE mailutilisateur = '".$mail."'";
+            $retour = mysql_query($requete);
+
+            while ($tableau = mysql_fetch_array($retour)) {
+
+                return $tableau['idConfirmationMail'];
+            }
         }
     }
     

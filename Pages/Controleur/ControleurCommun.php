@@ -1,4 +1,5 @@
 <?php
+require_once '../phpmailer/class.phpmailer.php';
 
 function deconnecterUtilisateur() {
 
@@ -86,8 +87,9 @@ function afficherInscription() {
             if ($_POST['password'] == $_POST['password2']){
 
 
-                BD::inscriptionEtudiant($_POST['mail'], $_POST['numetudiant'], $_POST['password'], $_POST['nom'], $_POST['prenom'], $_POST['promotion']);
-            
+                $idConfirmationMail = BD::inscriptionEtudiant($_POST['mail'], $_POST['numetudiant'], $_POST['password'], $_POST['nom'], $_POST['prenom'], $_POST['promotion']);
+
+                envoyerMail($_POST['mail'], $idConfirmationMail);
             
                 $corps = genererPageInscriptionTerminee();
                 AffichePage(FALSE, $corps);
@@ -98,10 +100,45 @@ function afficherInscription() {
         $tabPromotion = BD::recherchePromotion();
         $corps = genererPageInscription($tabPromotion);
         AffichePage(FALSE, $corps);
-    }
+    }    
+}
 
+function confirmationInscription(){
 
+    BD::confirmationInscription($_GET['id']);
+    $corps = genererPageAccueil();
+    AffichePage(FALSE, $corps);
+}
 
+function envoyerMail($mailEtudiant, $idConfirmationMail){
+
+    $mailEtudiant .= "@etudiant.univ-nancy2" ;
+
+    $mail = new PHPmailer();
+    $mail->IsSMTP(); 
+
+    $mail->SMTPAuth = true; 
+    $mail->Username = "stagegestion@gmail.com";
+    $mail->Password = "miagemiage";
+
+    $webmaster_email = "ludovic.fort@gmail.com";
+    $email="fort0192@etudiant.univ-nancy2.fr"; 
+    $name="";
+    $mail->From = $webmaster_email;
+    $mail->FromName = "Gestion stage";
+    $mail->AddAddress($email,$name);
+    //$mail->AddReplyTo($webmaster_email,"Webmaster");
+    $mail->WordWrap = 50; // set word wrap
+
+    $mail->IsHTML(true); // send as HTML
+    $mail->Subject = "Inscription ".utf8_decode("à")." la plateforme de gestion des stages";
+    $mail->Body = "Bonjour,</br></br>
+    Vous venez de vous inscrire &agrave; la plateforme de gestion des stages.
+    Pour confirmer votre inscription veuillez cliquer sur le lien suivant : <a href=\"http://localhost/GestionStage?action=confirmationInscription&id=".$idConfirmationMail."\">Confirmer inscription</a>";
+    $mail->AltBody = "Bonjour, \n\n
+    Vous venez de vous inscrire &agrave; la plateforme de gestion des stages.
+    Pour confirmer votre inscription veuillez vous rendre &agrave; l'adresse suivante : http://localhost/GestionStage?action=confirmationInscription&id=".$idConfirmationMail; //Text Body
+    $mail->Send();
     
 }
 
