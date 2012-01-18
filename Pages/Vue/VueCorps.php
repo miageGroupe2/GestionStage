@@ -970,7 +970,7 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion) {
 function genererAfficherOption() {
 
     $corps = "<td id = \"corps\">
-                <h3>Option</h3>
+                <h3>Options</h3>
 
                 <a href=\"" . RACINE . "?action=gererPromotion\">G&eacute;rer les promotions</a>
 
@@ -1327,7 +1327,7 @@ function genererAfficherOptionEtudiant($tabPromotion, $messageChangementMdp) {
     $utilisateur = $_SESSION['modeleUtilisateur'];
     $promoEtudiante = $utilisateur->getIdPromotion();
     $corps = "<td id = \"corps\">
-                <h3>Option</h3>
+                <h3>Options</h3>
 
             <script src=\"" . RACINE . RACINE_SCRIPT . "OptionEtudiant.js\" type=\"text/javascript\"></script>
             <form onsubmit=\"return changementNumEtudiant()\" action=\"" . RACINE . "?action=optionEtudiant\" method=\"post\">
