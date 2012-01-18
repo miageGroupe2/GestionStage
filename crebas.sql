@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Mer 11 Janvier 2012 à 17:04
+-- Généré le : Mer 18 Janvier 2012 à 15:13
 -- Version du serveur: 5.1.49
 -- Version de PHP: 5.3.3-1ubuntu9.5
 
@@ -246,24 +246,27 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `idpromotion` int(11) NOT NULL,
   `mailutilisateur` varchar(50) DEFAULT NULL,
   `passwordutilisateur` varchar(50) DEFAULT NULL,
+  `passwordutilisateurtmp` varchar(50) NOT NULL,
   `nomutilisateur` varchar(50) DEFAULT NULL,
   `prenomutilisateur` varchar(50) DEFAULT NULL,
   `numetudiant` varchar(50) DEFAULT NULL,
+  `idConfirmationMail` varchar(100) NOT NULL,
   `admin` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idutilisateur`),
   KEY `fk_utilisateurpromotion` (`idpromotion`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Contenu de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`idutilisateur`, `idpromotion`, `mailutilisateur`, `passwordutilisateur`, `nomutilisateur`, `prenomutilisateur`, `numetudiant`, `admin`) VALUES
-(1, 2, 'ludo@gmail.com', 'ae5a3c4fa3c5d1c2cc98e43b1899f88bce0e3569', 'fort', 'ludovic', '1234567', 0),
-(3, 1, 'laurent@gmail.com', 'f1b010126f61b5c59e7d5eb42c5c68f6105c5914', 'Dubois', 'Laurent', '283983', 0),
-(4, 3, 'anthony.avola@gmail.com', '7a79f9450d349278985d7ff04b2bd7d48ddcf42a', 'AVOLA', 'Anthony', '27004612', 0),
-(10, 2, 'khalid.benali@loria.fr', '94ca247fff5ad413788a1c8d8c80394a246dba1c', 'benali', 'khalid', NULL, 1),
-(11, 1, 'jean.malhomme@loria.fr', '51f8b1fa9b424745378826727452997ee2a7c3d7', 'Malhomme', 'Jean', NULL, 1);
+INSERT INTO `utilisateur` (`idutilisateur`, `idpromotion`, `mailutilisateur`, `passwordutilisateur`, `passwordutilisateurtmp`, `nomutilisateur`, `prenomutilisateur`, `numetudiant`, `idConfirmationMail`, `admin`) VALUES
+(1, 2, 'ludo@gmail.com', 'ae5a3c4fa3c5d1c2cc98e43b1899f88bce0e3569', '', 'fort', 'ludovic', '1234567', '', 0),
+(3, 1, 'laurent@gmail.com', 'f1b010126f61b5c59e7d5eb42c5c68f6105c5914', '', 'Dubois', 'Laurent', '283983', '', 0),
+(4, 3, 'anthony.avola@gmail.com', '7a79f9450d349278985d7ff04b2bd7d48ddcf42a', '', 'AVOLA', 'Anthony', '27004612', '', 0),
+(10, 2, 'khalid.benali@loria.fr', '94ca247fff5ad413788a1c8d8c80394a246dba1c', '', 'benali', 'khalid', NULL, '', 1),
+(11, 1, 'jean.malhomme@loria.fr', '51f8b1fa9b424745378826727452997ee2a7c3d7', '', 'Malhomme', 'Jean', NULL, '', 1),
+(20, 2, 'fort0192@etudiant.univ-nancy2.fr', '146473bcb6ff4a8b8b564d04e59c99d8296501cb', '146473bcb6ff4a8b8b564d04e59c99d8296501cb', 'fort', 'ludovic', NULL, '83de63f05ecb1762271239084cbfc9b3', 0);
 
 --
 -- Contraintes pour les tables exportées
