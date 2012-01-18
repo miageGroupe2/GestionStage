@@ -61,6 +61,15 @@ root {
     text-align: right;
 }
 
+/*Pour la page d'inscription */
+.corps_inscription{
+    margin-left: 400px;
+    border: 1px solid black;
+    width: 600px;
+    vertical-align: top;
+    text-align: center;
+    background-color: #cdcdcc;
+}
 
 
 /* Lister les propositions de stage coté etudiant */

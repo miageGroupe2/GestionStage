@@ -72,6 +72,41 @@ function afficherPagePrincipale() {
     $corps = genererPagePrincipal();
     AffichePage(TRUE, $corps);
 }
+function afficherInscription() {
+
+    //si le formulaire a été renseigné
+    if (isset($_POST['mail']) && isset($_POST['password'])
+        && isset($_POST['password2'])&& isset($_POST['numetudiant'])
+        && isset($_POST['nom'])&& isset($_POST['prenom'])){
+        
+
+        if ($_POST['mail']!= '' && $_POST['password'] != ''&& $_POST['password2']!= ''
+            && $_POST['numetudiant']!= '' && $_POST['nom']!= '' && $_POST['prenom']!= '' ){
+
+            if ($_POST['password'] == $_POST['password2']){
+
+
+                BD::inscriptionEtudiant($_POST['mail'], $_POST['numetudiant'], $_POST['password'], $_POST['nom'], $_POST['prenom'], $_POST['promotion']);
+            
+            
+                $corps = genererPageInscriptionTerminee();
+                AffichePage(FALSE, $corps);
+            }
+        }
+    }else{
+    
+        $tabPromotion = BD::recherchePromotion();
+        $corps = genererPageInscription($tabPromotion);
+        AffichePage(FALSE, $corps);
+    }
+
+
+
+    
+}
+
+
+
 
 function afficherRechercherEntreprise() {
     $corps = genererRechercheEntreprise();

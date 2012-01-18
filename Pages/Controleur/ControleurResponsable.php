@@ -166,7 +166,40 @@ require_once 'BD.php';
     }
     
     function afficherOption(){
+
+
+        require("../phpmailer/class.phpmailer.php");
+
+        $mail = new PHPmailer();
+        $mail->IsSMTP(); // send via SMTP
         
+        $mail->SMTPAuth = true; // turn on SMTP authentication
+        $mail->Username = "ludovic.fort@gmail.com"; // SMTP username
+        $mail->Password = ""; // SMTP password
+        $webmaster_email = "ludovic.fort@gmail.com"; //Reply to this email ID
+        $email="fort0192@etudiant.univ-nancy2.fr"; // Recipients email ID
+        $name="ludo"; // Recipient's name
+        $mail->From = $webmaster_email;
+        $mail->FromName = "Webmaster";
+        $mail->AddAddress($email,$name);
+        $mail->AddReplyTo($webmaster_email,"Webmaster");
+        $mail->WordWrap = 50; // set word wrap
+
+        $mail->IsHTML(true); // send as HTML
+        $mail->Subject = "This is the subject";
+        $mail->Body = "Hi,
+        This is the HTML BODY "; //HTML Body
+        $mail->AltBody = "This is the body when user views in plain text format"; //Text Body
+        if(!$mail->Send())
+        {
+          echo "Mailer Error: " . $mail->ErrorInfo;
+        }
+        else
+        {
+          echo "Message has been sent";
+        }
+       
+
         $corps = genererAfficherOption();
         AffichePage(TRUE, $corps);
     }
