@@ -69,7 +69,54 @@ class BD {
             }
         }
     }
-    
+
+    public static function inscriptionEtudiant($mail, $numetudiant, $password, $nom, $prenom, $idPromotion){
+
+        
+        BD::getConnection();
+        $mail = mysql_real_escape_string(htmlspecialchars($mail));
+        $password = mysql_real_escape_string(htmlspecialchars($password));
+        $numetudiant = mysql_real_escape_string(htmlspecialchars($numetudiant));
+        $nom = mysql_real_escape_string(htmlspecialchars($nom));
+        $prenom= mysql_real_escape_string(htmlspecialchars($prenom));
+        $idPromotion = mysql_real_escape_string(htmlspecialchars($idPromotion));
+
+
+        if ($mail != FALSE && $password != FALSE && $numetudiant != FALSE
+            && $nom != FALSE && $prenom != FALSE && $idPromotion != FALSE ) {
+
+            $mail .= "@etudiant.univ-nancy2.fr";
+
+            $idUnique = md5(uniqid(rand(), true)) ;
+
+            // check if exist
+
+            $requete = "SELECT mailutilisateur FROM utilisateur WHERE mailutilisateur = '".$mail."'";
+            $retour = mysql_query($requete);
+
+            $existeDeja = FALSE ;
+            while ($tableau = mysql_fetch_array($retour)) {
+
+                $existeDeja = TRUE ;
+            }
+
+            if (!$existeDeja){
+
+                $requete = "INSERT INTO utilisateur (idpromotion, prenomutilisateur, nomutilisateur, mailutilisateur,
+                passwordutilisateurtmp, admin, idConfirmationMail)
+                VALUES ('$idPromotion','$prenom', '$nom', '$mail', '".sha1($password)."', '0', '".$idUnique."')";
+
+
+                mysql_query($requete);
+            }else{
+
+                $requete = "UPDATE utilisateur SET idConfirmationMail = '".$idUnique."', passwordutilisateurtmp = '".sha1($password)."' WHERE mailutilisateur='".$mail."'" ;
+                mysql_query($requete);
+            }
+            
+            
+        }
+    }
     
 
 //-----------------------------------------------------------------------------------------

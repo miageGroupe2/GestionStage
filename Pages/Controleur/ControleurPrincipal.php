@@ -106,6 +106,8 @@ function verifierAutorisationAction($action) {
     } else {
         if ($action == "connexion") {
             return $action;
+        }else if ($action == "inscription") {
+            return $action;
         } else {
             return "afficherAccueil";
         }
@@ -143,6 +145,10 @@ function call_action() {
                 break;
             case 'telechargement' :
                 $action = 'telechargement';
+                break;
+
+            case 'inscription' :
+                $action = 'afficherInscription';
                 break;
             /*
               case 'rechercherEntreprise':
