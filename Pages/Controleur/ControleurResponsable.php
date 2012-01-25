@@ -21,7 +21,8 @@ require_once 'BD.php';
         $proposition = BD::rechercherProposition($_GET['idprop']);
         $modeleFicheRenseignement = BD::rechercherFicheRenseignement($_GET['idprop'], TRUE);
         $modeleFicheSujetStage = BD::rechercherFicheSujetStage($_GET['idprop'], TRUE);
-        $corps = genererDetailProposition($proposition, $modeleFicheRenseignement, $modeleFicheSujetStage);
+        $tabTechno = BD::rechercheTechnoByProposition($_GET['idprop']);
+        $corps = genererDetailProposition($proposition, $modeleFicheRenseignement, $modeleFicheSujetStage, $tabTechno);
         AffichePage(TRUE, $corps);        
     }
 
@@ -46,7 +47,7 @@ require_once 'BD.php';
             }
             BD::refuserProposition($_GET['idprop'], $raisonrefus);
         }else{
-            echo "appel de valider propo<br/>";
+            
             BD::validerProposition($_GET['idprop']);
         }
 

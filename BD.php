@@ -88,6 +88,23 @@ class BD {
         return $technoTab ;
     }
 
+    public static function rechercheTechnoByProposition($idProposition){
+
+        BD::getConnection();
+        $technoTab = NULL ;
+        $requete = "SELECT * FROM technoproposition, techno WHERE technoproposition.idtechno=techno.id AND  idproposition = ".$idProposition;
+        
+        $retour = mysql_query($requete);
+        $i=0;
+        while ($tableau = mysql_fetch_array($retour)) {
+
+            $technoTab[$i] = new ModeleTechno($tableau['id'], $tableau['nom']);
+            $i++ ;
+        }
+
+        return $technoTab ;
+    }
+
     public static function confirmationInscription($id){
         
         BD::getConnection();
@@ -484,6 +501,13 @@ class BD {
             mysql_query($requete);
         }
     }
+    public static function ajouterTechnoProposition($idProposition, $idtechno){
+
+        BD::getConnection();
+
+        $requete = "INSERT INTO technoproposition(idproposition, idtechno) VALUES(".$idProposition.",". $idtechno.")";
+        mysql_query($requete);
+    }
 
     public static function ajouterPropositionStage($idEntreprise, $sujetStage, $titreStage, $technoStage, $idFiche, $idFicheSujet) {
 
@@ -492,10 +516,10 @@ class BD {
         $idEntreprise = mysql_real_escape_string(htmlspecialchars($idEntreprise));
         $sujetStage = mysql_real_escape_string(htmlspecialchars($sujetStage));
         $titreStage = mysql_real_escape_string(htmlspecialchars($titreStage));
-        $technoStage = mysql_real_escape_string(htmlspecialchars($technoStage));
+        $idproposition = 0 ;
 
-        if ($idEntreprise != FALSE && $sujetStage != FALSE 
-                && $titreStage != FALSE && $technoStage != FALSE ) {
+        if ($idEntreprise != FALSE && $sujetStage != FALSE
+                && $titreStage != FALSE ) {
 
             $modeleUtilisateur = $_SESSION['modeleUtilisateur'];
             $idUtilisateur = $modeleUtilisateur->getId();
@@ -516,6 +540,7 @@ class BD {
 
 
                 mysql_query($requete);
+                
                 $idproposition = mysql_insert_id();
                 $requete = "UPDATE ficherenseignement SET idproposition=".$idproposition." WHERE id=".$idFiche;
                 mysql_query($requete);
@@ -529,6 +554,7 @@ class BD {
                 // il y a un doublon, donc on ne fait rien
             }
         }
+        return $idproposition;
     }
 
     /**
@@ -1166,8 +1192,6 @@ class BD {
             $requete .= " AND datevalidation > DATE('".($annee-1)."-09-01')";
         }
         
-
-        echo $requete;
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {
