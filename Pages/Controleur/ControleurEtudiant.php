@@ -13,8 +13,7 @@ require_once 'BD.php';
 
         // on vérifie que l'utilisateur a renseigné un sujet
         if (isset($_POST['sujetStage']) && $_POST['sujetStage'] != ""
-                && isset($_POST['titreStage']) && $_POST['titreStage'] != ""
-                && isset($_POST['technoStage']) && $_POST['technoStage'] != "" ){
+                && isset($_POST['titreStage']) && $_POST['titreStage'] != "" ){
 
              // limite à 3 Mo
             if ($_FILES['ficherenseignement']['error'] == 0
@@ -70,9 +69,19 @@ require_once 'BD.php';
                         $entreprise->getUrlSiteInternet());
                 
             }
-            
-            BD::ajouterPropositionStage($idEntreprise, $_POST['sujetStage'], $_POST['titreStage'], $_POST['technoStage'], $idFiche, $idFicheSujet);
-            
+            $technoDetails = "";
+            if (isset($_POST['technoStage'])){
+                $technoDetails = $_POST['technoStage'];
+            }
+            $idproposition = BD::ajouterPropositionStage($idEntreprise, $_POST['sujetStage'], $_POST['titreStage'], $technoDetails, $idFiche, $idFicheSujet);
+
+            $tabCheckBox = $_POST['check'] ;
+
+            foreach($tabCheckBox as $techno){
+
+                BD::ajouterTechnoProposition ($idproposition, $techno);
+            }
+
             $corps = genererProposerStageEtape3($entreprise);
             AffichePage(TRUE, $corps);
         }else{

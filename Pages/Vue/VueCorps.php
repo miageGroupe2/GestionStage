@@ -497,7 +497,7 @@ function genererListePropositionStageResponsable($tabProp) {
     return $corps;
 }
 
-function genererDetailProposition($proposition, $modeleFicheRenseignement, $modeleSujetStage) {
+function genererDetailProposition($proposition, $modeleFicheRenseignement, $modeleSujetStage, $tabTechno) {
     $corps = "";
     if ($proposition != NULL) {
         $corps = "<td id = \"corps\">
@@ -598,8 +598,7 @@ function genererDetailProposition($proposition, $modeleFicheRenseignement, $mode
             <table class=\"detail_prop_stage\">
                 <tr>
                     <td class=\"detail_prop_stage_colg\">
-                        Technologies utilisées :
-                    </td>
+                        Technologies utilisées :</td>
                     <td class=\"detail_prop_stage_colg\">
                         Fiche de renseignement : 
                     </td>
@@ -609,7 +608,20 @@ function genererDetailProposition($proposition, $modeleFicheRenseignement, $mode
                 </tr>
                 <tr>
                     <td class=\"detail_prop_stage_cold\">
-                        ". $proposition->getTechnoStage() . "
+                        ";
+
+                        $technoConcat = "";
+                        foreach($tabTechno as $techno){
+
+                            $technoConcat .= $techno->getNom() .",";
+                        }
+                        $technoConcat .= $proposition->getTechnoStage();
+                        if ( substr($technoConcat, -1, 1)== ","){
+
+                            $technoConcat = substr($technoConcat, 0, strlen($technoConcat)-1);
+                        }
+
+                        $corps .= $technoConcat."
                     </td>
                     <td class=\"detail_prop_stage_cold\">
                         ";
@@ -1784,7 +1796,7 @@ function genererProposerStageEtape2($entreprise, $technoTab) {
                                 if($i == 0){
                                     $corps .= "<tr>";
                                 }
-                                $corps .= "<td><input type=\"checkbox\" id=\"techno".$j."\"  name=\"".$techno->getId()."\" value=\"Milk\">".$techno->getNom()."</td>";
+                                $corps .= "<td><input type=\"checkbox\" id=\"techno".$j."\"  value=\"".$techno->getId()."\" name=\"check[]\">".$techno->getNom()."</td>";
                                 $j++;
                                 $i++ ;
                                 if($i == 4){
