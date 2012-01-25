@@ -18,29 +18,41 @@ require_once 'BD.php';
 
              // limite à 3 Mo
             if ($_FILES['ficherenseignement']['error'] == 0
-                && $_FILES['ficherenseignement']['size'] <= 3145728
-                && $_FILES['fichesujetstage']['error'] == 0
-                && $_FILES['fichesujetstage']['size'] <= 3145728){
-                
+                && $_FILES['ficherenseignement']['size'] <= 3145728){
 
                 $nom = md5(uniqid(rand(), true)) ;
                 $resultat = move_uploaded_file($_FILES['ficherenseignement']['tmp_name'],"./FicheRenseignement/".$nom);
-
-                $nomSujet = md5(uniqid(rand(), true)) ;
-                $resultat2 = move_uploaded_file($_FILES['fichesujetstage']['tmp_name'],"./FicheSujetStage/".$nomSujet);
-
-                
-
-                if($resultat && $resultat2){
+                if($resultat ){
 
                     $idFiche = BD::ajouterFicheRenseignement($_FILES['ficherenseignement']['name'],$_FILES['ficherenseignement']['type'], $nom);
-                    $idFicheSujet = BD::ajouterFicheSujetStage($_FILES['fichesujetstage']['name'],$_FILES['fichesujetstage']['type'], $nomSujet);
-                }else{
-
-                    $corps = genererProblemeUploadFichier();
-                    AffichePage(TRUE, $corps);
-                    return ;
                 }
+
+
+                
+                if ($_FILES['fichesujetstage']['size'] != 0){
+
+                    if ($_FILES['fichesujetstage']['error'] == 0
+                        && $_FILES['fichesujetstage']['size'] <= 3145728){
+
+                            $nomSujet = md5(uniqid(rand(), true)) ;
+                            $resultat2 = move_uploaded_file($_FILES['fichesujetstage']['tmp_name'],"./FicheSujetStage/".$nomSujet);
+                            if($resultat2 ){
+
+                                $idFicheSujet = BD::ajouterFicheSujetStage($_FILES['fichesujetstage']['name'],$_FILES['fichesujetstage']['type'], $nomSujet);
+                            }
+                        }else{
+
+                            $corps = genererProblemeUploadFichier();
+                            AffichePage(TRUE, $corps);
+                            return ;
+                        }
+                }
+
+                
+            }else{
+                $corps = genererProblemeUploadFichier();
+                AffichePage(TRUE, $corps);
+                return ;
             }
 
 

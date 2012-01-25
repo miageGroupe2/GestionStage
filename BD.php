@@ -184,6 +184,7 @@ class BD {
         if ($nomOriginal != FALSE && $nomUnique != FALSE) {
 
             $requete = "INSERT INTO fichesujetstage (nomoriginal, nomunique, type) VALUES ('".$nomOriginal."','".$nomUnique."','".$type."')";
+            echo $requete;
             mysql_query($requete);
             $requete = "SELECT id FROM fichesujetstage WHERE nomunique ='".$nomUnique."'";
             $retour = mysql_query($requete);
@@ -206,7 +207,7 @@ class BD {
         if ($nomOriginal != FALSE && $nomUnique != FALSE) {
 
             $requete = "INSERT INTO ficherenseignement (nomoriginal, nomunique, type) VALUES ('".$nomOriginal."','".$nomUnique."','".$type."')";
-            
+            echo $requete ;
             mysql_query($requete);
             
             $requete = "SELECT id FROM ficherenseignement WHERE nomunique ='".$nomUnique."'";
@@ -921,7 +922,7 @@ class BD {
                         FROM ficherenseignement
                         WHERE idstage = ".$id;
             }
-
+echo $requete;
             $retour = mysql_query($requete) ;
             
             while ($tableau = mysql_fetch_array($retour)) {
@@ -1055,7 +1056,7 @@ class BD {
                     sujetstage, titrestage, technostage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
                     appreciationobtenue, remuneration, embauche, dateembauche, respcivil) 
                     VALUES ('', null, null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', '" .mysql_real_escape_string($prop->getTitreStage()). ", '" .mysql_real_escape_string($prop->getTechnoStage()). "', NOW(), null, null, null, null, 'en cours', null, null, null, null, null, 0)";
-            echo "AAAAA".$requete;
+            
                 
                 //pas encore utilisé(modif demandé par jean malhomme
             } else {
@@ -1064,7 +1065,7 @@ class BD {
                     sujetstage, titrestage, technostage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
                     appreciationobtenue, remuneration, embauche, dateembauche, respcivil, idpromotion) 
                     VALUES ('', " . $prop->getIdEntreprise() . ", null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', '" .mysql_real_escape_string($prop->getTitreStage()). "', '" .mysql_real_escape_string($prop->getTechnoStage()). "', NOW(), null, null, null, null, 'en cours', null, null, null, null, null, 0, ".$prop->getPromotionEtudiant().")";
-            echo "BBBBBBBB".$requete;
+            echo "AAAAA".$requete;
             }
 
             mysql_query($requete);
@@ -1169,7 +1170,7 @@ class BD {
                     AND u.idutilisateur = s.idutilisateur
                     AND u.idpromotion = pr.idpromotion
                     AND s.identreprise = e.identreprise";
-    
+         
         $retour = mysql_query($requete) or die(mysql_error());
         
         while ($tableau = mysql_fetch_array($retour)) {
@@ -1183,7 +1184,7 @@ class BD {
             
         }
         
-        return $tabStage;
+        return $tabStage[0];
     }
     
     

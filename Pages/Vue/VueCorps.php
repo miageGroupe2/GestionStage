@@ -1104,12 +1104,12 @@ function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujet
 
     $corps = "";
     if ($stage != NULL) {
-        if ($stage[0]->getRespcivil() == 1) {
+        if ($stage->getRespcivil() == 1) {
             $respcivil = "OK";
         } else {
             $respcivil = "en attente";
         }
-        if ($stage[0]->getEmbauche() == 1) {
+        if ($stage->getEmbauche() == 1) {
             $embauche = "OUI";
         } else {
             $embauche = "NON";
@@ -1119,51 +1119,53 @@ function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujet
             <table class = \"tableau\">
                 <tr>
                     <td class = \"tableau\">
-                        N° Etudiant : " . $stage[0]->getUtilisateur()->getNumeroetudiant() . "<br/><br/>" .
-                $stage[0]->getUtilisateur()->getPrenom() . " " . $stage[0]->getUtilisateur()->getNom() . "<br/>
-                        Formation : " . $stage[0]->getPromotion()->getNompromotion() . "<br/>
-                        Mail : " . $stage[0]->getUtilisateur()->getMail() . "<br/>
+                        N° Etudiant : " . $stage->getUtilisateur()->getNumeroetudiant() . "<br/><br/>" .
+                $stage->getUtilisateur()->getPrenom() . " " . $stage->getUtilisateur()->getNom() . "<br/>
+                        Formation : " . $stage->getPromotion()->getNompromotion() . "<br/>
+                        Mail : " . $stage->getUtilisateur()->getMail() . "<br/>
                     </td>
                      <td class = \"tableau\">
                         Contact Entreprise : <br/><br/>" .
-                $stage[0]->getContact()->getPrenom() . " " . $stage[0]->getContact()->getNom() . "<br/>
-                        Fonction : " . $stage[0]->getContact()->getFonction() . "<br/>
-                        Tel fixe : " . $stage[0]->getContact()->getTelephoneFixe() . "<br/>
-                        Tel mobile : " . $stage[0]->getContact()->getTelephoneMobile() . "<br/>
-                        Mail : " . $stage[0]->getContact()->getMail() . "<br/>
+                $stage->getContact()->getPrenom() . " " . $stage->getContact()->getNom() . "<br/>
+                        Fonction : " . $stage->getContact()->getFonction() . "<br/>
+                        Tel fixe : " . $stage->getContact()->getTelephoneFixe() . "<br/>
+                        Tel mobile : " . $stage->getContact()->getTelephoneMobile() . "<br/>
+                        Mail : " . $stage->getContact()->getMail() . "<br/>
                     </td>
                 </tr>
                 <tr>
                     <td colspan=\"2\" class = \"tableau\">
                         Entreprise : <br/><br/>" .
-                $stage[0]->getEntreprise()->getNom() . "<br/>
-                        Siret : " . $stage[0]->getEntreprise()->getNumeroSiret() . "<br/>
-                        Adresse : <br/><br/>" . $stage[0]->getEntreprise()->getAdresse() . "<br/>" .
-                $stage[0]->getEntreprise()->getCodePostal() . "<br/>" . $stage[0]->getEntreprise()->getVille() . "<br/>" .
-                $stage[0]->getEntreprise()->getPays() . "<br/><br/> Tel : " .
-                $stage[0]->getEntreprise()->getNumeroTelephone() . "<br/>Site Web : " .
-                $stage[0]->getEntreprise()->getUrlSiteInternet() . "
+                $stage->getEntreprise()->getNom() . "<br/>
+                        Siret : " . $stage->getEntreprise()->getNumeroSiret() . "<br/>
+                        Adresse : <br/><br/>" . $stage->getEntreprise()->getAdresse() . "<br/>" .
+                $stage->getEntreprise()->getCodePostal() . "<br/>" . $stage->getEntreprise()->getVille() . "<br/>" .
+                $stage->getEntreprise()->getPays() . "<br/><br/> Tel : " .
+                $stage->getEntreprise()->getNumeroTelephone() . "<br/>Site Web : " .
+                $stage->getEntreprise()->getUrlSiteInternet() . "
                     </td>
                 </tr>
                 <tr>
                     <td colspan=\"2\" class = \"tableau\">
-                        Stage : " . $stage[0]->getEtatstage() . "<br/>Responsabilité civile : " . $respcivil . "<br/><br/>
-                        Date de validation : " . $stage[0]->getDatevalidation() . "<br/>
-                        Date de d&eacute;but : " . $stage[0]->getDatedebut() . "<br/>
-                        Date de fin : " . $stage[0]->getDatefin() . "<br/>
-                        Date de soutenance : " . $stage[0]->getDatesoutenance() . "<br/>
-                        Lieu de soutenance : " . $stage[0]->getLieusoutenance() . "<br/>
-                        Note obtenue : " . $stage[0]->getNoteobtenue() . "<br/>
-                        Appr&eacute;ciation obtenue : " . $stage[0]->getAppreciationobtenue() . "<br/>
-                        R&eacute;mun&eacute;ration : " . $stage[0]->getRemuneration() . "<br/>
+                        Stage : " . $stage->getEtatstage() . "<br/>Responsabilité civile : " . $respcivil . "<br/><br/>
+                        Date de validation : " . $stage->getDatevalidation() . "<br/>
+                        Date de d&eacute;but : " . $stage->getDatedebut() . "<br/>
+                        Date de fin : " . $stage->getDatefin() . "<br/>
+                        Date de soutenance : " . $stage->getDatesoutenance() . "<br/>
+                        Lieu de soutenance : " . $stage->getLieusoutenance() . "<br/>
+                        Note obtenue : " . $stage->getNoteobtenue() . "<br/>
+                        Appr&eacute;ciation obtenue : " . $stage->getAppreciationobtenue() . "<br/>
+                        R&eacute;mun&eacute;ration : " . $stage->getRemuneration() . "<br/>
                         Embauche : " . $embauche . "<br/>
-                        Date embauche : " . $stage[0]->getDateembauche() . "<br/>
-                        Titre de stage :" . $stage[0]->getTitreStage() . "<br/>
-                        Sujet :" . $stage[0]->getSujetstage() . "<br/>
-                        Technologies utilisées :" . $stage[0]->getTechnoStage() . "<br/>
+                        Date embauche : " . $stage->getDateembauche() . "<br/>
+                        Titre de stage :" . $stage->getTitreStage() . "<br/>
+                        Sujet :" . $stage->getSujetstage() . "<br/>
+                        Technologies utilisées :" . $stage->getTechnoStage() . "<br/>
 
-                        Fiche de renseignement : <a href=\"" . RACINE . "?action=telechargement&type=renseignement&id=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>
-                        <br/><br/><a href=\"" . RACINE . "?action=editerStage&idstage=" . $stage[0]->getIdstage() . "\">Modifier les donn&eacute;es du stage</a>
+                        Fiche de renseignement : <a href=\"" . RACINE . "?action=telechargement&type=renseignement&id=" . $stage->getIdstage() . "\">" .$modeleFicheRenseignement->getNomOriginal() . "</a>
+                        <br/>
+                        Fiche du sujet de stage : <a href=\"" . RACINE . "?action=telechargement&type=sujet&id=" . $stage->getIdstage() . "\">" .$modeleFicheSujetStage->getNomOriginal() . "</a>
+                        <br/><br/><a href=\"" . RACINE . "?action=editerStage&idstage=" . $stage->getIdstage() . "\">Modifier les donn&eacute;es du stage</a>
                     </td>
                 </tr>
             </table>

@@ -72,6 +72,7 @@ require_once 'BD.php';
     function afficherDetailStage(){
         $stage = BD::rechercherStageByID($_GET['idstage']);
         $modeleFicheRenseignement = BD::rechercherFicheRenseignement($stage->getIdstage(), FALSE);
+        echo $modeleFicheRenseignement->getNomOriginal();
         $modeleFicheSujetStage = BD::rechercherFicheSujetStage($stage->getIdstage(), FALSE);
         $corps = genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujetStage);
         AffichePage(TRUE, $corps);
