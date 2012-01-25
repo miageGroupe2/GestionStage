@@ -51,16 +51,16 @@
                         <a href=\"".RACINE."?action=listeStageAnneeCourante\">Voir les stages de l'ann&eacute;e courante</a><br/>
                         <a href=\"".RACINE."?action=listeStages\">Consulter les stages</a><br/>
                         <a href=\"".RACINE."?action=gererCompteAdmin\">G&eacute;rer les comptes administrateur</a><br/>
-                        <a href=\"".RACINE."?action=option\">Option</a><br/>
+                        <a href=\"".RACINE."?action=option\">Options</a><br/>
                         <a href=\"".RACINE."?action=accesDonneesEtudiant\">Acc&egrave;s donn&eacute;es &eacute;tudiant</a><br/>
                         </td>";
         }else{
             $menuGauche .= "<h3>&nbsp;Actions</h3>
                         <a href=\"".RACINE."?action=pagePrincipale\">Accueil</a><br/>
-                        <a href=\"".RACINE."?action=proposerStageEtape1\">Proposer un Stage</a><br/>
+                        <a href=\"".RACINE."?action=proposerStageEtape1\">Proposer un stage</a><br/>
                         <a href=\"".RACINE."?action=listePropositionStageEtudiant\">Mes propositions de stage</a><br/>
                         <a href=\"".RACINE."?action=voirStageEtudiant\">Voir mon stage</a><br/>
-                        <a href=\"".RACINE."?action=optionEtudiant\">Option</a><br/>
+                        <a href=\"".RACINE."?action=optionEtudiant\">Options</a><br/>
                         </td>";
         }
 
