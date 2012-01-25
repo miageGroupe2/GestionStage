@@ -71,15 +71,15 @@ function genererPageAccueilErreue() {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class=\"champ_log_mdp\">Login :</td>
+                                        <td class=\"champ_log_mdp\">Email :</td>
                                         <td>
-                                            <input type=\"text\" class=\"forml\" style=\"width:160px;\" name=\"login\" id=\"recherche\" title=\"saisie_login\"/>
+                                            <input type=\"text\" class=\"forml\" style=\"width:250px;\" name=\"login\" id=\"recherche\" title=\"saisie_login\"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class=\"champ_log_mdp\">Mot de passe :</td>
                                         <td>
-                                            <input type=\"password\" class=\"forml\" style=\"width:160px;\" name=\"password\" id=\"recherche\" title=\"saisie_mdp\"/>
+                                            <input type=\"password\" class=\"forml\" style=\"width:250px;\" name=\"password\" id=\"recherche\" title=\"saisie_mdp\"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -90,6 +90,7 @@ function genererPageAccueilErreue() {
                                     </tr>
                                 </table>
                             </form><br/><br/>
+                            <a href=\"" . RACINE . "?action=inscription\">Cr&eacute;er un compte</a>
                         </td>
                     </tr>
                 </table>
