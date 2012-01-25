@@ -8,6 +8,8 @@ require_once 'BD.php';
     function proposerStageEtape3() {
         
         $idFiche = 0 ;
+        $idFiche = NULL ;
+        $idFicheSujet = NULL ;
 
         // on vérifie que l'utilisateur a renseigné un sujet
         if (isset($_POST['sujetStage']) && $_POST['sujetStage'] != ""
@@ -27,6 +29,7 @@ require_once 'BD.php';
                 $nomSujet = md5(uniqid(rand(), true)) ;
                 $resultat2 = move_uploaded_file($_FILES['fichesujetstage']['tmp_name'],"./FicheSujetStage/".$nomSujet);
 
+                
 
                 if($resultat && $resultat2){
 
@@ -207,8 +210,8 @@ require_once 'BD.php';
             if($operationPermise){
     
                 $proposition = BD::rechercherProposition($_GET['idProposition']);
-                $modeleFicheRenseignement = BD::rechercherFicheRenseignement($_GET['idProposition']);
-                $modeleFicheSujetStage = BD::rechercherFicheSujetStage($_GET['idProposition']);
+                $modeleFicheRenseignement = BD::rechercherFicheRenseignement($_GET['idProposition'], TRUE);
+                $modeleFicheSujetStage = BD::rechercherFicheSujetStage($_GET['idProposition'], TRUE);
                 $corps = genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignement, $modeleFicheSujetStage);
                 AffichePage(TRUE, $corps);    
                 

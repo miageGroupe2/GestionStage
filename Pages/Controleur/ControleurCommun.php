@@ -45,12 +45,18 @@ function connecterUtilisateur() {
 
 function telechargement(){
 
-    if(isset($_GET['type'] )&& isset($_GET['idproposition'] )){
+    $estUneProposition = FALSE ; // ou est un stage
+    
+    if(isset($_GET['estUneProposition'] )){
+
+        $estUneProposition = TRUE ;
+    }
+    if(isset($_GET['type'] )&& isset($_GET['id'] )){
 
         if ($_GET['type'] == "sujet"){
             
-            $idProposition = $_GET['idproposition'];
-            $modeleFicheSujetStage = BD::rechercherFicheSujetStage($idProposition);
+            $id = $_GET['id'];
+            $modeleFicheSujetStage = BD::rechercherFicheSujetStage($id, $estUneProposition);
             header('Content-type: '.$modeleFicheSujetStage->getType());
             header('Content-Transfer-Encoding: binary'); //Transfert en binaire (fichier)
             header('Content-Disposition: attachment; filename='.$modeleFicheSujetStage->getNomOriginal()); //Nom du fichier
@@ -59,8 +65,8 @@ function telechargement(){
         }else{
             //sinon fiche de renseignement
 
-            $idProposition = $_GET['idproposition'];
-            $modeleFicheRenseignement = BD::rechercherFicheRenseignement($idProposition);
+            $id = $_GET['id'];
+            $modeleFicheRenseignement = BD::rechercherFicheRenseignement($id, $estUneProposition);
             header('Content-type: '.$modeleFicheRenseignement->getType());
             header('Content-Transfer-Encoding: binary'); //Transfert en binaire (fichier)
             header('Content-Disposition: attachment; filename='.$modeleFicheRenseignement->getNomOriginal()); //Nom du fichier

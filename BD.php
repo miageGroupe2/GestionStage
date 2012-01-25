@@ -500,10 +500,12 @@ class BD {
                 mysql_query($requete);
                 $idproposition = mysql_insert_id();
                 $requete = "UPDATE ficherenseignement SET idproposition=".$idproposition." WHERE id=".$idFiche;
+                mysql_query($requete);
+                if ($idFicheSujet != NULL){
                 
-                mysql_query($requete);
-                $requete = "UPDATE fichesujetstage SET idproposition=".$idproposition." WHERE id=".$idFicheSujet;
-                mysql_query($requete);
+                    $requete = "UPDATE fichesujetstage SET idproposition=".$idproposition." WHERE id=".$idFicheSujet;
+                    mysql_query($requete);
+                }
             } else {
 
                 // il y a un doublon, donc on ne fait rien
@@ -865,19 +867,28 @@ class BD {
         return $tabProp;
     }
 
-    public static function rechercherFicheSujetStage($idProposition){
+    public static function rechercherFicheSujetStage($id, $estUneProposition){
 
         BD::getConnection();
 
-        $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+        $id = mysql_real_escape_string(htmlspecialchars($id));
         $modeleFicheSujetStage = null ;
 
-        if ($idProposition != FALSE) {
+        if ($id != FALSE) {
 
+            $requete ="";
+            if ($estUneProposition){
 
-            $requete = "SELECT id, nomoriginal, nomunique, type
+                $requete = "SELECT id, nomoriginal, nomunique, type
                         FROM fichesujetstage
-                        WHERE idproposition = ".$idProposition;
+                        WHERE idproposition = ".$id;
+            }else{
+
+                $requete = "SELECT id, nomoriginal, nomunique, type
+                        FROM fichesujetstage
+                        WHERE idstage = ".$id;
+            }
+            
             $retour = mysql_query($requete) ;
             
             while ($tableau = mysql_fetch_array($retour)) {
@@ -890,19 +901,27 @@ class BD {
         return $modeleFicheSujetStage ;
     }
 
-    public static function rechercherFicheRenseignement($idProposition){
+    public static function rechercherFicheRenseignement($id, $estUneProposition){
 
         BD::getConnection();
 
-        $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+        $id = mysql_real_escape_string(htmlspecialchars($id));
         $modeleFicheRenseignement = null ;
 
-        if ($idProposition != FALSE) {
+        if ($id != FALSE) {
 
+            $requete ="";
+            if ($estUneProposition){
 
-            $requete = "SELECT id, nomoriginal, nomunique, type
+                $requete = "SELECT id, nomoriginal, nomunique, type
                         FROM ficherenseignement
-                        WHERE idproposition = ".$idProposition;
+                        WHERE idproposition = ".$id;
+            }else{
+                $requete = "SELECT id, nomoriginal, nomunique, type
+                        FROM ficherenseignement
+                        WHERE idstage = ".$id;
+            }
+
             $retour = mysql_query($requete) ;
             
             while ($tableau = mysql_fetch_array($retour)) {
@@ -1036,7 +1055,7 @@ class BD {
                     sujetstage, titrestage, technostage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
                     appreciationobtenue, remuneration, embauche, dateembauche, respcivil) 
                     VALUES ('', null, null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', '" .mysql_real_escape_string($prop->getTitreStage()). ", '" .mysql_real_escape_string($prop->getTechnoStage()). "', NOW(), null, null, null, null, 'en cours', null, null, null, null, null, 0)";
-            
+            echo "AAAAA".$requete;
                 
                 //pas encore utilisé(modif demandé par jean malhomme
             } else {
@@ -1045,10 +1064,10 @@ class BD {
                     sujetstage, titrestage, technostage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
                     appreciationobtenue, remuneration, embauche, dateembauche, respcivil, idpromotion) 
                     VALUES ('', " . $prop->getIdEntreprise() . ", null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', '" .mysql_real_escape_string($prop->getTitreStage()). "', '" .mysql_real_escape_string($prop->getTechnoStage()). "', NOW(), null, null, null, null, 'en cours', null, null, null, null, null, 0, ".$prop->getPromotionEtudiant().")";
-                
+            echo "BBBBBBBB".$requete;
             }
 
-            if (mysql_query($requete)) {
+            mysql_query($requete);
                 // 3) Modification de l'etat etat dans l'entité proposition à TRUE
                 $requete = "UPDATE proposition SET etat = \"validee\" WHERE idproposition = " . $idProp . ";";
                 mysql_query($requete);
@@ -1070,7 +1089,7 @@ class BD {
 
                 $requete = "UPDATE fichesujetstage SET idstage = ".$idStage." WHERE idproposition = " . $idProp . ";";
                 mysql_query($requete);
-            }
+            
         }
     }
 

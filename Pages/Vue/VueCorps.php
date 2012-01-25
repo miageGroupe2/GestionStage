@@ -308,7 +308,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         <td class = \"tableau\">";
 
         if ($modeleFicheRenseignement != null) {
-            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=renseignement&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=renseignement&estUneProposition&id=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
         }
         $corps .="</td>
                     </tr>
@@ -328,7 +328,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         <td class = \"tableau\">";
 
         if ($modeleFicheSujetStage != null) {
-            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=sujet&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheSujetStage->getNomOriginal() . "</a>";
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=sujet&estUneProposition&id=" . $proposition->getIdProposition() . "\">" . $modeleFicheSujetStage->getNomOriginal() . "</a>";
         }
         $corps .="</td>
                     </tr>
@@ -614,11 +614,11 @@ function genererDetailProposition($proposition, $modeleFicheRenseignement, $mode
             </br>
             Fiche de renseignement : ";
         if ($modeleFicheRenseignement != null) {
-            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=renseignement&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=renseignement&estUneProposition&id=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
         }
             $corps .= "</br></br>Fiche de sujet de stage : ";
         if ($modeleSujetStage != null) {
-            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=sujet&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleSujetStage->getNomOriginal() . "</a>";
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=sujet&estUneProposition&id=" . $proposition->getIdProposition() . "\">" . $modeleSujetStage->getNomOriginal() . "</a>";
         }
 
         $corps .= "
@@ -1092,7 +1092,7 @@ function genererGererPromotion($tabPromotion) {
     return $corps;
 }
 
-function genererDetailStage($stage) {
+function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujetStage) {
 
     $corps = "";
     if ($stage != NULL) {
@@ -1153,6 +1153,8 @@ function genererDetailStage($stage) {
                         Titre de stage :" . $stage[0]->getTitreStage() . "<br/>
                         Sujet :" . $stage[0]->getSujetstage() . "<br/>
                         Technologies utilisées :" . $stage[0]->getTechnoStage() . "<br/>
+
+                        Fiche de renseignement : <a href=\"" . RACINE . "?action=telechargement&type=renseignement&id=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>
                         <br/><br/><a href=\"" . RACINE . "?action=editerStage&idstage=" . $stage[0]->getIdstage() . "\">Modifier les donn&eacute;es du stage</a>
                     </td>
                 </tr>

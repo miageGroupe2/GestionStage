@@ -19,8 +19,8 @@ require_once 'BD.php';
 
     function afficherDetailProposition(){
         $proposition = BD::rechercherProposition($_GET['idprop']);
-        $modeleFicheRenseignement = BD::rechercherFicheRenseignement($_GET['idprop']);
-        $modeleFicheSujetStage = BD::rechercherFicheSujetStage($_GET['idprop']);
+        $modeleFicheRenseignement = BD::rechercherFicheRenseignement($_GET['idprop'], TRUE);
+        $modeleFicheSujetStage = BD::rechercherFicheSujetStage($_GET['idprop'], TRUE);
         $corps = genererDetailProposition($proposition, $modeleFicheRenseignement, $modeleFicheSujetStage);
         AffichePage(TRUE, $corps);        
     }
@@ -46,7 +46,7 @@ require_once 'BD.php';
             }
             BD::refuserProposition($_GET['idprop'], $raisonrefus);
         }else{
-
+            echo "appel de valider propo<br/>";
             BD::validerProposition($_GET['idprop']);
         }
 
@@ -71,7 +71,9 @@ require_once 'BD.php';
 
     function afficherDetailStage(){
         $stage = BD::rechercherStageByID($_GET['idstage']);
-        $corps = genererDetailStage($stage);
+        $modeleFicheRenseignement = BD::rechercherFicheRenseignement($stage->getIdstage(), FALSE);
+        $modeleFicheSujetStage = BD::rechercherFicheSujetStage($stage->getIdstage(), FALSE);
+        $corps = genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujetStage);
         AffichePage(TRUE, $corps);
     }
 
