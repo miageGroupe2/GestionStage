@@ -273,3 +273,24 @@ vert{
     padding-top: 5px;
     padding-bottom: 5px;
 }
+
+/* Modifier un tuteur */
+
+.form_ajout_tuteur{
+    margin: 0 auto 0 auto;
+    width: 400px;
+}
+
+.form_ajout_tuteur_sous_categ{
+    font-size: 20px;
+    font-style: italic;
+    text-align: center;
+}
+
+.form_ajout_tuteur_nom_champ{
+    text-align: right;
+}
+
+.form_ajout_tuteur_champ{
+    text-align: left;
+}

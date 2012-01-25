@@ -20,7 +20,8 @@ require_once 'BD.php';
     function afficherDetailProposition(){
         $proposition = BD::rechercherProposition($_GET['idprop']);
         $modeleFicheRenseignement = BD::rechercherFicheRenseignement($_GET['idprop']);
-        $corps = genererDetailProposition($proposition, $modeleFicheRenseignement);
+        $modeleFicheSujetStage = BD::rechercherFicheSujetStage($_GET['idprop']);
+        $corps = genererDetailProposition($proposition, $modeleFicheRenseignement, $modeleFicheSujetStage);
         AffichePage(TRUE, $corps);        
     }
 

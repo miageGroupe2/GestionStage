@@ -230,7 +230,7 @@ function genererAjoutPropositionStageOk() {
 /**
  * Permet d'afficher la page permettant d'éditer une proposition de stage (côté étudiant)
  */
-function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignement) {
+function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignement, $modeleFicheSujetStage) {
     if ($proposition != NULL) {
         $corps = "<td id = \"corps\">
                 <h2>Edition d'une proposition de stage</h2>
@@ -311,7 +311,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         <td class = \"tableau\">";
 
         if ($modeleFicheRenseignement != null) {
-            $corps .= "<a href=\"" . RACINE . "?action=telechargement&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=renseignement&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
         }
         $corps .="</td>
                     </tr>
@@ -322,6 +322,26 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         <td class = \"tableau\">
                             <input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"3145728\" />
                             <input type=\"file\" name=\"ficherenseignement\" id=\"ficherenseignement\" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"intitule_colg\">
+                            Fiche de sujet de stage :
+                        </td>
+                        <td class = \"tableau\">";
+
+        if ($modeleFicheSujetStage != null) {
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=sujet&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheSujetStage->getNomOriginal() . "</a>";
+        }
+        $corps .="</td>
+                    </tr>
+                    <tr>
+                        <td class = \"intitule_colg\">
+                            Changer la fiche de sujet de stage :
+                        </td>
+                        <td class = \"tableau\">
+                            <input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"3145728\" />
+                            <input type=\"file\" name=\"fichesujetstage\" id=\"fichesujetstage\" />
                         </td>
                     </tr>
                     <tr>
@@ -484,7 +504,7 @@ function genererListePropositionStageResponsable($tabProp) {
     return $corps;
 }
 
-function genererDetailProposition($proposition, $modeleFicheRenseignement) {
+function genererDetailProposition($proposition, $modeleFicheRenseignement, $modeleSujetStage) {
     $corps = "";
     if ($proposition != NULL) {
         $corps = "<td id = \"corps\">
@@ -602,7 +622,11 @@ function genererDetailProposition($proposition, $modeleFicheRenseignement) {
             </br>
             Fiche de renseignement : ";
         if ($modeleFicheRenseignement != null) {
-            $corps .= "<a href=\"" . RACINE . "?action=telechargement&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=renseignement&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
+        }
+            $corps .= "</br></br>Fiche de sujet de stage : ";
+        if ($modeleSujetStage != null) {
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=sujet&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleSujetStage->getNomOriginal() . "</a>";
         }
 
         $corps .= "
@@ -1850,6 +1874,14 @@ function genererProposerStageEtape2($entreprise) {
                         </td>
                     </tr>
                     <tr>
+                        <td>
+                             </br>
+                            Fiche du sujet de stage (<= 3 Mo) (facultatif):</br>
+                            <input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"3145728\" />
+                            <input type=\"file\" name=\"fichesujetstage\" id=\"fichesujetstage\" /><br />
+                        </td>
+                    </tr>
+                    <tr>
                         <td class=\"submit_prop\">
                             </br>
                             <input type=\"submit\" value=\"Valider la proposition\"></form><br /><br />
@@ -1923,7 +1955,15 @@ function genererModifierContact($tabContact, $idEntreprise, $idStage) {
 
     // on affiche le formulaire de saisie d'un nouveau tuteur
     if ($tabContact == NULL) {
-        $corps .= "<br />Il n'existe aucun tuteur pour cette entreprise dans la base. Vous devez l'ajouter :";
+        $corps .= "<br /><table class=\"information\">
+                        <tr>
+                            <td>
+                                <h3>Information</h3>
+                                Aucun contact ayant le r&ocirc;le de tuteur de stage n'est renseign&eacute; dans la base.<br/>
+                                Veuillez compl&eacute;ter les informations relatives au tuteur gr&acirc;ce au formulaire ci-dessous.
+                            </td>
+                        </tr>
+                    </table><br/>";
     } else {
         $corps .= "<br /><input type=\"radio\" name=\"idContact\" value=\"ajouter\" id=\"ajouter\" checked=\"checked\"/> <label for=\"autre\">Ajouter un tuteur :</label>";
     }
@@ -1931,57 +1971,67 @@ function genererModifierContact($tabContact, $idEntreprise, $idStage) {
     $corps .= "
             <input type=hidden id=\"idEntreprise\" name=\"idEntreprise\" value=\"$idEntreprise\">
             <input type=hidden id=\"idStage\" name=\"idStage\" value=\"$idStage\">
-            <table>
+            <table class=\"form_ajout_tuteur\">
             <tr>
-                <td>
+                <td colspan=\"2\" class=\"form_ajout_tuteur_sous_categ\">
+                    Compl&eacute;ter les informations du tuteur<br/><br/>
+                </td>
+            </tr>
+            <tr>
+                <td class=\"form_ajout_tuteur_nom_champ\">
                     Nom <etoile>*</etoile>:
                 </td>
-                <td>
+                <td class=\"form_ajout_tuteur_champ\">
                     <input type=text name=\"nom_tuteur\" id=\"nom_tuteur\" value=\"Fort\">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_tuteur_nom_champ\">
                     Pr&eacute;nom <etoile>*</etoile>:
                 </td>
-                <td>
+                <td class=\"form_ajout_tuteur_champ\">
                     <input type=text name=\"prenom_tuteur\" id=\"prenom_tuteur\" value=\"Bertrand\">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_tuteur_nom_champ\">
                     Fonction :
                 </td>
-                <td>
+                <td class=\"form_ajout_tuteur_champ\">
                     <input type=text name=\"fonction_tuteur\" id=\"fonction_tuteur\">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_tuteur_nom_champ\">
                     T&eacute;l&eacute;phone fixe :
                 </td>
-                <td>
+                <td class=\"form_ajout_tuteur_champ\">
                     <input type=text name=\"tel_fixe\" id=\"tel_fixe\">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_tuteur_nom_champ\">
                     T&eacute;l&eacute;phone portable :
                 </td>
-                <td>
+                <td class=\"form_ajout_tuteur_champ\">
                     <input type=text name=\"tel_port\" id=\"tel_port\">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_tuteur_nom_champ\">
                     Mail <etoile>*</etoile>:
                 </td>
-                <td>
+                <td class=\"form_ajout_tuteur_champ\">
                     <input type=text name=\"mail_tuteur\" id=\"mail_tuteur\">
                 </td>
-            </tr></table>
-            <br /><input type=\"submit\" value=\"Valider\"></form><br /><br />";
-
+            </tr>
+            <tr>
+                <td colspan=\"2\" class=\"submit\">
+                    <br /><input type=\"submit\" value=\"Valider\"></form><br /><br />
+                </td>
+            </tr>
+    </table>";
+            
     $corps .= "
         
                 </td>
