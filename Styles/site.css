@@ -385,3 +385,34 @@ vert{
     text-align: left;
     padding: 5px;
 }
+
+/* Détail d'un stage'*/
+
+.tab_detail_stage{
+    margin: 0 auto 0 auto;
+}
+
+.tab_bloc_detail_stage{
+    vertical-align: top;
+    width: 300px;
+}
+
+.tab_interne_bloc{
+    border-collapse: collapse;
+    margin: 0 auto 0 auto;
+}
+
+.tab_interne_bloc_colg{
+    background-color: #cdcdcc;
+    vertical-align: top;
+    text-align: right;
+    border: 1px solid black;
+    padding: 6px;
+}
+
+.tab_interne_bloc_cold{
+    vertical-align: top;
+    text-align: left;
+    border: 1px solid black;
+    padding: 6px;
+}
