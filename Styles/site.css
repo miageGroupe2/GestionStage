@@ -101,6 +101,32 @@ root {
     padding-right: 5px;
 }
 
+.entete_tab_prop_stage_identity{
+    background-color: #cdcdcc;
+    border: 1px solid black;
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 100px;
+}
+
+.entete_tab_prop_stage_resume{
+    background-color: #cdcdcc;
+    border: 1px solid black;
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 290px;
+}
+
+.contenu_tab{
+    border: 1px solid black;
+    border-collapse: collapse; 
+    padding: 5px ;
+    vertical-align: top;
+    font-size: 13px;
+}
+
 .submit_prop{
     margin: 0 auto 0 auto;
     width: 820px;

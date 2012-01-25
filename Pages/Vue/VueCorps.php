@@ -467,11 +467,8 @@ function genererListePropositionStageResponsable($tabProp) {
                 <h2>Propositions de stage</h2>
                 <table class=\"tab_prop_stage\">
                     <tr>
-                        <td class=\"entete_tab_prop_stage\">
-                            Nom &eacute;tudiant
-                        </td>
-                        <td class=\"entete_tab_prop_stage\">
-                            Pr&eacute;nom &eacute;tudiant
+                        <td class=\"entete_tab_prop_stage_identity\">
+                            Identit&eacute; &eacute;tudiant
                         </td>
                         <td class=\"entete_tab_prop_stage\">
                             Nom de l'entreprise
@@ -479,24 +476,19 @@ function genererListePropositionStageResponsable($tabProp) {
                         <td class=\"entete_tab_prop_stage\">
                             Sujet de stage
                         </td>
-                        <td class=\"entete_tab_prop_stage\">
-                            + d'infos
-                        </td>
                     </tr>
             ";
     if ($tabProp != null) {
         foreach ($tabProp as $prop) {
             $corps = $corps . "
                         <tr>
-                            <td class=\"tableau\">" . $prop->getEtudiant()->getNom()
+                            <td class=\"contenu_tab\">" . $prop->getEtudiant()->getNom()." ".$prop->getEtudiant()->getPrenom()
                     . "</td>
-                            <td class=\"tableau\">" . $prop->getEtudiant()->getPrenom()
+                            <td class=\"contenu_tab\">" . $prop->getNomEntreprise() . ", " . $prop->getVille() . " (" . $prop->getPays() . ")"
                     . "</td>
-                            <td class=\"tableau\">" . $prop->getNomEntreprise() . ", " . $prop->getVille() . " (" . $prop->getPays() . ")"
+                        <td class=\"contenu_tab\">" . $prop->getTitreStage()
                     . "</td>
-                        <td class=\"tableau\">" . $prop->getTitreStage()
-                    . "</td>
-                            <td class=\"tableau\"><a href=\"" . RACINE . "?action=detailProp&idprop=" . $prop->getIdProposition() . "\">D&eacute;tails</a>
+                            <td class=\"contenu_tab\"><a href=\"" . RACINE . "?action=detailProp&idprop=" . $prop->getIdProposition() . "\"><img src=\"".RACINE_IMAGE."\loupe.png\" alt=\"loupe\" /></a>
                             </td>
                         </tr>";
         }
@@ -736,27 +728,18 @@ function genererValiderProposition($ok) {
 function genererListeStage($tabStage) {
     $corps = "<td id = \"corps\">
             <h2>Liste des stages</h2>
-                <table class=\"tableau\">
+                <table class=\"tab_prop_stage\">
                     <tr>
-                        <td class=\"tableau\">
-                            Date validation
+                        <td class=\"entete_tab_prop_stage_identity\">
+                            Identit&eacute; &eacute;tudiant
                         </td>
-                        <td class=\"tableau\">
-                            Nom &eacute;tudiant
-                        </td>
-                        <td class=\"tableau\">
-                            Pr&eacute;nom &eacute;tudiant
-                        </td>
-                        <td class=\"tableau\">
+                        <td class=\"entete_tab_prop_stage\">
                             Nom de l'entreprise
                         </td>
-                        <td class=\"tableau\">
-                            Etat stage
-                        </td>
-                        <td class=\"tableau\">
+                        <td class=\"entete_tab_prop_stage_resume\">
                             Titre du stage
                         </td>
-                        <td class=\"tableau\">
+                        <td class=\"entete_tab_prop_stage\">
                             Nom promotion
                         </td>
                     </tr>
@@ -765,21 +748,15 @@ function genererListeStage($tabStage) {
         foreach ($tabStage as $stage) {
             $corps = $corps . "
                         <tr>
-                            <td class=\"tableau\">" . $stage->getDatevalidation()
+                            <td class=\"contenu_tab\">" . $stage->getUtilisateur()->getNom()." ".$stage->getUtilisateur()->getPrenom()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getUtilisateur()->getNom()
+                            <td class=\"contenu_tab\">" . $stage->getEntreprise()->getNom() . ", " . $stage->getEntreprise()->getVille() . " (" . $stage->getEntreprise()->getPays() . ")"
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getUtilisateur()->getPrenom()
+                            <td class=\"contenu_tab\">" . $stage->getTitreStage()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getEntreprise()->getNom() . ", " . $stage->getEntreprise()->getVille() . " (" . $stage->getEntreprise()->getPays() . ")"
+                            <td class=\"contenu_tab\">" . $stage->getPromotion()->getNompromotion()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getEtatstage()
-                    . "</td>
-                            <td class=\"tableau\">" . $stage->getTitreStage()
-                    . "</td>
-                            <td class=\"tableau\">" . $stage->getPromotion()->getNompromotion()
-                    . "</td>
-                            <td class=\"tableau\"><a href=\"" . RACINE . "?action=detailStage&idstage=" . $stage->getIdstage() . "\">D&eacute;tails</a>
+                            <td class=\"contenu_tab\"><a href=\"" . RACINE . "?action=detailStage&idstage=" . $stage->getIdstage() . "\"><img src=\"".RACINE_IMAGE."loupe.png\" alt=\"loupe\"/></a>
                             </td>
                      </tr>";
         }
@@ -795,28 +772,19 @@ function genererListeStage($tabStage) {
 function genererListeStageAnneeCourante($tabStage) {
     $corps = "<td id = \"corps\">
             <h2>Liste des stages de l'ann&eacute;e courante</h2>
-                <table class=\"tableau\">
+                <table class=\"tab_prop_stage\">
                     <tr>
-                        <td class=\"tableau\">
-                            Date validation
+                        <td class=\"entete_tab_prop_stage\">
+                            Identit&eacute; &eacute;tudiant
                         </td>
-                        <td class=\"tableau\">
-                            Nom &eacute;tudiant
-                        </td>
-                        <td class=\"tableau\">
-                            Pr&eacute;nom &eacute;tudiant
-                        </td>
-                        <td class=\"tableau\">
+                        <td class=\"entete_tab_prop_stage\">
                             Nom de l'entreprise
                         </td>
-                        <td class=\"tableau\">
+                        <td class=\"entete_tab_prop_stage\">
                             Etat stage
                         </td>
-                        <td class=\"tableau\">
-                            Titre du stage
-                        </td>
-                        <td class=\"tableau\">
-                            Nom promotion
+                        <td class=\"entete_tab_prop_stage_resume\">
+                            R&eacute;sum&eacute; sujet
                         </td>
                     </tr>
             ";
@@ -824,21 +792,15 @@ function genererListeStageAnneeCourante($tabStage) {
         foreach ($tabStage as $stage) {
             $corps = $corps . "
                         <tr>
-                            <td class=\"tableau\">" . $stage->getDatevalidation()
+                            <td class=\"contenu_tab\">" . $stage->getUtilisateur()->getNom()." ".$stage->getUtilisateur()->getPrenom()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getUtilisateur()->getNom()
+                            <td class=\"contenu_tab\">" . $stage->getEntreprise()->getNom() . ", " . $stage->getEntreprise()->getVille() . " (" . $stage->getEntreprise()->getPays() . ")"
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getUtilisateur()->getPrenom()
+                            <td class=\"contenu_tab\">" . $stage->getEtatstage()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getEntreprise()->getNom() . ", " . $stage->getEntreprise()->getVille() . " (" . $stage->getEntreprise()->getPays() . ")"
+                            <td class=\"contenu_tab\">" . $stage->getTitreStage()
                     . "</td>
-                            <td class=\"tableau\">" . $stage->getEtatstage()
-                    . "</td>
-                            <td class=\"tableau\">" . $stage->getTitreStage()
-                    . "</td>
-                            <td class=\"tableau\">" . $stage->getPromotion()->getNompromotion()
-                    . "</td>
-                            <td class=\"tableau\"><a href=\"" . RACINE . "?action=detailStage&idstage=" . $stage->getIdstage() . "\">D&eacute;tails</a>
+                            <td class=\"contenu_tab\"><a href=\"" . RACINE . "?action=detailStage&idstage=" . $stage->getIdstage() . "\"><img src=\"".RACINE_IMAGE."loupe.png\" alt=\"loupe\"/></a>
                             </td>
                      </tr>";
         }
