@@ -1668,119 +1668,6 @@ function genererListePropositionStageEtudiant($tabProp) {
     return $corps;
 }
 
-//function genererProposerStageEtape2($tabContact) {
-//
-//    $corps = "<script src=\"".RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
-//    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaireEtape2()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape3\">";
-//    $corps .= "<td id = \"corps\">
-//                <h2>Choix du tuteur</h2>";
-//
-//
-//    // si il existe des contacts dans la base, on les affiche
-//    if ($tabContact != null) {
-//
-//        $corps .= "<table class=\"tableau\"><tr>
-//                  <td class=\"tableau\"> Choix </td>
-//                  <td class=\"tableau\"> Pr&eacute;nom </td>
-//                  <td class=\"tableau\"> Nom </td>
-//                  <td class=\"tableau\"> Fonction </td>
-//                  <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
-//                  <td class=\"tableau\"> T&eacute;l&eacute;phone Portable </td>
-//                  <td class=\"tableau\"> Mail </td>
-//                  </tr>";
-//
-//        foreach ($tabContact as $contactCourant) {
-//
-//            $corps .= "<tr><td class=\"tableau\"> ";
-//
-//            $corps .= "<input type=\"radio\" name=\"idContact\" value=\"" . $contactCourant->getId() . "\" id=\"" . $contactCourant->getId() . "\" />";
-//            $corps .= "</td><td class=\"tableau\">";
-//            $corps .= $contactCourant->getPrenom();
-//            $corps .= "</td><td class=\"tableau\">";
-//            $corps .= $contactCourant->getNom();
-//            $corps .= "</td><td class=\"tableau\">";
-//            $corps .= $contactCourant->getFonction();
-//            $corps .= "</td><td class=\"tableau\">";
-//            $corps .= $contactCourant->getTelephoneFixe();
-//            $corps .= "</td><td class=\"tableau\">";
-//            $corps .= $contactCourant->getTelephoneMobile();
-//            $corps .= "</td><td class=\"tableau\">";
-//            $corps .= $contactCourant->getMail();
-//
-//
-//            $corps .= "</td></tr>";
-//        }
-//
-//        $corps .= "</table>";
-//    }
-//
-//    // on affiche le formulaire de saisie d'un nouveau tuteur
-//    if ($tabContact == NULL){
-//        $corps .= "<br />Il n'existe aucun tuteur pour cette entreprise dans la base. Vous devez l'ajouter :";
-//    }else{
-//        $corps .= "<br /><input type=\"radio\" name=\"idContact\" value=\"ajouter\" id=\"ajouter\" checked=\"checked\"/> <label for=\"autre\">Ajouter un tuteur :</label>";
-//    }
-//
-//    $corps .= "<table>
-//            <tr>
-//                <td>
-//                    Nom <etoile>*</etoile>:
-//                </td>
-//                <td>
-//                    <input type=text name=\"nom_tuteur\" id=\"nom_tuteur\" value=\"Fort\">
-//                </td>
-//            </tr>
-//            <tr>
-//                <td>
-//                    Pr&eacute;nom <etoile>*</etoile>:
-//                </td>
-//                <td>
-//                    <input type=text name=\"prenom_tuteur\" id=\"prenom_tuteur\" value=\"Bertrand\">
-//                </td>
-//            </tr>
-//            <tr>
-//                <td>
-//                    Fonction :
-//                </td>
-//                <td>
-//                    <input type=text name=\"fonction_tuteur\">
-//                </td>
-//            </tr>
-//            <tr>
-//                <td>
-//                    T&eacute;l&eacute;phone fixe :
-//                </td>
-//                <td>
-//                    <input type=text name=\"tel_fixe\">
-//                </td>
-//            </tr>
-//            <tr>
-//                <td>
-//                    T&eacute;l&eacute;phone portable :
-//                </td>
-//                <td>
-//                    <input type=text name=\"tel_port\">
-//                </td>
-//            </tr>
-//            <tr>
-//                <td>
-//                    Mail :
-//                </td>
-//                <td>
-//                    <input type=text name=\"mail\">
-//                </td>
-//            </tr></table>
-//            <br /><input type=\"submit\" value=\"Etape suivante\"></form><br /><br />";
-//
-//    $corps .= "
-//
-//                </td>
-//            </tr>
-//        </table>";
-//
-//    return $corps;
-//
-//}
 
 function genererProposerStageEtape3() {
 
@@ -1791,7 +1678,7 @@ function genererProposerStageEtape3() {
     return $corps;
 }
 
-function genererProposerStageEtape2($entreprise) {
+function genererProposerStageEtape2($entreprise, $technoTab) {
 
     $utilisateur = $_SESSION['modeleUtilisateur'];
 
@@ -1923,12 +1810,36 @@ function genererProposerStageEtape2($entreprise) {
                             <textarea rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" ></textarea>
                         </td>
                     </tr>
+                    <tr><td>
+                        Technologies utilisées <etoile>*</etoile>:<br/>
+                        <table>
+                        ";
+
+                            $i = 0;
+                            $j = 1;
+                            foreach ($technoTab as $techno) {
+
+                                if($i == 0){
+                                    $corps .= "<tr>";
+                                }
+                                $corps .= "<td><input type=\"checkbox\" id=\"techno".$j."\"  name=\"".$techno->getId()."\" value=\"Milk\">".$techno->getNom()."</td>";
+                                $j++;
+                                $i++ ;
+                                if($i == 4){
+                                    $corps .= "</tr>";
+                                    $i = 0 ;
+                                }
+                            }
+
+                        $corps .= "</table>
+                    </td></tr>
                     <tr>
                         <td>
-                            Technologies utilisées <etoile>*</etoile>:
+                            <br/>Autres technologies :<br/>
                             <input type=text id=\"technoStage\" name=\"technoStage\" size=\"75\" maxlength=\"200\" >
                         </td>
                     </tr>
+                    
                     <tr>
                         <td>
                              </br>

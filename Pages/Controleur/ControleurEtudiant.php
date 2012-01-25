@@ -139,8 +139,8 @@ require_once 'BD.php';
         if ($continuer){
 
             $_SESSION['modeleEntreprise'] = $entreprise ;
-                
-            $corps = genererProposerStageEtape2($entreprise);
+            $technoTab = BD::rechercheTechnos();
+            $corps = genererProposerStageEtape2($entreprise,$technoTab);
             AffichePage(TRUE, $corps);
         }
     }
@@ -374,8 +374,4 @@ require_once 'BD.php';
     }
 
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 ?>

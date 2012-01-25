@@ -8,6 +8,8 @@ require_once RACINE_MODELE . 'ModeleProposition.php';
 require_once RACINE_MODELE . 'ModelePromotion.php';
 require_once RACINE_MODELE . 'ModeleFicheRenseignement.php';
 require_once RACINE_MODELE . 'ModeleFicheSujetStage.php';
+require_once RACINE_MODELE . 'ModeleTechno.php';
+
 
 class BD {
 
@@ -69,6 +71,21 @@ class BD {
                 return NULL;
             }
         }
+    }
+    public static function rechercheTechnos(){
+
+        BD::getConnection();
+        $technoTab = NULL ;
+        $requete = "SELECT * FROM techno";
+        $retour = mysql_query($requete);
+        $i=0;
+        while ($tableau = mysql_fetch_array($retour)) {
+
+            $technoTab[$i] = new ModeleTechno($tableau['id'], $tableau['nom']);
+            $i++ ;
+        }
+
+        return $technoTab ;
     }
 
     public static function confirmationInscription($id){
@@ -184,7 +201,7 @@ class BD {
         if ($nomOriginal != FALSE && $nomUnique != FALSE) {
 
             $requete = "INSERT INTO fichesujetstage (nomoriginal, nomunique, type) VALUES ('".$nomOriginal."','".$nomUnique."','".$type."')";
-            echo $requete;
+            
             mysql_query($requete);
             $requete = "SELECT id FROM fichesujetstage WHERE nomunique ='".$nomUnique."'";
             $retour = mysql_query($requete);
@@ -207,7 +224,7 @@ class BD {
         if ($nomOriginal != FALSE && $nomUnique != FALSE) {
 
             $requete = "INSERT INTO ficherenseignement (nomoriginal, nomunique, type) VALUES ('".$nomOriginal."','".$nomUnique."','".$type."')";
-            echo $requete ;
+            
             mysql_query($requete);
             
             $requete = "SELECT id FROM ficherenseignement WHERE nomunique ='".$nomUnique."'";
@@ -922,7 +939,7 @@ class BD {
                         FROM ficherenseignement
                         WHERE idstage = ".$id;
             }
-echo $requete;
+
             $retour = mysql_query($requete) ;
             
             while ($tableau = mysql_fetch_array($retour)) {
@@ -1014,7 +1031,7 @@ echo $requete;
 
             $requete = "UPDATE proposition SET raisonrefus='".$raisonrefus."', etat='refusée'
                 WHERE idproposition=".$idProp;
-                echo $requete ;
+                
             mysql_query($requete);
         }
 
@@ -1065,7 +1082,7 @@ echo $requete;
                     sujetstage, titrestage, technostage, datevalidation, datedebut, datefin, datesoutenance, lieusoutenance, etatstage, noteobtenue, 
                     appreciationobtenue, remuneration, embauche, dateembauche, respcivil, idpromotion) 
                     VALUES ('', " . $prop->getIdEntreprise() . ", null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', '" .mysql_real_escape_string($prop->getTitreStage()). "', '" .mysql_real_escape_string($prop->getTechnoStage()). "', NOW(), null, null, null, null, 'en cours', null, null, null, null, null, 0, ".$prop->getPromotionEtudiant().")";
-            echo "AAAAA".$requete;
+            
             }
 
             mysql_query($requete);
@@ -1130,8 +1147,9 @@ echo $requete;
         $i=0;
 
         $dateDuJour = date("Y/m/d");
-        
-        
+        $mois = date("m");
+        $annee = date("Y");
+
         $requete = "SELECT s.idstage, s.etatstage, s.datevalidation, u.nomutilisateur,
                     u.prenomutilisateur, e.nomentreprise, e.villeentreprise, e.paysentreprise,
                     s.titrestage, pr.nompromotion
@@ -1139,10 +1157,17 @@ echo $requete;
                     WHERE u.idutilisateur = s.idutilisateur
                     AND u.idpromotion = pr.idpromotion
                     AND u.idpromotion = $promotion
-                    AND s.identreprise = e.identreprise
-                    
-        ";
-        echo $requete ;
+                    AND s.identreprise = e.identreprise";
+
+        if ($mois > 9){
+
+            $requete .= " AND datevalidation > DATE('".$annee."-09-01')";
+        }else{
+            $requete .= " AND datevalidation > DATE('".($annee-1)."-09-01')";
+        }
+        
+
+        echo $requete;
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {

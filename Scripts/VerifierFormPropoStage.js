@@ -16,18 +16,28 @@ function verifierFormulaireEtape1(){
         }
 }
 function verifierFormulaireEtape2(){
-    
+
+    var i = 1;
+    var auMoinsUneCase = false ;
+    while(document.getElementById('techno' + i)){
+     
+        if(document.getElementById('techno' + i).checked){
+            auMoinsUneCase = true ;
+        }
+        i++;
+    }
     if (document.getElementById("sujetStage").value == ""
         || document.getElementById("titreStage").value == ""
-        || document.getElementById("technoStage").value == ""
-        || document.getElementById("ficherenseignement").value == ""
-
-        ){
+        || document.getElementById("ficherenseignement").value == ""){
         
         alert("Veuillez remplir tous les champs marqués d'une étoile.");
         return false ;
-    }else{
-        
-        return true ;
     }
+
+    if(document.getElementById("technoStage").value == "" && auMoinsUneCase == false){
+
+        alert("Veuillez renseigner au moins une technologie");
+        return false ;
+    }
+    return true ;
 }
