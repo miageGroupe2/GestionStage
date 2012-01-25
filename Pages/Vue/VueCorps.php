@@ -1941,22 +1941,35 @@ function genererProposerStageEtape2($entreprise) {
 function genererModifierContact($tabContact, $idEntreprise, $idStage) {
 
     $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "verifierModiferContactEtudiant.js\" type=\"text/javascript\"></script>";
-    $corps .= "<form name=\"formulaire\" onsubmit=\"return verifierFormulaireModifierContact()\" method=\"post\" action=\"" . RACINE . "?action=modifierContactEtape2\">";
-    $corps .= "<td id = \"corps\">
-                <h2>Modification du tuteur</h2>";
+    $corps .= "<td id = \"corps\">";
+    $corps .= "<form name=\"formulaire\" method=\"post\" action=\"" . RACINE . "?action=modifierContactEtape2\">
+        <input type=hidden id=\"idEntreprise\" name=\"idEntreprise\" value=\"$idEntreprise\">
+        <input type=hidden id=\"idStage\" name=\"idStage\" value=\"$idStage\">
+        <h2>Modification du tuteur</h2>";
 
 
     // si il existe des contacts dans la base, on les affiche
     if ($tabContact != null) {
-
-        $corps .= "<table class=\"tableau\"><tr>
-                  <td class=\"tableau\"> Choix </td>
-                  <td class=\"tableau\"> Pr&eacute;nom </td>
-                  <td class=\"tableau\"> Nom </td>
-                  <td class=\"tableau\"> Fonction </td>
-                  <td class=\"tableau\"> T&eacute;l&eacute;phone Fixe </td>
-                  <td class=\"tableau\"> T&eacute;l&eacute;phone Portable </td>
-                  <td class=\"tableau\"> Mail </td>
+        $corps .= "<table class=\"information\">
+                        <tr>
+                            <td>
+                                <h3>Information</h3>
+                                Des tuteurs associ&eacute;s &agrave; l'entreprise concernant votre stage ont &eacute;t&eacute; trouv&eacute;s dans la base de donn&eacute;es.<br/>
+                                Si votre tuteur appara&icirc;t dans le tableau, s&eacute;lectionnez-le et cliquez sur Valider.<br/>
+                                Dans le cas contraire, ajoutez un tuteur gr&acirc;ce au formulaire en bas de page.<br/>
+                                
+                            </td>
+                        </tr>
+                    </table><br/>";
+        
+        $corps .= "<table class=\"tab_tuteurs\"><tr>
+                  <td class=\"entete_tab_tuteur\"> Choix </td>
+                  <td class=\"entete_tab_tuteur\"> Pr&eacute;nom </td>
+                  <td class=\"entete_tab_tuteur\"> Nom </td>
+                  <td class=\"entete_tab_tuteur\"> Fonction </td>
+                  <td class=\"entete_tab_tuteur\"> T&eacute;l&eacute;phone Fixe </td>
+                  <td class=\"entete_tab_tuteur\"> T&eacute;l&eacute;phone Portable </td>
+                  <td class=\"entete_tab_tuteur\"> Mail </td>
                   </tr>";
 
         foreach ($tabContact as $contactCourant) {
@@ -1981,7 +1994,13 @@ function genererModifierContact($tabContact, $idEntreprise, $idStage) {
             $corps .= "</td></tr>";
         }
 
-        $corps .= "</table>";
+        $corps .= "
+            <tr>
+                <td colspan=\"7\" class=\"submit\">
+                    <br /><input type=\"submit\" value=\"Valider\"></form><br /><br />
+                </td>
+            </tr>
+            </table></form><hr/>";
     }
 
     // on affiche le formulaire de saisie d'un nouveau tuteur
@@ -1995,17 +2014,16 @@ function genererModifierContact($tabContact, $idEntreprise, $idStage) {
                             </td>
                         </tr>
                     </table><br/>";
-    } else {
-        $corps .= "<br /><input type=\"radio\" name=\"idContact\" value=\"ajouter\" id=\"ajouter\" checked=\"checked\"/> <label for=\"autre\">Ajouter un tuteur :</label>";
     }
 
     $corps .= "
+            <form name=\"formulaire2\" onsubmit=\"return verifierFormulaireModifierContact()\" method=\"post\" action=\"" . RACINE . "?action=modifierContactEtape2\">
             <input type=hidden id=\"idEntreprise\" name=\"idEntreprise\" value=\"$idEntreprise\">
             <input type=hidden id=\"idStage\" name=\"idStage\" value=\"$idStage\">
             <table class=\"form_ajout_tuteur\">
             <tr>
-                <td colspan=\"2\" class=\"form_ajout_tuteur_sous_categ\">
-                    Compl&eacute;ter les informations du tuteur<br/><br/>
+                <td colspan=\"2\">
+                    <h2>Ajouter un tuteur</h2>
                 </td>
             </tr>
             <tr>
@@ -2013,7 +2031,7 @@ function genererModifierContact($tabContact, $idEntreprise, $idStage) {
                     Nom <etoile>*</etoile>:
                 </td>
                 <td class=\"form_ajout_tuteur_champ\">
-                    <input type=text name=\"nom_tuteur\" id=\"nom_tuteur\" value=\"Fort\">
+                    <input type=text name=\"nom_tuteur\" id=\"nom_tuteur\">
                 </td>
             </tr>
             <tr>
@@ -2021,7 +2039,7 @@ function genererModifierContact($tabContact, $idEntreprise, $idStage) {
                     Pr&eacute;nom <etoile>*</etoile>:
                 </td>
                 <td class=\"form_ajout_tuteur_champ\">
-                    <input type=text name=\"prenom_tuteur\" id=\"prenom_tuteur\" value=\"Bertrand\">
+                    <input type=text name=\"prenom_tuteur\" id=\"prenom_tuteur\">
                 </td>
             </tr>
             <tr>

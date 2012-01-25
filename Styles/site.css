@@ -324,3 +324,18 @@ vert{
     color: white;
        
 }
+
+/* Modifier tutuer */
+
+.tab_tuteurs{
+    margin: 0 auto 0 auto;
+    border-collapse: collapse;
+}
+
+.entete_tab_tuteur{
+    background-color: #cdcdcc;
+    border: 1px solid black;
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+}
