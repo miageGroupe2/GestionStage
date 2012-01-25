@@ -4,6 +4,8 @@
 // fonction responsable
 // fonction communes
 
+require_once(RACINE_VUE.'Fonctions.php');
+
 function genererPageAccueil() {
     $corps = "<table class=\"login\">
                     <tr>
@@ -71,15 +73,15 @@ function genererPageAccueilErreue() {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class=\"champ_log_mdp\">Login :</td>
+                                        <td class=\"champ_log_mdp\">Email :</td>
                                         <td>
-                                            <input type=\"text\" class=\"forml\" style=\"width:160px;\" name=\"login\" id=\"recherche\" title=\"saisie_login\"/>
+                                            <input type=\"text\" class=\"forml\" style=\"width:250px;\" name=\"login\" id=\"recherche\" title=\"saisie_login\"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class=\"champ_log_mdp\">Mot de passe :</td>
                                         <td>
-                                            <input type=\"password\" class=\"forml\" style=\"width:160px;\" name=\"password\" id=\"recherche\" title=\"saisie_mdp\"/>
+                                            <input type=\"password\" class=\"forml\" style=\"width:250px;\" name=\"password\" id=\"recherche\" title=\"saisie_mdp\"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -90,6 +92,7 @@ function genererPageAccueilErreue() {
                                     </tr>
                                 </table>
                             </form><br/><br/>
+                            <a href=\"" . RACINE . "?action=inscription\">Cr&eacute;er un compte</a>
                         </td>
                     </tr>
                 </table>
@@ -235,15 +238,15 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                 <form onsubmit=\"return verifierEditerProposition()\" action=\"" . RACINE . "?action=editerPropositionStage&idProposition=" . $proposition->getIdProposition() . "&sujetModifie=true\" method=\"post\"  enctype=\"multipart/form-data\">
                 <table class = \"tableau\">
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"intitule_colg\">
                             Date de proposition :
                         </td>
                         <td class = \"tableau\">
-                            " . $proposition->getDateProposition() . "
+                            " .convertirDateENFR($proposition->getDateProposition()) . "
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"intitule_colg\">
                             Nom de l'entreprise :
                         </td>
                         <td class = \"tableau\">
@@ -251,7 +254,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"intitule_colg\">
                             Adresse :
                         </td>
                         <td class = \"tableau\">
@@ -262,7 +265,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"intitule_colg\">
                             Num&eacute;ro de t&eacute;l&eacute;phone :
                         </td>
                         <td class = \"tableau\">
@@ -270,7 +273,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"intitule_colg\">
                             Site Web :
                         </td>
                         <td class = \"tableau\">
@@ -278,7 +281,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"intitule_colg\">
                             Titre du stage <etoile>*</etoile>:
                         </td>
                         <td class = \"tableau\">
@@ -286,7 +289,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"intitule_colg\">
                             Sujet <etoile>*</etoile>:
                         </td>
                         <td class = \"tableau\">
@@ -294,7 +297,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"intitule_colg\">
                             Technologies utilisées <etoile>*</etoile>:
                         </td>
                         <td class = \"tableau\">
@@ -302,7 +305,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"intitule_colg\">
                             Fiche de renseignement :
                         </td>
                         <td class = \"tableau\">";
@@ -313,7 +316,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
         $corps .="</td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"intitule_colg\">
                             Changer la fiche de renseignement :
                         </td>
                         <td class = \"tableau\">
@@ -322,7 +325,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"intitule_colg\">
                             Fiche de sujet de stage :
                         </td>
                         <td class = \"tableau\">";
@@ -333,7 +336,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
         $corps .="</td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"intitule_colg\">
                             Changer la fiche de sujet de stage :
                         </td>
                         <td class = \"tableau\">
@@ -342,17 +345,22 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"intitule_colg\">
                             Etat de la proposition :
                         </td>
                         <td class = \"tableau\">
                             " . $proposition->getEtat() . "
                         </td>
                     </tr>
+                </table><br/><br/>
+                <table>
+                    <tr>
+                        <td class=\"submit\">
+                            <input type=\"button\" value=\"Supprimer\" onclick=\"confirmerAvantSuppression(" . $proposition->getIdProposition() . ")\">
+                            <input type=\"submit\" value=\"Valider\">
+                        </td>
+                    </tr>
                 </table>
-                <input type=\"button\" value=\"Supprimer\" onclick=\"confirmerAvantSuppression(" . $proposition->getIdProposition() . ")\">
-                <input type=\"submit\" value=\"Valider\">
-
 
                 </td>
             </tr>
@@ -1517,7 +1525,7 @@ function genererListePropositionStageEtudiant($tabProp) {
                             Date de proposition :
                         </td>
                         <td>
-                            " . $prop->getDateProposition() . "
+                            " . convertirDateENFR($prop->getDateProposition()) . "
                         </td>
                     </tr>";
 
@@ -1949,7 +1957,15 @@ function genererModifierContact($tabContact, $idEntreprise, $idStage) {
 
     // on affiche le formulaire de saisie d'un nouveau tuteur
     if ($tabContact == NULL) {
-        $corps .= "<br />Il n'existe aucun tuteur pour cette entreprise dans la base. Vous devez l'ajouter :";
+        $corps .= "<br /><table class=\"information\">
+                        <tr>
+                            <td>
+                                <h3>Information</h3>
+                                Aucun contact ayant le r&ocirc;le de tuteur de stage n'est renseign&eacute; dans la base.<br/>
+                                Veuillez compl&eacute;ter les informations relatives au tuteur gr&acirc;ce au formulaire ci-dessous.
+                            </td>
+                        </tr>
+                    </table><br/>";
     } else {
         $corps .= "<br /><input type=\"radio\" name=\"idContact\" value=\"ajouter\" id=\"ajouter\" checked=\"checked\"/> <label for=\"autre\">Ajouter un tuteur :</label>";
     }
@@ -1957,57 +1973,67 @@ function genererModifierContact($tabContact, $idEntreprise, $idStage) {
     $corps .= "
             <input type=hidden id=\"idEntreprise\" name=\"idEntreprise\" value=\"$idEntreprise\">
             <input type=hidden id=\"idStage\" name=\"idStage\" value=\"$idStage\">
-            <table>
+            <table class=\"form_ajout_tuteur\">
             <tr>
-                <td>
+                <td colspan=\"2\" class=\"form_ajout_tuteur_sous_categ\">
+                    Compl&eacute;ter les informations du tuteur<br/><br/>
+                </td>
+            </tr>
+            <tr>
+                <td class=\"form_ajout_tuteur_nom_champ\">
                     Nom <etoile>*</etoile>:
                 </td>
-                <td>
+                <td class=\"form_ajout_tuteur_champ\">
                     <input type=text name=\"nom_tuteur\" id=\"nom_tuteur\" value=\"Fort\">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_tuteur_nom_champ\">
                     Pr&eacute;nom <etoile>*</etoile>:
                 </td>
-                <td>
+                <td class=\"form_ajout_tuteur_champ\">
                     <input type=text name=\"prenom_tuteur\" id=\"prenom_tuteur\" value=\"Bertrand\">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_tuteur_nom_champ\">
                     Fonction :
                 </td>
-                <td>
+                <td class=\"form_ajout_tuteur_champ\">
                     <input type=text name=\"fonction_tuteur\" id=\"fonction_tuteur\">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_tuteur_nom_champ\">
                     T&eacute;l&eacute;phone fixe :
                 </td>
-                <td>
+                <td class=\"form_ajout_tuteur_champ\">
                     <input type=text name=\"tel_fixe\" id=\"tel_fixe\">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_tuteur_nom_champ\">
                     T&eacute;l&eacute;phone portable :
                 </td>
-                <td>
+                <td class=\"form_ajout_tuteur_champ\">
                     <input type=text name=\"tel_port\" id=\"tel_port\">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_tuteur_nom_champ\">
                     Mail <etoile>*</etoile>:
                 </td>
-                <td>
+                <td class=\"form_ajout_tuteur_champ\">
                     <input type=text name=\"mail_tuteur\" id=\"mail_tuteur\">
                 </td>
-            </tr></table>
-            <br /><input type=\"submit\" value=\"Valider\"></form><br /><br />";
-
+            </tr>
+            <tr>
+                <td colspan=\"2\" class=\"submit\">
+                    <br /><input type=\"submit\" value=\"Valider\"></form><br /><br />
+                </td>
+            </tr>
+    </table>";
+            
     $corps .= "
         
                 </td>
@@ -2234,11 +2260,22 @@ function genererProblemeUploadFichier() {
 
 function genererVoirStageEtudiant($stage) {
     $corps = "<td id = \"corps\">
+                <h2>Mon stage</h2>
                 ";
     if ($stage == null) {
-
-        $corps .= "Vous n'avez aucun stage validé pour l'instant.";
-
+        $corps .= "
+        <table class=\"information\">
+                        <tr>
+                            <td>
+                                <h3>Information</h3>
+                                Vous n'avez pas de stage pour le moment.<br/>
+                                Veuillez effectuer une proposition de stage gr&acirc;ce au formulaire disponible<br/> via le menu de gauche \"Proposer un stage\".<br/>
+                                Si votre proposition de stage est accept&eacute;e par cotre responsable, alors votre stage appara&icirc;tra ici.                                
+                            </td>
+                        </tr>
+                    </table>
+        ";
+        
         $corps .= "</td>
             </tr>
         </table>";
@@ -2247,68 +2284,68 @@ function genererVoirStageEtudiant($stage) {
     }
 
     $corps .="
-                <table class = \"tableau\">
+                <table class = \"tabstage\">
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecolg\">
                             Etat stage :
                         </td>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecold\">
                             " . $stage->getEtatstage() . "
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecolg\">
                             Nom de l'entreprise :
                         </td>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecold\">
                             " . $stage->getEntreprise()->getNom() . "
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecolg\">
                             Titre du stage :
                         </td>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecold\">
                             " . $stage->getTitreStage() . "
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecolg\">
                             Sujet :
                         </td>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecold\">
                             " . $stage->getSujetstage() . "
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecolg\">
                             Technologies utilisées :
                         </td>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecold\">
                             " . $stage->getTechnoStage() . "
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecolg\">
                             Date de d&eacute;but :
                         </td>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecold\">
                             " . $stage->getDatedebut() . "
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecolg\">
                             Date de fin :
                         </td>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecold\">
                             " . $stage->getDatefin() . "
                         </td>
                     </tr>
                     <tr>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecolg\">
                             Responsabilit&eacute;e civile :
                         </td>
-                        <td class = \"tableau\">
+                        <td class = \"tabstagecold\">
                             " . $stage->getDatefin() . "
                         </td>
                     </tr>
@@ -2322,28 +2359,30 @@ function genererVoirStageEtudiant($stage) {
 
 
         $corps .="
-                    Tuteur :
-                    <table class = \"tableau\">
+                    <h2>Tuteur du stage</h2>
+                    <table class = \"tabstage\">
                         <tr>
-                            <td class = \"tableau\">
+                            <td class = \"tabstagecolg\">
                                 Nom :
                             </td>
-                            <td class = \"tableau\">
+                            <td class = \"tabstagecold\">
                                 " . $stage->getContact()->getNom() . "
                             </td>
                         </tr>
                         <tr>
-                            <td class = \"tableau\">
+                            <td class = \"tabstagecolg\">
                                 Pr&eacute;nom :
                             </td>
-                            <td class = \"tableau\">
+                            <td class = \"tabstagecold\">
                                 " . $stage->getContact()->getPrenom() . "
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan=\"2\" class=\"tabstagemodiftuteur\">
+                                <a href=\"" . RACINE . "?action=modifierContact&idStage=" . $stage->getIdstage() . "&idEntreprise=" . $stage->getIdentreprise() . "\">Modifier le tuteur</a>
+                            </td>
+                        </tr>
                     </table>
-
-                    <a href=\"" . RACINE . "?action=modifierContact&idStage=" . $stage->getIdstage() . "&idEntreprise=" . $stage->getIdentreprise() . "\">Modifier le tuteur</a>
-
 
                 ";
     }
