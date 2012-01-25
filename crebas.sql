@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Mer 18 Janvier 2012 à 15:13
+-- Généré le : Mer 25 Janvier 2012 à 10:23
 -- Version du serveur: 5.1.49
 -- Version de PHP: 5.3.3-1ubuntu9.5
 
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `ficherenseignement` (
   `idstage` int(11) NOT NULL,
   `type` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Contenu de la table `ficherenseignement`
@@ -122,7 +122,49 @@ INSERT INTO `ficherenseignement` (`id`, `nomoriginal`, `nomunique`, `idpropositi
 (6, 'sfeir.pdf', '14e3a5074e322b29c0f673c818a592c7', 36, 0, ''),
 (7, 'SujetComplet.pdf', '1eaec75b957e9edc713773f8f9b48d1e', 37, 0, 'application/pdf'),
 (8, 'sfeir.pdf', '533de697497ea5e147031ac38a288921', 38, 0, 'application/pdf'),
-(9, 'sfeir.pdf', 'a37bfa0d2591780565b00ab68761cdce', 39, 0, 'application/pdf');
+(9, 'sfeir.pdf', 'a37bfa0d2591780565b00ab68761cdce', 39, 0, 'application/pdf'),
+(10, 'sid-tp2.war', '46a44b1f4aef743df74e8940c62e529b', 0, 0, 'application/x-webarchive'),
+(11, 'lettre_de_motivation_master2.pdf', 'bdc54e2bd5d7a0da7439b5a2c9a2e849', 0, 0, 'application/pdf'),
+(12, 'lettre_de_motivation_master2.pdf', '3f105603b41dd0af8d25b23959ddfabd', 0, 0, 'application/pdf'),
+(13, 'FicheRenseignementStageETPjtIndusEtModalite?s.doc', '6c09d890a014cdf995b146252ce7065d', 0, 0, 'application/msword'),
+(14, 'lettre_de_motivation_master2.pdf', '8ce1686260ba33f9ace578b6ad54e8cf', 0, 0, 'application/pdf'),
+(15, 'lettre_de_motivation_master2.pdf', '76a86de85d62181d4777654ba49e958e', 44, 0, 'application/pdf'),
+(16, '10-11-Stages-SID.pdf', 'c4304b8f82e131242db45c11553939e6', 45, 0, 'application/pdf'),
+(17, 'lettre_de_motivation_master2.pdf', '0ca481a88b6ba51dc73e49ba24d843d4', 46, 0, 'application/pdf'),
+(18, 'Presentation.odp', 'b004ddc055f6e914dada25e09eb5d533', 47, 29, 'application/vnd.oasis.opendocument.presentation'),
+(19, 'dm_sid-x6.pdf', '5680e98317717c16b71cdfe449fd7f26', 48, 31, 'application/pdf');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `fichesujetstage`
+--
+
+CREATE TABLE IF NOT EXISTS `fichesujetstage` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nomoriginal` varchar(300) NOT NULL,
+  `nomunique` varchar(100) NOT NULL,
+  `idproposition` int(11) NOT NULL,
+  `idstage` int(11) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+
+--
+-- Contenu de la table `fichesujetstage`
+--
+
+INSERT INTO `fichesujetstage` (`id`, `nomoriginal`, `nomunique`, `idproposition`, `idstage`, `type`) VALUES
+(10, '11-12-EdT-SID.pdf', 'dd734b21213a5b98c2448f65a19456d7', 40, 0, 'application/pdf'),
+(11, 'lettre_de_motivation_master2.odt', '7fde7a76d85d6610af8a369c6b008964', 41, 0, 'application/vnd.oasis.opendocument.text'),
+(12, 'lettre_de_motivation_master2.odt', 'cda6ac10fcfb2c8a4cd867085b2c306d', 0, 0, 'application/vnd.oasis.opendocument.text'),
+(13, 'CoursQuonVaDonner', 'b8674050700725c2ce529f5f3fb16939', 42, 0, 'application/octet-stream'),
+(14, 'lettre_de_motivation_master2.pdf', 'd5b710e4e6924bdfe2eb9308befbdf1c', 43, 0, 'application/pdf'),
+(15, 'lettre_de_motivation_master2.odt', 'd59976a4b2398d7c6017fa981fb4a68c', 44, 0, 'application/vnd.oasis.opendocument.text'),
+(16, '11-12-EdT-SID.pdf', 'b3f00d92f6ea949436273349de8f18e2', 45, 0, 'application/pdf'),
+(17, '11-12-EdT-SID.pdf', 'fddfdfaa88c23caddebb8fdb8e892a07', 46, 0, 'application/pdf'),
+(18, 'nouveau fichier', '01e8d6e28092e57c988cb67bdf5758fb', 47, 29, 'application/octet-stream'),
+(19, 'attrib_credit_infos.txt', '07f8278a2cf7b0ecef01c9fbc4c0c675', 48, 31, 'text/plain');
 
 -- --------------------------------------------------------
 
@@ -174,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `proposition` (
   KEY `fk_propoentreprise` (`identreprise`),
   KEY `fk_propositionstage2` (`idstage`),
   KEY `fk_utilisateur_proposition` (`idutilisateur`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
 
 --
 -- Contenu de la table `proposition`
@@ -186,7 +228,9 @@ INSERT INTO `proposition` (`idproposition`, `identreprise`, `idutilisateur`, `id
 (18, 9, 3, NULL, NULL, '2011-12-14', NULL, NULL, NULL, NULL, NULL, NULL, 'vrai sujet', '11111', '22222', '', 'validee'),
 (19, 14, 1, NULL, NULL, '2011-12-14', NULL, NULL, NULL, NULL, NULL, NULL, 'etjte', 'jetj', 'j', '', 'validee'),
 (28, 5, 3, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'php', 'php', 'php', '', 'en attente'),
-(39, 9, 1, NULL, NULL, '2012-01-11', NULL, NULL, NULL, NULL, NULL, NULL, 'spring !', 'vrai stage spring', 'bah spring', '', 'en attente');
+(46, 5, 1, NULL, NULL, '2012-01-25', NULL, NULL, NULL, NULL, NULL, NULL, 'aera', 'aerar', 'aeraer', '', 'validee'),
+(47, 1, 1, NULL, NULL, '2012-01-25', NULL, NULL, NULL, NULL, NULL, NULL, 'ffffffffff', 'fffffffff', 'fffffffffff', '', 'validee'),
+(48, 7, 1, NULL, NULL, '2012-01-25', NULL, NULL, NULL, NULL, NULL, NULL, 'mmmmmmm', 'mmmmmmm', 'mmmmmm', '', 'validee');
 
 -- --------------------------------------------------------
 
@@ -222,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `stage` (
   KEY `fk_stage_contact` (`idcontact`),
   KEY `fk_stage_entreprise` (`identreprise`),
   KEY `fk_utilistateur_stage` (`idutilisateur`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
 
 --
 -- Contenu de la table `stage`
@@ -233,7 +277,17 @@ INSERT INTO `stage` (`idstage`, `identreprise`, `idcontact`, `idpromotion`, `idp
 (18, 1, 2, 1, 17, 3, 'essai laurent', 'a', 'ga', '2011-12-14', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
 (19, 14, NULL, 2, 19, 1, 'etjte', 'jetj', 'j', '2012-01-11', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
 (20, 14, NULL, 2, 19, 1, 'etjte', 'jetj', 'j', '2012-01-11', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
-(21, 9, NULL, 1, 18, 3, 'vrai sujet', '11111', '22222', '2012-01-11', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0);
+(21, 9, NULL, 1, 18, 3, 'vrai sujet', '11111', '22222', '2012-01-11', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
+(22, 5, NULL, 2, 46, 1, 'aera', 'aerar', 'aeraer', '2012-01-25', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
+(23, 5, NULL, 2, 46, 1, 'aera', 'aerar', 'aeraer', '2012-01-25', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
+(24, 1, NULL, 2, 47, 1, 'ffffffffff', 'fffffffff', 'fffffffffff', '2012-01-25', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
+(25, 1, NULL, 2, 47, 1, 'ffffffffff', 'fffffffff', 'fffffffffff', '2012-01-25', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
+(26, 1, NULL, 2, 47, 1, 'ffffffffff', 'fffffffff', 'fffffffffff', '2012-01-25', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
+(27, 1, NULL, 2, 47, 1, 'ffffffffff', 'fffffffff', 'fffffffffff', '2012-01-25', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
+(28, 1, NULL, 2, 47, 1, 'ffffffffff', 'fffffffff', 'fffffffffff', '2012-01-25', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
+(29, 1, NULL, 2, 47, 1, 'ffffffffff', 'fffffffff', 'fffffffffff', '2012-01-25', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
+(30, 7, NULL, 2, 48, 1, 'mmmmmmm', 'mmmmmmm', 'mmmmmm', '2012-01-25', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0),
+(31, 7, NULL, 2, 48, 1, 'mmmmmmm', 'mmmmmmm', 'mmmmmm', '2012-01-25', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -254,19 +308,20 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `admin` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idutilisateur`),
   KEY `fk_utilisateurpromotion` (`idpromotion`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Contenu de la table `utilisateur`
 --
 
 INSERT INTO `utilisateur` (`idutilisateur`, `idpromotion`, `mailutilisateur`, `passwordutilisateur`, `passwordutilisateurtmp`, `nomutilisateur`, `prenomutilisateur`, `numetudiant`, `idConfirmationMail`, `admin`) VALUES
-(1, 2, 'ludo@gmail.com', 'ae5a3c4fa3c5d1c2cc98e43b1899f88bce0e3569', '', 'fort', 'ludovic', '1234567', '', 0),
+(1, 2, 'ludo@gmail.com', 'ae5a3c4fa3c5d1c2cc98e43b1899f88bce0e3569', '', 'fort', 'ludovic', '22222222222', '', 0),
 (3, 1, 'laurent@gmail.com', 'f1b010126f61b5c59e7d5eb42c5c68f6105c5914', '', 'Dubois', 'Laurent', '283983', '', 0),
 (4, 3, 'anthony.avola@gmail.com', '7a79f9450d349278985d7ff04b2bd7d48ddcf42a', '', 'AVOLA', 'Anthony', '27004612', '', 0),
 (10, 2, 'khalid.benali@loria.fr', '94ca247fff5ad413788a1c8d8c80394a246dba1c', '', 'benali', 'khalid', NULL, '', 1),
 (11, 1, 'jean.malhomme@loria.fr', '51f8b1fa9b424745378826727452997ee2a7c3d7', '', 'Malhomme', 'Jean', NULL, '', 1),
-(20, 2, 'fort0192@etudiant.univ-nancy2.fr', '146473bcb6ff4a8b8b564d04e59c99d8296501cb', '146473bcb6ff4a8b8b564d04e59c99d8296501cb', 'fort', 'ludovic', NULL, '83de63f05ecb1762271239084cbfc9b3', 0);
+(20, 2, 'fort0192@etudiant.univ-nancy2.fr', '146473bcb6ff4a8b8b564d04e59c99d8296501cb', '146473bcb6ff4a8b8b564d04e59c99d8296501cb', 'fort', 'ludovic', NULL, '83de63f05ecb1762271239084cbfc9b3', 0),
+(21, 2, 'anthony.avola@etudiant.univ-nancy2.fr', NULL, '6e1a438cfe5a6c9e2165665f8c2258849ccc43f0', 'Antony', 'Avola', NULL, '715673ae886620da633e93f3f94c091c', 0);
 
 --
 -- Contraintes pour les tables exportées

@@ -45,17 +45,30 @@ function connecterUtilisateur() {
 
 function telechargement(){
 
+    if(isset($_GET['type'] )&& isset($_GET['idproposition'] )){
 
-    //header('Content-Length: '.$bdd_infos['up_filesize']); //Taille du fichier
-    if(isset($_GET['idproposition']) ){
+        if ($_GET['type'] == "sujet"){
+            
+            $idProposition = $_GET['idproposition'];
+            $modeleFicheSujetStage = BD::rechercherFicheSujetStage($idProposition);
+            header('Content-type: '.$modeleFicheSujetStage->getType());
+            header('Content-Transfer-Encoding: binary'); //Transfert en binaire (fichier)
+            header('Content-Disposition: attachment; filename='.$modeleFicheSujetStage->getNomOriginal()); //Nom du fichier
+            readfile("FicheSujetStage/".$modeleFicheSujetStage->getNomUnique());
 
-        $idProposition = $_GET['idproposition'];
-        $modeleFicheRenseignement = BD::rechercherFicheRenseignement($idProposition);
-        header('Content-type: '.$modeleFicheRenseignement->getType());
-        header('Content-Transfer-Encoding: binary'); //Transfert en binaire (fichier)
-        header('Content-Disposition: attachment; filename='.$modeleFicheRenseignement->getNomOriginal()); //Nom du fichier
-        readfile("FicheRenseignement/".$modeleFicheRenseignement->getNomUnique());
+        }else{
+            //sinon fiche de renseignement
+
+            $idProposition = $_GET['idproposition'];
+            $modeleFicheRenseignement = BD::rechercherFicheRenseignement($idProposition);
+            header('Content-type: '.$modeleFicheRenseignement->getType());
+            header('Content-Transfer-Encoding: binary'); //Transfert en binaire (fichier)
+            header('Content-Disposition: attachment; filename='.$modeleFicheRenseignement->getNomOriginal()); //Nom du fichier
+            readfile("FicheRenseignement/".$modeleFicheRenseignement->getNomUnique());
+
+        }
     }
+    
 }
 
 function afficherAccueil() {

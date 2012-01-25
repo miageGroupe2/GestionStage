@@ -227,7 +227,7 @@ function genererAjoutPropositionStageOk() {
 /**
  * Permet d'afficher la page permettant d'éditer une proposition de stage (côté étudiant)
  */
-function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignement) {
+function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignement, $modeleFicheSujetStage) {
     if ($proposition != NULL) {
         $corps = "<td id = \"corps\">
                 <h2>Edition d'une proposition de stage</h2>
@@ -308,7 +308,7 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         <td class = \"tableau\">";
 
         if ($modeleFicheRenseignement != null) {
-            $corps .= "<a href=\"" . RACINE . "?action=telechargement&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=renseignement&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
         }
         $corps .="</td>
                     </tr>
@@ -319,6 +319,26 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         <td class = \"tableau\">
                             <input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"3145728\" />
                             <input type=\"file\" name=\"ficherenseignement\" id=\"ficherenseignement\" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Fiche de sujet de stage :
+                        </td>
+                        <td class = \"tableau\">";
+
+        if ($modeleFicheSujetStage != null) {
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=sujet&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheSujetStage->getNomOriginal() . "</a>";
+        }
+        $corps .="</td>
+                    </tr>
+                    <tr>
+                        <td class = \"tableau\">
+                            Changer la fiche de sujet de stage :
+                        </td>
+                        <td class = \"tableau\">
+                            <input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"3145728\" />
+                            <input type=\"file\" name=\"fichesujetstage\" id=\"fichesujetstage\" />
                         </td>
                     </tr>
                     <tr>
@@ -476,7 +496,7 @@ function genererListePropositionStageResponsable($tabProp) {
     return $corps;
 }
 
-function genererDetailProposition($proposition, $modeleFicheRenseignement) {
+function genererDetailProposition($proposition, $modeleFicheRenseignement, $modeleSujetStage) {
     $corps = "";
     if ($proposition != NULL) {
         $corps = "<td id = \"corps\">
@@ -594,7 +614,11 @@ function genererDetailProposition($proposition, $modeleFicheRenseignement) {
             </br>
             Fiche de renseignement : ";
         if ($modeleFicheRenseignement != null) {
-            $corps .= "<a href=\"" . RACINE . "?action=telechargement&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=renseignement&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
+        }
+            $corps .= "</br></br>Fiche de sujet de stage : ";
+        if ($modeleSujetStage != null) {
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=sujet&idproposition=" . $proposition->getIdProposition() . "\">" . $modeleSujetStage->getNomOriginal() . "</a>";
         }
 
         $corps .= "
@@ -1839,6 +1863,14 @@ function genererProposerStageEtape2($entreprise) {
                             Fiche de renseignements (<= 3 Mo) <etoile>*</etoile>:</br>
                             <input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"3145728\" />
                             <input type=\"file\" name=\"ficherenseignement\" id=\"ficherenseignement\" /><br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             </br>
+                            Fiche du sujet de stage (<= 3 Mo) (facultatif):</br>
+                            <input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"3145728\" />
+                            <input type=\"file\" name=\"fichesujetstage\" id=\"fichesujetstage\" /><br />
                         </td>
                     </tr>
                     <tr>

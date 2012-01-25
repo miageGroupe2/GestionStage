@@ -12,17 +12,26 @@ require_once 'BD.php';
         // on vérifie que l'utilisateur a renseigné un sujet
         if (isset($_POST['sujetStage']) && $_POST['sujetStage'] != ""
                 && isset($_POST['titreStage']) && $_POST['titreStage'] != ""
-                &&isset($_POST['technoStage']) && $_POST['technoStage'] != "" ){
+                && isset($_POST['technoStage']) && $_POST['technoStage'] != "" ){
 
              // limite à 3 Mo
             if ($_FILES['ficherenseignement']['error'] == 0
-                && $_FILES['ficherenseignement']['size'] <= 3145728){
+                && $_FILES['ficherenseignement']['size'] <= 3145728
+                && $_FILES['fichesujetstage']['error'] == 0
+                && $_FILES['fichesujetstage']['size'] <= 3145728){
+                
 
                 $nom = md5(uniqid(rand(), true)) ;
                 $resultat = move_uploaded_file($_FILES['ficherenseignement']['tmp_name'],"./FicheRenseignement/".$nom);
-                if($resultat){
+
+                $nomSujet = md5(uniqid(rand(), true)) ;
+                $resultat2 = move_uploaded_file($_FILES['fichesujetstage']['tmp_name'],"./FicheSujetStage/".$nomSujet);
+
+
+                if($resultat && $resultat2){
 
                     $idFiche = BD::ajouterFicheRenseignement($_FILES['ficherenseignement']['name'],$_FILES['ficherenseignement']['type'], $nom);
+                    $idFicheSujet = BD::ajouterFicheSujetStage($_FILES['fichesujetstage']['name'],$_FILES['fichesujetstage']['type'], $nomSujet);
                 }else{
 
                     $corps = genererProblemeUploadFichier();
@@ -47,7 +56,7 @@ require_once 'BD.php';
                 
             }
             
-            BD::ajouterPropositionStage($idEntreprise, $_POST['sujetStage'], $_POST['titreStage'], $_POST['technoStage'], $idFiche);
+            BD::ajouterPropositionStage($idEntreprise, $_POST['sujetStage'], $_POST['titreStage'], $_POST['technoStage'], $idFiche, $idFicheSujet);
             
             $corps = genererProposerStageEtape3($entreprise);
             AffichePage(TRUE, $corps);
@@ -160,13 +169,22 @@ require_once 'BD.php';
                 $proposition = BD::editerPropositionStage($_GET['idProposition'], $_POST['sujetStage'], $_POST['titreStage'], $_POST['technoStage']);
                 // limite à 3 Mo
                 if ($_FILES['ficherenseignement']['error'] == 0
-                        && $_FILES['ficherenseignement']['size'] <= 3145728){
+                        && $_FILES['ficherenseignement']['size'] <= 3145728
+                        &&$_FILES['fichesujetstage']['error'] == 0
+                        && $_FILES['fichesujetstage']['size'] <= 3145728){
+
 
                     $nom = md5(uniqid(rand(), true)) ;
                     $resultat = move_uploaded_file($_FILES['ficherenseignement']['tmp_name'],"./FicheRenseignement/".$nom);
-                    if($resultat){
 
-                        $idFiche = BD::modifierFicheRenseignement($_FILES['ficherenseignement']['name'], $_FILES['ficherenseignement']['type'], $nom, $_GET['idProposition']);
+                    $nomSujet = md5(uniqid(rand(), true)) ;
+                    $resultat2 = move_uploaded_file($_FILES['fichesujetstage']['tmp_name'],"./FicheSujetStage/".$nomSujet);
+
+
+                    if($resultat && $resultat2){
+
+                        BD::modifierFicheRenseignement($_FILES['ficherenseignement']['name'], $_FILES['ficherenseignement']['type'], $nom, $_GET['idProposition']);
+                        BD::modifierFicheSujetStage($_FILES['fichesujetstage']['name'], $_FILES['fichesujetstage']['type'], $nomSujet, $_GET['idProposition']);
 
                     }else{
 
@@ -190,7 +208,8 @@ require_once 'BD.php';
     
                 $proposition = BD::rechercherProposition($_GET['idProposition']);
                 $modeleFicheRenseignement = BD::rechercherFicheRenseignement($_GET['idProposition']);
-                $corps = genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignement);
+                $modeleFicheSujetStage = BD::rechercherFicheSujetStage($_GET['idProposition']);
+                $corps = genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignement, $modeleFicheSujetStage);
                 AffichePage(TRUE, $corps);    
                 
             }else{

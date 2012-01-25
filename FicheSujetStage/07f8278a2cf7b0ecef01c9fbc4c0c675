@@ -1,0 +1,38 @@
+NumClient	Identifiant du client
+Region	Région d'habitat
+Ville	Ville de résidence
+Sit_Ffam	Situation de famille
+Nbr_Enfant	Nombre d'enfants
+Profession	Profession
+Sexe	Sexe
+Habitation	Propriétaire ou locataire
+Depense	Dépenses mensuelles
+Revenu	Revenus mensuels
+Anciennete	Ancienneté en tranche
+Limite_Credit	Plafond de découvert
+Segment	Code segmentation
+UtilDav_4_6M	Utilisation de chèques entre 4 et 6 mois
+UtilDav_1_3M	Utilisation de chèques entre 1 et 3 mois
+UtilDav_0M	Utilisation de chèques sur le mois
+JDeb_0M	Nombre de jours débiteurs sur le mois
+JDeb_1_3M	Nombre de jours débiteurs entre 1 et 3 mois
+JDeb_4_6M	Nombre de jours débiteurs entre 4 et 6 mois
+Nbr_Service	Nombre de services
+Score	Score du risque
+DavMax_6M	Flux maximum sur les chèques sur 6 mois
+DavMax_1_3M	Flux maximum sur les chèques entre 1 et 3 mois
+Nbr_Vir_6M	Nombre de virements sur 6 mois
+Nbr_Vir_1_3M	Nombre de virements entre 1 et 3 mois
+Nbr_Vir_4_6M	Nombre de virements entre 4 et 6 mois
+Epargne	Epargne détenue
+Mvt_Diff_1M	Différence de mouvements entre le mois 0 et le mois 1
+Mvt_Diff_2M	Différence de mouvements entre le mois 1 et le mois 2
+Mvt_Diff_3M	Différence de mouvements entre le mois 2 et le mois 3
+Mvt_Diff_4M	Différence de mouvements entre le mois 3 et le mois 4
+Mvt_Diff_5M	Différence de mouvements entre le mois 4 et le mois 5
+Mvt_Diff_6M	Différence de mouvements entre le mois 5 et le mois 6
+Max_Pos_Mvt	Remise de fonds maximale observée
+Max_Neg_Mvt	Retrait de fonds maximal observé
+Variance	Variance
+Raison_Clot	Raison de clôture
+Statut	Statut de clôture

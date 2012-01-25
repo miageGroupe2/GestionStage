@@ -7,6 +7,7 @@ require_once RACINE_MODELE . 'ModeleUtilisateur.php';
 require_once RACINE_MODELE . 'ModeleProposition.php';
 require_once RACINE_MODELE . 'ModelePromotion.php';
 require_once RACINE_MODELE . 'ModeleFicheRenseignement.php';
+require_once RACINE_MODELE . 'ModeleFicheSujetStage.php';
 
 class BD {
 
@@ -173,6 +174,28 @@ class BD {
         return $tabEntreprise;
     }
 
+    public static function ajouterFicheSujetStage($nomOriginal, $type, $nomUnique) {
+
+        BD::getConnection();
+        $nomOriginal = mysql_real_escape_string(htmlspecialchars($nomOriginal));
+        $nomUnique = mysql_real_escape_string(htmlspecialchars($nomUnique));
+        $idFiche = 0 ;
+
+        if ($nomOriginal != FALSE && $nomUnique != FALSE) {
+
+            $requete = "INSERT INTO fichesujetstage (nomoriginal, nomunique, type) VALUES ('".$nomOriginal."','".$nomUnique."','".$type."')";
+            mysql_query($requete);
+            $requete = "SELECT id FROM fichesujetstage WHERE nomunique ='".$nomUnique."'";
+            $retour = mysql_query($requete);
+
+            while ($tableau = mysql_fetch_array($retour)) {
+                $idFiche = $tableau['id'];
+            }
+        }
+
+        return $idFiche;
+    }
+
     public static function ajouterFicheRenseignement($nomOriginal, $type, $nomUnique) {
 
         BD::getConnection();
@@ -183,10 +206,13 @@ class BD {
         if ($nomOriginal != FALSE && $nomUnique != FALSE) {
 
             $requete = "INSERT INTO ficherenseignement (nomoriginal, nomunique, type) VALUES ('".$nomOriginal."','".$nomUnique."','".$type."')";
+            
             mysql_query($requete);
+            
             $requete = "SELECT id FROM ficherenseignement WHERE nomunique ='".$nomUnique."'";
+            
             $retour = mysql_query($requete);
-
+            
             while ($tableau = mysql_fetch_array($retour)) {
                 $idFiche = $tableau['id'];
             }
@@ -205,7 +231,23 @@ class BD {
 
             $requete = "UPDATE ficherenseignement SET nomoriginal = '".$nomOriginal."', nomunique = '".$nomUnique."', type = '".$type."' WHERE idproposition=".$idProposition;
             mysql_query($requete);
-            
+
+
+        }
+    }
+
+    public static function modifierFicheSujetStage($nomOriginal, $type, $nomUnique, $idProposition) {
+
+        BD::getConnection();
+        $nomOriginal = mysql_real_escape_string(htmlspecialchars($nomOriginal));
+        $nomUnique = mysql_real_escape_string(htmlspecialchars($nomUnique));
+        $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+
+        if ($nomOriginal != FALSE && $nomUnique != FALSE && $idProposition != FALSE) {
+
+            $requete = "UPDATE fichesujetstage SET nomoriginal = '".$nomOriginal."', nomunique = '".$nomUnique."', type = '".$type."' WHERE idproposition=".$idProposition;
+            mysql_query($requete);
+
 
         }
     }
@@ -244,7 +286,7 @@ class BD {
 
     public static function ajouterEntreprise($nom, $numRue, $ville, $codePostal, $pays, $numeroTel, $urlSiteInternet) {
 
-        echo "avant".$numRue ;
+        
         BD::getConnection();
         $nom = mysql_real_escape_string(htmlspecialchars($nom));
         $numRue = mysql_real_escape_string(htmlspecialchars($numRue));
@@ -425,7 +467,7 @@ class BD {
         }
     }
 
-    public static function ajouterPropositionStage($idEntreprise, $sujetStage, $titreStage, $technoStage, $idFiche) {
+    public static function ajouterPropositionStage($idEntreprise, $sujetStage, $titreStage, $technoStage, $idFiche, $idFicheSujet) {
 
         BD::getConnection();
 
@@ -443,6 +485,7 @@ class BD {
             //avant d'insérer une proposition on vérifie que celle-ci n'existe pas dans la base
             //(pour empêcher les doublons suite à un F5 dans le navigateur, par exemple)
             $requete = "SELECT idproposition FROM proposition WHERE idutilisateur='$idUtilisateur' AND identreprise='$idEntreprise' AND sujetstagep='$sujetStage'";
+            
             $retour = mysql_query($requete);
 
             $nombreDeLignes = mysql_num_rows($retour);
@@ -453,9 +496,13 @@ class BD {
                     sujetstagep, titrestagep, technostagep, etat, dateproposition, idstage) 
                     VALUES ('', '$idEntreprise', '$idUtilisateur', '$sujetStage','$titreStage','$technoStage', 'en attente', NOW(), NULL)";
 
+
                 mysql_query($requete);
                 $idproposition = mysql_insert_id();
                 $requete = "UPDATE ficherenseignement SET idproposition=".$idproposition." WHERE id=".$idFiche;
+                
+                mysql_query($requete);
+                $requete = "UPDATE fichesujetstage SET idproposition=".$idproposition." WHERE id=".$idFicheSujet;
                 mysql_query($requete);
             } else {
 
@@ -818,6 +865,31 @@ class BD {
         return $tabProp;
     }
 
+    public static function rechercherFicheSujetStage($idProposition){
+
+        BD::getConnection();
+
+        $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+        $modeleFicheSujetStage = null ;
+
+        if ($idProposition != FALSE) {
+
+
+            $requete = "SELECT id, nomoriginal, nomunique, type
+                        FROM fichesujetstage
+                        WHERE idproposition = ".$idProposition;
+            $retour = mysql_query($requete) ;
+            
+            while ($tableau = mysql_fetch_array($retour)) {
+
+                $modeleFicheSujetStage = new ModeleFicheSujetStage($tableau['id'], $tableau['nomoriginal'], $tableau['nomunique'], $tableau['type']);
+            }
+
+        }
+
+        return $modeleFicheSujetStage ;
+    }
+
     public static function rechercherFicheRenseignement($idProposition){
 
         BD::getConnection();
@@ -832,7 +904,7 @@ class BD {
                         FROM ficherenseignement
                         WHERE idproposition = ".$idProposition;
             $retour = mysql_query($requete) ;
-
+            
             while ($tableau = mysql_fetch_array($retour)) {
 
                 $modeleFicheRenseignement = new ModeleFicheRenseignement($tableau['id'], $tableau['nomoriginal'], $tableau['nomunique'], $tableau['type']);
@@ -966,7 +1038,7 @@ class BD {
                     VALUES ('', null, null, " . $prop->getIdProposition() . ", " . $prop->getIdUtilisateur() . ", '" . mysql_real_escape_string($prop->getSujet()) . "', '" .mysql_real_escape_string($prop->getTitreStage()). ", '" .mysql_real_escape_string($prop->getTechnoStage()). "', NOW(), null, null, null, null, 'en cours', null, null, null, null, null, 0)";
             
                 
-                
+                //pas encore utilisé(modif demandé par jean malhomme
             } else {
                 
                 $requete = "INSERT INTO stage (idstage, identreprise, idcontact, idproposition, idutilisateur,
@@ -981,6 +1053,23 @@ class BD {
                 $requete = "UPDATE proposition SET etat = \"validee\" WHERE idproposition = " . $idProp . ";";
                 mysql_query($requete);
 
+
+                //modif dans les tables de fichiers
+
+                $requete = "SELECT * FROM stage WHERE idproposition  = " . $idProp . ";";
+                
+                $retour = mysql_query($requete);
+                $idStage = 0 ;
+                while ($tableau = mysql_fetch_array($retour)) {
+
+                    $idStage = $tableau['idstage'];
+                }
+
+                $requete = "UPDATE ficherenseignement SET idstage = ".$idStage." WHERE idproposition = " . $idProp . ";";
+                mysql_query($requete);
+
+                $requete = "UPDATE fichesujetstage SET idstage = ".$idStage." WHERE idproposition = " . $idProp . ";";
+                mysql_query($requete);
             }
         }
     }
