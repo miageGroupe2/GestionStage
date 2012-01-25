@@ -464,22 +464,23 @@ function genererListePropositionStageResponsable($tabProp) {
 
 
     $corps = "<td id = \"corps\">
-                <table class=\"tableau\">
+                <h2>Propositions de stage</h2>
+                <table class=\"tab_prop_stage\">
                     <tr>
-                        <td class=\"tableau\">
+                        <td class=\"entete_tab_prop_stage\">
                             Nom &eacute;tudiant
                         </td>
-                        <td class=\"tableau\">
+                        <td class=\"entete_tab_prop_stage\">
                             Pr&eacute;nom &eacute;tudiant
                         </td>
-                        <td class=\"tableau\">
+                        <td class=\"entete_tab_prop_stage\">
                             Nom de l'entreprise
                         </td>
-                        <td class=\"tableau\">
+                        <td class=\"entete_tab_prop_stage\">
                             Sujet de stage
                         </td>
-                        <td class=\"tableau\">
-                            Informations suppl&eacute;mentaires
+                        <td class=\"entete_tab_prop_stage\">
+                            + d'infos
                         </td>
                     </tr>
             ";
@@ -510,140 +511,194 @@ function genererDetailProposition($proposition, $modeleFicheRenseignement, $mode
         $corps = "<td id = \"corps\">
             <h2>Proposition de stage</h2><br/>
             <form method=\"post\" action=\"" . RACINE . "?action=validerProp&idprop=" . $proposition->getIdProposition() . "\">
-            <table>
+            <table class=\"detail_prop_stage\">
             <tr>
-                <td>
+                <td class=\"detail_prop_stage_colg\">
                     Date de proposition :
                 </td>
-                <td>
-                    <input type=text readonly=\"true\" name=\"dateproposition\" value=\"" . $proposition->getDateProposition() . "\">
+                <td class=\"detail_prop_stage_cold\">
+                    " . convertirDateENFR($proposition->getDateProposition()) . "
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"detail_prop_stage_colg\">
                     Nom :
                 </td>
-                <td>
-                    <input type=text readonly=\"true\" name=\"nom\" value=\"" . $proposition->getEtudiant()->getNom() . "\">
+                <td class=\"detail_prop_stage_cold\">
+                    " . $proposition->getEtudiant()->getNom() . "
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"detail_prop_stage_colg\">
                     Pr&eacute;om :
                 </td>
-                <td>
-                    <input type=text readonly=\"true\" name=\"prenom\" value=\"" . $proposition->getEtudiant()->getPrenom() . "\">
+                <td class=\"detail_prop_stage_cold\">
+                    " . $proposition->getEtudiant()->getPrenom() . "
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"detail_prop_stage_colg\">
                     Promotion :
                 </td>
-                <td>
-                    <input type=text readonly=\"true\" name=\"promotionetudiant\" value=\"" . $proposition->getPromotionEtudiant() . "\">
+                <td class=\"detail_prop_stage_cold\">
+                    " . $proposition->getPromotionEtudiant() . "
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"detail_prop_stage_colg\">
                     Nom Entreprise :
                 </td>
-                <td>
-                    <input type=text readonly=\"true\" name=\"nomentreprise\" value=\"" . $proposition->getNomEntreprise() . "\">
+                <td class=\"detail_prop_stage_cold\">
+                    " . $proposition->getNomEntreprise() . "
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"detail_prop_stage_colg\">
                     Adresse :
                 </td>
-                <td>
-                    <input type=\"text\" readonly=\"true\" size=\"35\" name=\"adresseentreprise\" value=\"" . $proposition->getAdresseEntreprise() . "\">
+                <td class=\"detail_prop_stage_cold\">
+                    " . $proposition->getAdresseEntreprise() . "
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"detail_prop_stage_colg\">
                     Code postal :
                 </td>
-                <td>
-                    <input type=\"text\" readonly=\"true\" name=\"codepostalentreprise\" value=\"" . $proposition->getCodePostal() . "\">
+                <td class=\"detail_prop_stage_cold\">
+                    " . $proposition->getCodePostal() . "
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"detail_prop_stage_colg\">
                     Ville :
                 </td>
-                <td>
-                    <input type=\"text\" readonly=\"true\" name=\"villeentreprise\" value=\"" . $proposition->getVille() . "\">
+                <td class=\"detail_prop_stage_cold\">
+                    " . $proposition->getVille() . "
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"detail_prop_stage_colg\">
                     Pays :
                 </td>
-                <td>
-                    <input type=\"text\" readonly=\"true\" name=\"paysentreprise\" value=\"" . $proposition->getPays() . "\">
+                <td class=\"detail_prop_stage_cold\">
+                    " . $proposition->getPays() . "
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"detail_prop_stage_colg\">
                     N&deg; Tel :
                 </td>
-                <td>
-                    <input type=\"text\" readonly=\"true\" name=\"telentreprise\" value=\"" . $proposition->getNumTelephone() . "\">
+                <td class=\"detail_prop_stage_cold\">
+                    " . $proposition->getNumTelephone() . "
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"detail_prop_stage_colg\">
                     URL Site :
                 </td>
-                <td>
-                    <input type=\"text\" readonly=\"true\" name=\"urlsite\" value=\"" . $proposition->getUrlSite() . "\">
+                <td class=\"detail_prop_stage_cold\">
+                    " . $proposition->getUrlSite() . "
                 </td>
             </tr>
+            </table>";
+        
+            $corps .="<h2>Fichiers attach&eacute;s - Technologies utilis&eacute;es</h2>
+            <table class=\"detail_prop_stage\">
+                <tr>
+                    <td class=\"detail_prop_stage_colg\">
+                        Technologies utilisées :
+                    </td>
+                    <td class=\"detail_prop_stage_colg\">
+                        Fiche de renseignement : 
+                    </td>
+                    <td class=\"detail_prop_stage_colg\">
+                        Fiche de sujet de stage :
+                    </td>
+                </tr>
+                <tr>
+                    <td class=\"detail_prop_stage_cold\">
+                        ". $proposition->getTechnoStage() . "
+                    </td>
+                    <td class=\"detail_prop_stage_cold\">
+                        ";
+                        if ($modeleFicheRenseignement != null) {
+                            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=renseignement&estUneProposition&id=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
+                        }
+                        $corps.="
+                    </td>
+                    <td class=\"detail_prop_stage_cold\">";
+                        if ($modeleSujetStage != null) {
+                            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=sujet&estUneProposition&id=" . $proposition->getIdProposition() . "\">" . $modeleSujetStage->getNomOriginal() . "</a>";
+                        }
+                        $corps.="
+                    </td>
+                </tr>
+            </table>";
+
+            $corps .="          
+            <h2>Sujet de stage</h2>
+            <table class=\"detail_prop_stage\">
+                <tr>
+                    <td>
+                        Titre du stage (résumé du sujet en quelques mots) :
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea rows=\"4\" cols=\"60\" readonly=\"true\" id=\"sujetStage\" name=\"titreSujetStage\" >" . $proposition->getTitreStage() . "\"></textarea>
+                    </td>
+                </tr>
             </table>
-
-            <h3>Sujet de stage</h3>
-            </br>
-
-            Titre du stage (résumé du sujet en quelques mots) :
-            <br />
-            <input type=text id=\"titreStage\" readonly=\"true\" name=\"titreStage\" size=\"75\" maxlength=\"200\" value=\"" . $proposition->getTitreStage() . "\">
-
-            <br />
-            Sujet complet de stage : <br />
-            <textarea rows=\"10\" cols=\"60\" readonly=\"true\" id=\"sujetStage\" name=\"sujetStage\" >" . $proposition->getSujet() . "</textarea>
-            <br />
-
-
-            Technologies utilisées :
-            </br>
-                <input type=text id=\"technoStage\" readonly=\"true\" name=\"technoStage\" size=\"75\" maxlength=\"200\" value=\"" . $proposition->getTechnoStage() . "\">
-
-            </br>
-            </br>
-            Fiche de renseignement : ";
-        if ($modeleFicheRenseignement != null) {
-            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=renseignement&estUneProposition&id=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
-        }
-            $corps .= "</br></br>Fiche de sujet de stage : ";
-        if ($modeleSujetStage != null) {
-            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=sujet&estUneProposition&id=" . $proposition->getIdProposition() . "\">" . $modeleSujetStage->getNomOriginal() . "</a>";
-        }
+            <table class=\"detail_prop_stage\">
+                <tr>
+                    <td>
+                        Sujet complet de stage :
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea rows=\"10\" cols=\"60\" readonly=\"true\" id=\"sujetStage\" name=\"sujetStage\" >" . $proposition->getSujet() . "</textarea>
+                    </td>
+                </tr>
+            </table>";
+            
+                      
+        
 
         $corps .= "
-            </br>
-            </br>
-            Raison du refus (le cas échéant) :
-            </br>
-
-                <textarea rows=\"5\" cols=\"60\" id=\"raisonrefus\" name=\"raisonrefus\"></textarea>
-
-            </br>
-            </br>
-
-            <input id=\"submit_refus_prop\" type=\"submit\" name=\"refuser\" value=\"Refuser cette proposition\"/>
-            <input id=\"submit_valid_prop\" type=\"submit\" name=\"valider\" value=\"Valider cette proposition\"/>
-
-            </br>
+            <br/><br/>
+            <table class=\"information\">
+                    <tr>
+                        <td>
+                        <h3>Information</h3>
+                        En cas de refus de la proposition de stage, il est possible de faire mentionner un motif de refus.<br/>
+                        Veuillez compl&eacute;r la zone de texte ci-dessous.<br/>
+                    </td>
+                </tr>
+            </table>
+            <br/><br:>
+            <table class=\"detail_prop_stage\">
+                <tr>
+                    <td>
+                        Motif de refus (facultatif) :
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea rows=\"5\" cols=\"60\" id=\"raisonrefus\" name=\"raisonrefus\"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <table class=\"detail_prop_stage\">
+                <tr>
+                    <td>
+                        <input id=\"submit_refus_prop\" type=\"submit\" name=\"refuser\" value=\"Refuser cette proposition\"/>
+                    </td>
+                    <td>
+                        <input id=\"submit_valid_prop\" type=\"submit\" name=\"valider\" value=\"Valider cette proposition\"/>
+                    </td>
+                </tr>
+            </table>
 
             </td>
                 </tr>
