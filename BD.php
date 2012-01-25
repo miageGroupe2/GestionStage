@@ -1128,6 +1128,9 @@ echo $requete;
         BD::getConnection();
         $tabStage = null;
         $i=0;
+
+        $dateDuJour = date("Y/m/d");
+        
         
         $requete = "SELECT s.idstage, s.etatstage, s.datevalidation, u.nomutilisateur,
                     u.prenomutilisateur, e.nomentreprise, e.villeentreprise, e.paysentreprise,
@@ -1137,7 +1140,9 @@ echo $requete;
                     AND u.idpromotion = pr.idpromotion
                     AND u.idpromotion = $promotion
                     AND s.identreprise = e.identreprise
+                    
         ";
+        echo $requete ;
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {

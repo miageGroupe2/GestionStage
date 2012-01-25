@@ -1200,38 +1200,16 @@ function genererEditerStage($stage) {
                             Etat du stage :
                         </td>
                         <td>
-                            <select name=\"etatstage\" id=\"etatstage\">
-                                <option value=\"" . $stage[0]->getEtatstage() . "\">" . $stage[0]->getEtatstage() . "</option>
+                            <select name=\"etatstage\" id=\"etatstage\">";
 
-        ";
-        if ($stage[0]->getEtatstage() == "valide") {
-            $corps .="
-              <option value=\"attente signature entreprise\">attente signature entreprise</option>
-              <option value=\"attente signature universite\">attente signature universite</option>
-            ";
-        } else if ($stage[0]->getEtatstage() == "attente signature entreprise") {
-            $corps .="
-              <option value=\"valide\">valide</option>
-              <option value=\"attente signature universite\">attente signature universite</option>
-            ";
-        } else if ($stage[0]->getEtatstage() == "attente signature universite") {
-            $corps .="
-              <option value=\"valide\">
-              <option value=\"attente signature entreprise\">
-            ";
-        } else if ($stage[0]->getEtatstage() == "") {
-            $corps .="
-              <option value=\"valide\">valide</option>
-              <option value=\"attente signature entreprise\">attente signature entreprise</option>
-              <option value=\"attente signature universite\">attente signature universite</option>
-            ";
-        } else if ($stage[0]->getEtatstage() == NULL) {
-            $corps .="
-              <option value=\"valide\">valide</option>
-              <option value=\"attente signature entreprise\">attente signature entreprise</option>
-              <option value=\"attente signature universite\">attente signature universite</option>
-            ";
-        }
+                            $corps .= "<option selected=\"selected\" value=\"" . $stage->getEtatstage() . "\">" . $stage->getEtatstage() . "</option>";
+                            if ($stage->getEtatstage() == "en cours"){
+
+                                $corps .= "<option value=\"valide\">validé</option>" ;
+                            }else{
+                                $corps .= "<option value=\"en cours\">en cours</option>" ;
+                            }
+                                
 
 
         $corps .="
@@ -1243,7 +1221,7 @@ function genererEditerStage($stage) {
                             Responsabilit&eacute; civile :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"respcivil\" value=\"" . $stage[0]->getRespcivil() . "\" >
+                            <input type=\"text\" name=\"respcivil\" value=\"" . $stage->getRespcivil() . "\" >
                         </td>
                     </tr>
                     <tr>
@@ -1251,7 +1229,7 @@ function genererEditerStage($stage) {
                             Date de d&eacute;but :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"datedeb\" class=\"calendrier\" value=\"" . $stage[0]->getDatedebut() . "\" >
+                            <input type=\"text\" name=\"datedeb\" class=\"calendrier\" value=\"" . $stage->getDatedebut() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -1259,7 +1237,7 @@ function genererEditerStage($stage) {
                             Date de fin :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"datefin\" class=\"calendrier\" value=\"" . $stage[0]->getDatefin() . "\" >
+                            <input type=\"text\" name=\"datefin\" class=\"calendrier\" value=\"" . $stage->getDatefin() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -1267,7 +1245,7 @@ function genererEditerStage($stage) {
                             Date de soutenance :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"datesoutenance\" class=\"calendrier\" value=\"" . $stage[0]->getDatesoutenance() . "\" >
+                            <input type=\"text\" name=\"datesoutenance\" class=\"calendrier\" value=\"" . $stage->getDatesoutenance() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -1275,7 +1253,7 @@ function genererEditerStage($stage) {
                             Lieu desoutenance :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"lieusoutenance\" value=\"" . $stage[0]->getLieusoutenance() . "\" >
+                            <input type=\"text\" name=\"lieusoutenance\" value=\"" . $stage->getLieusoutenance() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -1283,7 +1261,7 @@ function genererEditerStage($stage) {
                             Note obtenue :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"noteobtenue\" value=\"" . $stage[0]->getNoteobtenue() . "\" >
+                            <input type=\"text\" name=\"noteobtenue\" value=\"" . $stage->getNoteobtenue() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -1291,7 +1269,7 @@ function genererEditerStage($stage) {
                             Appr&eacute;ciation obtenue :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"appreciationobtenue\" value=\"" . $stage[0]->getAppreciationobtenue() . "\" >
+                            <input type=\"text\" name=\"appreciationobtenue\" value=\"" . $stage->getAppreciationobtenue() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -1299,7 +1277,7 @@ function genererEditerStage($stage) {
                             R&eacute;mun&eacute;ration :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"remuneration\" value=\"" . $stage[0]->getRemuneration() . "\" >
+                            <input type=\"text\" name=\"remuneration\" value=\"" . $stage->getRemuneration() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -1307,7 +1285,7 @@ function genererEditerStage($stage) {
                             Embauche :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"embauche\" value=\"" . $stage[0]->getEmbauche() . "\" >
+                            <input type=\"text\" name=\"embauche\" value=\"" . $stage->getEmbauche() . "\" >
                         </td>
                     </tr>
                      <tr>
@@ -1315,7 +1293,7 @@ function genererEditerStage($stage) {
                             Date embauche :
                         </td>
                         <td>
-                            <input type=\"text\" name=\"dateembauche\" class=\"calendrier\" value=\"" . $stage[0]->getDateembauche() . "\" >
+                            <input type=\"text\" name=\"dateembauche\" class=\"calendrier\" value=\"" . $stage->getDateembauche() . "\" >
                         </td>
                     </tr>
                     </table><br/><br/>
