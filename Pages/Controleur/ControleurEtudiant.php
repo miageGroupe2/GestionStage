@@ -202,24 +202,38 @@ require_once 'BD.php';
                         BD::ajouterTechnoProposition ($_GET['idProposition'], $techno);
                     }
                 }
-
+                
                 // limite à 3 Mo
                 if ($_FILES['ficherenseignement']['error'] == 0
-                        && $_FILES['ficherenseignement']['size'] <= 3145728
-                        &&$_FILES['fichesujetstage']['error'] == 0
-                        && $_FILES['fichesujetstage']['size'] <= 3145728){
+                        && $_FILES['ficherenseignement']['size'] <= 3145728){
 
 
                     $nom = md5(uniqid(rand(), true)) ;
                     $resultat = move_uploaded_file($_FILES['ficherenseignement']['tmp_name'],"./FicheRenseignement/".$nom);
 
+                    if($resultat ){
+
+                        BD::modifierFicheRenseignement($_FILES['ficherenseignement']['name'], $_FILES['ficherenseignement']['type'], $nom, $_GET['idProposition']);
+
+                    }else{
+
+                        $corps = genererProblemeUploadFichier();
+                        AffichePage(TRUE, $corps);
+                        return ;
+                    }
+
+                }
+                echo "avant fichier";
+                if ($_FILES['fichesujetstage']['error'] == 0
+                    && $_FILES['fichesujetstage']['size'] <= 3145728){
+
+                    echo "dans fichier";
                     $nomSujet = md5(uniqid(rand(), true)) ;
                     $resultat2 = move_uploaded_file($_FILES['fichesujetstage']['tmp_name'],"./FicheSujetStage/".$nomSujet);
 
 
-                    if($resultat && $resultat2){
+                    if($resultat2){
 
-                        BD::modifierFicheRenseignement($_FILES['ficherenseignement']['name'], $_FILES['ficherenseignement']['type'], $nom, $_GET['idProposition']);
                         BD::modifierFicheSujetStage($_FILES['fichesujetstage']['name'], $_FILES['fichesujetstage']['type'], $nomSujet, $_GET['idProposition']);
 
                     }else{
