@@ -1650,6 +1650,75 @@ function genererEditerStage($stage) {
     return $corps;
 }
 
+function genererEditerStageEtudiant($stage) {
+
+    $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "DateChooser.js\" type=\"text/javascript\"></script>
+        <td id = \"corps\">";
+
+    if ($stage != NULL) {
+        $corps .= "<form name=\"editionStage\" method=\"post\" action=\"" . RACINE . "?action=validerModifStageEtudiant&idstage=" . $_GET['idstage'] . "\">
+                <h2>Editer les informations du stage</h2><br/>
+                <table class=\"tableau\">
+                    <tr>
+                        <td>
+                            Date de d&eacute;but :
+                        </td>
+                        <td>
+                            <input type=\"text\" name=\"datedeb\" class=\"calendrier\" value=\"" . convertirDateENFR($stage->getDatedebut()) . "\" >
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            Date de fin :
+                        </td>
+                        <td>
+                            <input type=\"text\" name=\"datefin\" class=\"calendrier\" value=\"" . convertirDateENFR($stage->getDatefin()) . "\" >
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            R&eacute;mun&eacute;ration :
+                        </td>
+                        <td>
+                            <input type=\"text\" name=\"remuneration\" value=\"" . $stage->getRemuneration() . "\" >
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            Embauche :
+                        </td>
+                        <td>
+                            <input type=\"text\" name=\"embauche\" value=\"" . $stage->getEmbauche() . "\" >
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            Date embauche :
+                        </td>
+                        <td>
+                            <input type=\"text\" name=\"dateembauche\" class=\"calendrier\" value=\"" . $stage->getDateembauche() . "\" >
+                        </td>
+                    </tr>
+                    </table><br/><br/>
+                    <input id=\"submit_valid_modif_stage\" type=\"submit\" name=\"Envoyer\" value=\"Envoyer\"><br/>
+                </form>
+                </td>
+                </tr>
+            </table>
+        ";
+    } else {
+        $corps = "
+                <td id = \"corps\">
+                    Le stage semble ne pas avoir &eacute;t&eacute; remont&eacute;e.
+               </td>
+            </tr>
+        </table>
+        ";
+    }
+    return $corps;
+}
+
+
 function genererValiderModificationsStage($ok) {
     if ($ok) {
         $corps = "
@@ -2601,7 +2670,7 @@ function genererVoirStageEtudiant($stage) {
                             Date de d&eacute;but :
                         </td>
                         <td class = \"tabstagecold\">
-                            " . $stage->getDatedebut() . "
+                            " . convertirDateENFR($stage->getDatedebut()) . "
                         </td>
                     </tr>
                     <tr>
@@ -2609,17 +2678,29 @@ function genererVoirStageEtudiant($stage) {
                             Date de fin :
                         </td>
                         <td class = \"tabstagecold\">
-                            " . $stage->getDatefin() . "
+                            " . convertirDateENFR($stage->getDatefin()) . "
                         </td>
                     </tr>
                     <tr>
                         <td class = \"tabstagecolg\">
                             Responsabilit&eacute;e civile :
-                        </td>
-                        <td class = \"tabstagecold\">
-                            " . $stage->getDatefin() . "
-                        </td>
+                        </td>";
+                        if($stage->getRespcivil() == 0){
+                            $corps.="<td class = \"tabstagecold\">
+                            En attente
+                            </td>";
+                        }else{
+                            $corps.="<td class = \"tabstagecold\">
+                            D&eacute;livr&eacute;e
+                            </td>";
+                        }
+                        $corps.="
                     </tr>
+                    <tr>
+                            <td colspan=\"2\" class=\"tabstagemodiftuteur\">
+                                <a href=\"" . RACINE . "?action=editerStageEtudiant&idstage=" . $stage->getIdstage() . "\">Editer les informations du stage</a>
+                            </td>
+                        </tr>
 
                 </table><br/>";
 
