@@ -3,7 +3,8 @@
 require_once RACINE_VUE . 'Afficheur.php';
 require_once RACINE_VUE . 'VueMenuGauche.php';
 require_once RACINE_VUE . 'VueCorps.php';
-require_once 'BD.php';
+require_once 'BDEtudiant.php';
+require_once 'BDCommun.php';
 
     function proposerStageEtape3() {
         //jetais en train de faire les techno predefini (checkbokx) il reste plus qu'a faire des champs de recherche sur ces techno'
@@ -23,7 +24,7 @@ require_once 'BD.php';
                 $resultat = move_uploaded_file($_FILES['ficherenseignement']['tmp_name'],"./FicheRenseignement/".$nom);
                 if($resultat ){
 
-                    $idFiche = BD::ajouterFicheRenseignement($_FILES['ficherenseignement']['name'],$_FILES['ficherenseignement']['type'], $nom);
+                    $idFiche = BDEtudiant::ajouterFicheRenseignement($_FILES['ficherenseignement']['name'],$_FILES['ficherenseignement']['type'], $nom);
                 }
 
 
@@ -37,7 +38,7 @@ require_once 'BD.php';
                             $resultat2 = move_uploaded_file($_FILES['fichesujetstage']['tmp_name'],"./FicheSujetStage/".$nomSujet);
                             if($resultat2 ){
 
-                                $idFicheSujet = BD::ajouterFicheSujetStage($_FILES['fichesujetstage']['name'],$_FILES['fichesujetstage']['type'], $nomSujet);
+                                $idFicheSujet = BDEtudiant::ajouterFicheSujetStage($_FILES['fichesujetstage']['name'],$_FILES['fichesujetstage']['type'], $nomSujet);
                             }
                         }else{
 
@@ -62,7 +63,7 @@ require_once 'BD.php';
             //dans la base. Donc on l'ajoute
             if ($idEntreprise == NULL || $idEntreprise == ""){
                 
-                $idEntreprise = BD::ajouterEntreprise($entreprise->getNom(), $entreprise->getAdresse(),
+                $idEntreprise = BDEtudiant::ajouterEntreprise($entreprise->getNom(), $entreprise->getAdresse(),
                         $entreprise->getVille(), $entreprise->getCodePostal(),
                         $entreprise->getPays(),
                         $entreprise->getNumeroTelephone(),
@@ -73,14 +74,14 @@ require_once 'BD.php';
             if (isset($_POST['technoStage'])){
                 $technoDetails = $_POST['technoStage'];
             }
-            $idproposition = BD::ajouterPropositionStage($idEntreprise, $_POST['sujetStage'], $_POST['titreStage'], $technoDetails, $idFiche, $idFicheSujet);
+            $idproposition = BDEtudiant::ajouterPropositionStage($idEntreprise, $_POST['sujetStage'], $_POST['titreStage'], $technoDetails, $idFiche, $idFicheSujet);
 
             if (isset ($_POST['check'])){
                 $tabCheckBox = $_POST['check'] ;
 
                 foreach($tabCheckBox as $techno){
 
-                    BD::ajouterTechnoProposition ($idproposition, $techno);
+                    BDEtudiant::ajouterTechnoProposition ($idproposition, $techno);
                 }
             }
 
@@ -102,7 +103,7 @@ require_once 'BD.php';
         if (isset($_POST['idEntreprise']) && $_POST['idEntreprise'] != "ajouter"){
 
 
-            $entreprise = BD::rechercherEntrepriseById($_POST['idEntreprise']);
+            $entreprise = BDEtudiant::rechercherEntrepriseById($_POST['idEntreprise']);
             if ( $entreprise != NULL){
 
                 $continuer = TRUE ;
@@ -120,7 +121,7 @@ require_once 'BD.php';
                     ){
 
 
-                $existe = BD::entrepriseExistante($_POST['nom_entreprise']);
+                $existe = BDEtudiant::entrepriseExistante($_POST['nom_entreprise']);
 
                 if (!$existe){
 
@@ -150,7 +151,7 @@ require_once 'BD.php';
         if ($continuer){
 
             $_SESSION['modeleEntreprise'] = $entreprise ;
-            $technoTab = BD::rechercheTechnos();
+            $technoTab = BDCommun::rechercheTechnos();
             $corps = genererProposerStageEtape2($entreprise,$technoTab);
             AffichePage(TRUE, $corps);
         }
@@ -165,7 +166,7 @@ require_once 'BD.php';
 
             // on va chercher dans la base la liste des entreprises ayant un 
             //nom similaire
-            $tabEntreprise = BD::rechercherEntreprise($_POST['nom']);
+            $tabEntreprise = BDEtudiant::rechercherEntreprise($_POST['nom']);
         }
 
 
@@ -175,7 +176,7 @@ require_once 'BD.php';
 
     function afficherListePropositionStageEtudiant() {
 
-        $tabProp = BD::rechercherPropositionsEtudiant();
+        $tabProp = BDEtudiant::rechercherPropositionsEtudiant();
         $corps = genererListePropositionStageEtudiant($tabProp);
         AffichePage(TRUE, $corps);
     }
@@ -188,18 +189,18 @@ require_once 'BD.php';
         if (isset ($_GET['sujetModifie']) && $_GET['sujetModifie']=="true"){
             
             
-            $operationPermise = BD::autorisationEditerProposition($_GET['idProposition'], $utilisateur->getId());
+            $operationPermise = BDEtudiant::autorisationEditerProposition($_GET['idProposition'], $utilisateur->getId());
 
             if($operationPermise){
 
-                BD::editerPropositionStage($_GET['idProposition'], $_POST['sujetStage'], $_POST['titreStage'], $_POST['technoStage']);
-                BD::supprimerTechnoProposition($_GET['idProposition']);
+                BDEtudiant::editerPropositionStage($_GET['idProposition'], $_POST['sujetStage'], $_POST['titreStage'], $_POST['technoStage']);
+                BDEtudiant::supprimerTechnoProposition($_GET['idProposition']);
                 if (isset ($_POST['check'])){
                     $tabCheckBox = $_POST['check'] ;
 
                     foreach($tabCheckBox as $techno){
 
-                        BD::ajouterTechnoProposition ($_GET['idProposition'], $techno);
+                        BDEtudiant::ajouterTechnoProposition ($_GET['idProposition'], $techno);
                     }
                 }
                 
@@ -213,7 +214,7 @@ require_once 'BD.php';
 
                     if($resultat ){
 
-                        BD::modifierFicheRenseignement($_FILES['ficherenseignement']['name'], $_FILES['ficherenseignement']['type'], $nom, $_GET['idProposition']);
+                        BDEtudiant::modifierFicheRenseignement($_FILES['ficherenseignement']['name'], $_FILES['ficherenseignement']['type'], $nom, $_GET['idProposition']);
 
                     }else{
 
@@ -234,7 +235,7 @@ require_once 'BD.php';
 
                     if($resultat2){
 
-                        BD::modifierFicheSujetStage($_FILES['fichesujetstage']['name'], $_FILES['fichesujetstage']['type'], $nomSujet, $_GET['idProposition']);
+                        BDEtudiant::modifierFicheSujetStage($_FILES['fichesujetstage']['name'], $_FILES['fichesujetstage']['type'], $nomSujet, $_GET['idProposition']);
 
                     }else{
 
@@ -252,15 +253,15 @@ require_once 'BD.php';
         //sinon affichage de la page editer stage
         else if (isset ($_GET['idProposition'])){
             
-            $operationPermise = BD::autorisationEditerProposition($_GET['idProposition'], $utilisateur->getId());
+            $operationPermise = BDEtudiant::autorisationEditerProposition($_GET['idProposition'], $utilisateur->getId());
             
             if($operationPermise){
     
-                $proposition = BD::rechercherProposition($_GET['idProposition']);
-                $modeleFicheRenseignement = BD::rechercherFicheRenseignement($_GET['idProposition'], TRUE);
-                $modeleFicheSujetStage = BD::rechercherFicheSujetStage($_GET['idProposition'], TRUE);
-                $technoTab = BD::rechercheTechnos();
-                $technoTabSelect = BD::rechercheTechnosByProposition($_GET['idProposition']);
+                $proposition = BDCommun::rechercherProposition($_GET['idProposition']);
+                $modeleFicheRenseignement = BDCommun::rechercherFicheRenseignement($_GET['idProposition'], TRUE);
+                $modeleFicheSujetStage = BDCommun::rechercherFicheSujetStage($_GET['idProposition'], TRUE);
+                $technoTab = BDCommun::rechercheTechnos();
+                $technoTabSelect = BDEtudiant::rechercheTechnosByProposition($_GET['idProposition']);
                 $corps = genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignement, $modeleFicheSujetStage, $technoTab, $technoTabSelect);
                 AffichePage(TRUE, $corps);    
                 
@@ -274,14 +275,14 @@ require_once 'BD.php';
     
     function editerStageEtudiant(){
         $utilisateur = $_SESSION['modeleUtilisateur'];
-        $stage = BD::rechercherStageEtudiant($utilisateur->getId());
+        $stage = BDEtudiant::rechercherStageEtudiant($utilisateur->getId());
         
         $corps = genererEditerStageEtudiant($stage);
         AffichePage(TRUE, $corps);
     }
     
      function validerModifStageEtudiant(){
-        $ok = BD::modifierDonneesStageEtudiant();
+        $ok = BDEtudiant::modifierDonneesStageEtudiant();
         $corps = genererValiderModificationsStage($ok);
         AffichePage(TRUE, $corps);
     }
@@ -291,11 +292,11 @@ require_once 'BD.php';
         if (isset ($_GET['idProposition'])){
 
             $utilisateur = $_SESSION['modeleUtilisateur'];
-            $operationPermise = BD::autorisationEditerProposition($_GET['idProposition'], $utilisateur->getId());
+            $operationPermise = BDEtudiant::autorisationEditerProposition($_GET['idProposition'], $utilisateur->getId());
             
             if($operationPermise){
 
-                BD::supprimerProposition($_GET['idProposition']);
+                BDEtudiant::supprimerProposition($_GET['idProposition']);
             }
         }
         
@@ -308,12 +309,12 @@ require_once 'BD.php';
         $idUtilisateur = $utilisateur->getId();
         $idPromotion = $utilisateur->getIdpromotion();
         
-        $stage = BD::rechercherIdStageEtudiant($idUtilisateur, $idPromotion);
+        $stage = BDEtudiant::rechercherIdStageEtudiant($idUtilisateur, $idPromotion);
         
-        $stage = BD::rechercherStageByID($stage->getIdstage());
-        $modeleFicheRenseignement = BD::rechercherFicheRenseignement($stage->getIdstage(), FALSE);
-        $technoTab = BD::rechercheTechnosModeleByProposition($stage->getIdproposition());
-        $modeleFicheSujetStage = BD::rechercherFicheSujetStage($stage->getIdstage(), FALSE);
+        $stage = BDCommun::rechercherStageByID($stage->getIdstage());
+        $modeleFicheRenseignement = BDCommun::rechercherFicheRenseignement($stage->getIdstage(), FALSE);
+        $technoTab = BDCommun::rechercheTechnosModeleByProposition($stage->getIdproposition());
+        $modeleFicheSujetStage = BDCommun::rechercherFicheSujetStage($stage->getIdstage(), FALSE);
         
         $corps = genererDetailStageEtudiant($stage, $modeleFicheRenseignement, $modeleFicheSujetStage, $technoTab);
         AffichePage(TRUE, $corps);
@@ -324,7 +325,7 @@ require_once 'BD.php';
         if (isset($_GET['idEntreprise']) && ($_GET['idEntreprise'] != null)) {
 
             
-            $tabContact = BD::rechercherContactParEntreprise($_GET['idEntreprise']);
+            $tabContact = BDEtudiant::rechercherContactParEntreprise($_GET['idEntreprise']);
             $corps = genererModifierContact($tabContact, $_GET['idEntreprise'], $_GET['idStage']);
             AffichePage(TRUE, $corps);
             
@@ -353,7 +354,7 @@ require_once 'BD.php';
                 && isset($_POST['mail_tuteur']) && $_POST['mail_tuteur'] != NULL   
                     ){
 
-                $idContact = BD::ajouterContact($_POST['idEntreprise'],$_POST['nom_tuteur'], $_POST['prenom_tuteur'], $_POST['fonction_tuteur'], $_POST['tel_fixe'], $_POST['tel_port'], $_POST['mail_tuteur']);
+                $idContact = BDEtudiant::ajouterContact($_POST['idEntreprise'],$_POST['nom_tuteur'], $_POST['prenom_tuteur'], $_POST['fonction_tuteur'], $_POST['tel_fixe'], $_POST['tel_port'], $_POST['mail_tuteur']);
                 
                 $continuer = true ;
                 
@@ -365,7 +366,7 @@ require_once 'BD.php';
         if ($continuer){
 
             $utilisateur = $_SESSION['modeleUtilisateur'];
-            BD::modifierContactDansStage($idContact, $_POST['idStage'], $utilisateur->getId());
+            BDEtudiant::modifierContactDansStage($idContact, $_POST['idStage'], $utilisateur->getId());
             $_REQUEST['action'] = "voirStageEtudiant";
             call_action();
         }
@@ -387,7 +388,7 @@ require_once 'BD.php';
                 ){
          
             $corps = genererAjoutPropositionStageOk();
-            BD::ajouterPropositionStage($_POST['nom'], $_POST['prenom'], $_POST['formation'], $_POST['nom_entreprise'], $_POST['num_rue'], $_POST['code_postal'], $_POST['ville'], $_POST['tel_accueil'], $_POST['sujet']);
+            BDEtudiant::ajouterPropositionStage($_POST['nom'], $_POST['prenom'], $_POST['formation'], $_POST['nom_entreprise'], $_POST['num_rue'], $_POST['code_postal'], $_POST['ville'], $_POST['tel_accueil'], $_POST['sujet']);
         }else{
 
             $corps = genererProposerStage(true);
@@ -403,7 +404,7 @@ require_once 'BD.php';
 
         if (isset($_POST['changerPromotion'])&& isset($_POST['idPromo'])){
 
-            BD::modifierPromotionEtudiant($_POST['idPromo']);
+            BDEtudiant::modifierPromotionEtudiant($_POST['idPromo']);
 
         }else if (isset($_POST['changerMdp'])&& isset($_POST['password'])
                 && isset($_POST['password2'])&& isset($_POST['password_old'])){
@@ -413,7 +414,7 @@ require_once 'BD.php';
 
                 if ($_POST['password'] == $_POST['password2']){
 
-                    $messageChangementMdp = BD::changerMdpEtudiant($_POST['password_old'], $_POST['password']);
+                    $messageChangementMdp = BDEtudiant::changerMdpEtudiant($_POST['password_old'], $_POST['password']);
                 }
 
             }
@@ -422,11 +423,11 @@ require_once 'BD.php';
 
             if ($_POST['numEtudiant'] != ''){
 
-                $messageChangementMdp = BD::changerNumEtudiant($_POST['numEtudiant']);
+                $messageChangementMdp = BDEtudiant::changerNumEtudiant($_POST['numEtudiant']);
             }
         }
 
-        $tabPromotion = BD::recherchePromotion();
+        $tabPromotion = BDCommun::recherchePromotion();
         $corps = genererAfficherOptionEtudiant($tabPromotion, $messageChangementMdp);
         AffichePage(TRUE, $corps);
     }

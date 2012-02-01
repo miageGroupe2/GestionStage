@@ -24,7 +24,7 @@ function connecterUtilisateur() {
             $login = $_POST['login'];
             $password = $_POST['password'];
 
-            $utilisateur = BD::authentification($login, $password);
+            $utilisateur = BDEtudiant::authentification($login, $password);
 
             if ($utilisateur != NULL) {
 
@@ -59,7 +59,7 @@ function telechargement() {
         if ($_GET['type'] == "sujet"){
             
             $id = $_GET['id'];
-            $modeleFicheSujetStage = BD::rechercherFicheSujetStage($id, $estUneProposition);
+            $modeleFicheSujetStage = BDCommun::rechercherFicheSujetStage($id, $estUneProposition);
             header('Content-type: '.$modeleFicheSujetStage->getType());
 
             header('Content-Transfer-Encoding: binary'); //Transfert en binaire (fichier)
@@ -69,7 +69,7 @@ function telechargement() {
             //sinon fiche de renseignement
 
             $id = $_GET['id'];
-            $modeleFicheRenseignement = BD::rechercherFicheRenseignement($id, $estUneProposition);
+            $modeleFicheRenseignement = BDCommun::rechercherFicheRenseignement($id, $estUneProposition);
             header('Content-type: '.$modeleFicheRenseignement->getType());
 
             header('Content-Transfer-Encoding: binary'); //Transfert en binaire (fichier)
@@ -108,7 +108,7 @@ function afficherInscription() {
             if ($_POST['password'] == $_POST['password2']) {
 
 
-                $idConfirmationMail = BD::inscriptionEtudiant($_POST['mail'], $_POST['numetudiant'], $_POST['password'], $_POST['nom'], $_POST['prenom'], $_POST['promotion']);
+                $idConfirmationMail = BDEtudiant::inscriptionEtudiant($_POST['mail'], $_POST['numetudiant'], $_POST['password'], $_POST['nom'], $_POST['prenom'], $_POST['promotion']);
 
                 envoyerMail($_POST['mail'], $idConfirmationMail);
 
@@ -118,7 +118,7 @@ function afficherInscription() {
         }
     } else {
 
-        $tabPromotion = BD::recherchePromotion();
+        $tabPromotion = BDCommun::recherchePromotion();
         $corps = genererPageInscription($tabPromotion);
         AffichePage(FALSE, $corps);
     }
@@ -126,7 +126,7 @@ function afficherInscription() {
 
 function confirmationInscription() {
 
-    BD::confirmationInscription($_GET['id']);
+    BDEtudiant::confirmationInscription($_GET['id']);
     $corps = genererPageAccueil();
     AffichePage(FALSE, $corps);
 }
