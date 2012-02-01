@@ -1263,17 +1263,40 @@ class BD {
         BD::getConnection();
         $tabStage = null;
         $i=0;
-        $requete = "SELECT s.idstage, s.etatstage, s.datevalidation, s.titrestage, u.nomutilisateur,
+        $requete = "SELECT s.idstage, s.idproposition, s.etatstage, s.datevalidation, s.titrestage, u.nomutilisateur,
+                    u.prenomutilisateur, e.nomentreprise, e.paysentreprise,
+                    e.villeentreprise, s.noteobtenue, pr.nompromotion
+                    FROM stage s, entreprise e, utilisateur u, promotion pr
+                    WHERE u.idutilisateur = s.idutilisateur
+                    AND u.idpromotion = pr.idpromotion
+                    AND s.identreprise = e.identreprise
+        ";
+        if ($idPromotion != null){
+
+            $requete .= " AND pr.idpromotion = $idPromotion";
+        }
+
+        if ( $tabTechno != null){
+
+            $requete = "SELECT s.idstage, s.idproposition, s.etatstage, s.datevalidation, s.titrestage, u.nomutilisateur,
                     u.prenomutilisateur, e.nomentreprise, e.paysentreprise,
                     e.villeentreprise, s.noteobtenue, pr.nompromotion
                     FROM stage s, entreprise e, utilisateur u, promotion pr, technoproposition tp
                     WHERE u.idutilisateur = s.idutilisateur
                     AND u.idpromotion = pr.idpromotion
-                    AND pr.idpromotion = $idPromotion
                     AND s.identreprise = e.identreprise
-                    AND tp.idproposition = s.idproposition
+                    AND tp.idproposition = s.idproposition";
 
-        ";
+            foreach ($tabTechno as $techno) {
+
+                $requete .= " AND tp.idtechno =" .$techno;
+            }
+            if ($idPromotion != null){
+
+                $requete .= " AND pr.idpromotion = $idPromotion";
+            }
+        }
+        
         $retour = mysql_query($requete) or die(mysql_error());
 
         while ($tableau = mysql_fetch_array($retour)) {
