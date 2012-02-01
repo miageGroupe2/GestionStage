@@ -370,9 +370,9 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         </td>
                         <td class = \"tableau\">";
 
-        if ($modeleFicheSujetStage != null) {
-            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=sujet&estUneProposition&id=" . $proposition->getIdProposition() . "\">" . $modeleFicheSujetStage->getNomOriginal() . "</a>";
-        }
+                    if ($modeleFicheSujetStage != null) {
+                        $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=sujet&estUneProposition&id=" . $proposition->getIdProposition() . "\">" . $modeleFicheSujetStage->getNomOriginal() . "</a>";
+                    }
         $corps .="</td>
                     </tr>
                     <tr>

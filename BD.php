@@ -324,9 +324,23 @@ class BD {
 
         if ($nomOriginal != FALSE && $nomUnique != FALSE && $idProposition != FALSE) {
 
-            $requete = "UPDATE fichesujetstage SET nomoriginal = '".$nomOriginal."', nomunique = '".$nomUnique."', type = '".$type."' WHERE idproposition=".$idProposition;
-            mysql_query($requete);
+            $requete = "SELECT * FROM fichesujetstage WHERE idproposition=".$idProposition;
+            $retour = mysql_query($requete);
+            $i = 0 ;
+            while ($tableau = mysql_fetch_array($retour)) {
 
+                $i ++ ;
+                break ;
+            }
+            if($i == 0){
+
+                $requete = "INSERT INTO fichesujetstage (nomoriginal, nomunique, type, idproposition) VALUES ('".$nomOriginal."','".$nomUnique."','".$type."','".$idProposition."')";
+
+            }else{
+
+                $requete = "UPDATE fichesujetstage SET nomoriginal = '".$nomOriginal."', nomunique = '".$nomUnique."', type = '".$type."' WHERE idproposition=".$idProposition;
+            }
+            mysql_query($requete);
 
         }
     }
