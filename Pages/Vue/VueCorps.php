@@ -597,12 +597,12 @@ function genererDetailProposition($proposition, $modeleFicheRenseignement, $mode
             $corps .="<h2>Fichiers attach&eacute;s - Technologies utilis&eacute;es</h2>
             <table class=\"detail_prop_stage\">
                 <tr>
-                    <td class=\"detail_prop_stage_colg\">
+                    <td class=\"detail_prop_stage_colh\">
                         Technologies utilisées :</td>
-                    <td class=\"detail_prop_stage_colg\">
+                    <td class=\"detail_prop_stage_colh\">
                         Fiche de renseignement : 
                     </td>
-                    <td class=\"detail_prop_stage_colg\">
+                    <td class=\"detail_prop_stage_colh\">
                         Fiche de sujet de stage :
                     </td>
                 </tr>
