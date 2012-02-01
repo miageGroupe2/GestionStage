@@ -1,6 +1,9 @@
 <?php
 
 require_once '../phpmailer/class.phpmailer.php';
+require_once RACINE_VUE . 'VueCorpsCommun.php';
+require_once RACINE_VUE . 'VueCorpsEtudiant.php';
+require_once RACINE_VUE . 'VueCorpsResponsable.php';
 
 function deconnecterUtilisateur() {
 
@@ -34,7 +37,11 @@ function connecterUtilisateur() {
                 //on stock en session l'utilisateur connecté
                 $_SESSION['modeleUtilisateur'] = $utilisateur;
 
-                afficherPagePrincipale();
+                if ($utilisateur->getAdmin() == 1) {
+                    afficherPagePrincipaleResponsable();
+                } else {
+                    afficherPagePrincipaleEtudiant();
+                }
             } else {
                 afficherAccueilErreur();
             }
@@ -42,25 +49,30 @@ function connecterUtilisateur() {
             afficherAccueilErreur();
         }
     } else {
-        afficherPagePrincipale();
+        $utilisateur = $_SESSION['modeleUtilisateur'];
+        if ($utilisateur->getAdmin() == 1) {
+            afficherPagePrincipaleResponsable();
+        } else {
+            afficherPagePrincipaleEtudiant();
+        }
     }
 }
 
 function telechargement() {
 
-    $estUneProposition = FALSE ; // ou est un stage
-    
-    if(isset($_GET['estUneProposition'] )){
+    $estUneProposition = FALSE; // ou est un stage
 
-        $estUneProposition = TRUE ;
+    if (isset($_GET['estUneProposition'])) {
+
+        $estUneProposition = TRUE;
     }
-    if(isset($_GET['type'] )&& isset($_GET['id'] )){
+    if (isset($_GET['type']) && isset($_GET['id'])) {
 
-        if ($_GET['type'] == "sujet"){
-            
+        if ($_GET['type'] == "sujet") {
+
             $id = $_GET['id'];
             $modeleFicheSujetStage = BDCommun::rechercherFicheSujetStage($id, $estUneProposition);
-            header('Content-type: '.$modeleFicheSujetStage->getType());
+            header('Content-type: ' . $modeleFicheSujetStage->getType());
 
             header('Content-Transfer-Encoding: binary'); //Transfert en binaire (fichier)
             header('Content-Disposition: attachment; filename=' . $modeleFicheSujetStage->getNomOriginal()); //Nom du fichier
@@ -70,7 +82,7 @@ function telechargement() {
 
             $id = $_GET['id'];
             $modeleFicheRenseignement = BDCommun::rechercherFicheRenseignement($id, $estUneProposition);
-            header('Content-type: '.$modeleFicheRenseignement->getType());
+            header('Content-type: ' . $modeleFicheRenseignement->getType());
 
             header('Content-Transfer-Encoding: binary'); //Transfert en binaire (fichier)
             header('Content-Disposition: attachment; filename=' . $modeleFicheRenseignement->getNomOriginal()); //Nom du fichier
@@ -87,11 +99,6 @@ function afficherAccueil() {
 function afficherAccueilErreur() {
     $corps = genererPageAccueilErreue();
     AffichePage(FALSE, $corps);
-}
-
-function afficherPagePrincipale() {
-    $corps = genererPagePrincipal();
-    AffichePage(TRUE, $corps);
 }
 
 function afficherInscription() {

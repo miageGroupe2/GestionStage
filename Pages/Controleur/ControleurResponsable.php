@@ -2,8 +2,15 @@
 
 require_once RACINE_VUE . 'Afficheur.php';
 require_once RACINE_VUE . 'VueMenuGauche.php';
-require_once RACINE_VUE . 'VueCorps.php';
+require_once RACINE_VUE . 'VueCorpsResponsable.php';
+require_once RACINE_VUE . 'VueCorpsCommun.php';
 require_once 'BDResponsable.php';
+
+function afficherPagePrincipaleResponsable() {
+    $corps = genererPagePrincipalResponsable();
+    AffichePage(TRUE, $corps);
+}
+
 
     function validerModifStage(){
         $ok = BDResponsable::modifierDonneesStage();

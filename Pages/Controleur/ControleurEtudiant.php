@@ -2,9 +2,16 @@
 
 require_once RACINE_VUE . 'Afficheur.php';
 require_once RACINE_VUE . 'VueMenuGauche.php';
-require_once RACINE_VUE . 'VueCorps.php';
+require_once RACINE_VUE . 'VueCorpsCommun.php';
+require_once RACINE_VUE . 'VueCorpsEtudiant.php';
 require_once 'BDEtudiant.php';
 require_once 'BDCommun.php';
+
+function afficherPagePrincipaleEtudiant() {
+    $corps = genererPagePrincipalEtudiant();
+    AffichePage(TRUE, $corps);
+}
+
 
     function proposerStageEtape3() {
         //jetais en train de faire les techno predefini (checkbokx) il reste plus qu'a faire des champs de recherche sur ces techno'

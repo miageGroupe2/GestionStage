@@ -46,7 +46,7 @@
         if ($utilisateur->getAdmin()) {
             $menuGauche .= "
                         <ul>
-                        <li><a href=\"".RACINE."?action=pagePrincipale\">Accueil</a><br/></li>
+                        <li><a href=\"".RACINE."?action=pagePrincipaleResponsable\">Accueil</a><br/></li>
                         <li><a href=\"".RACINE."?action=listePropositionStageResponsable\">Voir les propositions de stage</a><br/></li>
                         <li><a href=\"".RACINE."?action=listeStageAnneeCourante\">Voir les stages de l'ann&eacute;e courante</a><br/></li>
                         <li><a href=\"".RACINE."?action=listeStages\">Consulter les stages</a><br/></li>
@@ -57,7 +57,7 @@
         }else{
             $menuGauche .= "
                         <ul>
-                        <li><a href=\"".RACINE."?action=pagePrincipale\">Accueil</a><br/></li>
+                        <li><a href=\"".RACINE."?action=pagePrincipaleEtudiant\">Accueil</a><br/></li>
                         <li><a href=\"".RACINE."?action=proposerStageEtape1\">Proposer un stage</a><br/></li>
                         <li><a href=\"".RACINE."?action=listePropositionStageEtudiant\">Mes propositions de stage</a><br/></li>
                         <li><a href=\"".RACINE."?action=voirStageEtudiant\">Voir mon stage</a><br/></li>

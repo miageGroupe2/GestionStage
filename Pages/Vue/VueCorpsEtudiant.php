@@ -1,6 +1,8 @@
 <?php
 
-function genererPagePrincipal() {
+require_once(RACINE_VUE.'Fonctions.php');
+
+function genererPagePrincipalEtudiant() {
     $corps = "<td rowspan=\"2\" id=\"corps\">
                    Bienvenue
                 </td>

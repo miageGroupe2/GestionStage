@@ -62,7 +62,7 @@ function verifierAutorisationAction($action) {
                 } else if ($action == "telechargement") {
                     return $action;
                 } else {
-                    return "pagePrincipale";
+                    return "pagePrincipaleResponsable";
                 }
             } else {
                 // Specifique ETUDIANT
@@ -101,7 +101,7 @@ function verifierAutorisationAction($action) {
                 } else if ($action == "optionEtudiant") {
                     return $action;
                 } else {
-                    return "pagePrincipale";
+                    return "pagePrincipaleEtudiant";
                 }
             }
         }
@@ -136,9 +136,6 @@ function call_action() {
                 $action = 'afficherAccueil';
                 break;
 
-            case 'pagePrincipale' :
-                $action = 'afficherPagePrincipale';
-                break;
 
             case 'connexion' :
                 $action = 'connecterUtilisateur';
@@ -173,6 +170,10 @@ function call_action() {
 
             // partie etudiant
 
+            case 'pagePrincipaleEtudiant':
+                $action = 'afficherPagePrincipaleEtudiant';
+                break;
+            
             case 'proposerStageEtape1' :
                 $action = 'proposerStageEtape1';
                 break;
@@ -227,7 +228,10 @@ function call_action() {
 
             // Partie responsable
 
-
+            case 'pagePrincipaleResponsable':
+                $action = 'afficherPagePrincipaleResponsable';
+                break;
+            
             case 'listePropositionStageResponsable' :
                 $action = 'listePropositionStageResponsable';
                 break;
