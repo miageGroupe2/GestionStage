@@ -224,7 +224,7 @@ require_once 'BDCommun.php';
                     }
 
                 }
-                echo "avant fichier";
+                
                 if ($_FILES['fichesujetstage']['error'] == 0
                     && $_FILES['fichesujetstage']['size'] <= 3145728){
 
