@@ -9,30 +9,29 @@ session_start();
 call_action();
 
 function verifierAutorisationAction($action) {
-    
     // Si on est connecte Evite le warning a l'etape du deddous
     if (isset($_SESSION['connecte'])) {
         // IDEM si on est conecte
         if ($_SESSION['connecte'] == 1) {
-            
+
             //on récupère l'utilisateur connecté 
             $utilisateur = $_SESSION['modeleUtilisateur'];
-            
+
             // Si admin, SINON etudiant
             if ($utilisateur->getAdmin()) {
-                
+
                 // specifique ADMIN
                 if ($action == "listePropositionStageResponsable") {
                     return $action;
                 } else if ($action == "detailProp") {
                     return $action;
-                }else if ($action == "validerProp") {
+                } else if ($action == "validerProp") {
                     return $action;
-                } else if($action == 'detailStage'){
+                } else if ($action == 'detailStage') {
                     return $action;
-                }else if ($action == "editerStage") {
+                } else if ($action == "editerStage") {
                     return $action;
-                }else if ($action == "listeStageAnneeCourante") {
+                } else if ($action == "listeStageAnneeCourante") {
                     return $action;
                 } else if ($action == "listeStages") {
                     return $action;
@@ -45,27 +44,24 @@ function verifierAutorisationAction($action) {
                 } else if ($action == "connexion") {
                     return $action;
                 } else if ($action == "deconnexion") {
-                   return $action;
-                } else if ($action == "ajouterAdmin") {
-                   return $action;
-                }else if ($action == "validerModifStage") {
                     return $action;
-                }else if ($action == "modifierAdmin") {
-                   return $action;
-                }else if ($action == "modifierAdminEtape2") {
-                   return $action;
-                }else if ($action == "supprimerAdmin") {
-                   return $action;
-                }else if ($action == "option") {
-                   return $action;
-                }else if ($action == "gererPromotion") {
-                   return $action;
-                }else if ($action == "telechargement") {
-                   return $action;
-                }
-                
-                
-                else {
+                } else if ($action == "ajouterAdmin") {
+                    return $action;
+                } else if ($action == "validerModifStage") {
+                    return $action;
+                } else if ($action == "modifierAdmin") {
+                    return $action;
+                } else if ($action == "modifierAdminEtape2") {
+                    return $action;
+                } else if ($action == "supprimerAdmin") {
+                    return $action;
+                } else if ($action == "option") {
+                    return $action;
+                } else if ($action == "gererPromotion") {
+                    return $action;
+                } else if ($action == "telechargement") {
+                    return $action;
+                } else {
                     return "pagePrincipale";
                 }
             } else {
@@ -78,15 +74,19 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if ($action == "editerPropositionStage") {
                     return $action;
+                } else if ($action == "editerStageEtudiant") {
+                    return $action;
+                } else if ($action == "validerModifStageEtudiant") {
+                    return $action;
                 } else if ($action == "supprimerProposition") {
                     return $action;
                 } else if ($action == "listePropositionStageEtudiant") {
                     return $action;
                 } else if ($action == "voirStageEtudiant") {
                     return $action;
-                }else if ($action == "modifierContact") {
+                } else if ($action == "modifierContact") {
                     return $action;
-                }else if ($action == "modifierContactEtape2") {
+                } else if ($action == "modifierContactEtape2") {
                     return $action;
                 } else if ($action == "modifierInformations") {
                     return $action;
@@ -96,10 +96,10 @@ function verifierAutorisationAction($action) {
                     return $action;
                 } else if ($action == "deconnexion") {
                     return $action;
-                }else if ($action == "telechargement") {
-                   return $action;
-                }else if ($action == "optionEtudiant") {
-                   return $action;
+                } else if ($action == "telechargement") {
+                    return $action;
+                } else if ($action == "optionEtudiant") {
+                    return $action;
                 } else {
                     return "pagePrincipale";
                 }
@@ -108,9 +108,9 @@ function verifierAutorisationAction($action) {
     } else {
         if ($action == "connexion") {
             return $action;
-        }else if ($action == "inscription") {
+        } else if ($action == "inscription") {
             return $action;
-        }else if ($action == "confirmationInscription") {
+        } else if ($action == "confirmationInscription") {
             return $action;
         } else {
             return "afficherAccueil";
@@ -128,14 +128,14 @@ function call_action() {
         $action = $_REQUEST['action'];
 
         // Si l'action n'est pas autorisee pour l'utilisateur  (Admin/etudiant/guest)
-        
-        $action = verifierAutorisationAction($action);  
+
+        $action = verifierAutorisationAction($action);
         switch ($action) {
             // Partie commune
             case 'afficherAccueil':
                 $action = 'afficherAccueil';
                 break;
-            
+
             case 'pagePrincipale' :
                 $action = 'afficherPagePrincipale';
                 break;
@@ -170,30 +170,33 @@ function call_action() {
               $action = 'afficherContactParEntreprise';
               break;
              */
-            
+
             // partie etudiant
 
             case 'proposerStageEtape1' :
                 $action = 'proposerStageEtape1';
                 break;
-            
+
             case 'proposerStageEtape2' :
-                $action = 'proposerStageEtape2' ;
+                $action = 'proposerStageEtape2';
                 break;
-            
+
             case 'proposerStageEtape3' :
-                $action = 'proposerStageEtape3' ;
+                $action = 'proposerStageEtape3';
                 break;
 
             case 'editerPropositionStage' :
-                $action = 'editerPropositionStage' ;
+                $action = 'editerPropositionStage';
                 break;
-            
+
+            case 'editerStageEtudiant':
+                $action = 'editerStageEtudiant';
+                break;
 
             case 'supprimerProposition':
-                $action = 'supprimerProposition' ;
+                $action = 'supprimerProposition';
                 break;
-                
+
 //                case 'validerProposerStage':
 //                    $action = 'validerProposerStage' ;
 //                    break;
@@ -218,46 +221,49 @@ function call_action() {
             case 'optionEtudiant' :
                 $action = 'afficherOptionEtudiant';
                 break;
+            case 'validerModifStageEtudiant' :
+                $action = 'validerModifStageEtudiant';
+                break;
 
             // Partie responsable
 
-            
+
             case 'listePropositionStageResponsable' :
                 $action = 'listePropositionStageResponsable';
                 break;
-            
+
             case 'option' :
                 $action = 'afficherOption';
                 break;
-            
+
             case 'gererPromotion' :
                 $action = 'afficherGererPromotion';
                 break;
-            
+
             case 'supprimerAdmin' :
                 $action = 'supprimerAdmin';
                 break;
-            
+
             case 'modifierAdminEtape2' :
                 $action = 'modifierAdminEtape2';
-                break ;
-                
+                break;
+
             case 'modifierAdmin' :
                 $action = 'modifierAdmin';
                 break;
-            
-             case 'ajouterAdmin' :
+
+            case 'ajouterAdmin' :
                 $action = 'ajouterAdmin';
                 break;
 
             case 'detailProp' :
                 $action = 'afficherDetailProposition';
                 break;
-            
+
             case 'validerProp' :
                 $action = 'validerProposition';
                 break;
-            
+
             case 'listeStageAnneeCourante' :
                 $action = 'afficherListeStageAnneeCourante';
                 break;
@@ -265,14 +271,14 @@ function call_action() {
             case 'listeStages' :
                 $action = 'afficherListeStage';
                 break;
-            
+
             case 'detailStage' :
                 $action = 'afficherDetailStage';
                 break;
             case 'editerStage':
                 $action = 'afficherEditerStage';
                 break;
-            
+
             case 'gererCompteAdmin' :
                 $action = 'afficherGererCompteAdmin';
                 break;

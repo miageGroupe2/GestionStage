@@ -7,7 +7,7 @@ function convertirDateENFR($date) {
 
 
 
-    $date = $jour . '/' . $mois . '/' . $annee;
+    $date = $jour . '-' . $mois . '-' . $annee;
 
     return $date;
 }

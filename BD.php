@@ -847,7 +847,54 @@ class BD {
             BD::rechargerSessionUtilisateur();
         }
     }
-
+        
+    public static function modifierDonneesStageEtudiant() {
+        
+        BD::getConnection();
+        $idStage = mysql_real_escape_string(htmlspecialchars($_GET['idstage']));
+        
+        $datedeb = mysql_real_escape_string(htmlspecialchars($_POST['datedeb']));
+        if($datedeb == NULL){
+            $datedeb = "NULL";
+        }
+        $datefin = mysql_real_escape_string(htmlspecialchars($_POST['datefin']));
+        if($datefin == NULL){
+            $datefin = "NULL";
+        }
+        $remuneration = mysql_real_escape_string(htmlspecialchars($_POST['remuneration']));
+        if($remuneration == NULL){
+            $remuneration = "NULL";
+        }
+        $embauche = mysql_real_escape_string(htmlspecialchars($_POST['embauche']));
+        if($embauche == NULL){
+            $embauche = "NULL";
+        }
+        $dateembauche = mysql_real_escape_string(htmlspecialchars($_POST['dateembauche']));
+        if($dateembauche == NULL){
+            $dateembauche = "NULL";
+        }
+        
+        $datedeb = BD::dateFRtoEN($datedeb);
+        $dateembauche = BD::dateFRtoEN($dateembauche);
+        $datefin = BD::dateFRtoEN($datefin);
+        
+        
+        $requete = "UPDATE stage SET datedebut = '$datedeb', 
+        datefin = '$datefin', remuneration = $remuneration, embauche = $embauche, dateembauche = '$dateembauche'
+        WHERE idstage = $idStage";
+        
+        
+        if(mysql_query($requete)){
+            return true;
+        }else{
+            echo mysql_error();
+            return false;
+        }
+        
+    }    
+    
+    
+    
     //-----------------------------------------------------------------------------------------
     // PARTIE DES ACCES BASES ADMIN
     //-----------------------------------------------------------------------------------------    

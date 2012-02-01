@@ -272,6 +272,20 @@ require_once 'BD.php';
         }
     }
     
+    function editerStageEtudiant(){
+        $utilisateur = $_SESSION['modeleUtilisateur'];
+        $stage = BD::rechercherStageEtudiant($utilisateur->getId());
+        
+        $corps = genererEditerStageEtudiant($stage);
+        AffichePage(TRUE, $corps);
+    }
+    
+     function validerModifStageEtudiant(){
+        $ok = BD::modifierDonneesStageEtudiant();
+        $corps = genererValiderModificationsStage($ok);
+        AffichePage(TRUE, $corps);
+    }
+    
     function supprimerProposition(){
 
         if (isset ($_GET['idProposition'])){
