@@ -611,9 +611,11 @@ function genererDetailProposition($proposition, $modeleFicheRenseignement, $mode
                         ";
 
                         $technoConcat = "";
-                        foreach($tabTechno as $techno){
+                        if($tabTechno != null){
+                            foreach($tabTechno as $techno){
 
-                            $technoConcat .= $techno->getNom() .",";
+                                $technoConcat .= $techno->getNom() .",";
+                            }
                         }
                         $technoConcat .= $proposition->getTechnoStage();
                         if ( substr($technoConcat, -1, 1)== ","){
@@ -678,7 +680,7 @@ function genererDetailProposition($proposition, $modeleFicheRenseignement, $mode
                         <td>
                         <h3>Information</h3>
                         En cas de refus de la proposition de stage, il est possible de faire mentionner un motif de refus.<br/>
-                        Veuillez compl&eacute;r la zone de texte ci-dessous.<br/>
+                        Veuillez compl&eacute;ter la zone de texte ci-dessous.<br/>
                     </td>
                 </tr>
             </table>
@@ -741,8 +743,14 @@ function genererValiderProposition($ok) {
 
 function genererListeStage($tabStage) {
     $corps = "<td id = \"corps\">
-            <h2>Liste des stages</h2>
-                <table class=\"tab_prop_stage\">
+            <h2>Liste des stages</h2>";
+
+
+
+
+
+
+     $corps .= "          <table class=\"tab_prop_stage\">
                     <tr>
                         <td class=\"entete_tab_prop_stage_identity\">
                             Identit&eacute; &eacute;tudiant
@@ -798,7 +806,7 @@ function genererListeStageAnneeCourante($tabStage) {
                             Etat stage
                         </td>
                         <td class=\"entete_tab_prop_stage_resume\">
-                            R&eacute;sum&eacute; sujet
+                            Sujet de stage
                         </td>
                     </tr>
             ";
