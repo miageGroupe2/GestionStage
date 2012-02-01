@@ -57,8 +57,34 @@ require_once 'BD.php';
     }
 
     function afficherListeStage(){
-        $tabStage = BD::rechercherStage();
-        $corps = genererListeStage($tabStage);
+
+        $tabStage = null ;
+        $idPromoSelect = null ;
+        if( isset($_POST['promotion']) && $_POST['promotion'] != "-"){
+
+            $idPromoSelect = $_POST['promotion'];
+            
+        }
+        $tabTechnoSelect = null ;
+        if (isset ($_POST['check'])){
+            $tabCheckBox = $_POST['check'] ;
+
+            foreach($tabCheckBox as $techno){
+
+                $tabTechnoSelect[] = $techno ;
+            }
+        }
+        if ($tabTechnoSelect == null && $idPromoSelect == null){
+
+            $tabStage = BD::rechercherStage();
+        }else{
+
+            $tabStage = BD::rechercherStageByPromoByTechno($idPromoSelect, $tabTechnoSelect);
+        }
+        
+        $tabPromotion = BD::recherchePromotion();
+        $technoTab = BD::rechercheTechnos();
+        $corps = genererListeStage($tabStage, $tabPromotion, $technoTab);
         AffichePage(TRUE, $corps);     
     }
 
@@ -74,9 +100,9 @@ require_once 'BD.php';
     function afficherDetailStage(){
         $stage = BD::rechercherStageByID($_GET['idstage']);
         $modeleFicheRenseignement = BD::rechercherFicheRenseignement($stage->getIdstage(), FALSE);
-        
+        $technoTab = BD::rechercheTechnosModeleByProposition($stage->getIdproposition());
         $modeleFicheSujetStage = BD::rechercherFicheSujetStage($stage->getIdstage(), FALSE);
-        $corps = genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujetStage);
+        $corps = genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujetStage, $technoTab);
         AffichePage(TRUE, $corps);
     }
 
