@@ -743,14 +743,23 @@ function genererValiderProposition($ok) {
 
 function genererListeStage($tabStage) {
     $corps = "<td id = \"corps\">
-            <h2>Liste des stages</h2>";
+            <h2>Liste des stages</h2>
+
+            Afficher par promotion :
+
+            <select name=\"promotion\" id=\"promotion\">";
+
+            foreach ($tabPromotion as $promoCourante) {
+
+
+                $corps .= "<option value=\"" . $promoCourante->getIdpromotion() . "\">" . $promoCourante->getNompromotion() . "</option>";
+            }
+
+            $corps .= "</select>
 
 
 
-
-
-
-     $corps .= "          <table class=\"tab_prop_stage\">
+             <table class=\"tab_prop_stage\">
                     <tr>
                         <td class=\"entete_tab_prop_stage_identity\">
                             Identit&eacute; &eacute;tudiant
