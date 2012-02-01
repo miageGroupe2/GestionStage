@@ -72,6 +72,50 @@ class BD {
             }
         }
     }
+
+    public static function rechercheTechnosByProposition($idProposition){
+
+        BD::getConnection();
+        $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+
+        if ($idProposition != FALSE ) {
+
+            $requete = "SELECT idtechno FROM technoproposition WHERE idproposition = ".$idProposition;
+            $retour = mysql_query($requete);
+            $i=0;
+            $technoTab = null ;
+            while ($tableau = mysql_fetch_array($retour)) {
+
+                $technoTab[$i] = $tableau['idtechno'];
+                $i++ ;
+            }
+
+            return $technoTab ;
+        }
+        return null ;
+    }
+    public static function rechercheTechnosModeleByProposition($idProposition){
+
+        BD::getConnection();
+        $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+
+        if ($idProposition != FALSE ) {
+
+            $requete = "SELECT techno.id, techno.nom FROM technoproposition, techno
+                        WHERE techno.id = technoproposition.idtechno AND idproposition = ".$idProposition ;
+            $retour = mysql_query($requete);
+            $i=0;
+            $technoTab = null ;
+            while ($tableau = mysql_fetch_array($retour)) {
+
+                $technoTab[$i] = new ModeleTechno($tableau['id'], $tableau['nom']);
+                $i++ ;
+            }
+
+            return $technoTab ;
+        }
+        return null ;
+    }
     public static function rechercheTechnos(){
 
         BD::getConnection();
@@ -501,6 +545,22 @@ class BD {
             mysql_query($requete);
         }
     }
+
+    public static function supprimerTechnoProposition($idProposition){
+
+        BD::getConnection();
+        $idProposition = mysql_real_escape_string(htmlspecialchars($idProposition));
+
+        if ($idProposition != FALSE){
+
+            
+            $requete = "DELETE FROM technoproposition WHERE idproposition = ".$idProposition;
+            mysql_query($requete);
+        }
+
+        
+    }
+
     public static function ajouterTechnoProposition($idProposition, $idtechno){
 
         BD::getConnection();
@@ -682,7 +742,7 @@ class BD {
         $stage = null;
         $requete = "SELECT stage.idstage, stage.identreprise, stage.idcontact,
                     stage.sujetstage, stage.datedebut, stage.datefin, stage.datesoutenance,
-                    stage.remuneration, stage.lieusoutenance, stage.etatstage,
+                    stage.idproposition, stage.remuneration, stage.lieusoutenance, stage.etatstage,
                     stage.respcivil, entreprise.nomentreprise, stage.titrestage, stage.technostage,
                     contact.prenomcontact, contact.nomcontact
                     FROM contact RIGHT JOIN stage ON contact.idcontact = stage.idcontact, 
@@ -701,7 +761,7 @@ class BD {
             $contact = new ModeleContact(null, $tableau['prenomcontact'], $tableau['nomcontact'], null, null, null, null);
             $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, null, null, null, null, null, null, null);
             $stage = new ModeleStage($tableau['idstage'], $tableau['identreprise'], $tableau['idcontact'], $tableau['sujetstage'], null, $tableau['datedebut'], $tableau['datefin'], null, null, $tableau['etatstage'], null, null, $tableau['remuneration'], null, null, null, $entreprise, $contact, null, $tableau['respcivil'], $tableau['titrestage'], $tableau['technostage']);
-            
+            $stage->setIdproposition($tableau['idproposition']);
         }
         
         return $stage;
@@ -1137,7 +1197,7 @@ class BD {
         }
     }
 
-   public static function rechercherStageByPromo($idPromotion){
+   public static function rechercherStageByPromoByTechno($idPromotion, $tabTechno){
 
         BD::getConnection();
         $tabStage = null;
@@ -1145,11 +1205,12 @@ class BD {
         $requete = "SELECT s.idstage, s.etatstage, s.datevalidation, s.titrestage, u.nomutilisateur,
                     u.prenomutilisateur, e.nomentreprise, e.paysentreprise,
                     e.villeentreprise, s.noteobtenue, pr.nompromotion
-                    FROM stage s, entreprise e, utilisateur u, promotion pr
+                    FROM stage s, entreprise e, utilisateur u, promotion pr, technoproposition tp
                     WHERE u.idutilisateur = s.idutilisateur
                     AND u.idpromotion = pr.idpromotion
                     AND pr.idpromotion = $idPromotion
                     AND s.identreprise = e.identreprise
+                    AND tp.idproposition = s.idproposition
 
         ";
         $retour = mysql_query($requete) or die(mysql_error());
@@ -1240,7 +1301,7 @@ class BD {
         BD::getConnection();
         $tabStage = null;
         $i=0;
-        $requete = "SELECT s.idstage, s.datevalidation, s.sujetstage, s.titrestage, s.technostage, u.numetudiant, u.nomutilisateur, 
+        $requete = "SELECT s.idstage, s.idproposition, s.datevalidation, s.sujetstage, s.titrestage, s.technostage, u.numetudiant, u.nomutilisateur,
             u.prenomutilisateur, u.mailutilisateur, e.nomentreprise, e.adresseentreprise, 
             e.villeentreprise, e.codepostalentreprise, e.paysentreprise, e.numerotelephone, 
             e.numerosiret, e.urlsiteinternet, e.statutjuridique, s.datedebut, s.datefin, 
@@ -1262,6 +1323,7 @@ class BD {
             $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet'], $tableau['statutjuridique']);
             $contact = new ModeleContact(null, $tableau['prenomcontact'], $tableau['nomcontact'], $tableau['fonctioncontact'], $tableau['telfixecontact'], $tableau['telmobilecontact'], $tableau['mailcontact']);
             $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, $tableau['sujetstage'], BD::dateENtoFR($tableau['datevalidation']), BD::dateENtoFR($tableau['datedebut']), BD::dateENtoFR($tableau['datefin']), BD::dateENtoFR($tableau['datesoutenance']), $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], BD::dateENtoFR($tableau['dateembauche']), $etudiant, $entreprise, $contact, $promotion, $tableau['respcivil'],$tableau['titrestage'],$tableau['technostage']);
+            $tabStage[$i]->setIdproposition($tableau['idproposition']);
             $i++;
             
         }

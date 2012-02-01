@@ -29,12 +29,14 @@ class ModeleStage {
     private $respcivil;
     private $technoStage;
     private $titreStage;
-    
+    private $idproposition ;
+
     // Utile pour certaines requetes d'affichage, cet attribut ne fait pas parti de la table stage de la BDD
     private $utilisateur;
     private $entreprise;
     private $contact;
     private $promotion;
+
     
     function __construct($idstage, $identreprise, $idcontact, $sujetstage, $datevalidation, $datedebut, $datefin, $datesoutenance, $lieusoutenance, $etatstage, $noteobtenue, $appreciationobtenue, $remuneration, $embauche, $dateembauche, $utilisateur, $entreprise, $contact, $promotion, $respcivil, $titreStage, $technoStage) {
         $this->idstage = $idstage;
@@ -68,7 +70,15 @@ class ModeleStage {
         return $this->titreStage;
     }
     
+    public function getIdproposition() {
+        return $this->idproposition;
+    }
 
+    public function setIdproposition($idproposition) {
+        $this->idproposition = $idproposition;
+    }
+
+    
     public function getIdstage() {
         return $this->idstage;
     }

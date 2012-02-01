@@ -230,7 +230,7 @@ function genererAjoutPropositionStageOk() {
 /**
  * Permet d'afficher la page permettant d'éditer une proposition de stage (côté étudiant)
  */
-function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignement, $modeleFicheSujetStage) {
+function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignement, $modeleFicheSujetStage, $technoTab, $technoTabSelect) {
     if ($proposition != NULL) {
         $corps = "<td id = \"corps\">
                 <h2>Edition d'une proposition de stage</h2>
@@ -296,13 +296,53 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                             <textarea rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" >" . $proposition->getSujet() . "</textarea>
                         </td>
                     </tr>
-                    <tr>
+                    <tr><td class = \"intitule_colg\">
+                        Technologies utilisées <etoile>*</etoile>:<br/></td><td>
+                        <table>
+                        ";
+
+                            $i = 0;
+                            $j = 1;
+                            foreach ($technoTab as $techno) {
+
+                                if($i == 0){
+                                    $corps .= "<tr>";
+                                }
+                                $selectionne = FALSE ;
+                                if ($technoTabSelect != null){
+                                    foreach ($technoTabSelect as $technoSel) {
+                                        
+                                        if($techno->getId() == $technoSel){
+                                            
+                                            $selectionne = TRUE ;
+                                            break ;
+                                        }
+                                    }
+                                }
+                                    
+                                if ($selectionne){
+                                    $corps .= "<td><input type=\"checkbox\" id=\"techno".$j."\"  value=\"".$techno->getId()."\" name=\"check[]\" checked>".$techno->getNom()."</td>";
+                                }else{
+                                    $corps .= "<td><input type=\"checkbox\" id=\"techno".$j."\"  value=\"".$techno->getId()."\" name=\"check[]\">".$techno->getNom()."</td>";
+                                }
+                                
+                                $j++;
+                                $i++ ;
+                                if($i == 4){
+                                    $corps .= "</tr>";
+                                    $i = 0 ;
+                                }
+                            }
+
+                        $corps .= "</table></td></tr>
+                        <tr>
                         <td class = \"intitule_colg\">
-                            Technologies utilisées <etoile>*</etoile>:
+                            Autres technologies :
                         </td>
                         <td class = \"tableau\">
                             <textarea rows=\"3\" cols=\"60\" id=\"technoStage\" name=\"technoStage\" >" . $proposition->getTechnoStage() . "</textarea>
                         </td>
+
                     </tr>
                     <tr>
                         <td class = \"intitule_colg\">
@@ -741,11 +781,14 @@ function genererValiderProposition($ok) {
     return $corps;
 }
 
-function genererListeStage($tabStage, $tabPromotion) {
+function genererListeStage($tabStage, $tabPromotion, $technoTab) {
     
     $corps = "<td id = \"corps\">
             <h2>Liste des stages</h2>
 
+            <table>
+            <tr>
+                <td>
             Afficher par promotion :
             <form name=\"formulaireListeStage\" method=\"post\" action=\"" . RACINE . "?action=listeStages\">
             <select name=\"promotion\" id=\"promotion\">
@@ -757,8 +800,38 @@ function genererListeStage($tabStage, $tabPromotion) {
             }
 
             $corps .= "</select>
-                        <input type=\"submit\" value=\"Rechercher\" ><br/>
-                        </form>
+            </td>
+            <td>
+                Technologies utilisées :
+                <table>
+                ";
+
+                $i = 0;
+                $j = 1;
+                foreach ($technoTab as $techno) {
+
+                    if($i == 0){
+                        $corps .= "<tr>";
+                    }
+                    $corps .= "<td><input type=\"checkbox\" id=\"techno".$j."\"  value=\"".$techno->getId()."\" name=\"check[]\">".$techno->getNom()."</td>";
+                    $j++;
+                    $i++ ;
+                    if($i == 4){
+                        $corps .= "</tr>";
+                        $i = 0 ;
+                    }
+                }
+
+                $corps .= "</table>
+                </td>
+                <td>
+                    <input type=\"submit\" value=\"Rechercher\" ><br/>
+                </td>
+                </tr>
+                </table>
+
+                
+                </form>
 
 
 
@@ -1196,7 +1269,7 @@ function genererGererPromotion($tabPromotion) {
     return $corps;
 }
 
-function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujetStage) {
+function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujetStage, $tabTechno) {
 
     $corps = "";
     if ($stage != NULL) {
@@ -1463,24 +1536,44 @@ function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujet
                                 <td class=\"tab_interne_bloc_colg\">
                                      Fiche du sujet de stage :
                                 </td>
-                                <td class=\"tab_interne_bloc_cold\">
-                                    <a href=\"" . RACINE . "?action=telechargement&type=sujet&id=" . $stage->getIdstage() . "\">" .$modeleFicheSujetStage->getNomOriginal() . "</a>
-                                    <a href=\"" . RACINE . "?action=telechargement&type=sujet&id=" . $stage->getIdstage() . "\"><img src=\"".RACINE_IMAGE."disquette.png\" /></a>
-                                </td>
+                                <td class=\"tab_interne_bloc_cold\">";
+                                    if ($modeleFicheSujetStage != null){
+                                        $corps .="<a href=\"" . RACINE . "?action=telechargement&type=sujet&id=" . $stage->getIdstage() . "\">" .$modeleFicheSujetStage->getNomOriginal() . "</a>
+                                    
+                                                <a href=\"" . RACINE . "?action=telechargement&type=sujet&id=" . $stage->getIdstage() . "\"><img src=\"".RACINE_IMAGE."disquette.png\" /></a>";
+                                    }
+                                $corps .="</td>
                             </tr>
                             <tr>
                                 <td class=\"tab_interne_bloc_colg\">
                                      Technologies utilisées :
-                                </td>
+                                </td>";
+
+
+                                $technoConcat = "";
+                                if($tabTechno != null){
+                                    foreach($tabTechno as $techno){
+
+                                        $technoConcat .= $techno->getNom() .",";
+                                    }
+                                }
+                                $technoConcat .= $stage->getTechnoStage() ;
+                                if ( substr($technoConcat, -1, 1)== ","){
+
+                                    $technoConcat = substr($technoConcat, 0, strlen($technoConcat)-1);
+                                }
+                                $corps .= "
+
+
                                 <td class=\"tab_interne_bloc_cold\">
-                                    " . $stage->getTechnoStage() . "
+                                    " . $technoConcat . "
                                 </td>
                             </tr>
                         </table><br/><br/>
                         <table class=\"tab_interne_bloc\">
                             <tr>
                                 <td>
-                                    R&eacute;suù&eacute; du sujet de stage :
+                                    R&eacute;sum&eacute; du sujet de stage :
                                 </td>
                             </tr>
                             <tr>
@@ -2532,7 +2625,7 @@ function genererProblemeUploadFichier() {
     return $corps;
 }
 
-function genererVoirStageEtudiant($stage) {
+function genererVoirStageEtudiant($stage, $tabTechno) {
     $corps = "<td id = \"corps\">
                 <h2>Mon stage</h2>
                 ";
@@ -2595,9 +2688,22 @@ function genererVoirStageEtudiant($stage) {
                         <td class = \"tabstagecolg\">
                             Technologies utilisées :
                         </td>
-                        <td class = \"tabstagecold\">
-                            " . $stage->getTechnoStage() . "
-                        </td>
+                        <td class = \"tabstagecold\">";
+
+                        $technoConcat = "";
+                        if($tabTechno != null){
+                            foreach($tabTechno as $techno){
+
+                                $technoConcat .= $techno->getNom() .",";
+                            }
+                        }
+                        $technoConcat .= $stage->getTechnoStage() ;
+                        if ( substr($technoConcat, -1, 1)== ","){
+
+                            $technoConcat = substr($technoConcat, 0, strlen($technoConcat)-1);
+                        }
+                        $corps .= $technoConcat .
+                        "</td>
                     </tr>
                     <tr>
                         <td class = \"tabstagecolg\">

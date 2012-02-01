@@ -192,7 +192,17 @@ require_once 'BD.php';
 
             if($operationPermise){
 
-                $proposition = BD::editerPropositionStage($_GET['idProposition'], $_POST['sujetStage'], $_POST['titreStage'], $_POST['technoStage']);
+                BD::editerPropositionStage($_GET['idProposition'], $_POST['sujetStage'], $_POST['titreStage'], $_POST['technoStage']);
+                BD::supprimerTechnoProposition($_GET['idProposition']);
+                if (isset ($_POST['check'])){
+                    $tabCheckBox = $_POST['check'] ;
+
+                    foreach($tabCheckBox as $techno){
+
+                        BD::ajouterTechnoProposition ($_GET['idProposition'], $techno);
+                    }
+                }
+
                 // limite à 3 Mo
                 if ($_FILES['ficherenseignement']['error'] == 0
                         && $_FILES['ficherenseignement']['size'] <= 3145728
@@ -235,7 +245,9 @@ require_once 'BD.php';
                 $proposition = BD::rechercherProposition($_GET['idProposition']);
                 $modeleFicheRenseignement = BD::rechercherFicheRenseignement($_GET['idProposition'], TRUE);
                 $modeleFicheSujetStage = BD::rechercherFicheSujetStage($_GET['idProposition'], TRUE);
-                $corps = genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignement, $modeleFicheSujetStage);
+                $technoTab = BD::rechercheTechnos();
+                $technoTabSelect = BD::rechercheTechnosByProposition($_GET['idProposition']);
+                $corps = genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignement, $modeleFicheSujetStage, $technoTab, $technoTabSelect);
                 AffichePage(TRUE, $corps);    
                 
             }else{
@@ -267,8 +279,8 @@ require_once 'BD.php';
         
         $utilisateur = $_SESSION['modeleUtilisateur'];
         $stage = BD::rechercherStageEtudiant($utilisateur->getId());
-        
-        $corps = genererVoirStageEtudiant($stage);
+        $technoTab = BD::rechercheTechnosModeleByProposition($stage->getIdproposition());
+        $corps = genererVoirStageEtudiant($stage, $technoTab);
         AffichePage(TRUE, $corps);
     }
 
