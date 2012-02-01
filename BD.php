@@ -1295,8 +1295,9 @@ class BD {
             $requete .= " AND pr.idpromotion = $idPromotion";
         }
 
-        if ( $tabTechno != null){
 
+        if ( $tabTechno != null){
+            //bon courage ... !
             $requete = "SELECT s.idstage, s.idproposition, s.etatstage, s.datevalidation, s.titrestage, u.nomutilisateur,
                     u.prenomutilisateur, e.nomentreprise, e.paysentreprise,
                     e.villeentreprise, s.noteobtenue, pr.nompromotion
@@ -1304,11 +1305,27 @@ class BD {
                     WHERE u.idutilisateur = s.idutilisateur
                     AND u.idpromotion = pr.idpromotion
                     AND s.identreprise = e.identreprise
-                    AND tp.idproposition = s.idproposition";
-
+                    AND tp.idproposition = s.idproposition
+                    AND tp.idtechno =" .$tabTechno[0];
+            $i=0 ;
             foreach ($tabTechno as $techno) {
 
-                $requete .= " AND tp.idtechno =" .$techno;
+                $requete .= " 
+                        AND s.idstage in (
+                    SELECT s.idstage
+                    FROM stage s, entreprise e, utilisateur u, promotion pr, technoproposition tp
+                    WHERE u.idutilisateur = s.idutilisateur
+                    AND u.idpromotion = pr.idpromotion
+                    AND s.identreprise = e.identreprise
+                    AND tp.idproposition = s.idproposition
+                    AND tp.idtechno = ".$techno ;
+
+                    $i ++ ;
+
+            }
+            while ($i!= 0){
+                $requete .= ")";
+                $i-- ;
             }
             if ($idPromotion != null){
 

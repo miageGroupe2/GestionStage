@@ -60,6 +60,7 @@ require_once 'BD.php';
 
         $tabStage = null ;
         $idPromoSelect = null ;
+        $idPromoDejaSelec = null ;
         if( isset($_POST['promotion']) && $_POST['promotion'] != "-"){
 
             $idPromoSelect = $_POST['promotion'];
@@ -84,7 +85,7 @@ require_once 'BD.php';
         
         $tabPromotion = BD::recherchePromotion();
         $technoTab = BD::rechercheTechnos();
-        $corps = genererListeStage($tabStage, $tabPromotion, $technoTab);
+        $corps = genererListeStage($tabStage, $tabPromotion, $technoTab, $idPromoSelect, $tabTechnoSelect);
         AffichePage(TRUE, $corps);     
     }
 
