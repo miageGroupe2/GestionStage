@@ -838,19 +838,20 @@ function genererListeStageAnneeCourante($tabStage) {
 function genererGererCompteAdmin($tabAdmin, $tabPromotion) {
 
     $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormAdmin.js\" type=\"text/javascript\"></script>";
-    $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierSelectionnerAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdmin\">";
+    $corps .= "<td id = \"corps\">";
+    $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierSelectionnerAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdmin\">
 
-    $corps .= "<td id = \"corps\">
+    
                 <h2>Gestion des administrateurs</h2>";
 
     if ($tabAdmin != null) {
 
-        $corps .= "<table class=\"tableau\"><tr>
-                  <td class=\"tableau\"> Choix </td>
-                  <td class=\"tableau\"> Pr&eacute;nom </td>
-                  <td class=\"tableau\"> Nom </td>
-                  <td class=\"tableau\"> Promotion </td>
-                  <td class=\"tableau\"> Mail </td>
+        $corps .= "<table class=\"tab_prop_stage\"><tr>
+                  <td class=\"entete_tab_prop_stage\"> Choix </td>
+                  <td class=\"entete_tab_prop_stage\"> Pr&eacute;nom </td>
+                  <td class=\"entete_tab_prop_stage\"> Nom </td>
+                  <td class=\"entete_tab_prop_stage\"> Promotion </td>
+                  <td class=\"entete_tab_prop_stage\"> Mail </td>
                   </tr>";
 
         $i = 0;
@@ -879,35 +880,42 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion) {
         }
 
         $corps .= "</table>
-            <input type=\"submit\" value=\"Modifier\" >
+            <table>
+                <tr>
+                    <td class=\"submit\">
+                        <br/><input type=\"submit\" value=\"Modifier\" ><br/><br/>
+                    </td>
+                </tr>
+            </table>
             </form>
                 ";
 
 
         $corps .= "
+            <h2>Ajouter un administrateur</h2>
             <form name=\"formulaire\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=ajouterAdmin\">
-            <table>
+            <table class=\"form_ajout_new_company\">
             <tr>
-                <td>
+                <td class=\"form_ajout_new_company_nom_champ\">
                     Nom <etoile>*</etoile>:
                 </td>
-                <td>
+                <td class=\"form_ajout_new_company_champ\">
                     <input type=text name=\"nom_admin\" id=\"nom_admin\">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_new_company_nom_champ\">
                     Pr&eacute;nom <etoile>*</etoile>:
                 </td>
-                <td>
+                <td class=\"form_ajout_new_company_champ\">
                     <input type=text name=\"prenom_admin\" id=\"prenom_admin\">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_new_company_nom_champ\">
                     Promotion :
                 </td>
-                <td>
+                <td class=\"form_ajout_new_company_champ\">
                     <select name=\"promotion\" id=\"promotion\">";
 
         foreach ($tabPromotion as $promoCourante) {
@@ -920,32 +928,39 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion) {
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_new_company_nom_champ\">
                     Mail <etoile>*</etoile>:
                 </td>
-                <td>
+                <td class=\"form_ajout_new_company_champ\">
                     <input type=text name=\"mail_admin\" id=\"mail_admin\">
                 </td>
 
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_new_company_nom_champ\">
                     Mot de passe <etoile>*</etoile>:
                 </td>
-                <td>
+                <td class=\"form_ajout_new_company_champ\">
                     <input type=password name=\"mdp_admin\" id=\"mdp_admin\">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td class=\"form_ajout_new_company_nom_champ\">
                     Mot de passe v&eacute;rification <etoile>*</etoile>:
                 </td>
-                <td>
+                <td class=\"form_ajout_new_company_champ\">
                     <input type=password name=\"mdp2_admin\" id=\"mdp2_admin\">
                 </td>
             </tr>
             </table>
-            <br /><input type=\"submit\" value=\"Ajouter\"></form><br /><br />";
+            <table>
+                <tr>
+                    <td class=\"submit\">
+                        <br /><input type=\"submit\" value=\"Ajouter\"></form><br /><br />
+                    </td>
+                </tr>
+            </table>";
+            
 
 
         $corps .= "</td>
@@ -1058,23 +1073,28 @@ function genererGererPromotion($tabPromotion) {
     $corps .= "<form name=\"formulaireAjout\" onsubmit=\"return verifierAjoutPromotion()\" method=\"post\" action=\"" . RACINE . "?action=gererPromotion\">
                 <input type=hidden id=\"actionPromotion\" name=\"actionPromotion\" value=\"ajouter\">";
     $corps .= "<td id = \"corps\">
-                <h1>G&eacute;rer les promotions</h1>
+                <h2>G&eacute;rer les promotions</h2>
+                <table class=\"tab_prop_stage\">
+                    <tr>
+                        <td class=\"titre_sous_categ_form\">Liste des promotions<br/><br/></td>
+                    </tr>
+                    
+                        <ul>
+                        ";
 
-                <h2>Liste des promotions</h2>
+   foreach ($tabPromotion as $promoCourante) {
 
-                <ul>
-                ";
-
-    foreach ($tabPromotion as $promoCourante) {
-
-        $corps .= "<li>" . $promoCourante->getNompromotion() . "</li>";
+        $corps .= "<tr><td><li>" . $promoCourante->getNompromotion() . "</li></td></tr>";
     }
-
+        
     $corps .= "</ul>
-
-                <h2>Ajouter une promotion</h2>
-
-                 S&eacute;lectionner la promotion :</br>";
+        </tr>
+    </table><hr/><br/>
+    <table  class=\"tab_prop_stage\">
+        <tr>
+            <td class=\"titre_sous_categ_form\">Ajouter une promotion<br/><br/></td>
+        </tr>    
+        <tr><td>S&eacute;lectionner la promotion :</td></tr>";
 
     $tabPromoDejaAffiche[0] = "nagagull";
     $k = 0;
@@ -1104,33 +1124,58 @@ function genererGererPromotion($tabPromotion) {
 
         if ($afficherPromo) {
 
-            $corps .= "<input type=\"radio\" name=\"idPromo\" value=\"" . $aff . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
-                                    <label for=" . $promoCourante->getIdpromotion() . ">" . $aff . "</label><br />";
+            $corps .= "<tr><td><input type=\"radio\" name=\"idPromo\" value=\"" . $aff . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
+                                    <label for=" . $promoCourante->getIdpromotion() . ">" . $aff . "</label></td></tr>";
         }
     }
+    $corps.="</table><table class=\"tab_prop_stage\">";
 
-
-    $corps .= "</br>Année universitaire :
-                </br>(sous la forme \"2010-2011\")</br>
-                <input type=text name=\"anneeUniv\" id=\"anneeUniv\" value=\"\">
-                </br></br>
-                <input type=\"submit\"  value=\"Ajouter\">
-                </form>
+    $corps .= "<tr>
+                    <td>
+                        <br/>Saisir l'année universitaire :
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        (sous la forme \"2010-2011\")</br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type=text name=\"anneeUniv\" id=\"anneeUniv\" value=\"\">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                         <input type=\"submit\"  value=\"Ajouter\">
+                    </td>
+                </tr>
+               
+                </form></table><hr/>
                 ";
+    
 
-    $corps .= "<h2>Supprimer une promotion</h2>
-
-                <form name=\"formulaireSupprimer\" onsubmit=\"return confirmerAvantSuppression()\" method=\"post\" action=\"" . RACINE . "?action=gererPromotion\">
-                <input type=hidden id=\"actionPromotion\" name=\"actionPromotion\" value=\"supprimer\">
+    $corps .= "<form name=\"formulaireSupprimer\" onsubmit=\"return confirmerAvantSuppression()\" method=\"post\" action=\"" . RACINE . "?action=gererPromotion\">
+            <table class=\"tab_prop_stage\">
+                <tr>
+                    <td class=\"titre_sous_categ_form\">
+                        <br/>Supprimer une promotion<br/><br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>                    
+                        <input type=hidden id=\"actionPromotion\" name=\"actionPromotion\" value=\"supprimer\">
+                    </td>
+                </tr>
                 ";
 
     foreach ($tabPromotion as $promoCourante) {
 
-        $corps .= "<input type=\"radio\" name=\"idPromoSupprimer\" value=\"" . $promoCourante->getIdpromotion() . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
-                            <label for=" . $promoCourante->getIdpromotion() . ">" . $promoCourante->getNompromotion() . "</label><br />";
+        $corps .= "<tr><td><input type=\"radio\" name=\"idPromoSupprimer\" value=\"" . $promoCourante->getIdpromotion() . "\" id=\"" . $promoCourante->getIdpromotion() . "\" />
+                            <label for=" . $promoCourante->getIdpromotion() . ">" . $promoCourante->getNompromotion() . "</label></td></tr>";
     }
-    $corps .= "<input type=\"submit\" value=\"Supprimer\" >
-                        </form>
+    $corps .= "<tr><td><input type=\"submit\" value=\"Supprimer\" ></td></tr>
+                        </form></table>
                         ";
 
     $corps .= "</td>
@@ -1162,7 +1207,7 @@ function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujet
                         <table class=\"tab_interne_bloc\">
                             <tr>
                                 <td class=\"tab_interne_bloc_colg\">
-                                    N° Etudiant : 
+                                    N&deg; Etudiant : 
                                 </td>
                                 <td class=\"tab_interne_bloc_cold\">
                                     " . $stage->getUtilisateur()->getNumeroetudiant() . "
@@ -1274,7 +1319,7 @@ function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujet
                             </tr>
                             <tr>
                                 <td class=\"tab_interne_bloc_colg\">
-                                    N&edeg; Tel : 
+                                    N&deg; Tel : 
                                 </td>
                                 <td class=\"tab_interne_bloc_cold\">
                                     ".$stage->getEntreprise()->getNumeroTelephone() . "
@@ -1390,7 +1435,7 @@ function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujet
                                      Date embauche : 
                                 </td>
                                 <td class=\"tab_interne_bloc_cold\">
-                                " . $stage->getDateembauche() . "
+                                " . convertirDateENFR2($stage->getDateembauche()) . "
                                 </td>
                             </tr>
                             <tr>

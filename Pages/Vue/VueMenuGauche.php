@@ -45,21 +45,24 @@
         
         if ($utilisateur->getAdmin()) {
             $menuGauche .= "
-                        
-                        <a href=\"".RACINE."?action=pagePrincipale\">Accueil</a><br/>
-                        <a href=\"".RACINE."?action=listePropositionStageResponsable\">Voir les propositions de stage</a><br/>
-                        <a href=\"".RACINE."?action=listeStageAnneeCourante\">Voir les stages de l'ann&eacute;e courante</a><br/>
-                        <a href=\"".RACINE."?action=listeStages\">Consulter les stages</a><br/>
-                        <a href=\"".RACINE."?action=gererCompteAdmin\">G&eacute;rer les comptes administrateur</a><br/>
-                        <a href=\"".RACINE."?action=option\">Options</a><br/>
+                        <ul>
+                        <li><a href=\"".RACINE."?action=pagePrincipale\">Accueil</a><br/></li>
+                        <li><a href=\"".RACINE."?action=listePropositionStageResponsable\">Voir les propositions de stage</a><br/></li>
+                        <li><a href=\"".RACINE."?action=listeStageAnneeCourante\">Voir les stages de l'ann&eacute;e courante</a><br/></li>
+                        <li><a href=\"".RACINE."?action=listeStages\">Consulter les stages</a><br/></li>
+                        <li><a href=\"".RACINE."?action=gererCompteAdmin\">G&eacute;rer les comptes administrateur</a><br/></li>
+                        <li><a href=\"".RACINE."?action=option\">Options</a><br/></li>
+                        </ul>
                         </td>";
         }else{
             $menuGauche .= "
-                        <a href=\"".RACINE."?action=pagePrincipale\">Accueil</a><br/>
-                        <a href=\"".RACINE."?action=proposerStageEtape1\">Proposer un stage</a><br/>
-                        <a href=\"".RACINE."?action=listePropositionStageEtudiant\">Mes propositions de stage</a><br/>
-                        <a href=\"".RACINE."?action=voirStageEtudiant\">Voir mon stage</a><br/>
-                        <a href=\"".RACINE."?action=optionEtudiant\">Options</a><br/>
+                        <ul>
+                        <li><a href=\"".RACINE."?action=pagePrincipale\">Accueil</a><br/></li>
+                        <li><a href=\"".RACINE."?action=proposerStageEtape1\">Proposer un stage</a><br/></li>
+                        <li><a href=\"".RACINE."?action=listePropositionStageEtudiant\">Mes propositions de stage</a><br/></li>
+                        <li><a href=\"".RACINE."?action=voirStageEtudiant\">Voir mon stage</a><br/></li>
+                        <li><a href=\"".RACINE."?action=optionEtudiant\">Options</a><br/></li>
+                        </ul>
                         </td>";
         }
 
