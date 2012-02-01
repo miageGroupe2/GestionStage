@@ -75,11 +75,13 @@ require_once 'BD.php';
             }
             $idproposition = BD::ajouterPropositionStage($idEntreprise, $_POST['sujetStage'], $_POST['titreStage'], $technoDetails, $idFiche, $idFicheSujet);
 
-            $tabCheckBox = $_POST['check'] ;
+            if (isset ($_POST['check'])){
+                $tabCheckBox = $_POST['check'] ;
 
-            foreach($tabCheckBox as $techno){
+                foreach($tabCheckBox as $techno){
 
-                BD::ajouterTechnoProposition ($idproposition, $techno);
+                    BD::ajouterTechnoProposition ($idproposition, $techno);
+                }
             }
 
             $corps = genererProposerStageEtape3($entreprise);

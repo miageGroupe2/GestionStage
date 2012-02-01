@@ -57,8 +57,20 @@ require_once 'BD.php';
     }
 
     function afficherListeStage(){
-        $tabStage = BD::rechercherStage();
-        $corps = genererListeStage($tabStage);
+
+        $tabStage = null ;
+        if( isset($_POST['promotion']) && $_POST['promotion'] != "-"){
+
+            $tabStage = BD::rechercherStageByPromo($_POST['promotion']);
+            
+        }else{
+
+            $tabStage = BD::rechercherStage();
+        }
+
+        
+        $tabPromotion = BD::recherchePromotion();
+        $corps = genererListeStage($tabStage, $tabPromotion);
         AffichePage(TRUE, $corps);     
     }
 

@@ -741,14 +741,15 @@ function genererValiderProposition($ok) {
     return $corps;
 }
 
-function genererListeStage($tabStage) {
+function genererListeStage($tabStage, $tabPromotion) {
+    
     $corps = "<td id = \"corps\">
             <h2>Liste des stages</h2>
 
             Afficher par promotion :
-
-            <select name=\"promotion\" id=\"promotion\">";
-
+            <form name=\"formulaireListeStage\" method=\"post\" action=\"" . RACINE . "?action=listeStages\">
+            <select name=\"promotion\" id=\"promotion\">
+            <option value=\"-\">-</option>";
             foreach ($tabPromotion as $promoCourante) {
 
 
@@ -756,6 +757,8 @@ function genererListeStage($tabStage) {
             }
 
             $corps .= "</select>
+                        <input type=\"submit\" value=\"Rechercher\" ><br/>
+                        </form>
 
 
 

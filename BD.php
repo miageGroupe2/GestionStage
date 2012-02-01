@@ -1137,7 +1137,35 @@ class BD {
         }
     }
 
-    
+   public static function rechercherStageByPromo($idPromotion){
+
+        BD::getConnection();
+        $tabStage = null;
+        $i=0;
+        $requete = "SELECT s.idstage, s.etatstage, s.datevalidation, s.titrestage, u.nomutilisateur,
+                    u.prenomutilisateur, e.nomentreprise, e.paysentreprise,
+                    e.villeentreprise, s.noteobtenue, pr.nompromotion
+                    FROM stage s, entreprise e, utilisateur u, promotion pr
+                    WHERE u.idutilisateur = s.idutilisateur
+                    AND u.idpromotion = pr.idpromotion
+                    AND pr.idpromotion = $idPromotion
+                    AND s.identreprise = e.identreprise
+
+        ";
+        $retour = mysql_query($requete) or die(mysql_error());
+
+        while ($tableau = mysql_fetch_array($retour)) {
+
+            $promotion = new ModelePromotion(null, $tableau['nompromotion'], null);
+            $etudiant = new ModeleUtilisateur(null, null, null, $tableau['prenomutilisateur'], $tableau['nomutilisateur'], null, null, NULL);
+            $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, $tableau['villeentreprise'], null,  $tableau['paysentreprise'], null, null, null, null);
+            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, null, $tableau['datevalidation'], null, null, null, null, $tableau['etatstage'], $tableau['noteobtenue'], null, null, null, null, $etudiant, $entreprise, null, $promotion,null, $tableau['titrestage'], null);
+            $i++;
+
+        }
+
+        return $tabStage;
+    }
       
    public static function rechercherStage(){
         BD::getConnection();
