@@ -42,7 +42,7 @@ function connecterUtilisateur() {
             afficherAccueilErreur();
         }
     } else {
-        afficherAccueilErreur();
+        afficherPagePrincipale();
     }
 }
 
