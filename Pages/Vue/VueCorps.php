@@ -1625,12 +1625,12 @@ function genererEditerStage($stage) {
     if ($stage != NULL) {
         $corps .= "<form name=\"editionStage\" method=\"post\" action=\"" . RACINE . "?action=validerModifStage&idstage=" . $_GET['idstage'] . "\">
                 <h2>Editer les informations du stage</h2><br/>
-                <table class=\"tableau\">
+                <table class=\"form_edition_stage\">
                     <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             Etat du stage :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <select name=\"etatstage\" id=\"etatstage\">";
 
                             $corps .= "<option selected=\"selected\" value=\"" . $stage->getEtatstage() . "\">" . $stage->getEtatstage() . "</option>";
@@ -1648,87 +1648,93 @@ function genererEditerStage($stage) {
                         </td>
                     </tr>
                      <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             Responsabilit&eacute; civile :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"respcivil\" value=\"" . $stage->getRespcivil() . "\" >
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             Date de d&eacute;but :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"datedeb\" class=\"calendrier\" value=\"" . $stage->getDatedebut() . "\" >
                         </td>
                     </tr>
                      <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             Date de fin :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"datefin\" class=\"calendrier\" value=\"" . $stage->getDatefin() . "\" >
                         </td>
                     </tr>
                      <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             Date de soutenance :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"datesoutenance\" class=\"calendrier\" value=\"" . $stage->getDatesoutenance() . "\" >
                         </td>
                     </tr>
                      <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             Lieu desoutenance :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"lieusoutenance\" value=\"" . $stage->getLieusoutenance() . "\" >
                         </td>
                     </tr>
                      <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             Note obtenue :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"noteobtenue\" value=\"" . $stage->getNoteobtenue() . "\" >
                         </td>
                     </tr>
                      <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             Appr&eacute;ciation obtenue :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"appreciationobtenue\" value=\"" . $stage->getAppreciationobtenue() . "\" >
                         </td>
                     </tr>
                      <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             R&eacute;mun&eacute;ration :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"remuneration\" value=\"" . $stage->getRemuneration() . "\" >
                         </td>
                     </tr>
                      <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             Embauche :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"embauche\" value=\"" . $stage->getEmbauche() . "\" >
                         </td>
                     </tr>
                      <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             Date embauche :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"dateembauche\" class=\"calendrier\" value=\"" . $stage->getDateembauche() . "\" >
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan = \"2\" class=\"submit\">
+                            <input id=\"submit_valid_modif_stage\" type=\"submit\" name=\"Envoyer\" value=\"Envoyer\"><br/>
+                        </td>
+                    </tr>
+                    
                     </table><br/><br/>
-                    <input id=\"submit_valid_modif_stage\" type=\"submit\" name=\"Envoyer\" value=\"Envoyer\"><br/>
+                    
                 </form>
                 </td>
                 </tr>
@@ -1754,49 +1760,53 @@ function genererEditerStageEtudiant($stage) {
     if ($stage != NULL) {
         $corps .= "<form name=\"editionStage\" method=\"post\" action=\"" . RACINE . "?action=validerModifStageEtudiant&idstage=" . $_GET['idstage'] . "\">
                 <h2>Editer les informations du stage</h2><br/>
-                <table class=\"tableau\">
+                <table class=\"form_edition_stage\">
                     <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             Date de d&eacute;but :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"datedeb\" class=\"calendrier\" value=\"" . convertirDateENFR($stage->getDatedebut()) . "\" >
                         </td>
                     </tr>
                      <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             Date de fin :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"datefin\" class=\"calendrier\" value=\"" . convertirDateENFR($stage->getDatefin()) . "\" >
                         </td>
                     </tr>
                      <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             R&eacute;mun&eacute;ration :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"remuneration\" value=\"" . $stage->getRemuneration() . "\" >
                         </td>
                     </tr>
                      <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             Embauche :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"embauche\" value=\"" . $stage->getEmbauche() . "\" >
                         </td>
                     </tr>
                      <tr>
-                        <td>
+                        <td class=\"form_edition_stage_colg\">
                             Date embauche :
                         </td>
-                        <td>
+                        <td class=\"form_edition_stage_cold\">
                             <input type=\"text\" name=\"dateembauche\" class=\"calendrier\" value=\"" . $stage->getDateembauche() . "\" >
                         </td>
                     </tr>
+                    <tr>
+                        <td class=\"submit\" colspan=\"2\">
+                            <input id=\"submit_valid_modif_stage\" type=\"submit\" name=\"Envoyer\" value=\"Envoyer\"><br/>
+                        </td>
+                    </tr>
                     </table><br/><br/>
-                    <input id=\"submit_valid_modif_stage\" type=\"submit\" name=\"Envoyer\" value=\"Envoyer\"><br/>
                 </form>
                 </td>
                 </tr>

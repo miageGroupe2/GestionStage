@@ -425,3 +425,16 @@ vert{
     padding: 6px;
 }
 
+/* Edition du stage */
+
+.form_edition_stage{
+    margin: auto 0 auto 0;
+}
+
+.form_edition_stage_colg{
+    text-align: right;
+}
+
+.form_edition_stage_cold{
+    text-align: left;
+}
