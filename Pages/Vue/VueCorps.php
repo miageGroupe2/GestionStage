@@ -781,7 +781,7 @@ function genererValiderProposition($ok) {
     return $corps;
 }
 
-function genererListeStage($tabStage, $tabPromotion, $technoTab) {
+function genererListeStage($tabStage, $tabPromotion, $technoTab, $idPromoSelect, $tabTechnoSelect) {
     
     $corps = "<td id = \"corps\">
             <h2>Liste des stages</h2>
@@ -795,7 +795,14 @@ function genererListeStage($tabStage, $tabPromotion, $technoTab) {
             <option value=\"-\">-</option>";
             foreach ($tabPromotion as $promoCourante) {
 
+                if ($idPromoSelect != null){
 
+                    if ($idPromoSelect == $promoCourante->getIdpromotion()){
+
+                        $corps .= "<option selected value=\"" . $promoCourante->getIdpromotion() . "\">" . $promoCourante->getNompromotion() . "</option>";
+                        continue ;
+                    }
+                }
                 $corps .= "<option value=\"" . $promoCourante->getIdpromotion() . "\">" . $promoCourante->getNompromotion() . "</option>";
             }
 
@@ -813,7 +820,21 @@ function genererListeStage($tabStage, $tabPromotion, $technoTab) {
                     if($i == 0){
                         $corps .= "<tr>";
                     }
-                    $corps .= "<td><input type=\"checkbox\" id=\"techno".$j."\"  value=\"".$techno->getId()."\" name=\"check[]\">".$techno->getNom()."</td>";
+                    $aCocher = FALSE ;
+                    if($tabTechnoSelect != null){
+                        foreach ($tabTechnoSelect as $technoSelec) {
+
+                            if($technoSelec == $techno->getId()){
+
+                                $aCocher = TRUE ;
+                            }
+                        }
+                    }
+                    if($aCocher){
+                        $corps .= "<td><input type=\"checkbox\" checked id=\"techno".$j."\"  value=\"".$techno->getId()."\" name=\"check[]\">".$techno->getNom()."</td>";
+                    }else{
+                        $corps .= "<td><input type=\"checkbox\" id=\"techno".$j."\"  value=\"".$techno->getId()."\" name=\"check[]\">".$techno->getNom()."</td>";
+                    }
                     $j++;
                     $i++ ;
                     if($i == 4){
