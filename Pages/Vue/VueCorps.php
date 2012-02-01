@@ -1269,6 +1269,360 @@ function genererGererPromotion($tabPromotion) {
     return $corps;
 }
 
+function genererDetailStageEtudiant($stage, $modeleFicheRenseignement, $modeleFicheSujetStage, $tabTechno) {
+
+    $corps = "";
+    if ($stage != NULL) {
+        if ($stage->getRespcivil() == 1) {
+            $respcivil = "OK";
+        } else {
+            $respcivil = "en attente";
+        }
+        if ($stage->getEmbauche() == 1) {
+            $embauche = "OUI";
+        } else {
+            $embauche = "NON";
+        }
+        $corps = "<td id = \"corps\">
+            <h2>D&eacute;tail du Stage</h2><br/>
+            <table class = \"tab_detail_stage\">
+                <tr>
+                    <td class=\"tab_bloc_detail_stage\"\">
+                        <h2>Informations &eacute;tudiant</h2>
+                        <table class=\"tab_interne_bloc\">
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    N&deg; Etudiant : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                    " . $stage->getUtilisateur()->getNumeroetudiant() . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Identit&eacute; : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                    " . $stage->getUtilisateur()->getPrenom() . " " . $stage->getUtilisateur()->getNom() . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Formation : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                    " . $stage->getPromotion()->getNompromotion() . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Mail : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                    " . $stage->getUtilisateur()->getMail() . "
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                     <td class=\"tab_bloc_detail_stage\">
+                        <h2>Contact entreprise</h2>
+                        <table class=\"tab_interne_bloc\"> 
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Identit&eacute; :
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                    " .$stage->getContact()->getPrenom() . " " . $stage->getContact()->getNom() . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Fonction :
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                    " . $stage->getContact()->getFonction() . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Tel fixe : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                    ". $stage->getContact()->getTelephoneFixe() .  "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Tel mobile : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                    ". $stage->getContact()->getTelephoneMobile() . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Mail : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                    ". $stage->getContact()->getMail() ."
+                                </td>
+                            </tr>
+                            <tr>
+                            <td colspan=\"2\" class=\"tabstagemodiftuteur\">
+                                <a href=\"" . RACINE . "?action=modifierContact&idStage=" . $stage->getIdstage() . "&idEntreprise=" . $stage->getIdentreprise(). "\">Modifier le tuteur</a>
+                            </td>
+                        </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>    
+            <table class = \"tab_detail_stage\">
+                <tr>
+                    <td class=\"tab_bloc_detail_stage\" colspan=\"2\" class = \"tableau\">
+                        <h2>L'entreprise</h2>
+                        <table class=\"tab_interne_bloc\">
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Entreprise : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . $stage->getEntreprise()->getNom() . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    N&deg; Siret : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . $stage->getEntreprise()->getNumeroSiret() . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Adresse : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . $stage->getEntreprise()->getAdresse() . "<br/>".
+                                    $stage->getEntreprise()->getCodePostal() . "<br/>" . $stage->getEntreprise()->getVille() . "<br/>" .
+                                    $stage->getEntreprise()->getPays() . "<br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    N&deg; Tel : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                    ".$stage->getEntreprise()->getNumeroTelephone() . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Site Web : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                    ".$stage->getEntreprise()->getUrlSiteInternet() . "
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <table class = \"tab_detail_stage\">
+                <tr>
+                    <td class=\"tab_bloc_detail_stage\" colspan=\"2\" class = \"tableau\">
+                        <h2>Le stage </h2>
+                        <table class=\"tab_interne_bloc\">
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Avancement administratif :
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . $stage->getEtatstage() . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Responsabilit&eacute; civile :
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . $respcivil . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Date de validation :
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . convertirDateENFR2($stage->getDatevalidation()) . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Date de d&eacute;but : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . convertirDateENFR2($stage->getDatedebut()) . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Date de fin : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . convertirDateENFR2($stage->getDatefin()) . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Date de soutenance : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . convertirDateENFR2($stage->getDatesoutenance()) . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Lieu de soutenance : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . $stage->getLieusoutenance() . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Note obtenue : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . $stage->getNoteobtenue() . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    Appr&eacute;ciation obtenue : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . $stage->getAppreciationobtenue() . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                    R&eacute;mun&eacute;ration :
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . $stage->getRemuneration() . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                     Embauche :
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . $embauche . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                     Date embauche : 
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                " . convertirDateENFR2($stage->getDateembauche()) . "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                     Fiche de renseignement :
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">
+                                <a href=\"" . RACINE . "?action=telechargement&type=renseignement&id=" . $stage->getIdstage() . "\">" .$modeleFicheRenseignement->getNomOriginal() . "</a>
+                                    <a href=\"" . RACINE . "?action=telechargement&type=renseignement&id=" . $stage->getIdstage() . "\"><img src=\"".RACINE_IMAGE."disquette.png\" /></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                     Fiche du sujet de stage :
+                                </td>
+                                <td class=\"tab_interne_bloc_cold\">";
+                                    if ($modeleFicheSujetStage != null){
+                                        $corps .="<a href=\"" . RACINE . "?action=telechargement&type=sujet&id=" . $stage->getIdstage() . "\">" .$modeleFicheSujetStage->getNomOriginal() . "</a>
+                                    
+                                                <a href=\"" . RACINE . "?action=telechargement&type=sujet&id=" . $stage->getIdstage() . "\"><img src=\"".RACINE_IMAGE."disquette.png\" /></a>";
+                                    }
+                                $corps .="</td>
+                            </tr>
+                            <tr>
+                                <td class=\"tab_interne_bloc_colg\">
+                                     Technologies utilisées :
+                                </td>";
+
+
+                                $technoConcat = "";
+                                if($tabTechno != null){
+                                    foreach($tabTechno as $techno){
+
+                                        $technoConcat .= $techno->getNom() .",";
+                                    }
+                                }
+                                $technoConcat .= $stage->getTechnoStage() ;
+                                if ( substr($technoConcat, -1, 1)== ","){
+
+                                    $technoConcat = substr($technoConcat, 0, strlen($technoConcat)-1);
+                                }
+                                $corps .= "
+
+
+                                <td class=\"tab_interne_bloc_cold\">
+                                    " . $technoConcat . "
+                                </td>
+                            </tr>
+                        </table><br/><br/>
+                        <table class=\"tab_interne_bloc\">
+                            <tr>
+                                <td>
+                                    R&eacute;sum&eacute; du sujet de stage :
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <textarea rows=\"3\" cols=\"60\" id=\"titreStage\" name=\"titreStage\" >" . $stage->getTitreStage() . "</textarea>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td>
+                                    Sujet de stage :
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <textarea rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" >" . $stage->getSujetstage() . "</textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class=\"submit\">
+                                    <a href=\"" . RACINE . "?action=editerStageEtudiant&idstage=" . $stage->getIdstage() . "\">Editer les informations du stage</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+             </td>
+            </tr>
+        </table>
+        ";
+    } else {
+        $corps = "
+                <td id = \"corps\">
+                    La proposition de stage semble ne pas avoir &eacute;t&eacute; remont&eacute;e.
+               </td>
+            </tr>
+        </table>
+        ";
+    }
+
+    return $corps;
+}
+
+
 function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujetStage, $tabTechno) {
 
     $corps = "";

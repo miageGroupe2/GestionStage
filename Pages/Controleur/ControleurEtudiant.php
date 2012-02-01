@@ -304,11 +304,18 @@ require_once 'BD.php';
     }
 
     function afficherStageEtudiant() {
-        
         $utilisateur = $_SESSION['modeleUtilisateur'];
-        $stage = BD::rechercherStageEtudiant($utilisateur->getId());
+        $idUtilisateur = $utilisateur->getId();
+        $idPromotion = $utilisateur->getIdpromotion();
+        
+        $stage = BD::rechercherIdStageEtudiant($idUtilisateur, $idPromotion);
+        
+        $stage = BD::rechercherStageByID($stage->getIdstage());
+        $modeleFicheRenseignement = BD::rechercherFicheRenseignement($stage->getIdstage(), FALSE);
         $technoTab = BD::rechercheTechnosModeleByProposition($stage->getIdproposition());
-        $corps = genererVoirStageEtudiant($stage, $technoTab);
+        $modeleFicheSujetStage = BD::rechercherFicheSujetStage($stage->getIdstage(), FALSE);
+        
+        $corps = genererDetailStageEtudiant($stage, $modeleFicheRenseignement, $modeleFicheSujetStage, $technoTab);
         AffichePage(TRUE, $corps);
     }
 

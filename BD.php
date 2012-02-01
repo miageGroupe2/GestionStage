@@ -780,6 +780,25 @@ class BD {
         
         return $stage;
     }
+    
+    public static function rechercherIdStageEtudiant($idUtilisateur, $idPromotion){
+        BD::getConnection();
+        
+        $stage = null;
+        $requete = "SELECT s.idstage
+                    FROM stage s, utilisateur u
+                    WHERE s.idutilisateur = '$idUtilisateur'
+                    AND s.idpromotion = '$idPromotion'
+        ";
+
+        $retour = mysql_query($requete) or die(mysql_error());
+
+        while ($tableau = mysql_fetch_array($retour)) {
+            $stage = new ModeleStage($tableau['idstage'], null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        }
+        
+        return $stage;
+    }
 
     public static function modifierPromotionEtudiant($idPromo){
 
@@ -1385,7 +1404,7 @@ class BD {
         BD::getConnection();
         $tabStage = null;
         $i=0;
-        $requete = "SELECT s.idstage, s.idproposition, s.datevalidation, s.sujetstage, s.titrestage, s.technostage, u.numetudiant, u.nomutilisateur,
+        $requete = "SELECT s.idstage, s.identreprise, s.idproposition, s.datevalidation, s.sujetstage, s.titrestage, s.technostage, u.numetudiant, u.nomutilisateur,
             u.prenomutilisateur, u.mailutilisateur, e.nomentreprise, e.adresseentreprise, 
             e.villeentreprise, e.codepostalentreprise, e.paysentreprise, e.numerotelephone, 
             e.numerosiret, e.urlsiteinternet, e.statutjuridique, s.datedebut, s.datefin, 
@@ -1406,7 +1425,7 @@ class BD {
             $etudiant = new ModeleUtilisateur(null, null, $tableau['numetudiant'], $tableau['prenomutilisateur'], $tableau['nomutilisateur'], $tableau['mailutilisateur'], null, NULL);
             $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], $tableau['adresseentreprise'], $tableau['villeentreprise'], $tableau['codepostalentreprise'], $tableau['paysentreprise'], $tableau['numerotelephone'], $tableau['numerosiret'], $tableau['urlsiteinternet'], $tableau['statutjuridique']);
             $contact = new ModeleContact(null, $tableau['prenomcontact'], $tableau['nomcontact'], $tableau['fonctioncontact'], $tableau['telfixecontact'], $tableau['telmobilecontact'], $tableau['mailcontact']);
-            $tabStage[$i] = new ModeleStage($tableau['idstage'], null, null, $tableau['sujetstage'], BD::dateENtoFR($tableau['datevalidation']), BD::dateENtoFR($tableau['datedebut']), BD::dateENtoFR($tableau['datefin']), BD::dateENtoFR($tableau['datesoutenance']), $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], BD::dateENtoFR($tableau['dateembauche']), $etudiant, $entreprise, $contact, $promotion, $tableau['respcivil'],$tableau['titrestage'],$tableau['technostage']);
+            $tabStage[$i] = new ModeleStage($tableau['idstage'], $tableau['identreprise'], null, $tableau['sujetstage'], BD::dateENtoFR($tableau['datevalidation']), BD::dateENtoFR($tableau['datedebut']), BD::dateENtoFR($tableau['datefin']), BD::dateENtoFR($tableau['datesoutenance']), $tableau['lieusoutenance'], $tableau['etatstage'], $tableau['noteobtenue'], $tableau['appreciationobtenue'], $tableau['remuneration'], $tableau['embauche'], BD::dateENtoFR($tableau['dateembauche']), $etudiant, $entreprise, $contact, $promotion, $tableau['respcivil'],$tableau['titrestage'],$tableau['technostage']);
             $tabStage[$i]->setIdproposition($tableau['idproposition']);
             $i++;
         }
