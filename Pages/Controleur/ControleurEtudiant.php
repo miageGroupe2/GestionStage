@@ -6,7 +6,7 @@ require_once RACINE_VUE . 'VueCorps.php';
 require_once 'BD.php';
 
     function proposerStageEtape3() {
-        
+        //jetais en train de faire les techno predefini (checkbokx) il reste plus qu'a faire des champs de recherche sur ces techno'
         $idFiche = 0 ;
         $idFiche = NULL ;
         $idFicheSujet = NULL ;
