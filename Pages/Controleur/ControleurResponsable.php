@@ -14,7 +14,7 @@ function afficherPagePrincipaleResponsable() {
 
     function validerModifStage(){
         $ok = BDResponsable::modifierDonneesStage();
-        $corps = genererValiderModificationsStage($ok);
+        $corps = genererValiderModificationsStageResponsable($ok);
         AffichePage(TRUE, $corps);
     }
 

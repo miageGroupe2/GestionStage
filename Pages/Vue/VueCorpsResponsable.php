@@ -1334,7 +1334,67 @@ function genererEditerStage($stage) {
     return $corps;
 }
 
-
+function genererValiderModificationsStageResponsable($ok) {
+    
+    if ($ok) {
+        $corps = "
+                <td id = \"corps\">
+                    <table class=\"information\">
+                        <tr>
+                            <td>
+                                <h3>Information</h3>
+                                Les modifications ont bien &eacute;t&eacute; effectu&eacute;es
+                            </td>
+                        </tr>
+                    </table>";
+                    if(isset($_GET['idstage'])){
+                        $idstage = $_GET['idstage'];
+                        $corps.="<table>
+                        <tr>
+                            <td class=\"submit\">
+                                <a href=\"".RACINE."?action=detailStage&idstage=".$idstage."\">Retour au d&eacute;tail du stage</a>
+                            </td>
+                        </tr>
+                    </table>";
+                    }else{
+                        $corps.="<table>
+                        <tr>
+                            <td class=\"submit\">
+                                <a href=\"".RACINE."?action=pagePrincipaleResponsable\">Retour &agrave; l'accueil</a>
+                            </td>
+                        </tr>
+                    </table>";
+                    }
+               $corps.="</td>
+            </tr>
+        </table>
+        ";
+    } else {
+        $corps = "
+                <td id = \"corps\">
+                    <table class=\"information\">
+                        <tr>
+                            <td>
+                                <h3>Attention !</h3>
+                                Une erreur est survenue !
+                                Les modifications ne seront pas prises en compte
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td class=\"submit\">
+                                <a href=\"".RACINE."?action=pagePrincipaleResponsable\">Retour &agrave; l'accueil</a>
+                            </td>
+                        </tr>
+                    </table>
+               </td>
+            </tr>
+        </table>
+        ";
+    }
+    return $corps;
+}
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.

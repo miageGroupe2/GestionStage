@@ -1598,6 +1598,56 @@ function genererProblemeUploadFichier() {
     return $corps;
 }
 
+function genererValiderModificationsStageEtudiant($ok) {
+    if ($ok) {
+        $corps = "
+                <td id = \"corps\">
+                    <table class=\"information\">
+                        <tr>
+                            <td>
+                                <h3>Information</h3>
+                                Les modifications ont bien &eacute;t&eacute; effectu&eacute;es !
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td class=\"submit\">
+                                <a href=\"".RACINE."?action=voirStageEtudiant\">Retour au d&eacute;tail du stagel</a>
+                            </td>
+                        </tr>
+                    </table>
+               </td>
+            </tr>
+        </table>
+        ";
+    } else {
+        $corps = "
+                <td id = \"corps\">
+                    <table class=\"information\">
+                        <tr>
+                            <td>
+                                <h3>Attention !</h3>
+                                Une erreur est survenue !<br/>
+                                Les modifications ne seront pas prises en compte
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td class=\"submit\">
+                                <a href=\"".RACINE."?action=pagePrincipaleEtudiant\">Retour &agrave; l'accueil</a>
+                            </td>
+                        </tr>
+                    </table>
+               </td>
+            </tr>
+        </table>
+        ";
+    }
+    return $corps;
+}
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
