@@ -695,7 +695,6 @@ function genererEditerStageEtudiant($stage) {
                         </td>
                         <td class=\"form_edition_stage_cold\">";
                             if($stage->getEmbauche() == 1){
-                                echo "eaamfdbdfbdf";
                                 $corps.="<select name=\"embauche\">
                                     <option value=\"1\" checked>Oui</option>
                                     <option value=\"0\">Non</option>
