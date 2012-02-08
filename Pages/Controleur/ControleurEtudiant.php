@@ -303,7 +303,7 @@ function afficherPagePrincipaleEtudiant() {
     
      function validerModifStageEtudiant(){
         $ok = BDEtudiant::modifierDonneesStageEtudiant();
-        $corps = genererValiderModificationsStage($ok);
+        $corps = genererValiderModificationsStageEtudiant($ok);
         AffichePage(TRUE, $corps);
     }
     
