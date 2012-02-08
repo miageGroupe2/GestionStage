@@ -636,7 +636,7 @@ class BDEtudiant {
         $requete = "SELECT stage.idstage, stage.identreprise, stage.idcontact,
                     stage.sujetstage, stage.datedebut, stage.datefin, stage.datesoutenance,
                     stage.idproposition, stage.remuneration, stage.lieusoutenance, stage.etatstage,
-                    stage.respcivil, entreprise.nomentreprise, stage.titrestage, stage.technostage,
+                    stage.respcivil, stage.embauche, stage.dateembauche, entreprise.nomentreprise, stage.titrestage, stage.technostage,
                     contact.prenomcontact, contact.nomcontact
                     FROM contact RIGHT JOIN stage ON contact.idcontact = stage.idcontact, 
                     entreprise, utilisateur
@@ -653,7 +653,7 @@ class BDEtudiant {
             
             $contact = new ModeleContact(null, $tableau['prenomcontact'], $tableau['nomcontact'], null, null, null, null);
             $entreprise = new ModeleEntreprise(null, $tableau['nomentreprise'], null, null, null, null, null, null, null, null);
-            $stage = new ModeleStage($tableau['idstage'], $tableau['identreprise'], $tableau['idcontact'], $tableau['sujetstage'], null, $tableau['datedebut'], $tableau['datefin'], null, null, $tableau['etatstage'], null, null, $tableau['remuneration'], null, null, null, $entreprise, $contact, null, $tableau['respcivil'], $tableau['titrestage'], $tableau['technostage']);
+            $stage = new ModeleStage($tableau['idstage'], $tableau['identreprise'], $tableau['idcontact'], $tableau['sujetstage'], null, $tableau['datedebut'], $tableau['datefin'], null, null, $tableau['etatstage'], null, null, $tableau['remuneration'], $tableau['embauche'], $tableau['dateembauche'], null, $entreprise, $contact, null, $tableau['respcivil'], $tableau['titrestage'], $tableau['technostage']);
             $stage->setIdproposition($tableau['idproposition']);
         }
         

@@ -693,8 +693,20 @@ function genererEditerStageEtudiant($stage) {
                         <td class=\"form_edition_stage_colg\">
                             Embauche :
                         </td>
-                        <td class=\"form_edition_stage_cold\">
-                            <input type=\"text\" name=\"embauche\" value=\"" . $stage->getEmbauche() . "\" >
+                        <td class=\"form_edition_stage_cold\">";
+                            if($stage->getEmbauche() == 1){
+                                echo "eaamfdbdfbdf";
+                                $corps.="<select name=\"embauche\">
+                                    <option value=\"1\" checked>Oui</option>
+                                    <option value=\"0\">Non</option>
+                                </select>";
+                            }else{
+                                $corps.="<select name=\"embauche\">
+                                    <option value=\"0\" checked>Non</option>
+                                    <option value=\"1\">Oui</option>
+                                </select>";
+                            }
+                            $corps.="
                         </td>
                     </tr>
                      <tr>
@@ -702,7 +714,7 @@ function genererEditerStageEtudiant($stage) {
                             Date embauche :
                         </td>
                         <td class=\"form_edition_stage_cold\">
-                            <input type=\"text\" name=\"dateembauche\" class=\"calendrier\" value=\"" . $stage->getDateembauche() . "\" >
+                            <input type=\"text\" name=\"dateembauche\" class=\"calendrier\" value=\"" . convertirDateENFR($stage->getDateembauche()) . "\" >
                         </td>
                     </tr>
                     <tr>
