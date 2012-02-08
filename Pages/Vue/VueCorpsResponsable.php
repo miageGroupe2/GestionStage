@@ -1205,11 +1205,27 @@ function genererEditerStage($stage) {
                      <tr>
                         <td class=\"form_edition_stage_colg\">
                             Responsabilit&eacute; civile :
-                        </td>
-                        <td class=\"form_edition_stage_cold\">
-                            <input type=\"text\" name=\"respcivil\" value=\"" . $stage->getRespcivil() . "\" >
-                        </td>
-                    </tr>
+                        </td>";
+                        if($stage->getRespcivil() == 1){
+                            $corps.="
+                            <td class=\"form_edition_stage_cold\">
+                                <select name=\"respcivil\">
+                                    <option value=\"1\" checked>Ok</option>
+                                    <option value=\"0\">En attente</option>
+                                </select>
+                            </td>
+                            ";
+                        }else{
+                            $corps.="
+                            <td class=\"form_edition_stage_cold\">
+                                <select name=\"respcivil\">
+                                    <option value=\"0\" checked>En attente</option>
+                                    <option value=\"1\">Ok</option>
+                                </select>
+                            </td>
+                            ";
+                        }
+           $corps.="</tr>
                     <tr>
                         <td class=\"form_edition_stage_colg\">
                             Date de d&eacute;but :
