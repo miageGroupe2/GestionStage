@@ -292,13 +292,13 @@ function afficherPagePrincipaleEtudiant() {
         $utilisateur = $_SESSION['modeleUtilisateur'];
         $stage = BDEtudiant::rechercherStageEtudiant($utilisateur->getId());
 
-        if ($stage != null){
+       // if ($stage != null){
             $corps = genererEditerStageEtudiant($stage);
             AffichePage(TRUE, $corps);
-        }else{
+        /*}else{
             $_REQUEST['action'] = "afficherPagePrincipale";
             call_action();
-        }
+        }*/
     }
     
      function validerModifStageEtudiant(){

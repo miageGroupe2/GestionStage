@@ -282,7 +282,7 @@ function genererValiderProposition($ok) {
 
     $corps = "<td id =   \"corps\">";
     if ($ok) {
-        $corps .="La proposition de stage a bien &eacute;t&eacute; valid&eacute;e";
+        $corps .="La proposition de stage a &eacute;t&eacute; valid&eacute;e";
     } else {
         $corps .="La proposition de stage a &eacute;t&eacute; refus&eacute;e";
     }

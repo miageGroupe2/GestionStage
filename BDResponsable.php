@@ -87,7 +87,7 @@ class BDResponsable {
         remuneration = $remuneration, embauche = $embauche, dateembauche = '$dateembauche'
         WHERE idstage = $idStage";
 
-
+echo $requete ;
         if(mysql_query($requete)){
             return true;
         }else{

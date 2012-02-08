@@ -642,7 +642,6 @@ class BDEtudiant {
                     entreprise, utilisateur
                     WHERE stage.identreprise = entreprise.identreprise
                     AND stage.idutilisateur = utilisateur.idutilisateur
-                    AND stage.etatstage = 'en cours'
                     AND utilisateur.idutilisateur = '$idUtilisateur'
                     
         ";

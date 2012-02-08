@@ -162,10 +162,10 @@ function envoyerMail($mailEtudiant, $idConfirmationMail) {
     $mail->Subject = "Inscription " . utf8_decode("à") . " la plateforme de gestion des stages";
     $mail->Body = "Bonjour,</br></br>
     Vous venez de vous inscrire &agrave; la plateforme de gestion des stages.
-    Pour confirmer votre inscription veuillez cliquer sur le lien suivant : <a href=\"http://localhost/GestionStage?action=confirmationInscription&id=" . $idConfirmationMail . "\">Confirmer inscription</a>";
+    Pour confirmer votre inscription veuillez cliquer sur le lien suivant : <a href=\"".RACINE."?action=confirmationInscription&id=" . $idConfirmationMail . "\">Confirmer inscription</a>";
     $mail->AltBody = "Bonjour, \n\n
     Vous venez de vous inscrire &agrave; la plateforme de gestion des stages.
-    Pour confirmer votre inscription veuillez vous rendre &agrave; l'adresse suivante : http://localhost/GestionStage?action=confirmationInscription&id=" . $idConfirmationMail; //Text Body
+    Pour confirmer votre inscription veuillez vous rendre &agrave; l'adresse suivante : ".RACINE."?action=confirmationInscription&id=" . $idConfirmationMail; //Text Body
     $mail->Send();
 }
 
