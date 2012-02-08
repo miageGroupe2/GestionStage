@@ -149,8 +149,8 @@ class BDEtudiant {
             if (!$existeDeja){
 
                 $requete = "INSERT INTO utilisateur (idpromotion, prenomutilisateur, nomutilisateur, mailutilisateur,
-                passwordutilisateurtmp, admin, idConfirmationMail)
-                VALUES ('$idPromotion','$prenom', '$nom', '$mail', '".sha1($password)."', '0', '".$idUnique."')";
+                passwordutilisateurtmp, admin, idConfirmationMail, numetudiant)
+                VALUES ('$idPromotion','$prenom', '$nom', '$mail', '".sha1($password)."', '0', '".$idUnique."','".$numetudiant."')";
 
 
                 mysql_query($requete);

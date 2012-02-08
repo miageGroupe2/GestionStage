@@ -96,7 +96,7 @@ function afficherPagePrincipaleEtudiant() {
             AffichePage(TRUE, $corps);
         }else{
 
-            $_REQUEST['action'] = "pagePrincipale";
+            $_REQUEST['action'] = "afficherPagePrincipale";
             call_action();
         }
         
@@ -147,11 +147,11 @@ function afficherPagePrincipaleEtudiant() {
 
                 }else{
 
-                    $_REQUEST['action'] = "pagePrincipale";
+                    $_REQUEST['action'] = "afficherPagePrincipale";
                     call_action();
                 }
             }else{
-                $_REQUEST['action'] = "pagePrincipale";
+                $_REQUEST['action'] = "afficherPagePrincipale";
                 call_action();
             }
         }
@@ -184,8 +184,16 @@ function afficherPagePrincipaleEtudiant() {
     function afficherListePropositionStageEtudiant() {
 
         $tabProp = BDEtudiant::rechercherPropositionsEtudiant();
-        $corps = genererListePropositionStageEtudiant($tabProp);
-        AffichePage(TRUE, $corps);
+
+        if ( $tabProp == null){
+
+            $_REQUEST['action'] = "afficherPagePrincipale";
+            call_action();
+        }else{
+            $corps = genererListePropositionStageEtudiant($tabProp);
+            AffichePage(TRUE, $corps);
+        }
+        
     }
     
     function editerPropositionStage(){
@@ -253,7 +261,7 @@ function afficherPagePrincipaleEtudiant() {
                 }
             }
 
-            $_REQUEST['action'] = "pagePrincipale";
+            $_REQUEST['action'] = "afficherPagePrincipale";
             call_action();
             
         }
@@ -274,7 +282,7 @@ function afficherPagePrincipaleEtudiant() {
                 
             }else{
 
-                $_REQUEST['action'] = "pagePrincipale";
+                $_REQUEST['action'] = "afficherPagePrincipale";
                 call_action();
             }
         }
@@ -283,9 +291,14 @@ function afficherPagePrincipaleEtudiant() {
     function editerStageEtudiant(){
         $utilisateur = $_SESSION['modeleUtilisateur'];
         $stage = BDEtudiant::rechercherStageEtudiant($utilisateur->getId());
-        
-        $corps = genererEditerStageEtudiant($stage);
-        AffichePage(TRUE, $corps);
+
+        if ($stage != null){
+            $corps = genererEditerStageEtudiant($stage);
+            AffichePage(TRUE, $corps);
+        }else{
+            $_REQUEST['action'] = "afficherPagePrincipale";
+            call_action();
+        }
     }
     
      function validerModifStageEtudiant(){
@@ -307,7 +320,7 @@ function afficherPagePrincipaleEtudiant() {
             }
         }
         
-        $_REQUEST['action'] = "pagePrincipale";
+        $_REQUEST['action'] = "afficherPagePrincipale";
         call_action();
     }
 
@@ -317,14 +330,20 @@ function afficherPagePrincipaleEtudiant() {
         $idPromotion = $utilisateur->getIdpromotion();
         
         $stage = BDEtudiant::rechercherIdStageEtudiant($idUtilisateur, $idPromotion);
+
+        if($stage != null){
         
-        $stage = BDCommun::rechercherStageByID($stage->getIdstage());
-        $modeleFicheRenseignement = BDCommun::rechercherFicheRenseignement($stage->getIdstage(), FALSE);
-        $technoTab = BDCommun::rechercheTechnosModeleByProposition($stage->getIdproposition());
-        $modeleFicheSujetStage = BDCommun::rechercherFicheSujetStage($stage->getIdstage(), FALSE);
-        
-        $corps = genererDetailStageEtudiant($stage, $modeleFicheRenseignement, $modeleFicheSujetStage, $technoTab);
-        AffichePage(TRUE, $corps);
+            $stage = BDCommun::rechercherStageByID($stage->getIdstage());
+            $modeleFicheRenseignement = BDCommun::rechercherFicheRenseignement($stage->getIdstage(), FALSE);
+            $technoTab = BDCommun::rechercheTechnosModeleByProposition($stage->getIdproposition());
+            $modeleFicheSujetStage = BDCommun::rechercherFicheSujetStage($stage->getIdstage(), FALSE);
+
+            $corps = genererDetailStageEtudiant($stage, $modeleFicheRenseignement, $modeleFicheSujetStage, $technoTab);
+            AffichePage(TRUE, $corps);
+        }else{
+            $_REQUEST['action'] = "afficherPagePrincipale";
+            call_action();
+        }
     }
 
     function modifierContactEtape1(){
@@ -366,7 +385,7 @@ function afficherPagePrincipaleEtudiant() {
                 $continuer = true ;
                 
             }else{
-                $_REQUEST['action'] = "pagePrincipale";
+                $_REQUEST['action'] = "afficherPagePrincipale";
                 call_action();
             }
         }

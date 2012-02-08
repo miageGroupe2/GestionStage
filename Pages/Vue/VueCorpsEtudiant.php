@@ -992,7 +992,7 @@ function genererListePropositionStageEtudiant($tabProp) {
     } else {
         $corps = "
                 <td id = \"corps\">
-                    Le stage semble ne pas avoir &eacute;t&eacute; remont&eacute;e.
+                    
                </td>
             </tr>
         </table>
