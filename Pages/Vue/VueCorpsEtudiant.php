@@ -312,6 +312,11 @@ function genererDetailStageEtudiant($stage, $modeleFicheRenseignement, $modeleFi
         } else {
             $embauche = "NON";
         }
+        if ($stage->getDateEmbauche() == NULL) {
+            $date_embauche = "NC";
+        } else {
+            $date_embauche = convertirDateENFR2($stage->getDateembauche());
+        }
         $corps = "<td id = \"corps\">
             <h2>D&eacute;tail du Stage</h2><br/>
             <table class = \"tab_detail_stage\">
@@ -554,7 +559,7 @@ function genererDetailStageEtudiant($stage, $modeleFicheRenseignement, $modeleFi
                                      Date embauche : 
                                 </td>
                                 <td class=\"tab_interne_bloc_cold\">
-                                " . convertirDateENFR2($stage->getDateembauche()) . "
+                                " . $date_embauche . "
                                 </td>
                             </tr>
                             <tr>

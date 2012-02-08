@@ -438,3 +438,23 @@ vert{
 .form_edition_stage_cold{
     text-align: left;
 }
+
+/* Couleur tab liste stage annee courante*/
+
+.valide{
+    border: 1px solid black;
+    border-collapse: collapse; 
+    padding: 5px ;
+    vertical-align: top;
+    font-size: 13px;
+    background-color: #9BFC82;
+}
+
+.en_cours{
+    border: 1px solid black;
+    border-collapse: collapse; 
+    padding: 5px ;
+    vertical-align: top;
+    font-size: 13px;
+    background-color: #FCB8B8;
+}

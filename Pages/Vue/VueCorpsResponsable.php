@@ -297,11 +297,19 @@ function genererListeStage($tabStage, $tabPromotion, $technoTab, $idPromoSelect,
     $corps = "<td id = \"corps\">
             <h2>Liste des stages</h2>
 
-            <table>
-            <tr>
-                <td>
-            Afficher par promotion :
+            <h3>Crit&egrave;res de recherche    </h3>
             <form name=\"formulaireListeStage\" method=\"post\" action=\"" . RACINE . "?action=listeStages\">
+            <table class=\"tab_prop_stage\">
+            <tr>
+                <td class=\"entete_tab_prop_stage\">
+                    Afficher par promotion
+                </td>
+                <td colspan=\"2\" class=\"entete_tab_prop_stage\">
+                    Technologies utilisées
+                </td>
+             </tr>
+             <tr>
+                <td class=\"contenu_tab\">
             <select name=\"promotion\" id=\"promotion\">
             <option value=\"-\">-</option>";
             foreach ($tabPromotion as $promoCourante) {
@@ -319,8 +327,7 @@ function genererListeStage($tabStage, $tabPromotion, $technoTab, $idPromoSelect,
 
             $corps .= "</select>
             </td>
-            <td>
-                Technologies utilisées :
+            <td class=\"contenu_tab\">
                 <table>
                 ";
 
@@ -356,14 +363,13 @@ function genererListeStage($tabStage, $tabPromotion, $technoTab, $idPromoSelect,
 
                 $corps .= "</table>
                 </td>
-                <td>
+                <td class=\"contenu_tab\">
                     <input type=\"submit\" value=\"Rechercher\" ><br/>
                 </td>
                 </tr>
                 </table>
 
-                
-                </form>
+                </form><br/><br/>
 
 
 
@@ -429,19 +435,36 @@ function genererListeStageAnneeCourante($tabStage) {
             ";
     if ($tabStage != null) {
         foreach ($tabStage as $stage) {
-            $corps = $corps . "
+            if($stage->getEtatstage() == "valide"){
+                $corps = $corps . "
                         <tr>
-                            <td class=\"contenu_tab\">" . $stage->getUtilisateur()->getNom()." ".$stage->getUtilisateur()->getPrenom()
+                            <td class=\"valide\">" . $stage->getUtilisateur()->getNom()." ".$stage->getUtilisateur()->getPrenom()
                     . "</td>
-                            <td class=\"contenu_tab\">" . $stage->getEntreprise()->getNom() . ", " . $stage->getEntreprise()->getVille() . " (" . $stage->getEntreprise()->getPays() . ")"
+                            <td class=\"valide\">" . $stage->getEntreprise()->getNom() . ", " . $stage->getEntreprise()->getVille() . " (" . $stage->getEntreprise()->getPays() . ")"
                     . "</td>
-                            <td class=\"contenu_tab\">" . $stage->getEtatstage()
+                            <td class=\"valide\">" . $stage->getEtatstage()
                     . "</td>
-                            <td class=\"contenu_tab\">" . $stage->getTitreStage()
+                            <td class=\"valide\">" . $stage->getTitreStage()
                     . "</td>
-                            <td class=\"contenu_tab\"><a href=\"" . RACINE . "?action=detailStage&idstage=" . $stage->getIdstage() . "\"><img src=\"".RACINE_IMAGE."loupe.png\" alt=\"loupe\"/></a>
+                            <td class=\"valide\"><a href=\"" . RACINE . "?action=detailStage&idstage=" . $stage->getIdstage() . "\"><img src=\"".RACINE_IMAGE."loupe.png\" alt=\"loupe\"/></a>
                             </td>
                      </tr>";
+            }else{
+                $corps = $corps . "
+                        <tr>
+                            <td class=\"en_cours\">" . $stage->getUtilisateur()->getNom()." ".$stage->getUtilisateur()->getPrenom()
+                    . "</td>
+                            <td class=\"en_cours\">" . $stage->getEntreprise()->getNom() . ", " . $stage->getEntreprise()->getVille() . " (" . $stage->getEntreprise()->getPays() . ")"
+                    . "</td>
+                            <td class=\"en_cours\">" . $stage->getEtatstage()
+                    . "</td>
+                            <td class=\"en_cours\">" . $stage->getTitreStage()
+                    . "</td>
+                            <td class=\"en_cours\"><a href=\"" . RACINE . "?action=detailStage&idstage=" . $stage->getIdstage() . "\"><img src=\"".RACINE_IMAGE."loupe.png\" alt=\"loupe\"/></a>
+                            </td>
+                     </tr>";
+            }
+            
         }
         $corps .= "</table>";
     }
