@@ -1133,7 +1133,7 @@ function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujet
                             </tr>
                             <tr>
                                 <td>
-                                    <textarea rows=\"3\" cols=\"60\" id=\"titreStage\" name=\"titreStage\" >" . $stage->getTitreStage() . "</textarea>
+                                    <textarea readonly rows=\"3\" cols=\"60\" id=\"titreStage\" name=\"titreStage\" >" . $stage->getTitreStage() . "</textarea>
                                 </td>
                             </tr>
                              <tr>
@@ -1143,7 +1143,7 @@ function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujet
                             </tr>
                             <tr>
                                 <td>
-                                    <textarea rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" >" . $stage->getSujetstage() . "</textarea>
+                                    <textarea readonly rows=\"10\" cols=\"60\" id=\"sujetStage\" name=\"sujetStage\" >" . $stage->getSujetstage() . "</textarea>
                                 </td>
                             </tr>
                             <tr>
