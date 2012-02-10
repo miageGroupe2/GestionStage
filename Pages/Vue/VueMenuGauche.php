@@ -29,7 +29,7 @@
                                                 <a href=\"".RACINE."?action=deconnexion\"><img src=\"\"> <img src=\"Images/logo_deconnexion.png\"> </a><br/>
                                             </td>
                                         </tr>
-                                    </table>
+                                    </table><br/>
                                     
                                     
                              ";
@@ -46,14 +46,20 @@
         
         if ($utilisateur->getAdmin()) {
             $menuGauche .= "
-                        <ul>
-                        <li><a href=\"".RACINE."?action=pagePrincipaleResponsable\">Accueil</a><br/></li>
-                        <li><a href=\"".RACINE."?action=listePropositionStageResponsable\">Voir les propositions de stage</a><br/></li>
-                        <li><a href=\"".RACINE."?action=listeStageAnneeCourante\">Voir les stages de l'ann&eacute;e courante</a><br/></li>
-                        <li><a href=\"".RACINE."?action=listeStages\">Consulter les stages</a><br/></li>
-                        <li><a href=\"".RACINE."?action=gererCompteAdmin\">G&eacute;rer les comptes administrateur</a><br/></li>
-                        <li><a href=\"".RACINE."?action=option\">Options</a><br/></li>
-                        </ul>
+                        
+                        <a href=\"".RACINE."?action=pagePrincipaleResponsable\"><img src=\"Images/MenuGauche/home.png\"></a>
+                            <a href=\"".RACINE."?action=pagePrincipaleResponsable\">Accueil</a><br/>
+                        <a href=\"".RACINE."?action=listePropositionStageResponsable\"><img src=\"Images/MenuGauche/mes_propositions.png\"></a>        
+                            <a href=\"".RACINE."?action=listePropositionStageResponsable\">Propositions de stage</a><br/>
+                        <a href=\"".RACINE."?action=listeStageAnneeCourante\"><img src=\"Images/MenuGauche/mon_stage.png\"></a>
+                            <a href=\"".RACINE."?action=listeStageAnneeCourante\">Stages ann&eacute;e courante</a><br/>
+                        <a href=\"".RACINE."?action=listeStages\"><img src=\"Images/MenuGauche/Folder.png\"></a>
+                            <a href=\"".RACINE."?action=listeStages\">Tous les stages</a><br/>
+                        <a href=\"".RACINE."?action=gererCompteAdmin\"><img src=\"Images/MenuGauche/compte_admin.png\"></a>
+                            <a href=\"".RACINE."?action=gererCompteAdmin\">G&eacute;rer les comptes admin</a><br/>
+                        <a href=\"".RACINE."?action=option\"><img src=\"Images/MenuGauche/options.png\"></a>
+                            <a href=\"".RACINE."?action=option\">Options</a><br/>
+                        
                         </td>";
         }else{
             $menuGauche .= "

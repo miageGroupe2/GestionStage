@@ -132,19 +132,19 @@ function genererPageInscription($tabPromotion) {
                                 <table class=\"login\">
 
                                     <tr>
-                                        <td class=\"champ_log_mdp\">Nom :</td>
+                                        <td class=\"champ_log_mdp\">Nom :<etoile>*</etoile></td>
                                         <td>
                                             <input type=\"text\" class=\"forml\" style=\"width:200px;\" name=\"nom\" id=\"nom\" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class=\"champ_log_mdp\">Pr&eacute;nom :</td>
+                                        <td class=\"champ_log_mdp\">Pr&eacute;nom :<etoile>*</etoile></td>
                                         <td>
                                             <input type=\"text\" class=\"forml\" style=\"width:200px;\" name=\"prenom\" id=\"prenom\" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class=\"champ_log_mdp\">Mail :</td>
+                                        <td class=\"champ_log_mdp\">Mail :<etoile>*</etoile></td>
                                         <td>
                                             <input type=\"text\" class=\"forml\" style=\"width:200px;\" name=\"mail\" id=\"mail\" />
                                         </td>
@@ -153,13 +153,13 @@ function genererPageInscription($tabPromotion) {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class=\"champ_log_mdp\">Num&eacute;ro &eacute;tudiant :</td>
+                                        <td class=\"champ_log_mdp\">Num&eacute;ro &eacute;tudiant :<etoile>*</etoile></td>
                                         <td>
                                             <input type=\"text\" class=\"forml\" style=\"width:200px;\" name=\"numetudiant\" id=\"numetudiant\" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class=\"champ_log_mdp\">Promotion :</td>
+                                        <td class=\"champ_log_mdp\">Promotion :<etoile>*</etoile></td>
                                         <td>
                                             <select name=\"promotion\" id=\"promotion\">";
 
@@ -173,13 +173,13 @@ function genererPageInscription($tabPromotion) {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class=\"champ_log_mdp\">Mot de passe :</td>
+                                        <td class=\"champ_log_mdp\">Mot de passe :<etoile>*</etoile></td>
                                         <td>
                                             <input type=\"password\" class=\"forml\" style=\"width:200px;\" name=\"password\" id=\"password\" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class=\"champ_log_mdp\">Confirmation :</td>
+                                        <td class=\"champ_log_mdp\">Confirmation :<etoile>*</etoile></td>
                                         <td>
                                             <input type=\"password\" class=\"forml\" style=\"width:200px;\" name=\"password2\" id=\"password2\" />
                                         </td>
