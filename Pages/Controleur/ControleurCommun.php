@@ -33,6 +33,8 @@ function connecterUtilisateur() {
 
                 $_SESSION['connecte'] = 1;
                 $_SESSION['login'] = $login;
+                $_SESSION['nom'] = $utilisateur->getNom();
+                $_SESSION['prenom'] = $utilisateur->getPrenom();
 
                 //on stock en session l'utilisateur connecté
                 $_SESSION['modeleUtilisateur'] = $utilisateur;

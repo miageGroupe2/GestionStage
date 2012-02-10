@@ -31,7 +31,13 @@ function genererAjoutPropositionStageOk() {
 function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignement, $modeleFicheSujetStage, $technoTab, $technoTabSelect) {
     if ($proposition != NULL) {
         $corps = "<td id = \"corps\">
-                <h2>Edition d'une proposition de stage</h2>
+                <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/editer_prop.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table>
                 <script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormEditerProposition.js\" type=\"text/javascript\"></script>
                 <form onsubmit=\"return verifierEditerProposition()\" action=\"" . RACINE . "?action=editerPropositionStage&idProposition=" . $proposition->getIdProposition() . "&sujetModifie=true\" method=\"post\"  enctype=\"multipart/form-data\">
                 <table class = \"tableau\">
@@ -149,7 +155,8 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         <td class = \"tableau\">";
 
         if ($modeleFicheRenseignement != null) {
-            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=renseignement&estUneProposition&id=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
+            $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=renseignement&estUneProposition&id=" . $proposition->getIdProposition() . "\"><img src=\"".RACINE_IMAGE."disquette.png\" /></a>
+                <a href=\"" . RACINE . "?action=telechargement&type=renseignement&estUneProposition&id=" . $proposition->getIdProposition() . "\">" . $modeleFicheRenseignement->getNomOriginal() . "</a>";
         }
         $corps .="</td>
                     </tr>
@@ -169,7 +176,8 @@ function genererEditerPropositionEtudiant($proposition, $modeleFicheRenseignemen
                         <td class = \"tableau\">";
 
                     if ($modeleFicheSujetStage != null) {
-                        $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=sujet&estUneProposition&id=" . $proposition->getIdProposition() . "\">" . $modeleFicheSujetStage->getNomOriginal() . "</a>";
+                        $corps .= "<a href=\"" . RACINE . "?action=telechargement&type=sujet&estUneProposition&id=" . $proposition->getIdProposition() . "\"><img src=\"".RACINE_IMAGE."disquette.png\" /></a>
+                            <a href=\"" . RACINE . "?action=telechargement&type=sujet&estUneProposition&id=" . $proposition->getIdProposition() . "\">" . $modeleFicheSujetStage->getNomOriginal() . "</a>";
                     }
         $corps .="</td>
                     </tr>
@@ -318,12 +326,22 @@ function genererDetailStageEtudiant($stage, $modeleFicheRenseignement, $modeleFi
             $date_embauche = convertirDateENFR2($stage->getDateembauche());
         }
         $corps = "<td id = \"corps\">
-            <h2>D&eacute;tail du Stage</h2><br/>
+            <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/detail_stage.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
             <table class = \"tab_detail_stage\">
                 <tr>
                     <td class=\"tab_bloc_detail_stage\"\">
-                        <h2>Informations &eacute;tudiant</h2>
                         <table class=\"tab_interne_bloc\">
+                            <tr>
+                                <td colspan=\"2\" class=\"sous_titre_prop\">
+                                    L'&eacute;tudiant
+                                </td>
+                            </tr>
                             <tr>
                                 <td class=\"tab_interne_bloc_colg\">
                                     N&deg; Etudiant : 
@@ -359,8 +377,13 @@ function genererDetailStageEtudiant($stage, $modeleFicheRenseignement, $modeleFi
                         </table>
                     </td>
                      <td class=\"tab_bloc_detail_stage\">
-                        <h2>Contact entreprise</h2>
-                        <table class=\"tab_interne_bloc\"> 
+                                
+                        <table class=\"tab_interne_bloc\">
+                            <tr>
+                                <td colspan=\"2\" class=\"sous_titre_prop\">
+                                    Contact de l'entreprise
+                                </td>
+                            </tr>
                             <tr>
                                 <td class=\"tab_interne_bloc_colg\">
                                     Identit&eacute; :
@@ -409,12 +432,17 @@ function genererDetailStageEtudiant($stage, $modeleFicheRenseignement, $modeleFi
                         </table>
                     </td>
                 </tr>
-            </table>    
+            </table><br/>    
             <table class = \"tab_detail_stage\">
                 <tr>
                     <td class=\"tab_bloc_detail_stage\" colspan=\"2\" class = \"tableau\">
-                        <h2>L'entreprise</h2>
+                        
                         <table class=\"tab_interne_bloc\">
+                            <tr>
+                                <td colspan=\"2\" class=\"sous_titre_prop\">
+                                    L'entreprise
+                                </td>
+                            </tr>
                             <tr>
                                 <td class=\"tab_interne_bloc_colg\">
                                     Entreprise : 
@@ -460,12 +488,16 @@ function genererDetailStageEtudiant($stage, $modeleFicheRenseignement, $modeleFi
                         </table>
                     </td>
                 </tr>
-            </table>
+            </table><br/>
             <table class = \"tab_detail_stage\">
                 <tr>
                     <td class=\"tab_bloc_detail_stage\" colspan=\"2\" class = \"tableau\">
-                        <h2>Le stage </h2>
                         <table class=\"tab_interne_bloc\">
+                            <tr>
+                                <td colspan=\"2\" class=\"sous_titre_prop\">
+                                    Le stage
+                                </td>
+                            </tr>
                             <tr>
                                 <td class=\"tab_interne_bloc_colg\">
                                     Avancement administratif :
@@ -663,7 +695,13 @@ function genererEditerStageEtudiant($stage) {
 
     if ($stage != NULL) {
         $corps .= "<form name=\"editionStage\" method=\"post\" action=\"" . RACINE . "?action=validerModifStageEtudiant&idstage=" . $_GET['idstage'] . "\">
-                <h2>Editer les informations du stage</h2><br/>
+                <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/editer_stage.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table>
                 <table class=\"form_edition_stage\">
                     <tr>
                         <td class=\"form_edition_stage_colg\">
@@ -744,8 +782,13 @@ function genererAfficherOptionEtudiant($tabPromotion, $messageChangementMdp) {
 
     $utilisateur = $_SESSION['modeleUtilisateur'];
     $promoEtudiante = $utilisateur->getIdPromotion();
-    $corps = "<td id = \"corps\">
-                <h2>Options</h2>
+    $corps = "<td id = \"corps\"><table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/options.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table>
 
             <script src=\"" . RACINE . RACINE_SCRIPT . "OptionEtudiant.js\" type=\"text/javascript\"></script>
             <form onsubmit=\"return changementNumEtudiant()\" action=\"" . RACINE . "?action=optionEtudiant\" method=\"post\">
@@ -868,22 +911,39 @@ function genererListePropositionStageEtudiant($tabProp) {
     $i = 1;
 
     $corps = "<td id = \"corps\">
-            <h2>Proposition de stage</h2><br/>";
+            <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/mes_propositions.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table>";
 
     if ($tabProp != NULL) {
 
         foreach ($tabProp as $prop) {
 
             $corps .= "
-                <h3>Proposition " . $i . " :</h3>
+                
                  <table class=\"proposition\">
+                    <tr>
+                        <td colspan=\"2\" class=\"entete_tab_prop_stage\">
+                            <img src=\"Images/logo_udl.png\" alt=\"titre\">Proposition " . $i . " :
+                        </td>
+                    </tr>
                     <tr>
                       <td class=\"bloc_prop_entreprise\">
                 
                  <table class=\"prop_entreprise\">
                     <tr>
                         <td colspan=\"2\" class=\"titre_prop\">
-                            <h4>Informations sur l'entreprise</h4>
+                            <table>
+                                <tr>
+                                    <td class=\"sous_titre_prop\">
+                                        L'entreprise
+                                    </td>
+                            </tr>
+                </table>
                         <td>
                     </tr>
                     <tr>
@@ -928,7 +988,13 @@ function genererListePropositionStageEtudiant($tabProp) {
                 <table class=\"etat_prop\">
                     <tr>
                         <td colspan=\"2\" class=\"titre_prop\">
-                            <h4>Suivi de la proposition</h4>
+                            <table>
+                                <tr>
+                                    <td class=\"sous_titre_prop\">
+                                         Suivi de la proposition
+                                    </td>
+                            </tr>
+                </table>
                         <td>
                     </tr>
                     <tr>
@@ -983,9 +1049,15 @@ function genererListePropositionStageEtudiant($tabProp) {
                 <table class=\"sujet\">
                     <tr>
                         <td class=\"sujet_titre\">
-                            <h4>Titre du sujet : </h4>
+                            <table>
+                                <tr>
+                                    <td class=\"sous_titre_prop\">
+                                        R&eacute;sum&eacute; du sujet :
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
-                        <td>
+                        <td class=\"resume_sujet\">
                             " . $prop->getTitreStage() . "
                         </td>
                     </tr>
@@ -999,7 +1071,7 @@ function genererListePropositionStageEtudiant($tabProp) {
             } else {
                 $corps .="<a href=\"" . RACINE . "?action=editerPropositionStage&idProposition=" . $prop->getIdProposition() . "\">Editer cette proposition</a>";
             }
-            $corps .="</td></tr></table>";
+            $corps .="</td></tr></table><br/>";
 
 
             $i++;
@@ -1021,7 +1093,22 @@ function genererListePropositionStageEtudiant($tabProp) {
 function genererProposerStageEtape3() {
 
     $corps = "<td id = \"corps\">
-                <h2>Proposition de stage effectuée</h2>    ";
+                <table class=\"information\">
+                        <tr>
+                            <td>
+                                <h3>Information !</h3>
+                                Votre proposition destage a bien &eacute;t&eacute; envoy&eacute;e.<br/>
+                                Vous pouvez la consulter et l'&eacute;diter dans la rubrique - Voir mes propositions de stage -.
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td class=\"submit\">
+                                <a href=\"".RACINE."?action=pagePrincipaleEtudiant\">Retour &agrave; l'accueil</a>
+                            </td>
+                        </tr>
+                    </table>    ";
 
     $corps .="</td> </tr> </table>";
     return $corps;
@@ -1034,15 +1121,33 @@ function genererProposerStageEtape2($entreprise, $technoTab) {
     $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
     $corps .= "<form onsubmit=\"return verifierFormulaireEtape2()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape3\" enctype=\"multipart/form-data\">
                 <td id = \"corps\">
-                    <h2>Ajouter une proposition de stage - Etape 2</h2>
+                     <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/ajouter_prop_etape2.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table>
 
                 <table class=\"form_etape2\">
                     <tr>
                         <td class=\"form_etape2_sous_categ\">
-                            Entreprise<br/><br/>
+                            <table>
+                             <tr>
+                                <td class=\"sous_titre_prop\">
+                                    L'entreprise
+                                </td>
+                            </tr>
+                        </table>
                         </td>
                         <td class=\"form_etape2_sous_categ\">
-                            Etudiant<br/><br/>
+                            <table>
+                             <tr>
+                                <td class=\"sous_titre_prop\">
+                                    L'&eacute;tudiant
+                                </td>
+                            </tr>
+                        </table>
                         </td>
                     </tr>
                     <tr>
@@ -1136,12 +1241,14 @@ function genererProposerStageEtape2($entreprise, $technoTab) {
                         </td>
                      </tr>
                   </table><br/><br/>
+                  <table>
+                             <tr>
+                                <td class=\"titre\">
+                                    <img src=\"Images/sujet_stage.png\" alt=\"titre\">
+                                </td>
+                            </tr>
+                        </table>
                   <table class=\"form_etape2_sujet\">
-                    <tr>
-                        <td class=\"form_etape2_titre\">
-                            <h3>Sujet de stage</h3>
-                        </td>
-                    </tr>
                     <tr>
                         <td>
                             Titre du stage (résumé du sujet en quelques mots) <etoile>*</etoile>:<br />
@@ -1394,7 +1501,13 @@ function genererProposerStage($tabEntreprise) {
 
     $corps = "<script src=\"" . RACINE . RACINE_SCRIPT . "VerifierFormPropoStage.js\" type=\"text/javascript\"></script>";
     $corps .= "<td id = \"corps\">
-                <h2>Ajouter une proposition de stage - Etape 1</h2>
+                <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/ajouter_prop_etape1.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table>
                 <table>
                     <tr>
                         <td class=\"form_proposer_stage_choix_entreprise\">
@@ -1481,13 +1594,27 @@ function genererProposerStage($tabEntreprise) {
 
         if ($tabEntreprise == NULL) {
 
-            $corps .= "<br />Il n'existe aucune entreprise ayant un nom similaire dans la base. Vous devez l'ajouter :";
+            $corps .= "<table class=\"info_etape1\">
+                        <tr>
+                            <td>
+                                <h3>Information</h3>
+                                Il n'existe aucune entreprise ayant un nom similaire dans la base.<br/>
+                                Vous devez l'ajouter !
+                            </td>
+                        </tr>
+                    </table>";
         } else {
 
 
             $corps .= "<table><tr><td class=\"submit_prop\"><br /><input type=\"submit\" value=\"Etape suivante\"></form><br/></td></tr></table><hr/>
                 <form name=\"formulaire_ajout\" onsubmit=\"return verifierFormulaireEtape1()\" method=\"post\" action=\"" . RACINE . "?action=proposerStageEtape2\">
-                 <h2>Ajouter une entreprise</h2>";
+                 <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/ajouter_entreprise.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table>";
         }
 
         $corps .= " 

@@ -51,6 +51,8 @@ h3{
     border: 1px solid black;
     vertical-align: top;
     width: 230px;
+    text-align: center;
+    font-size: 16px;
 }
 
 #menu_gauche{
@@ -60,6 +62,11 @@ h3{
     width: 230px;
     height: 100%;
     text-align: left;
+    font-size: 15px;
+}
+
+.se_deconnecter{
+    text-align: center;
 }
 
 #corps{
@@ -104,6 +111,5 @@ a img:visited img{
 	text-decoration: none;
 	border:0;
 }
-
 
 

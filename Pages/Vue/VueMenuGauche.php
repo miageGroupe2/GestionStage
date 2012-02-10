@@ -19,11 +19,12 @@
                                     <table>
                                         <tr>
                                             <td id=\"titre_menu_gauche\">
-                                                Connect&eacute; en tant que : " . $_SESSION['login'] . "
+                                                Statut : Connect&eacute; <img src=\"Images/MenuGauche/Link.png\" alt=\"link\"/> <br/> 
+                                                <img src=\"Images/MenuGauche/people.png\" alt=\"link\"/> : " . $_SESSION['prenom'] ." ". $_SESSION['nom'] ."
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td class=\"se_deconnecter\">
                                                 <a href=\"".RACINE."?action=deconnexion\">Se d&eacute;connecter</a>
                                                 <a href=\"".RACINE."?action=deconnexion\"><img src=\"\"> <img src=\"Images/logo_deconnexion.png\"> </a><br/>
                                             </td>
@@ -56,13 +57,16 @@
                         </td>";
         }else{
             $menuGauche .= "
-                        <ul>
-                        <li><a href=\"".RACINE."?action=pagePrincipaleEtudiant\">Accueil</a><br/></li>
-                        <li><a href=\"".RACINE."?action=proposerStageEtape1\">Proposer un stage</a><br/></li>
-                        <li><a href=\"".RACINE."?action=listePropositionStageEtudiant\">Mes propositions de stage</a><br/></li>
-                        <li><a href=\"".RACINE."?action=voirStageEtudiant\">Voir mon stage</a><br/></li>
-                        <li><a href=\"".RACINE."?action=optionEtudiant\">Options</a><br/></li>
-                        </ul>
+                        <a href=\"".RACINE."?action=pagePrincipaleEtudiant\"><img src=\"Images/MenuGauche/home.png\"></a>
+                            <a href=\"".RACINE."?action=pagePrincipaleEtudiant\">Accueil</a><br/>
+                        <a href=\"".RACINE."?action=proposerStageEtape1\"><img src=\"Images/MenuGauche/editer_stage.png\"></a>
+                            <a href=\"".RACINE."?action=proposerStageEtape1\">Proposer un stage</a><br/>
+                        <a href=\"".RACINE."?action=listePropositionStageEtudiant\"><img src=\"Images/MenuGauche/mes_propositions.png\"></a>
+                            <a href=\"".RACINE."?action=listePropositionStageEtudiant\">Mes propositions de stage</a><br/>
+                        <a href=\"".RACINE."?action=voirStageEtudiant\"><img src=\"Images/MenuGauche/mon_stage.png\"></a>
+                            <a href=\"".RACINE."?action=voirStageEtudiant\">Voir mon stage</a><br/>
+                        <a href=\"".RACINE."?action=optionEtudiant\"><img src=\"Images/MenuGauche/options.png\"></a>
+                            <a href=\"".RACINE."?action=optionEtudiant\">Options</a><br/>
                         </td>";
         }
 
