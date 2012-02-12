@@ -73,6 +73,30 @@ root {
     background-color: #cdcdcc;
 }
 
+/* Page accueil etudiant */
+
+.actions{
+    margin: 0 auto 0 auto;
+}
+
+.image_action{
+    text-align: center;
+}
+
+.texte_action{
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.actions_possibles{
+    text-align: center;
+    color: darkblue;
+    font-size: 18px;
+    margin: 0 auto 0 auto;
+}
+
 /* Proposer un stage Etape 1*/
 
 .form_proposer_stage_choix_entreprise{

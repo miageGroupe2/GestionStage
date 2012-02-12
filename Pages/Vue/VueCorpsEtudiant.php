@@ -3,11 +3,48 @@
 require_once(RACINE_VUE.'Fonctions.php');
 
 function genererPagePrincipalEtudiant() {
-    $corps = "<td rowspan=\"2\" id=\"corps\">
-                   <table>
+    $corps = "<td id=\"corps\">
+                <table>
                     <tr>
                         <td class=\"titre\">
                             <img src=\"Images/accueil.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
+                <table class=\"actions\">
+                    <tr>
+                        <td class=\"actions_possibles\">
+                            Actions possibles
+                        </td>
+                    </tr>
+                </table>
+                <table class=\"actions\">
+                    <tr>
+                        <td class=\"image_action\">
+                            <a href=\"".RACINE."?action=proposerStageEtape1\"><img src=\"Images/Accueil/proposer_stage.png\" alt=\"titre\"></a>
+                        </td>
+                        <td class=\"image_action\">
+                            <a href=\"".RACINE."?action=listePropositionStageEtudiant\"><img src=\"Images/Accueil/mes_propositions.png\" alt=\"titre\"></a>
+                        </td>
+                        <td class=\"image_action\">
+                            <a href=\"".RACINE."?action=voirStageEtudiant\"><img src=\"Images/Accueil/mon_stage.png\" alt=\"titre\"></a>
+                        </td>
+                        <td class=\"image_action\">
+                            <a href=\"".RACINE."?action=optionEtudiant\"><img src=\"Images/Accueil/options.png\" alt=\"titre\"></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class=\"texte_action\">
+                            <a href=\"".RACINE."?action=proposerStageEtape1\">Proposer un stage</a>
+                        </td>
+                        <td class=\"texte_action\">
+                            <a href=\"".RACINE."?action=listePropositionStageEtudiant\">Mes propositions de stage</a>
+                        </td>
+                        <td class=\"texte_action\">
+                            <a href=\"".RACINE."?action=voirStageEtudiant\">Mon stage</a>
+                        </td>
+                        <td class=\"texte_action\">
+                            <a href=\"".RACINE."?action=optionEtudiant\">Options</a>
                         </td>
                     </tr>
                 </table>

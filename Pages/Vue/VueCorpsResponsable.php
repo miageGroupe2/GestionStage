@@ -3,7 +3,7 @@
 require_once(RACINE_VUE.'Fonctions.php');
 
 function genererPagePrincipalResponsable() {
-    $corps = "<td rowspan=\"2\" id=\"corps\">
+    $corps = "<td id=\"corps\">
                    <table>
                     <tr>
                         <td class=\"titre\">
@@ -11,6 +11,49 @@ function genererPagePrincipalResponsable() {
                         </td>
                     </tr>
                 </table><br/>
+                 <table class=\"actions\">
+                    <tr>
+                        <td class=\"actions_possibles\">
+                            Actions possibles
+                        </td>
+                    </tr>
+                </table><br/>
+                <table class=\"actions\">
+                    <tr>
+                        <td class=\"image_action\">
+                            <a href=\"".RACINE."?action=listePropositionStageResponsable\"><img src=\"Images/Accueil/mes_propositions.png\" alt=\"titre\"></a>
+                        </td>
+                        <td class=\"image_action\">
+                            <a href=\"".RACINE."?action=listeStageAnneeCourante\"><img src=\"Images/Accueil/mon_stage.png\" alt=\"titre\"></a>
+                        </td>
+                        <td class=\"image_action\">
+                            <a href=\"".RACINE."?action=listeStages\"><img src=\"Images/Accueil/tous_stages.png\" alt=\"titre\"></a>
+                        </td>
+                        <td class=\"image_action\">
+                            <a href=\"".RACINE."?action=gererCompteAdmin\"><img src=\"Images/Accueil/gestion_admin.png\" alt=\"titre\"></a>
+                        </td>
+                        <td class=\"image_action\">
+                            <a href=\"".RACINE."?action=option\"><img src=\"Images/Accueil/options.png\" alt=\"titre\"></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class=\"texte_action\">
+                            <a href=\"".RACINE."?action=listePropositionStageResponsable\">Les propositions de stage</a>
+                        </td>
+                        <td class=\"texte_action\">
+                            <a href=\"".RACINE."?action=listeStageAnneeCourante\">Stages de l'ann&eacute;e courante</a>
+                        </td>
+                        <td class=\"texte_action\">
+                            <a href=\"".RACINE."?action=listeStages\">Tous les stages</a>
+                        </td>
+                        <td class=\"texte_action\">
+                            <a href=\"".RACINE."?action=gererCompteAdmin\">Gestion des comptes administrateurs</a>
+                        </td>
+                        <td class=\"texte_action\">
+                            <a href=\"".RACINE."?action=option\">Options</a>
+                        </td>
+                    </tr>
+                </table>
                 </td>
             </tr>
         </table>";
