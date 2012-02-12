@@ -15,7 +15,13 @@ function genererListePropositionStageResponsable($tabProp) {
 
 
     $corps = "<td id = \"corps\">
-                <h2>Propositions de stage</h2>
+                <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/propositions_stage.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
                 <table class=\"tab_prop_stage\">
                     <tr>
                         <td class=\"entete_tab_prop_stage_identity\">
@@ -52,7 +58,13 @@ function genererDetailProposition($proposition, $modeleFicheRenseignement, $mode
     $corps = "";
     if ($proposition != NULL) {
         $corps = "<td id = \"corps\">
-            <h2>Proposition de stage</h2><br/>
+            <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/propositions_stage.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
             <form method=\"post\" action=\"" . RACINE . "?action=validerProp&idprop=" . $proposition->getIdProposition() . "\">
             <table class=\"detail_prop_stage\">
             <tr>
@@ -145,7 +157,13 @@ function genererDetailProposition($proposition, $modeleFicheRenseignement, $mode
             </tr>
             </table>";
         
-            $corps .="<h2>Fichiers attach&eacute;s - Technologies utilis&eacute;es</h2>
+            $corps .="<br/><table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/fichiers_attaches_techno.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
             <table class=\"detail_prop_stage\">
                 <tr>
                     <td class=\"detail_prop_stage_colh\">
@@ -195,7 +213,13 @@ function genererDetailProposition($proposition, $modeleFicheRenseignement, $mode
             </table>";
 
             $corps .="          
-            <h2>Sujet de stage</h2>
+            <br/><table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/sujet_stage2.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
             <table class=\"detail_prop_stage\">
                 <tr>
                     <td>
@@ -282,9 +306,23 @@ function genererValiderProposition($ok) {
 
     $corps = "<td id =   \"corps\">";
     if ($ok) {
-        $corps .="La proposition de stage a &eacute;t&eacute; valid&eacute;e";
+        $corps .="<table class=\"information\">
+                        <tr>
+                            <td>
+                                <h3>Information</h3>
+                                La proposition de stage a &eacute;t&eacute; valid&eacute;e.
+                            </td>
+                        </tr>
+                    </table>";
     } else {
-        $corps .="La proposition de stage a &eacute;t&eacute; refus&eacute;e";
+        $corps .="<table class=\"information\">
+                        <tr>
+                            <td>
+                                <h3>Information</h3>
+                                La proposition de stage a &eacute;t&eacute; refus&eacute;e.
+                            </td>
+                        </tr>
+                    </table>";
     }
     $corps .= "</td>
                 </tr>
@@ -295,7 +333,13 @@ function genererValiderProposition($ok) {
 function genererListeStage($tabStage, $tabPromotion, $technoTab, $idPromoSelect, $tabTechnoSelect) {
     
     $corps = "<td id = \"corps\">
-            <h2>Liste des stages</h2>
+            <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/liste_stages.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
 
             <h3>Crit&egrave;res de recherche    </h3>
             <form name=\"formulaireListeStage\" method=\"post\" action=\"" . RACINE . "?action=listeStages\">
@@ -416,7 +460,13 @@ function genererListeStage($tabStage, $tabPromotion, $technoTab, $idPromoSelect,
 
 function genererListeStageAnneeCourante($tabStage) {
     $corps = "<td id = \"corps\">
-            <h2>Liste des stages de l'ann&eacute;e courante</h2>
+            <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/stage_annee_courante.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
                 <table class=\"tab_prop_stage\">
                     <tr>
                         <td class=\"entete_tab_prop_stage\">
@@ -482,7 +532,13 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion) {
     $corps .= "<form name=\"formulaireModifierAdmin\" onsubmit=\"return verifierSelectionnerAdmin()\" method=\"post\" action=\"" . RACINE . "?action=modifierAdmin\">
 
     
-                <h2>Gestion des administrateurs</h2>";
+                <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/gestion_administrateurs.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>";
 
     if ($tabAdmin != null) {
 
@@ -532,7 +588,13 @@ function genererGererCompteAdmin($tabAdmin, $tabPromotion) {
 
 
         $corps .= "
-            <h2>Ajouter un administrateur</h2>
+            <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/ajouter_administrateur.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
             <form name=\"formulaire\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=ajouterAdmin\">
             <table class=\"form_ajout_new_company\">
             <tr>
@@ -617,7 +679,13 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion) {
 
 
     $corps .= "<td id = \"corps\">
-                <h2>Modifier un compte administrateur</h2>
+                <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/modifier_administrateur.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
 
             <form name=\"formulaire\" onsubmit=\"return verifierAjouterAdmin()\" method=\"post\" action=\"" . RACINE . "?action=ajouterAdmin\">
 
@@ -696,7 +764,13 @@ function genererModiferCompteAdmin($modeleUtilisateur, $tabPromotion) {
 function genererAfficherOption() {
 
     $corps = "<td id = \"corps\">
-                <h3>Options</h3>
+                <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/options.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
 
                 <a href=\"" . RACINE . "?action=gererPromotion\">G&eacute;rer les promotions</a>
 
@@ -713,7 +787,13 @@ function genererGererPromotion($tabPromotion) {
     $corps .= "<form name=\"formulaireAjout\" onsubmit=\"return verifierAjoutPromotion()\" method=\"post\" action=\"" . RACINE . "?action=gererPromotion\">
                 <input type=hidden id=\"actionPromotion\" name=\"actionPromotion\" value=\"ajouter\">";
     $corps .= "<td id = \"corps\">
-                <h2>G&eacute;rer les promotions</h2>
+                <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/gestion_promotions.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
                 <table class=\"tab_prop_stage\">
                     <tr>
                         <td class=\"titre_sous_categ_form\">Liste des promotions<br/><br/></td>
@@ -839,12 +919,22 @@ function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujet
             $embauche = "NON";
         }
         $corps = "<td id = \"corps\">
-            <h2>D&eacute;tail du Stage</h2><br/>
+            <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/detail_stage.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
             <table class = \"tab_detail_stage\">
                 <tr>
                     <td class=\"tab_bloc_detail_stage\"\">
-                        <h2>Informations &eacute;tudiant</h2>
                         <table class=\"tab_interne_bloc\">
+                            <tr>
+                                <td colspan=\"2\" class=\"sous_titre_prop\">
+                                    L'&eacute;tudiant
+                                </td>
+                            </tr>
                             <tr>
                                 <td class=\"tab_interne_bloc_colg\">
                                     N&deg; Etudiant : 
@@ -880,8 +970,12 @@ function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujet
                         </table>
                     </td>
                      <td class=\"tab_bloc_detail_stage\">
-                        <h2>Contact entreprise</h2>
                         <table class=\"tab_interne_bloc\"> 
+                            <tr>
+                                <td colspan=\"2\" class=\"sous_titre_prop\">
+                                    Contact de l'entreprise
+                                </td>
+                            </tr>
                             <tr>
                                 <td class=\"tab_interne_bloc_colg\">
                                     Identit&eacute; :
@@ -929,8 +1023,13 @@ function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujet
             <table class = \"tab_detail_stage\">
                 <tr>
                     <td class=\"tab_bloc_detail_stage\" colspan=\"2\" class = \"tableau\">
-                        <h2>L'entreprise</h2>
+                        
                         <table class=\"tab_interne_bloc\">
+                            <tr>
+                                <td colspan=\"2\" class=\"sous_titre_prop\">
+                                    L'entreprise
+                                </td>
+                            </tr>
                             <tr>
                                 <td class=\"tab_interne_bloc_colg\">
                                     Entreprise : 
@@ -980,8 +1079,13 @@ function genererDetailStage($stage, $modeleFicheRenseignement, $modeleFicheSujet
             <table class = \"tab_detail_stage\">
                 <tr>
                     <td class=\"tab_bloc_detail_stage\" colspan=\"2\" class = \"tableau\">
-                        <h2>Le stage </h2>
+                        
                         <table class=\"tab_interne_bloc\">
+                            <tr>
+                                <td colspan=\"2\" class=\"sous_titre_prop\">
+                                    Le stage
+                                </td>
+                            </tr>
                             <tr>
                                 <td class=\"tab_interne_bloc_colg\">
                                     Avancement administratif :
@@ -1179,7 +1283,13 @@ function genererEditerStage($stage) {
 
     if ($stage != NULL) {
         $corps .= "<form name=\"editionStage\" method=\"post\" action=\"" . RACINE . "?action=validerModifStage&idstage=" . $_GET['idstage'] . "\">
-                <h2>Editer les informations du stage</h2><br/>
+                <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/editer_stage2.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
                 <table class=\"form_edition_stage\">
                     <tr>
                         <td class=\"form_edition_stage_colg\">
