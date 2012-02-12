@@ -4,7 +4,13 @@ require_once(RACINE_VUE.'Fonctions.php');
 
 function genererPagePrincipalResponsable() {
     $corps = "<td rowspan=\"2\" id=\"corps\">
-                   Bienvenue
+                   <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/accueil.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
                 </td>
             </tr>
         </table>";
@@ -341,9 +347,15 @@ function genererListeStage($tabStage, $tabPromotion, $technoTab, $idPromoSelect,
                     </tr>
                 </table><br/>
 
-            <h3>Crit&egrave;res de recherche    </h3>
+            
             <form name=\"formulaireListeStage\" method=\"post\" action=\"" . RACINE . "?action=listeStages\">
             <table class=\"tab_prop_stage\">
+            <tr>
+                <td colspan=\"2\" class=\"sous_titre_prop\">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Crit&egrave;res de recherche
+                </td>
+            </tr>
             <tr>
                 <td class=\"entete_tab_prop_stage\">
                     Afficher par promotion

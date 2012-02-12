@@ -4,7 +4,13 @@ require_once(RACINE_VUE.'Fonctions.php');
 
 function genererPagePrincipalEtudiant() {
     $corps = "<td rowspan=\"2\" id=\"corps\">
-                   Bienvenue
+                   <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/accueil.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table>
                 </td>
             </tr>
         </table>";

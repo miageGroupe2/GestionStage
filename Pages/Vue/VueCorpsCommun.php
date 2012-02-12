@@ -6,7 +6,7 @@ function genererPageAccueil() {
     $corps = "<table class=\"login\">
                     <tr>
                         <td id=\"log_champ_connexion\">
-                            Connexion
+                            <img src=\"Images/MenuGauche/Link.png\" alt=\"link\"/> Connexion
                         </td>
                     </tr>
                         <td class=\"corps_log\">
