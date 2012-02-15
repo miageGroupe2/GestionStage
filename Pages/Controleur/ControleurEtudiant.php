@@ -367,19 +367,16 @@ function afficherPagePrincipaleEtudiant() {
         
         //si l'utilisateur a sélectionné un contact existant
         if (isset($_POST['idContact']) && $_POST['idContact'] != "ajouter"){
-            echo "on y est! util existant";
             $continuer = TRUE ;
             $idContact = $_POST['idContact'] ;
 
         }else{
-            echo "on y est! util non existant";
             // si l'utilisateur a ajouté un contact
             //on vérifie que tous les champs obligatoires sont remplis
             if (isset($_POST['nom_tuteur']) && $_POST['nom_tuteur'] != NULL
                 && isset($_POST['prenom_tuteur']) && $_POST['prenom_tuteur'] != NULL 
                 && isset($_POST['mail_tuteur']) && $_POST['mail_tuteur'] != NULL   
                     ){
-                echo "on a bien rempli les champs";
                 $idContact = BDEtudiant::ajouterContact($_POST['idEntreprise'],$_POST['nom_tuteur'], $_POST['prenom_tuteur'], $_POST['fonction_tuteur'], $_POST['tel_fixe'], $_POST['tel_port'], $_POST['mail_tuteur']);
                 
                 $continuer = true ;
@@ -390,7 +387,6 @@ function afficherPagePrincipaleEtudiant() {
             }
         }
         if ($continuer){
-            echo "on continue";
             $utilisateur = $_SESSION['modeleUtilisateur'];
             BDEtudiant::modifierContactDansStage($idContact, $_POST['idStage'], $utilisateur->getId());
             $_REQUEST['action'] = "voirStageEtudiant";
