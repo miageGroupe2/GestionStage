@@ -37,7 +37,7 @@ class BDCommun{
             try {
                 $retour = mysql_query($requete);
             } catch (Exception $e) {
-                echo "erreur lors de l'authentification :" . $e;
+                
             }
 
             $nombreDeLignes = mysql_num_rows($retour);

@@ -277,7 +277,7 @@ function genererDetailProposition($proposition, $modeleFicheRenseignement, $mode
                 </tr>
                 <tr>
                     <td>
-                        <textarea rows=\"4\" cols=\"60\" readonly=\"true\" id=\"sujetStage\" name=\"titreSujetStage\" >" . $proposition->getTitreStage() . "\"></textarea>
+                        <textarea rows=\"4\" cols=\"60\" readonly=\"true\" id=\"sujetStage\" name=\"titreSujetStage\" >" . $proposition->getTitreStage() . "</textarea>
                     </td>
                 </tr>
             </table>
