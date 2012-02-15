@@ -87,11 +87,11 @@ class BDResponsable {
         remuneration = $remuneration, embauche = $embauche, dateembauche = '$dateembauche'
         WHERE idstage = $idStage";
 
-echo $requete ;
+
         if(mysql_query($requete)){
             return true;
         }else{
-            echo mysql_error();
+            
             return false;
         }
 
@@ -433,7 +433,7 @@ echo $requete ;
             try {
                 $retour = mysql_query($requete);
             } catch (Exception $e) {
-                echo "erreur lors de l'authentification :" . $e;
+                
             }
 
             $modeleUtilisateur = NULL;

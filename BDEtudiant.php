@@ -416,6 +416,7 @@ class BDEtudiant {
         $nom = mysql_real_escape_string(htmlspecialchars($nom));
         $prenom = mysql_real_escape_string(htmlspecialchars($prenom));        
         $mail = mysql_real_escape_string(htmlspecialchars($mail));
+        $fonction = mysql_real_escape_string(htmlspecialchars($fonction));
 
         if ($idEntreprise != FALSE && $nom != FALSE
                 && $prenom != FALSE 
@@ -491,7 +492,7 @@ class BDEtudiant {
                     sujetstagep, titrestagep, technostagep, etat, dateproposition, idstage) 
                     VALUES ('', '$idEntreprise', '$idUtilisateur', '$sujetStage','$titreStage','$technoStage', 'en attente', NOW(), NULL)";
 
-
+                    echo $requete;
                 mysql_query($requete);
                 
                 $idproposition = mysql_insert_id();

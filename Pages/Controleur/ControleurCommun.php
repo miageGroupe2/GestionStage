@@ -150,8 +150,8 @@ function envoyerMail($mailEtudiant, $idConfirmationMail) {
     $mail->SMTPAuth = true;
     $mail->Username = "stagegestion@gmail.com";
     $mail->Password = "miagemiage";
-
     $webmaster_email = "stagegestion@gmail.com";
+    
     $email = $mailEtudiant;
     $name = "";
     $mail->From = $webmaster_email;
