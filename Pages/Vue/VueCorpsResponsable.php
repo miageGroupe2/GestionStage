@@ -11,13 +11,7 @@ function genererPagePrincipalResponsable() {
                         </td>
                     </tr>
                 </table><br/>
-                 <table class=\"actions\">
-                    <tr>
-                        <td class=\"actions_possibles\">
-                            Actions possibles
-                        </td>
-                    </tr>
-                </table><br/>
+                
                 <table class=\"actions\">
                     <tr>
                         <td class=\"image_action\">

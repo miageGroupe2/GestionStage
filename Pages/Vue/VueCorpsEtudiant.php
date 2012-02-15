@@ -13,13 +13,6 @@ function genererPagePrincipalEtudiant() {
                 </table><br/>
                 <table class=\"actions\">
                     <tr>
-                        <td class=\"actions_possibles\">
-                            Actions possibles
-                        </td>
-                    </tr>
-                </table>
-                <table class=\"actions\">
-                    <tr>
                         <td class=\"image_action\">
                             <a href=\"".RACINE."?action=proposerStageEtape1\"><img src=\"Images/Accueil/proposer_stage.png\" alt=\"titre\"></a>
                         </td>
@@ -1388,7 +1381,13 @@ function genererModifierContact($tabContact, $idEntreprise, $idStage) {
     $corps .= "<form name=\"formulaire\" method=\"post\" action=\"" . RACINE . "?action=modifierContactEtape2\">
         <input type=hidden id=\"idEntreprise\" name=\"idEntreprise\" value=\"$idEntreprise\">
         <input type=hidden id=\"idStage\" name=\"idStage\" value=\"$idStage\">
-        <h2>Modification du tuteur</h2>";
+        <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/modifier_tuteur.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>";
 
 
     // si il existe des contacts dans la base, on les affiche
@@ -1466,7 +1465,13 @@ function genererModifierContact($tabContact, $idEntreprise, $idStage) {
             <table class=\"form_ajout_tuteur\">
             <tr>
                 <td colspan=\"2\">
-                    <h2>Ajouter un tuteur</h2>
+                    <table>
+                    <tr>
+                        <td class=\"titre\">
+                            <img src=\"Images/ajouter_tuteur.png\" alt=\"titre\">
+                        </td>
+                    </tr>
+                </table><br/>
                 </td>
             </tr>
             <tr>
