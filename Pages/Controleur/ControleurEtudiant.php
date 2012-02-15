@@ -243,10 +243,8 @@ function afficherPagePrincipaleEtudiant() {
                 if ($_FILES['fichesujetstage']['error'] == 0
                     && $_FILES['fichesujetstage']['size'] <= 3145728){
 
-                    echo "dans fichier";
                     $nomSujet = md5(uniqid(rand(), true)) ;
                     $resultat2 = move_uploaded_file($_FILES['fichesujetstage']['tmp_name'],"./FicheSujetStage/".$nomSujet);
-
 
                     if($resultat2){
 

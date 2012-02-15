@@ -53,7 +53,6 @@ class BDEtudiant {
             try {
                 $retour = mysql_query($requete);
             } catch (Exception $e) {
-                echo "erreur lors de l'authentification :" . $e;
             }
 
             $nombreDeLignes = mysql_num_rows($retour);
@@ -428,7 +427,6 @@ class BDEtudiant {
                 VALUES ('$idEntreprise', '$prenom', '$nom', '$fonction', NOW(), NOW(), '$telephoneFixe', '$telephoneMobile', '$mail')";
 
             mysql_query($requete);
-            echo "on y est! util non existant";
             $id = mysql_insert_id();
             return $id ;
         }else{
@@ -493,7 +491,6 @@ class BDEtudiant {
                     sujetstagep, titrestagep, technostagep, etat, dateproposition, idstage) 
                     VALUES ('', '$idEntreprise', '$idUtilisateur', '$sujetStage','$titreStage','$technoStage', 'en attente', NOW(), NULL)";
 
-                    echo $requete;
                 mysql_query($requete);
                 
                 $idproposition = mysql_insert_id();
@@ -786,7 +783,6 @@ class BDEtudiant {
         if(mysql_query($requete)){
             return true;
         }else{
-            echo mysql_error();
             return false;
         }
         
