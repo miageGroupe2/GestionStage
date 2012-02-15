@@ -94,7 +94,7 @@ function genererListePropositionStageResponsable($tabProp) {
                     . "</td>
                         <td class=\"contenu_tab\">" . $prop->getTitreStage()
                     . "</td>
-                            <td class=\"contenu_tab\"><a href=\"" . RACINE . "?action=detailProp&idprop=" . $prop->getIdProposition() . "\"><img src=\"".RACINE_IMAGE."\loupe.png\" alt=\"loupe\" /></a>
+                            <td class=\"contenu_tab\"><a href=\"" . RACINE . "?action=detailProp&idprop=" . $prop->getIdProposition() . "\"><img src=\"".RACINE_IMAGE."loupe.png\" alt=\"loupe\" /></a>
                             </td>
                         </tr>";
         }
