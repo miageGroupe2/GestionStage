@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Mer 08 Février 2012 à 10:46
+-- Généré le : Mer 15 Février 2012 à 10:31
 -- Version du serveur: 5.1.49
 -- Version de PHP: 5.3.3-1ubuntu9.5
 
@@ -44,9 +44,6 @@ CREATE TABLE IF NOT EXISTS `contact` (
 -- Contenu de la table `contact`
 --
 
-INSERT INTO `contact` (`idcontact`, `identreprise`, `prenomcontact`, `nomcontact`, `fonctioncontact`, `dateajout`, `datederniereactivite`, `telfixecontact`, `telmobilecontact`, `mailcontact`) VALUES
-(10, 18, 'Pascal', 'Dupond', 'Architecte', '2012-02-08', '2012-02-08', '101019192', '101010101', 'dupond@pascal.fr'),
-(11, 18, 'Fred', 'Durand', 'chef de projet', '2012-02-08', '2012-02-08', '1983938', '181829', 'durand@fred.fr');
 
 -- --------------------------------------------------------
 
@@ -66,15 +63,16 @@ CREATE TABLE IF NOT EXISTS `entreprise` (
   `urlsiteinternet` varchar(50) DEFAULT NULL,
   `statutjuridique` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`identreprise`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Contenu de la table `entreprise`
 --
 
 INSERT INTO `entreprise` (`identreprise`, `nomentreprise`, `adresseentreprise`, `villeentreprise`, `codepostalentreprise`, `paysentreprise`, `numerotelephone`, `numerosiret`, `urlsiteinternet`, `statutjuridique`) VALUES
-(18, 'Netlor', '3 rue de Metz', 'Nancy', '54000', 'France', '0192837437', NULL, 'netlor.fr', NULL),
-(19, 'Intech', '234 rue avec un nom plutÃ´t long voir trÃ¨s long', 'Schifflange', '289383', 'Luxembourg', '92839484938', NULL, 'intech.lu', NULL);
+(18, 'Netlor', '93 route de Metz', 'MAXEVILLE', '54320', 'France', '+33 3 83 67 62 89', NULL, 'netlor.fr', NULL),
+(19, 'Intech', '17, 19 avenue de la Liberation', 'Schifflange', 'L-3850', 'Luxembourg', '+352 53 11 53 1', NULL, 'intech.lu', NULL),
+(20, 'DevWeb Nancy', '12 avenue de Metz', 'Nancy', '54000', 'France', '0389786514', NULL, 'deveweb.fr', NULL);
 
 -- --------------------------------------------------------
 
@@ -90,18 +88,16 @@ CREATE TABLE IF NOT EXISTS `ficherenseignement` (
   `idstage` int(11) NOT NULL,
   `type` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=61 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=71 ;
 
 --
 -- Contenu de la table `ficherenseignement`
 --
 
 INSERT INTO `ficherenseignement` (`id`, `nomoriginal`, `nomunique`, `idproposition`, `idstage`, `type`) VALUES
-(56, 'TP3.pdf', 'e74d39ad9af34902a3b5212b9b72948a', 77, 58, 'application/pdf'),
-(57, 'TP2 (1).pdf.crdownload', 'c85d93c78571046c995673812d315576', 78, 0, 'application/octet-stream'),
-(58, 'TP3 (1).pdf.crdownload', '5dfdbad98b4dc2e4685e47a4c2270c82', 79, 0, 'application/octet-stream'),
-(59, 'installation_joomla (1).pdf', '4cdeddd1fd7b7ff917ed1341f8e1aa2c', 80, 0, 'application/pdf'),
-(60, 'TP2 (3).pdf', '5d5a555a7e580e0759b7ec61ea8614fa', 81, 59, 'application/pdf');
+(69, 'ficheRenseignement.xls', '4bd44bd80806bfa1e02f622073444a8e', 90, 0, 'application/vnd.ms-excel'),
+(70, 'ficheRenseignement.xls', 'fef062542c137ffb6fc1ec2e0fe2aa1c', 91, 69, 'application/vnd.ms-excel'),
+(68, 'ficheRenseignement.xls', '1b22a7d36391bbdcac242ab3edfc950f', 89, 0, 'application/vnd.ms-excel');
 
 -- --------------------------------------------------------
 
@@ -117,14 +113,12 @@ CREATE TABLE IF NOT EXISTS `fichesujetstage` (
   `idstage` int(11) NOT NULL,
   `type` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 --
 -- Contenu de la table `fichesujetstage`
 --
 
-INSERT INTO `fichesujetstage` (`id`, `nomoriginal`, `nomunique`, `idproposition`, `idstage`, `type`) VALUES
-(25, 'TP2.pdf', '1d9b21b72c4b64cfbafe7b517e8e24a2', 77, 58, 'application/pdf');
 
 -- --------------------------------------------------------
 
@@ -137,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `promotion` (
   `nompromotion` varchar(50) DEFAULT NULL,
   `accesentreprises` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idpromotion`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Contenu de la table `promotion`
@@ -146,7 +140,9 @@ CREATE TABLE IF NOT EXISTS `promotion` (
 INSERT INTO `promotion` (`idpromotion`, `nompromotion`, `accesentreprises`) VALUES
 (1, 'L3 2011-2012', 0),
 (2, 'M2 SID 2011-2012', 1),
-(3, 'M2 ACSI 2011-2012', 1);
+(3, 'M2 ACSI 2011-2012', 1),
+(7, 'L3 2012-2013', 1),
+(8, 'L3 2009-2010', 1);
 
 -- --------------------------------------------------------
 
@@ -176,16 +172,16 @@ CREATE TABLE IF NOT EXISTS `proposition` (
   KEY `fk_propoentreprise` (`identreprise`),
   KEY `fk_propositionstage2` (`idstage`),
   KEY `fk_utilisateur_proposition` (`idutilisateur`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=82 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=92 ;
 
 --
 -- Contenu de la table `proposition`
 --
 
 INSERT INTO `proposition` (`idproposition`, `identreprise`, `idutilisateur`, `idstage`, `nomentreprisep`, `dateproposition`, `adresseentreprisep`, `villeentreprisep`, `codepostalentreprisep`, `paysentreprisep`, `numerotelephonep`, `urlsiteinternetp`, `sujetstagep`, `titrestagep`, `technostagep`, `raisonrefus`, `etat`) VALUES
-(77, 18, 25, NULL, NULL, '2012-02-08', NULL, NULL, NULL, NULL, NULL, NULL, 'Ubuntu 12.04 â€“ DÃ©monstration dâ€™Unity 5.2 multi-Ã©cran\r\n*La derniÃ¨re version d''Unity mis Ã  disposition des testeurs de la prochaine version d''Ubuntu, la 12.04 LTS precise pangolin, ajoute le support de la gestion de plusieurs Ã©crans. Voici donc une vidÃ©o prÃ©sentant les avancÃ©es d''Unity dans ce domaine.* .Ubuntu 12.04 â€“ DÃ©monstration dâ€™Unity 5.2 multi-Ã©cran\r\n*La derniÃ¨re version d''Unity mis Ã  disposition des testeurs de la prochaine version d''Ubuntu, la 12.04 LTS precise pangolin, ajoute le support de la gestion de plusieurs Ã©crans. Voici donc une vidÃ©o prÃ©sentant les avancÃ©es d''Unity dans ce domaine.', 'Modification d''une plateforme de communication.', 'jQuery, XML.', '', 'validee'),
-(80, 19, 28, NULL, NULL, '2012-02-08', NULL, NULL, NULL, NULL, NULL, NULL, ' l''objectif des Ã©diteurs de sites d''observation et d''analyse de l''activitÃ© parlementaire est d''offrir au grand public et aux mÃ©dias un accÃ¨s simplifiÃ© au fonctionnement des institutions dÃ©mocratiques. Sur la base des donnÃ©es personnelles diffusÃ©es par l''AssemblÃ©e nationale et le SÃ©nat sur leur site officiel, ils Ã©tablissent des statistiques individuelles permettant de livrer une prÃ©sentation synthÃ©tique et chiffrÃ©e de la maniÃ¨re dont les Ã©lus exercent leur mandat public. Â» ', 'DÃ©veloppement Iphone', 'Iphone', 'J''aime pas Intech', 'refusÃ©e'),
-(81, 19, 28, NULL, NULL, '2012-02-08', NULL, NULL, NULL, NULL, NULL, NULL, '\r\nLa sociÃ©tÃ© productrice de cÃ¢bles vient de publier ses rÃ©sultats pour le compte de l''annÃ©e 2011. MalgrÃ© un chiffre d''affaires en hausse, Nexans fait Ã©tat d''une perte nette due Ã  la mise sous sÃ©questre\r\n\r\nLa sociÃ©tÃ© productrice de cÃ¢bles vient de publier ses rÃ©sultats pour le compte de l''annÃ©e 2011. MalgrÃ© un chiffre d''affaires en hausse, Nexans fait Ã©tat d''une perte nette due Ã  la mise sous sÃ©questre\r\n', 'Android', 'android', '', 'validee');
+(89, 18, 25, NULL, NULL, '2012-02-15', NULL, NULL, NULL, NULL, NULL, NULL, 'DÃ©veloppement d''une plateforme de communication entre un serveur php et une application Java', 'DÃ©veloppement d''une plateforme de communication', '', '', 'en attente'),
+(90, 19, 28, NULL, NULL, '2012-02-15', NULL, NULL, NULL, NULL, NULL, NULL, 'DÃ©veloppement mobile Iphone avec communication avec un serveur Java', 'DÃ©veloppement mobile Iphone', 'Objective C', '', 'en attente'),
+(91, 20, 29, NULL, NULL, '2012-02-15', NULL, NULL, NULL, NULL, NULL, NULL, 'DÃ©veloppement d''un site de e-commerce', 'DÃ©veloppement Web', '', '', 'validee');
 
 -- --------------------------------------------------------
 
@@ -221,15 +217,14 @@ CREATE TABLE IF NOT EXISTS `stage` (
   KEY `fk_stage_contact` (`idcontact`),
   KEY `fk_stage_entreprise` (`identreprise`),
   KEY `fk_utilistateur_stage` (`idutilisateur`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=60 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=70 ;
 
 --
 -- Contenu de la table `stage`
 --
 
 INSERT INTO `stage` (`idstage`, `identreprise`, `idcontact`, `idpromotion`, `idproposition`, `idutilisateur`, `sujetstage`, `titrestage`, `technostage`, `datevalidation`, `datedebut`, `datefin`, `datesoutenance`, `lieusoutenance`, `etatstage`, `noteobtenue`, `appreciationobtenue`, `remuneration`, `embauche`, `dateembauche`, `respcivil`) VALUES
-(58, 18, 11, 2, 77, 25, 'Ubuntu 12.04 â€“ DÃ©monstration dâ€™Unity 5.2 multi-Ã©cran\r\n*La derniÃ¨re version d''Unity mis Ã  disposition des testeurs de la prochaine version d''Ubuntu, la 12.04 LTS precise pangolin, ajoute le support de la gestion de plusieurs Ã©crans. Voici donc une vidÃ©o prÃ©sentant les avancÃ©es d''Unity dans ce domaine.* .Ubuntu 12.04 â€“ DÃ©monstration dâ€™Unity 5.2 multi-Ã©cran\r\n*La derniÃ¨re version d''Unity mis Ã  disposition des testeurs de la prochaine version d''Ubuntu, la 12.04 LTS precise pangolin, ajoute le support de la gestion de plusieurs Ã©crans. Voici donc une vidÃ©o prÃ©sentant les avancÃ©es d''Unity dans ce domaine.', 'Modification d''une plateforme de communication.', 'jQuery, XML.', '2012-02-08', '2012-02-02', '2012-03-02', '2012-04-01', 'salle4', 'en cours', 4, 'NULL', '1500', NULL, '2012-02-25', NULL),
-(59, 19, NULL, 3, 81, 28, '\r\nLa sociÃ©tÃ© productrice de cÃ¢bles vient de publier ses rÃ©sultats pour le compte de l''annÃ©e 2011. MalgrÃ© un chiffre d''affaires en hausse, Nexans fait Ã©tat d''une perte nette due Ã  la mise sous sÃ©questre\r\n\r\nLa sociÃ©tÃ© productrice de cÃ¢bles vient de publier ses rÃ©sultats pour le compte de l''annÃ©e 2011. MalgrÃ© un chiffre d''affaires en hausse, Nexans fait Ã©tat d''une perte nette due Ã  la mise sous sÃ©questre\r\n', 'Android', 'android', '2012-02-08', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0);
+(69, 20, NULL, 1, 91, 29, 'DÃ©veloppement d''un site de e-commerce', 'DÃ©veloppement Web', '', '2012-02-15', NULL, NULL, NULL, NULL, 'en cours', NULL, NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -274,14 +269,14 @@ CREATE TABLE IF NOT EXISTS `technoproposition` (
 --
 
 INSERT INTO `technoproposition` (`idproposition`, `idtechno`) VALUES
-(77, 6),
-(77, 5),
-(77, 1),
-(79, 2),
-(80, 5),
-(80, 7),
-(80, 9),
-(81, 1);
+(91, 6),
+(91, 5),
+(91, 1),
+(90, 2),
+(90, 1),
+(89, 5),
+(89, 2),
+(89, 1);
 
 -- --------------------------------------------------------
 
@@ -302,7 +297,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `admin` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idutilisateur`),
   KEY `fk_utilisateurpromotion` (`idpromotion`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
 
 --
 -- Contenu de la table `utilisateur`
@@ -310,9 +305,10 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 
 INSERT INTO `utilisateur` (`idutilisateur`, `idpromotion`, `mailutilisateur`, `passwordutilisateur`, `passwordutilisateurtmp`, `nomutilisateur`, `prenomutilisateur`, `numetudiant`, `idConfirmationMail`, `admin`) VALUES
 (10, 2, 'khalid.benali@loria.fr', '94ca247fff5ad413788a1c8d8c80394a246dba1c', '', 'benali', 'khalid', NULL, '', 1),
-(24, 3, 'jean@loria.com', '51f8b1fa9b424745378826727452997ee2a7c3d7', '', 'Malhomme', 'Jean', NULL, '', 1),
-(25, 2, 'fort0192@etudiant.univ-nancy2.fr', 'ae5a3c4fa3c5d1c2cc98e43b1899f88bce0e3569', 'ae5a3c4fa3c5d1c2cc98e43b1899f88bce0e3569', 'Fort', 'Ludovic', '34', 'd3a45626d560dc75c80a29fc9481bc77', 0),
-(28, 3, 'anthony.avola@etudiant.univ-nancy2.fr', '6e1a438cfe5a6c9e2165665f8c2258849ccc43f0', '6e1a438cfe5a6c9e2165665f8c2258849ccc43f0', 'Avola', 'Anthony', '123', '3dab734b2be6b05fbe8183002ddfd431', 0);
+(24, 1, 'jean@loria.com', '51f8b1fa9b424745378826727452997ee2a7c3d7', '', 'Malhomme', 'Jean', NULL, '', 1),
+(25, 2, 'fort0192@etudiant.univ-nancy2.fr', 'ae5a3c4fa3c5d1c2cc98e43b1899f88bce0e3569', '90283840d90de49b8e7984bd99b47fee0d4bd50d', 'Fort', 'Ludovic', '34', '06feaf4cf3b15bd63d2fefd1b59b3f61', 0),
+(28, 2, 'anthony.avola@etudiant.univ-nancy2.fr', '6e1a438cfe5a6c9e2165665f8c2258849ccc43f0', '6e1a438cfe5a6c9e2165665f8c2258849ccc43f0', 'Avola', 'Anthony', '123', '3dab734b2be6b05fbe8183002ddfd431', 0),
+(29, 1, 'Jean.Dupond@etudiant.univ-nancy2.fr', '51f8b1fa9b424745378826727452997ee2a7c3d7', '', 'Dupond', 'Jean', '18881716', '0', NULL);
 
 --
 -- Contraintes pour les tables exportées
