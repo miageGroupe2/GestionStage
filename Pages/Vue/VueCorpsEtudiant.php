@@ -1140,7 +1140,7 @@ function genererProposerStageEtape3() {
                         <tr>
                             <td>
                                 <h3>Information !</h3>
-                                Votre proposition destage a bien &eacute;t&eacute; envoy&eacute;e.<br/>
+                                Votre proposition de stage a bien &eacute;t&eacute; envoy&eacute;e.<br/>
                                 Vous pouvez la consulter et l'&eacute;diter dans la rubrique - Voir mes propositions de stage -.
                             </td>
                         </tr>
