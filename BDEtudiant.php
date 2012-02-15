@@ -427,6 +427,7 @@ class BDEtudiant {
                 VALUES ('$idEntreprise', '$prenom', '$nom', '$fonction', NOW(), NOW(), '$telephoneFixe', '$telephoneMobile', '$mail')";
 
             mysql_query($requete);
+            echo "on y est! util non existant";
             $id = mysql_insert_id();
             return $id ;
         }else{
